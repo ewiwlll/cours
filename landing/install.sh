@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Cours (BioMIA Revision OS) — Script d'installation automatisé
+# Cours (Revision OS) — Script d'installation automatisé universel
+# Pour tous vos cours, amphis, classes et études supérieures
 # Compatible macOS (Apple Silicon / Intel) et Linux (x86_64 / arm64)
 # ==============================================================================
 
@@ -21,9 +22,9 @@ echo " / ___|___  _   _ _ __ ___          "
 echo "| |   / _ \| | | | '__/ __|         "
 echo "| |__| (_) | |_| | |  \__ \         "
 echo " \____\___/ \__,_|_|  |___/         "
-echo "  BioMIA Revision OS • L1           "
+echo "  Revision OS • Pour tous vos cours "
 echo -e "${RESET}"
-echo -e "${BLUE}==>${RESET} ${BOLD}Installation de Cours (BioMIA Revision OS)...${RESET}\n"
+echo -e "${BLUE}==>${RESET} ${BOLD}Installation de Cours (Revision OS)...${RESET}\n"
 
 # 1. Vérification des prérequis système
 echo -e "${BLUE}[1/6]${RESET} Vérification de l'environnement système..."
@@ -47,7 +48,7 @@ fi
 echo -e "  ${GREEN}✓${RESET} Git & Node.js $(node -v) détectés."
 
 # 2. Cloner ou initialiser le dépôt
-TARGET_DIR="cours-biomia"
+TARGET_DIR="cours-app"
 if [ ! -f "start.mjs" ]; then
     echo -e "\n${BLUE}[2/6]${RESET} Clonage du dépôt GitHub..."
     if [ -d "$TARGET_DIR" ]; then
@@ -107,7 +108,7 @@ echo -e "\n${BLUE}[6/6]${RESET} Exécution des tests de validation..."
 node --test tests/learning-engine.test.mjs tests/recall-correction.test.mjs > /dev/null 2>&1 || true
 echo -e "  ${GREEN}✓${RESET} Moteur FSRS-5 et Sas de Rappel validés avec succès."
 
-echo -e "\n${GREEN}${BOLD}🎉 Installation de Cours (BioMIA Revision OS) terminée avec succès !${RESET}\n"
+echo -e "\n${GREEN}${BOLD}🎉 Installation de Cours (Revision OS) terminée avec succès !${RESET}\n"
 echo -e "Pour démarrer le serveur local :"
 echo -e "  ${CYAN}cd $(pwd)${RESET}"
 echo -e "  ${CYAN}npm start${RESET}  ou  ${CYAN}node start.mjs${RESET}\n"

@@ -45,10 +45,10 @@ export function TopBar() {
             <div className="flex items-center gap-1.5 leading-none">
               <span className="font-bold text-sm text-zinc-100 tracking-tight">Cours</span>
               <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                BioMIA
+                OS
               </span>
             </div>
-            <p className="text-[10px] text-zinc-400 font-mono tracking-tight mt-0.5">Revision OS L1</p>
+            <p className="text-[10px] text-zinc-400 font-mono tracking-tight mt-0.5">Active Recall & FSRS-5</p>
           </div>
         </button>
 

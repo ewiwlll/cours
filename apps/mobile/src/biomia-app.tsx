@@ -448,10 +448,10 @@ export function BioMIAApp() {
             <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
               <Text style={styles.brandTitle}>Cours</Text>
               <View style={styles.tagBioMIA}>
-                <Text style={styles.tagBioMIAText}>BioMIA</Text>
+                <Text style={styles.tagBioMIAText}>OS</Text>
               </View>
             </View>
-            <Text style={styles.brandSubtitle}>Revision OS L1</Text>
+            <Text style={styles.brandSubtitle}>Active Recall & FSRS-5</Text>
           </View>
         </View>
 
@@ -469,7 +469,7 @@ export function BioMIAApp() {
       {loading ? (
         <View style={styles.centerBox}>
           <ActivityIndicator size="large" color="#3b82f6" />
-          <Text style={styles.loadingText}>Chargement de vos cours BioMIA...</Text>
+          <Text style={styles.loadingText}>Chargement de vos cours...</Text>
         </View>
       ) : (
         <ScrollView style={styles.contentScroll} contentContainerStyle={styles.contentScrollContainer}>

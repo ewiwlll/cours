@@ -1,11 +1,12 @@
-# Cours — BioMIA Revision OS
+# Cours — Revision OS
 
 [![Site Web](https://img.shields.io/badge/Site_Web-cours--biomia.pages.dev-blue?style=flat-square)](https://cours-biomia.pages.dev)
 [![Licence MIT](https://img.shields.io/badge/Licence-MIT-emerald?style=flat-square)](LICENSE)
 [![FSRS-5](https://img.shields.io/badge/Moteur-FSRS--5-amber?style=flat-square)](docs/learning-engine.md)
 [![Whisper Metal](https://img.shields.io/badge/Voix-Whisper_Metal_Local-cyan?style=flat-square)](docs/adr/0002-moteur-ia-gemini-et-transcription-whisper.md)
 
-Plateforme locale d'apprentissage, d'enregistrement d'amphi et de révision active pour la licence BioMIA L1 (Biologie, Mathématiques, Informatique et Applications).
+> **Pour tous vos cours, amphis et classes.**  
+> Enregistrez en 1 clic et concentrez-vous sans le stress d'oublier de prendre des notes : la transcription locale s'occupe de tout capturer. Votre unique mission pendant le cours : **visualiser les concepts dans votre tête** et **être constant**.
 
 ---
 
@@ -19,32 +20,35 @@ curl -fsSL https://cours-biomia.pages.dev/install.sh | bash
 
 ## Principes Fondamentaux
 
+- **Libération de la charge mentale en cours** : Vous n'avez plus besoin de recopier frénétiquement chaque slide. Vous écoutez le professeur, vous visualisez mentalement les mécanismes et vous posez des balises rapides (*Important, Pas compris, Piège, Définition*).
 - **Vérité terrain & sources conservées** : Les transcriptions textuelles (`data/transcriptions/`) et les enregistrements audio bruts (`data/enregistrements/`) sont préservés fidèlement sans altération.
-- **Sas de Rappel Actif initial** : À la création d'un cours, la fiche de synthèse reste verrouillée jusqu'à ce que l'étudiant effectue son premier rappel libre (oral ou écrit) sans aide.
-- **Répétition espacée FSRS-5** : Algorithme scientifique calculant la stabilité de la mémoire, la difficulté et la probabilité de rétention pour optimiser les révisions de flashcards et QCM.
-- **Correction diagnostique IA grounded** : Évaluation concept par concept par **Gemini 3.7 Flash** (score sur 100, concepts maîtrisés/partiels/manquants/erronés, explication pédagogique et réponse idéale).
+- **Sas de Rappel Actif initial** : À la création d'un cours, la fiche de synthèse reste volontairement verrouillée jusqu'à ce que l'étudiant effectue son premier rappel libre (oral ou écrit) sans aide.
+- **Répétition espacée FSRS-5 sans chrono** : Algorithme scientifique calculant la stabilité de la mémoire, la difficulté et la probabilité de rétention pour optimiser les révisions de flashcards et QCM sans stress de temps.
+- **Correction diagnostique IA grounded** : Évaluation concept par concept par **Gemini** (score sur 100, concepts maîtrisés/partiels/manquants/erronés, explication pédagogique et réponse idéale).
 - **Transcription locale Metal** : Traitement audio local gratuit et illimité sur Mac avec **Whisper.cpp** et accélération GPU Metal (`models/whisper/ggml-large-v3-turbo-q5_0.bin`).
 
-## Le Contrat Méthodologique en 6 Étapes
+---
 
-Le système repose sur un flux de travail rigoureux et sans friction entre ton smartphone, ton Mac et Antigravity :
+## Le Contrat Méthodologique Universel
 
-1. **📱 1. Capture en amphi** : Sur ton Pixel 8 ou Mac, micro en 1 clic, balises rapides (*Important, Pas compris, Piège, Définition*) et photos du tableau synchronisées (`offsetMs`).
+Le système repose sur un flux de travail rigoureux et sans friction entre votre smartphone, votre Mac et Antigravity :
+
+1. **📱 1. Capture en amphi / classe** : Sur votre smartphone ou Mac, micro en 1 clic, balises rapides (*Important, Pas compris, Piège, Définition*) et photos du tableau synchronisées (`offsetMs`).
    * **Bilan de fin d'amphi** : Vérification des balises, suppression des photos floues et validation sereine avant synchronisation.
 2. **🧠 2. Antigravity compile** : Whisper Metal transcrit en local (0 coût). Antigravity extrait les concepts atomiques, les analogies Feynman, les tableaux comparatifs « X vs Y » et ancre les photos et repères d'incompréhension exactement là où le professeur en parlait.
-3. **🔒 3. Cours verrouillé dans l'App** : Pour briser l'illusion de facilité de la simple relecture passive, la fiche reste verrouillée jusqu'à ta première restitution.
-4. **🎙️ 4. Rappel à froid (1-2 min)** : Tu dictes ou saisis tout ce dont tu te souviens sans regarder ton cours. C'est cet effort de rappel actif qui ancre durablement la mémoire.
-5. **📊 5. Diagnostic IA & Déblocage** : La fiche se débloque. Les notions oubliées sont immédiatement injectées en priorité dans ton planning FSRS de révision du lendemain.
-6. **⚡ 6. FSRS quotidien sans chrono** : Chaque jour, écoule ta pile de cartes dues du jour à ton rythme, sans compte à rebours stressant.
-7. **🌳 7. Mémoire Vivante des Questions** : Quand tu bloques sur un concept, Antigravity se rappelle de tes questions passées, fait progresser le raisonnement et crée une flashcard FSRS d'ancrage.
+3. **🔒 3. Cours verrouillé dans l'App** : Pour briser l'illusion de facilité de la simple relecture passive, la fiche reste verrouillée jusqu'à votre première restitution.
+4. **🎙️ 4. Rappel à froid (1-2 min)** : Vous dictez ou saisissez tout ce dont vous vous souvenez sans regarder votre cours. C'est cet effort de rappel actif qui ancre durablement la mémoire.
+5. **📊 5. Diagnostic IA & Déblocage** : La fiche se débloque. Les notions oubliées sont immédiatement injectées en priorité dans votre planning FSRS de révision du lendemain.
+6. **⚡ 6. FSRS quotidien sans chrono** : Chaque jour, écoulez votre pile de cartes dues du jour à votre rythme, sans compte à rebours stressant.
+7. **🌳 7. Mémoire Vivante des Questions** : Quand vous bloquez sur un concept, Antigravity se rappelle de vos questions passées, fait progresser le raisonnement et crée une flashcard FSRS d'ancrage.
 
 ---
 
 ## Organisation du Travail
 
-`Matière → Chapitre → Séance de cours` est la hiérarchie de référence :
-- **Matière** (ex. *Chimie 1, Biologie Cellulaire, Mathématiques Avancées 1*).
-- **Chapitre** : Thème pérenne regroupant plusieurs séances (ex. *Structure des biomolécules, Atomistique*).
+`Matière → Chapitre → Séance de cours` est la hiérarchie universelle :
+- **Matière** (ex. *Biologie, Droit Constitutionnel, Mathématiques, Histoire, Physique, Économie...*).
+- **Chapitre** : Thème pérenne regroupant plusieurs séances.
 - **Séance** : Chaque enregistrement rattaché à un chapitre devient automatiquement la Séance n°1, n°2, n°3...
 - **Portée (`partScope`)** : Délimite précisément les parties de contenu évaluées afin de ne jamais pénaliser l'étudiant sur des notions non encore abordées.
 
@@ -64,7 +68,7 @@ Puis ouvrez [http://localhost:3002](http://localhost:3002).
 
 ---
 
-## Utilisation Mobile (Pixel 8 / Android / iOS)
+## Utilisation Mobile (Android / iOS / Pixel)
 
 L'application mobile partage le même design system sombre zinc et 100% des fonctionnalités du Mac :
 
@@ -78,25 +82,7 @@ L'application mobile partage le même design system sombre zinc et 100% des fonc
    ```bash
    tailscale serve --bg http://127.0.0.1:3002
    ```
-   Renseignez l'URL HTTPS privée dans `apps/mobile/` et lancez l'application mobile Expo.
-
----
-
-## Pipeline d'Automatisation (Audio → Transcription → Synthèse IA)
-
-1. Déposez vos enregistrements ou fichiers textes dans `inbox/` (ex. `inbox/chimie-1/2026-09-09__cours-01.m4a`).
-2. `automation.mjs` convertit l'audio en WAV, lance **Whisper.cpp Metal**, écrit la transcription dans `data/transcriptions/`.
-3. **Gemini 3.7 Flash** génère la fiche de synthèse structurée (`data/cours/`), les cartes de révision (`data/cours/index.json`) et les tests de chapitre (`data/cours/chapters.json`).
-4. Le cours apparaît dans l'application prêt pour le premier rappel actif.
-
-### Commandes d'automatisation :
-```bash
-# Vérifier la configuration
-node automation.mjs --check
-
-# Lancer en mode simulation (Dry-Run)
-BIOMIA_AUTOMATION_DRY_RUN=1 node automation.mjs
-```
+   Renseignez l'URL HTTPS privée dans `apps/mobile/` et lancez l'application mobile.
 
 ---
 

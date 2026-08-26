@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cours — BioMIA Revision OS | Active Recall & FSRS-5</title>
-  <meta name="description" content="L'OS d'apprentissage et de révision active pour la licence BioMIA L1. Enregistrement amphi, Whisper Metal local, Sas de Rappel Actif et moteur FSRS-5.">
+  <title>Cours — L'OS d'Apprentissage & de Révision Active | Active Recall & FSRS-5</title>
+  <meta name="description" content="Pour tous vos cours, amphis et classes. Enregistrez en 1 clic, libérez-vous de la prise de note et visualisez le cours. Sas de Rappel Actif et Répétition Espacée FSRS-5.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -38,10 +38,10 @@
       overflow-x: hidden;
     }
     .glow-radial {
-      background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.12) 0%, rgba(9, 9, 11, 0) 70%);
+      background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.14) 0%, rgba(9, 9, 11, 0) 70%);
     }
-    .glow-amber {
-      background: radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.08) 0%, rgba(9, 9, 11, 0) 70%);
+    .glow-purple {
+      background: radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.08) 0%, rgba(9, 9, 11, 0) 70%);
     }
     .glass-card {
       background: rgba(18, 18, 22, 0.7);
@@ -82,15 +82,15 @@
         </div>
         <div class="flex items-center gap-2">
           <span class="font-extrabold text-base tracking-tight text-white">Cours</span>
-          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">BioMIA L1</span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">Revision OS</span>
         </div>
       </div>
 
       <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-400">
+        <a href="#vision" class="hover:text-white transition-colors">La Philosophie</a>
         <a href="#features" class="hover:text-white transition-colors">Fonctionnalités</a>
-        <a href="#active-recall" class="hover:text-white transition-colors">Sas de Rappel Actif</a>
+        <a href="#active-recall" class="hover:text-white transition-colors">Sas de Rappel</a>
         <a href="#fsrs" class="hover:text-white transition-colors">Moteur FSRS-5</a>
-        <a href="#multi-agent" class="hover:text-white transition-colors">Antigravity Studio</a>
       </nav>
 
       <div class="flex items-center gap-3">
@@ -104,23 +104,23 @@
 
   <!-- HERO SECTION -->
   <section class="relative z-10 pt-20 pb-20 sm:pt-28 sm:pb-28 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
-    <!-- BETA BADGE -->
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/90 border border-zinc-800 text-xs font-semibold text-zinc-300 mb-8 backdrop-blur-md">
+    <!-- UNIVERSAL PILL -->
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-xs font-semibold text-zinc-300 mb-8 backdrop-blur-md">
       <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-      <span>Early Beta • BioMIA Revision OS L1</span>
+      <span>Pour tous vos cours • Amphis, classes et études supérieures</span>
       <span class="text-zinc-600">|</span>
       <span class="text-blue-400">Open Source</span>
     </div>
 
     <!-- TITLE -->
     <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08] text-balance mb-6">
-      L'OS d'apprentissage et de <br class="hidden sm:inline"/>
-      <span class="text-gradient-blue">révision active</span> pour BioMIA.
+      Enregistrez votre cours. <br class="hidden sm:inline"/>
+      <span class="text-gradient-blue">Concentrez-vous à 100%.</span>
     </h1>
 
     <!-- SUBTITLE -->
     <p class="text-base sm:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed mb-10 text-balance">
-      Enregistrez vos amphis en 1 clic avec transcription Whisper Metal locale, débloquez vos fiches par le rappel actif sans hallucination, et consolidez votre mémoire avec l'algorithme FSRS-5.
+      Fini le stress d'oublier de noter une phrase : la transcription automatique locale s'occupe de tout capturer. Votre unique mission pendant l'amphi : <strong class="text-white font-semibold">visualiser les concepts dans votre tête</strong> et être constant.
     </p>
 
     <!-- ONE-LINER CURL INSTALL WIDGET -->
@@ -135,160 +135,132 @@
           <span id="copyText">Copier</span>
         </button>
       </div>
-      <p class="text-[11px] text-zinc-500 mt-2.5">Installation automatique • Compatible macOS (Apple Silicon / Intel) et Linux</p>
+      <p class="text-[11px] text-zinc-500 mt-2.5">Installation automatique en 1 clic • Compatible macOS & Linux • Zéro coût API voix</p>
     </div>
 
-    <!-- METRICS PILLS -->
+    <!-- 4 CORE PROMISES -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto pt-4">
       <div class="glass-card rounded-2xl p-4 text-center">
-        <div class="text-2xl sm:text-3xl font-black text-white mb-1">0€</div>
-        <div class="text-xs text-zinc-400">Coût API Voix (Whisper local)</div>
+        <div class="text-2xl sm:text-3xl font-black text-white mb-1">0%</div>
+        <div class="text-xs text-zinc-400">Stress de prise de notes</div>
       </div>
       <div class="glass-card rounded-2xl p-4 text-center">
         <div class="text-2xl sm:text-3xl font-black text-emerald-400 mb-1">FSRS-5</div>
-        <div class="text-xs text-zinc-400">Répétition espacée calibrée</div>
+        <div class="text-xs text-zinc-400">Répétition espacée sans chrono</div>
       </div>
       <div class="glass-card rounded-2xl p-4 text-center">
         <div class="text-2xl sm:text-3xl font-black text-amber-400 mb-1">1-2 min</div>
-        <div class="text-xs text-zinc-400">Sas de Rappel Actif</div>
+        <div class="text-xs text-zinc-400">Sas de Rappel Actif initial</div>
       </div>
       <div class="glass-card rounded-2xl p-4 text-center">
         <div class="text-2xl sm:text-3xl font-black text-cyan-400 mb-1">100%</div>
-        <div class="text-xs text-zinc-400">Parité Web / Mac / Mobile</div>
+        <div class="text-xs text-zinc-400">Toutes vos matières & filières</div>
       </div>
     </div>
   </section>
 
-  <!-- FEATURES GRID (GROK BOT STYLE) -->
-  <section id="features" class="py-20 bg-zinc-950/60 border-t border-b border-border/50 relative z-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-3xl mx-auto mb-16">
-        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
-          Conçu pour la science cognitive de la mémoire.
-        </h2>
-        <p class="text-base sm:text-lg text-zinc-400">
-          Chaque fonctionnalité repose sur les piliers éprouvés des neurosciences : active recall, spaced repetition, et analyse conceptuelle grounded.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-        <!-- CARD 1: SAS DE RAPPEL ACTIF -->
-        <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 text-2xl mb-6">
-            🔒
-          </div>
+  <!-- MANIFESTO / PHILOSOPHIE -->
+  <section id="vision" class="py-20 bg-zinc-950/80 border-t border-b border-border/50 relative z-10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="text-xs font-bold uppercase tracking-widest text-blue-400 mb-3 inline-block">La Méthode Universelle</span>
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-6">
+        Pourquoi copier frénétiquement quand une machine peut écouter pour vous ?
+      </h2>
+      <div class="glass-card rounded-3xl p-8 sm:p-10 text-left space-y-6 border border-zinc-800 leading-relaxed text-zinc-300 text-sm sm:text-base">
+        <div class="flex items-start gap-4">
+          <div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold shrink-0 mt-0.5">1</div>
           <div>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-amber-400">Active Recall Testing</span>
-            <h3 class="text-xl font-bold text-white mt-1 mb-3">Sas de Rappel Actif Obligatoire</h3>
-            <p class="text-sm text-zinc-400 leading-relaxed mb-6">
-              La fiche brute est verrouillée à la création. L'étudiant prend 1 à 2 minutes pour restituer ce qu'il a retenu. L'IA analyse les notions clés et débloque le cours avec une note diagnostique.
-            </p>
-          </div>
-          <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 text-xs font-mono text-zinc-300">
-            <span class="text-emerald-400">✓ Enthalpie libre ΔG</span><br>
-            <span class="text-emerald-400">✓ Couplage ATP</span><br>
-            <span class="text-rose-400">⚠ Distinguer ΔG et ΔG°'</span>
+            <strong class="text-white text-base">Pendant le cours : Écoute et Visualisation pure</strong>
+            <p class="text-zinc-400 text-sm mt-1">Vous lancez l'enregistrement d'une touche. Vous posez des balises rapides si une notion est importante ou floue. Vous ne passez plus 2 heures à recopier les slides : vous comprenez la logique du professeur en direct.</p>
           </div>
         </div>
 
-        <!-- CARD 2: MOTEUR FSRS-5 -->
-        <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 text-2xl mb-6">
-            ⚡
-          </div>
+        <div class="flex items-start gap-4">
+          <div class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold shrink-0 mt-0.5">2</div>
           <div>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">Spaced Repetition</span>
-            <h3 class="text-xl font-bold text-white mt-1 mb-3">Moteur FSRS-5 & Sans Chrono</h3>
-            <p class="text-sm text-zinc-400 leading-relaxed mb-6">
-              Calcul de stabilité mémoire, probabilité de rétention $R$ et difficulté intrinsèque. Pile de flashcards quotidienne optimisée pour réviser avant l'oubli sans stress.
-            </p>
-          </div>
-          <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 text-xs font-mono text-zinc-300">
-            <span class="text-zinc-400">Rétention cible :</span> <span class="text-emerald-400 font-bold">90%</span><br>
-            <span class="text-zinc-400">Stabilité S :</span> <span class="text-blue-400">14.2 jours</span><br>
-            <span class="text-zinc-400">Difficulté D :</span> <span class="text-amber-400">4.8 / 10</span>
+            <strong class="text-white text-base">Le soir : Sas de Rappel Actif (1 à 2 minutes)</strong>
+            <p class="text-zinc-400 text-sm mt-1">La fiche reste volontairement verrouillée. Vous faites l'effort sans aide de restituer les points clés à l'écrit ou au micro. L'IA analyse votre rappel, débloque la synthèse complète et injecte vos lacunes dans votre planning du lendemain.</p>
           </div>
         </div>
 
-        <!-- CARD 3: MEMOIRE DES QUESTIONS ANTIGRAVITY -->
-        <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-          <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/25 flex items-center justify-center text-purple-400 text-2xl mb-6">
-            🧠
-          </div>
+        <div class="flex items-start gap-4">
+          <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shrink-0 mt-0.5">3</div>
           <div>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-purple-400">Mémoire Vivante</span>
-            <h3 class="text-xl font-bold text-white mt-1 mb-3">Arbre des Questions Évolutif</h3>
-            <p class="text-sm text-zinc-400 leading-relaxed mb-6">
-              Antigravity contextualise vos incompréhensions passées pour éviter de poser la même question 300 fois, enrichit l'explication et génère des cartes ciblées.
-            </p>
-          </div>
-          <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 text-xs font-mono text-zinc-300">
-            <span class="text-purple-400 font-semibold">« Tu avais déjà demandé... »</span><br>
-            <span class="text-zinc-400">Évolution du raisonnement :</span> <span class="text-blue-400">+2 niveaux</span>
+            <strong class="text-white text-base">Au quotidien : Régularité FSRS-5 sans stress</strong>
+            <p class="text-zinc-400 text-sm mt-1">Chaque jour, votre pile de flashcards dues s'ajuste scientifiquement selon votre stabilité de mémoire. Vous révisez à votre rythme, sans compte à rebours anxiogène, jusqu'au jour de l'examen.</p>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- LIVE SCREENSHOTS / MOBILE & DESKTOP PARITY -->
-  <section class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
+  <!-- FEATURES GRID -->
+  <section id="features" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="text-center max-w-3xl mx-auto mb-16">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-semibold text-blue-400 mb-4">
-        📱 Parité Totale 100%
-      </div>
       <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
-        Le même cockpit sur Mac, Web et Mobile Pixel 8.
+        Un système complet pour réussir toutes vos matières.
       </h2>
       <p class="text-base sm:text-lg text-zinc-400">
-        En amphi ou dans les transports, vos cours, flashcards et fiches LaTeX sont synchronisés en temps réel.
+        Sciences, Droit, Santé, Lettres, Ingénierie, Économie... L'architecture s'adapte à n'importe quel cursus.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-      <!-- MOCKUP CARD 1 -->
-      <div class="glass-card rounded-3xl p-6 sm:p-8 border border-zinc-800">
-        <div class="flex items-center justify-between mb-4">
-          <span class="text-xs font-bold text-zinc-400 uppercase tracking-wider">Fiche & Concepts Atomiques</span>
-          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-500/15 text-blue-400 border border-blue-500/30">Mobile & Web</span>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- CARD 1 -->
+      <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden">
+        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/25 flex items-center justify-center text-blue-400 text-2xl mb-6">
+          🎙️
         </div>
-        <div class="rounded-2xl bg-zinc-950 border border-zinc-800/80 p-5 font-mono text-xs space-y-3">
-          <div class="text-amber-400 font-bold">💡 POURQUOI ON EN A BESOIN</div>
-          <p class="text-zinc-300 font-sans text-xs">Prédire le sens spontané d'une réaction sans mesurer l'entropie de tout l'univers.</p>
-          <div class="bg-zinc-900/90 rounded-xl p-3 text-center text-blue-300 font-bold">
-            ΔG = ΔH - T ΔS
-          </div>
-          <div class="border-t border-zinc-800 pt-3">
-            <span class="text-purple-400 font-bold">⚖️ COMPARAISON « X vs Y »</span>
-            <p class="text-zinc-400 font-sans text-[11px] mt-1">ΔG (variable instantanée) vs ΔG°' (constante standard tabulée).</p>
-          </div>
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-blue-400">Capture Universelle</span>
+          <h3 class="text-xl font-bold text-white mt-1 mb-3">En Amphi & Photos Synchronisées</h3>
+          <p class="text-sm text-zinc-400 leading-relaxed mb-6">
+            Micro natif en 1 clic. Posez des balises (Important, Pas compris, Piège, Définition) et prenez des photos du tableau synchronisées à la seconde exacte de l'explication.
+          </p>
+        </div>
+        <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 text-xs font-mono text-zinc-300">
+          <span class="text-blue-400">01:14:22</span> • <span class="text-amber-400">⭐ Important</span><br>
+          <span class="text-purple-400">📷 Photo tableau synchronisée</span>
         </div>
       </div>
 
-      <!-- MOCKUP CARD 2 -->
-      <div class="glass-card rounded-3xl p-6 sm:p-8 border border-zinc-800">
-        <div class="flex items-center justify-between mb-4">
-          <span class="text-xs font-bold text-zinc-400 uppercase tracking-wider">En Amphi • Capture Directe</span>
-          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">Whisper Metal</span>
+      <!-- CARD 2 -->
+      <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 text-2xl mb-6">
+          🔒
         </div>
-        <div class="rounded-2xl bg-zinc-950 border border-zinc-800/80 p-5 text-xs space-y-3 font-sans">
-          <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-rose-500 animate-ping"></span>
-            <span class="font-bold text-white">Enregistrement amphi en cours (01:14:22)</span>
-          </div>
-          <div class="flex flex-wrap gap-2 pt-1">
-            <span class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px] font-semibold">⭐ Important</span>
-            <span class="px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[11px] font-semibold">⚠️ Piège exam</span>
-            <span class="px-2.5 py-1 rounded-lg bg-blue-500/20 text-blue-300 border border-blue-500/30 text-[11px] font-semibold">❓ Pas compris</span>
-            <span class="px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30 text-[11px] font-semibold">📷 Photo tableau</span>
-          </div>
-          <p class="text-zinc-400 text-[11px] pt-2">
-            Photos et balises ancrées temporellement (<code class="text-zinc-300">offsetMs</code>) pour visualiser le tableau exactement quand le professeur en parlait.
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-amber-400">Active Recall Testing</span>
+          <h3 class="text-xl font-bold text-white mt-1 mb-3">Sas de Rappel Actif & Diagnostic</h3>
+          <p class="text-sm text-zinc-400 leading-relaxed mb-6">
+            Pour briser l'illusion de facilité de la simple relecture passive. Évaluation concept par concept basée uniquement sur le cours réel, sans hallucination.
           </p>
         </div>
+        <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 text-xs font-mono text-zinc-300">
+          <span class="text-emerald-400">✓ Notion A maîtrisée</span><br>
+          <span class="text-rose-400">⚠ Distinguer Notion A vs Notion B</span>
+        </div>
       </div>
+
+      <!-- CARD 3 -->
+      <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden">
+        <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/25 flex items-center justify-center text-purple-400 text-2xl mb-6">
+          🧠
+        </div>
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-purple-400">Mémoire Vivante</span>
+          <h3 class="text-xl font-bold text-white mt-1 mb-3">Arbre des Questions Évolutif</h3>
+          <p class="text-sm text-zinc-400 leading-relaxed mb-6">
+            Antigravity mémorise vos doutes passés pour contextualiser vos questions, approfondir le raisonnement et créer des flashcards de déblocage ciblées.
+          </p>
+        </div>
+        <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 text-xs font-mono text-zinc-300">
+          <span class="text-purple-400 font-semibold">« Tu avais déjà demandé... »</span><br>
+          <span class="text-zinc-400">Raisonnement approfondi</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -296,10 +268,10 @@
   <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center relative z-10">
     <div class="glass-card rounded-3xl p-10 sm:p-14 relative overflow-hidden border border-blue-500/20">
       <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">
-        Prêt à réviser avec BioMIA Revision OS ?
+        Prêt à transformer votre manière d'apprendre ?
       </h2>
       <p class="text-base text-zinc-400 max-w-xl mx-auto mb-8">
-        Installez la suite complète en 1 commande. Le serveur local, le client Web et les compétences Antigravity se configurent automatiquement.
+        Installez l'OS en 1 seule ligne de commande dans votre terminal. L'application, le serveur local et les modules d'IA se configurent immédiatement.
       </p>
 
       <div class="inline-block w-full max-w-xl">
@@ -321,13 +293,13 @@
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2">
         <div class="w-6 h-6 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white text-xs">C</div>
-        <span class="font-bold text-zinc-400">Cours — BioMIA Revision OS</span>
+        <span class="font-bold text-zinc-400">Cours — Revision OS</span>
         <span class="text-zinc-600">•</span>
-        <span>Licence MIT</span>
+        <span>Pour tous les cours, amphis et filières • Licence MIT</span>
       </div>
       <div class="flex items-center gap-6">
         <a href="https://github.com/ewiwlll/cours-biomia" target="_blank" class="hover:text-zinc-300 transition-colors">GitHub</a>
-        <a href="https://github.com/ewiwlll/cours-biomia/blob/main/AGENTS.md" target="_blank" class="hover:text-zinc-300 transition-colors">Architecture & Règles</a>
+        <a href="https://github.com/ewiwlll/cours-biomia/blob/main/AGENTS.md" target="_blank" class="hover:text-zinc-300 transition-colors">Architecture</a>
         <a href="https://github.com/ewiwlll/cours-biomia/blob/main/README.md" target="_blank" class="hover:text-zinc-300 transition-colors">Documentation</a>
       </div>
     </div>
@@ -338,7 +310,6 @@
       const text = document.getElementById('curlCommand').innerText;
       navigator.clipboard.writeText(text).then(() => {
         const copyText = document.getElementById('copyText');
-        const copyIcon = document.getElementById('copyIcon');
         if (copyText) copyText.innerText = 'Copié !';
         setTimeout(() => {
           if (copyText) copyText.innerText = 'Copier';
