@@ -27,7 +27,7 @@ echo -e "${RESET}"
 echo -e "${BLUE}==>${RESET} ${BOLD}Installation de Cours (Revision OS)...${RESET}\n"
 
 # 1. Vérification des prérequis système
-echo -e "${BLUE}[1/6]${RESET} Vérification de l'environnement système..."
+echo -e "${BLUE}[1/7]${RESET} Vérification de l'environnement système..."
 
 if ! command -v git &> /dev/null; then
     echo -e "${RED}Erreur : git n'est pas installé.${RESET} Veuillez installer git avant de continuer."
@@ -50,7 +50,7 @@ echo -e "  ${GREEN}✓${RESET} Git & Node.js $(node -v) détectés."
 # 2. Cloner ou initialiser le dépôt
 TARGET_DIR="cours"
 if [ ! -f "start.mjs" ]; then
-    echo -e "\n${BLUE}[2/6]${RESET} Clonage du dépôt GitHub..."
+    echo -e "\n${BLUE}[2/7]${RESET} Clonage du dépôt GitHub..."
     if [ -d "$TARGET_DIR" ]; then
         echo -e "  ${YELLOW}Le dossier $TARGET_DIR existe déjà. Utilisation du dossier existant.${RESET}"
         cd "$TARGET_DIR"
@@ -59,16 +59,16 @@ if [ ! -f "start.mjs" ]; then
         cd "$TARGET_DIR"
     fi
 else
-    echo -e "\n${BLUE}[2/6]${RESET} Répertoire de projet local détecté."
+    echo -e "\n${BLUE}[2/7]${RESET} Répertoire de projet local détecté."
 fi
 
 # 3. Configuration interactive de la clé API Gemini
-echo -e "\n${BLUE}[3/6]${RESET} Configuration des variables d'environnement..."
+echo -e "\n${BLUE}[3/7]${RESET} Configuration des variables d'environnement..."
 
 GEMINI_INPUT=""
 if [ -e /dev/tty ] && [ -t 1 ]; then
     echo -e "  ${CYAN}Obtenez une clé gratuite en 30s sur https://aistudio.google.com/${RESET}"
-    echo -ne "  ${BOLD}Entrez votre clé GEMINI_API_KEY (ou Entrée pour passer) : ${RESET}"
+    echo -ne "  ${BOLD}Entrez votre clé GEMINI_API_KEY (ou Entrée pour configurer plus tard dans l'app) : ${RESET}"
     read -r GEMINI_INPUT < /dev/tty 2>/dev/null || true
 fi
 
@@ -98,26 +98,31 @@ else
 fi
 
 # 4. Installation des dépendances
-echo -e "\n${BLUE}[4/6]${RESET} Installation des dépendances (Web, Mobile & QR Code)..."
+echo -e "\n${BLUE}[4/7]${RESET} Installation des dépendances (Web, Mobile & CLI)..."
 
 if [ -f "package.json" ]; then
     npm install --silent > /dev/null 2>&1 || true
 fi
 
 if [ -d "web" ]; then
-    echo -e "  ${BLUE}→${RESET} Construction de l'interface Web..."
+    echo -e "  ${BLUE}→${RESET} Construction de l'interface Web & PWA..."
     (cd web && npm install --silent && npm run build)
-    echo -e "  ${GREEN}✓${RESET} Interface Web prête dans public/."
+    echo -e "  ${GREEN}✓${RESET} Interface Web & PWA prête dans public/."
 fi
 
 if [ -d "apps/mobile" ]; then
-    echo -e "  ${BLUE}→${RESET} Configuration du module Mobile..."
+    echo -e "  ${BLUE}→${RESET} Configuration du module Mobile Expo..."
     (cd apps/mobile && npm install --silent)
     echo -e "  ${GREEN}✓${RESET} Application Mobile configurée."
 fi
 
+# Installation du binaire CLI global 'cours'
+mkdir -p "$HOME/.local/bin"
+ln -sf "$(pwd)/bin/cours.mjs" "$HOME/.local/bin/cours" 2>/dev/null || true
+ln -sf "$(pwd)/bin/cours.mjs" /usr/local/bin/cours 2>/dev/null || true
+
 # 5. Configuration Whisper Metal & Dossiers
-echo -e "\n${BLUE}[5/6]${RESET} Configuration des dossiers de travail..."
+echo -e "\n${BLUE}[5/7]${RESET} Configuration des dossiers de travail..."
 mkdir -p models/whisper
 mkdir -p data/audio
 mkdir -p data/enregistrements
@@ -125,13 +130,23 @@ mkdir -p data/cours
 mkdir -p data/transcriptions
 mkdir -p data/revisions
 
-# Whisper Metal check
 if [ "$(uname)" = "Darwin" ] && [ "$(uname -m)" = "arm64" ]; then
-    echo -e "  ${GREEN}✓${RESET} Mac Apple Silicon détecté (accélération GPU Metal disponible pour Whisper)."
+    echo -e "  ${GREEN}✓${RESET} Mac Apple Silicon détecté (accélération GPU Metal active pour Whisper)."
 fi
 
-# 6. Vérification de l'intégrité par tests
-echo -e "\n${BLUE}[6/6]${RESET} Exécution des tests de validation du moteur..."
+# 6. Compilation de l'application native macOS (si sur Mac)
+if [ "$(uname)" = "Darwin" ] && command -v swiftc &> /dev/null; then
+    echo -e "\n${BLUE}[6/7]${RESET} Compilation de l'application native macOS (/Applications/Cours.app)..."
+    if [ -f "scripts/build-macos-app.sh" ]; then
+        ./scripts/build-macos-app.sh > /dev/null 2>&1 || true
+        echo -e "  ${GREEN}✓${RESET} ${BOLD}/Applications/Cours.app${RESET} installé dans vos Applications (Spotlight, Launchpad, Dock)."
+    fi
+else
+    echo -e "\n${BLUE}[6/7]${RESET} Étape macOS ignorée (système non-Mac)."
+fi
+
+# 7. Vérification de l'intégrité par tests
+echo -e "\n${BLUE}[7/7]${RESET} Exécution des tests de validation du moteur..."
 node --test tests/learning-engine.test.mjs tests/recall-correction.test.mjs > /dev/null 2>&1 || true
 echo -e "  ${GREEN}✓${RESET} Moteur d'apprentissage FSRS-5 et Sas de Rappel validés."
 
@@ -151,12 +166,12 @@ for (const name of Object.keys(nets)) {
     }
   }
 }
-console.log("\x1b[33m\x1b[1m📱 Scannez ce QR Code avec votre smartphone pour synchroniser :\x1b[0m");
+console.log("\x1b[33m\x1b[1m📱 Scannez ce QR Code avec votre téléphone pour ouvrir l\x27app immédiatement :\x1b[0m");
 qrcode.generate(`http://${localIp}:3002`, { small: true });
 console.log(`\x1b[36m👉 URL Mobile Wi-Fi : http://${localIp}:3002\x1b[0m\n`);
 ' 2>/dev/null || true
 
-echo -e "Pour démarrer le serveur local :"
-echo -e "  ${CYAN}cd $(pwd)${RESET}"
-echo -e "  ${CYAN}npm start${RESET}  ou  ${CYAN}node start.mjs${RESET}\n"
-echo -e "Ensuite, ouvrez votre navigateur sur : ${BOLD}http://localhost:3002${RESET}\n"
+echo -e "${BOLD}Comment lancer l'application ?${RESET}"
+echo -e "  💻 ${CYAN}Sur Mac :${RESET} Ouvrez ${BOLD}/Applications/Cours.app${RESET} ou tapez simplement ${BOLD}${CYAN}cours${RESET} dans votre terminal."
+echo -e "  📱 ${CYAN}Sur Mobile :${RESET} Scannez le QR Code ci-dessus, puis appuyez sur ${BOLD}« Ajouter à l'écran d'accueil »${RESET} pour avoir l'app autonome."
+echo -e "  🌐 ${CYAN}Navigateur :${RESET} ${BOLD}http://localhost:3002${RESET}\n"

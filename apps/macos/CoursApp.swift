@@ -10,7 +10,22 @@ class CoursAppDelegate: NSObject, NSApplicationDelegate, WKUIDelegate, WKNavigat
     var serverProcess: Process?
     let defaultPort = 3002
     var appPort = 3002
-    let projectDir = "/Users/ewilien/Documents/Code/BioMIA Revision OS"
+    var projectDir: String {
+        let home = FileManager.default.homeDirectoryForCurrentUser.path
+        let possiblePaths = [
+            (home as NSString).appendingPathComponent("cours"),
+            (home as NSString).appendingPathComponent("Documents/Code/BioMIA Revision OS"),
+            Bundle.main.bundlePath,
+            FileManager.default.currentDirectoryPath
+        ]
+        for p in possiblePaths {
+            let startScript = (p as NSString).appendingPathComponent("start.mjs")
+            if FileManager.default.fileExists(atPath: startScript) {
+                return p
+            }
+        }
+        return (home as NSString).appendingPathComponent("cours")
+    }
     var isCheckingServer = false
 
     func applicationDidFinishLaunching(_ notification: Notification) {
