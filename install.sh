@@ -62,14 +62,39 @@ else
     echo -e "\n${BLUE}[2/6]${RESET} Répertoire de projet local détecté."
 fi
 
-# 3. Configuration des variables d'environnement
+# 3. Configuration interactive de la clé API Gemini
 echo -e "\n${BLUE}[3/6]${RESET} Configuration des variables d'environnement..."
+
+GEMINI_INPUT=""
+if [ -e /dev/tty ] && [ -t 1 ]; then
+    echo -e "  ${CYAN}Obtenez une clé gratuite en 30s sur https://aistudio.google.com/${RESET}"
+    echo -ne "  ${BOLD}Entrez votre clé GEMINI_API_KEY (ou Entrée pour passer) : ${RESET}"
+    read -r GEMINI_INPUT < /dev/tty 2>/dev/null || true
+fi
+
 if [ ! -f ".env" ]; then
     cp .env.example .env
-    echo -e "  ${GREEN}✓${RESET} Fichier .env initialisé depuis .env.example."
-    echo -e "  ${YELLOW}Note : Renseignez votre clé GEMINI_API_KEY dans le fichier .env pour activer l'évaluation IA.${RESET}"
+    if [ -n "$GEMINI_INPUT" ]; then
+        if [ "$(uname)" = "Darwin" ]; then
+            sed -i '' "s|GEMINI_API_KEY=.*|GEMINI_API_KEY=$GEMINI_INPUT|g" .env
+        else
+            sed -i "s|GEMINI_API_KEY=.*|GEMINI_API_KEY=$GEMINI_INPUT|g" .env
+        fi
+        echo -e "  ${GREEN}✓${RESET} Clé GEMINI_API_KEY configurée avec succès dans .env."
+    else
+        echo -e "  ${GREEN}✓${RESET} Fichier .env initialisé depuis .env.example."
+    fi
 else
-    echo -e "  ${GREEN}✓${RESET} Fichier .env existant conservé."
+    if [ -n "$GEMINI_INPUT" ]; then
+        if [ "$(uname)" = "Darwin" ]; then
+            sed -i '' "s|GEMINI_API_KEY=.*|GEMINI_API_KEY=$GEMINI_INPUT|g" .env
+        else
+            sed -i "s|GEMINI_API_KEY=.*|GEMINI_API_KEY=$GEMINI_INPUT|g" .env
+        fi
+        echo -e "  ${GREEN}✓${RESET} Clé GEMINI_API_KEY mise à jour dans .env."
+    else
+        echo -e "  ${GREEN}✓${RESET} Fichier .env existant conservé."
+    fi
 fi
 
 # 4. Installation des dépendances
@@ -126,13 +151,8 @@ for (const name of Object.keys(nets)) {
     }
   }
 }
-console.log("\x1b[33m\x1b[1m📱 Scannez ce QR Code avec votre smartphone pour synchroniser l\x27application :\x1b[0m");
-const qrGen = qrcode.default?.generate || qrcode.generate;
-if (qrGen) {
-  qrGen(`http://${localIp}:3002`, { small: true }, (qr) => {
-    console.log(qr);
-  });
-}
+console.log("\x1b[33m\x1b[1m📱 Scannez ce QR Code avec votre smartphone pour synchroniser :\x1b[0m");
+qrcode.generate(`http://${localIp}:3002`, { small: true });
 console.log(`\x1b[36m👉 URL Mobile Wi-Fi : http://${localIp}:3002\x1b[0m\n`);
 ' 2>/dev/null || true
 

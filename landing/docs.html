@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation — Cours (Revision OS)</title>
+  <meta name="description" content="Documentation complète et guide d'architecture de Cours (Revision OS) : Active Recall, FSRS-5, Whisper Metal local, Antigravity Studio et clients multi-plateformes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            background: '#09090b',
+            sidebar: '#0c0c0e',
+            card: '#121216',
+            cardHover: '#18181f',
+            border: '#27272a',
+            accent: '#3b82f6',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #09090b;
+      color: #e4e4e7;
+      font-family: 'Inter', sans-serif;
+    }
+    .prose-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .callout-info {
+      border-left: 3px solid #3b82f6;
+      background: rgba(59, 130, 246, 0.08);
+    }
+    .callout-tip {
+      border-left: 3px solid #10b981;
+      background: rgba(16, 185, 129, 0.08);
+    }
+    .callout-warning {
+      border-left: 3px solid #f59e0b;
+      background: rgba(245, 158, 11, 0.08);
+    }
+    .code-block {
+      background: #111114;
+      border: 1px solid #27272a;
+      border-radius: 0.75rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white">
+
+  <!-- TOP BAR -->
+  <header class="sticky top-0 z-50 h-16 bg-background/90 backdrop-blur-md border-b border-border flex items-center justify-between px-4 lg:px-8">
+    <div class="flex items-center gap-3">
+      <a href="/" class="flex items-center gap-2.5 group">
+        <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-black text-white text-base shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+          C
+        </div>
+        <span class="font-bold text-base text-white tracking-tight">Cours</span>
+        <span class="text-xs text-zinc-400 font-mono">/ Docs</span>
+      </a>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 ml-2 font-semibold">v1.0.0</span>
+    </div>
+
+    <div class="flex items-center gap-4 text-sm font-medium">
+      <a href="/" class="text-zinc-400 hover:text-white transition-colors">Accueil</a>
+      <a href="https://github.com/ewiwlll/cours" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:bg-zinc-800 transition-colors text-xs font-semibold">
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        <span>GitHub</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <div class="flex-1 flex max-w-[90rem] mx-auto w-full">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="hidden md:block w-72 shrink-0 border-r border-border p-6 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto bg-sidebar/50 text-xs">
+      <div class="space-y-6">
+        <div>
+          <h4 class="font-bold text-zinc-300 uppercase tracking-wider text-[11px] mb-3">Pour Commencer</h4>
+          <ul class="space-y-2 text-zinc-400">
+            <li><a href="#quickstart" class="block hover:text-white transition-colors text-blue-400 font-semibold">1. Démarrage Rapide</a></li>
+            <li><a href="#architecture" class="block hover:text-white transition-colors">2. Vue d'Ensemble & Architecture</a></li>
+            <li><a href="#gemini-setup" class="block hover:text-white transition-colors">3. Configuration Gemini IA</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-zinc-300 uppercase tracking-wider text-[11px] mb-3">En Amphi & En Cours</h4>
+          <ul class="space-y-2 text-zinc-400">
+            <li><a href="#recording" class="block hover:text-white transition-colors">4. Enregistrement & Balises Directes</a></li>
+            <li><a href="#photos-sync" class="block hover:text-white transition-colors">5. Photos Synchronisées (offsetMs)</a></li>
+            <li><a href="#whisper-metal" class="block hover:text-white transition-colors">6. Transcription Whisper Metal (0€)</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-zinc-300 uppercase tracking-wider text-[11px] mb-3">Méthode Cognitive</h4>
+          <ul class="space-y-2 text-zinc-400">
+            <li><a href="#active-recall" class="block hover:text-white transition-colors">7. Le Sas de Rappel Actif Initial</a></li>
+            <li><a href="#fsrs5-engine" class="block hover:text-white transition-colors">8. Moteur FSRS-5 & Spaced Repetition</a></li>
+            <li><a href="#atomic-concepts" class="block hover:text-white transition-colors">9. Concepts Atomiques & « X vs Y »</a></li>
+            <li><a href="#memory-tree" class="block hover:text-white transition-colors">10. Mémoire Vivante des Questions</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-zinc-300 uppercase tracking-wider text-[11px] mb-3">Clients & Déploiement</h4>
+          <ul class="space-y-2 text-zinc-400">
+            <li><a href="#mobile-sync" class="block hover:text-white transition-colors">11. Synchronisation Mobile QR Code</a></li>
+            <li><a href="#api-reference" class="block hover:text-white transition-colors">12. Référence API REST Backend</a></li>
+            <li><a href="#faq" class="block hover:text-white transition-colors">13. FAQ & Dépannage</a></li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER DOCUMENTATION CONTENT -->
+    <main class="flex-1 min-w-0 py-10 px-6 sm:px-12 lg:px-16 max-w-4xl">
+      
+      <!-- CHAPTER 1: QUICK START -->
+      <section id="quickstart" class="mb-16">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
+          Guide de Démarrage Rapide
+        </h1>
+        <p class="text-base text-zinc-400 leading-relaxed mb-6">
+          Installez et configurez l'ensemble de l'environnement <strong>Cours (Revision OS)</strong> sur macOS ou Linux en une seule ligne de commande dans votre terminal.
+        </p>
+
+        <div class="code-block p-4 mb-6">
+          <div class="flex items-center justify-between text-xs text-zinc-400 mb-2 font-mono">
+            <span>Terminal</span>
+            <button onclick="copyCode(this)" class="text-zinc-400 hover:text-white">Copier</button>
+          </div>
+          <pre class="font-mono text-sm text-blue-300 overflow-x-auto">curl -fsSL https://cours-awc.pages.dev/install.sh | bash</pre>
+        </div>
+
+        <div class="callout-tip p-4 rounded-xl mb-6 text-xs sm:text-sm">
+          <strong class="text-emerald-400 block mb-1">💡 Ce que fait le script automatiquement :</strong>
+          1. Détecte votre système d'exploitation et vérifie <code class="text-zinc-200">git</code> et <code class="text-zinc-200">Node.js >= 18</code>.<br>
+          2. Clone le dépôt public officiel <code class="text-zinc-200">github.com/ewiwlll/cours</code>.<br>
+          3. Vous demande votre clé <code class="text-zinc-200">GEMINI_API_KEY</code> directement dans la console pour l'écrire dans <code class="text-zinc-200">.env</code>.<br>
+          4. Installe les modules Node, compile le client Web Vite et prépare le module Mobile Expo.<br>
+          5. Valide le moteur FSRS-5 par 23 tests unitaires et affiche le <strong>QR Code mobile</strong>.
+        </div>
+
+        <h3 class="text-lg font-bold text-white mb-3">Lancer le serveur au quotidien :</h3>
+        <div class="code-block p-4 mb-4">
+          <pre class="font-mono text-sm text-zinc-300">cd cours
+node start.mjs</pre>
+        </div>
+        <p class="text-sm text-zinc-400">
+          Ouvrez ensuite <a href="http://localhost:3002" target="_blank" class="text-blue-400 underline">http://localhost:3002</a> dans votre navigateur ou scannez le QR Code avec votre téléphone.
+        </p>
+      </section>
+
+      <!-- CHAPTER 2: EN AMPHI & PHOTOS SYNC -->
+      <section id="recording" class="mb-16 border-t border-border/60 pt-12">
+        <h2 class="text-2xl font-bold text-white mb-4">
+          Capture en Amphi & Photos Synchronisées (<code class="text-amber-400 font-mono text-xl">offsetMs</code>)
+        </h2>
+        <p class="text-sm text-zinc-400 leading-relaxed mb-4">
+          Pendant un cours magistral ou une séance de travaux dirigés, votre objectif principal est de <strong>visualiser les mécanismes dans votre tête</strong> plutôt que de recopier frénétiquement le tableau.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs space-y-2">
+            <span class="font-bold text-amber-400">🔥 1. Balises Rapides 1 Clic</span>
+            <p class="text-zinc-400">Posez des balises en direct : <em>Important</em>, <em>Piège exam</em>, <em>Pas compris</em> ou <em>Définition</em>. Elles créent des ancres temporelles précises dans l'audio.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs space-y-2">
+            <span class="font-bold text-purple-400">📷 2. Photos du Tableau Synchronisées</span>
+            <p class="text-zinc-400">Prenez en photo une équation ou un schéma au tableau : l'application enregistre le décalage milliseconde (<code class="text-zinc-200">offsetMs</code>) pour positionner l'image exactement là où le professeur l'expliquait.</p>
+          </div>
+        </div>
+
+        <div class="callout-warning p-4 rounded-xl mb-4 text-xs sm:text-sm">
+          <strong class="text-amber-400 block mb-1">📋 Écran de Fin d'Amphi (Bilan Serein) :</strong>
+          À la fin du cours, un écran récapitulatif vous permet de relire vos repères posés, corriger une note rapide et supprimer d'un geste les photos floues avant l'ingestion par Antigravity.
+        </div>
+      </section>
+
+      <!-- CHAPTER 3: SAS DE RAPPEL ACTIF -->
+      <section id="active-recall" class="mb-16 border-t border-border/60 pt-12">
+        <h2 class="text-2xl font-bold text-white mb-4">
+          Le Sas de Rappel Actif Obligatoire (Active Recall Testing)
+        </h2>
+        <p class="text-sm text-zinc-400 leading-relaxed mb-4">
+          La science cognitive prouve que relire passivement une fiche crée une <strong>illusion de maîtrise</strong> : on pense avoir compris car le texte nous est familier, mais on est incapable de mobiliser la connaissance sans aide lors d'un examen.
+        </p>
+
+        <div class="p-6 rounded-2xl bg-zinc-950 border border-amber-500/30 space-y-4 mb-6">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🔒</span>
+            <div>
+              <h4 class="font-bold text-white text-sm">Le Protocole de Déblocage en 3 Étapes :</h4>
+              <p class="text-xs text-zinc-400">Pour tout nouveau cours créé, la fiche brute reste volontairement verrouillée.</p>
+            </div>
+          </div>
+          <ol class="list-decimal list-inside text-xs sm:text-sm text-zinc-300 space-y-2 pl-2">
+            <li><strong>Restitution à froid (1 à 2 minutes)</strong> : Sans regarder aucune note, vous dictez au micro ou tapez ce dont vous vous rappelez du cours.</li>
+            <li><strong>Évaluation Diagnostique IA Grounded</strong> : Gemini analyse votre réponse <em>concept par concept</em> basé uniquement sur le contenu réel (aucun fait inventé). Score sur 100 et feedback pédagogique.</li>
+            <li><strong>Déblocage & Priorisation FSRS</strong> : La fiche se débloque. Les notions oubliées ou inexactes sont immédiatement programmées dans votre pile de révision du lendemain.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- CHAPTER 4: MOTEUR FSRS-5 -->
+      <section id="fsrs5-engine" class="mb-16 border-t border-border/60 pt-12">
+        <h2 class="text-2xl font-bold text-white mb-4">
+          Moteur d'Apprentissage FSRS-5 (Free Spaced Repetition Scheduler v5)
+        </h2>
+        <p class="text-sm text-zinc-400 leading-relaxed mb-4">
+          Cours intègre l'algorithme officiel <strong>FSRS-5</strong>, supérieur aux anciens modèles Anki SM-2. Il modélise scientifiquement la décroissance de la mémoire humaine à travers trois variables fondamentales :
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs">
+            <div class="text-blue-400 font-bold mb-1">Stabilité S (jours)</div>
+            <p class="text-zinc-400">Durée en jours nécessaire pour que la probabilité de rappel chute à 90%.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs">
+            <div class="text-amber-400 font-bold mb-1">Difficulté D (1 à 10)</div>
+            <p class="text-zinc-400">Complexité intrinsèque du concept, ajustée selon vos réussites et échecs.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs">
+            <div class="text-emerald-400 font-bold mb-1">Rétention R (%)</div>
+            <p class="text-zinc-400">Probabilité prédite de se souvenir de la carte à l'instant t : \(R = (1 + \text{Factor} \times t/S)^{\text{Power}}\).</p>
+          </div>
+        </div>
+
+        <div class="callout-info p-4 rounded-xl text-xs sm:text-sm mb-4">
+          <strong class="text-blue-400 block mb-1">⚡ Répétition Sans Chrono Anxiogène :</strong>
+          Toutes les séances de cartes s'effectuent sans compte à rebours stressant. Vous prenez le temps de réfléchir et de consolider la réponse.
+        </div>
+      </section>
+
+      <!-- CHAPTER 5: MEMOIRE VIVANTE ANTIGRAVITY -->
+      <section id="memory-tree" class="mb-16 border-t border-border/60 pt-12">
+        <h2 class="text-2xl font-bold text-white mb-4">
+          La Mémoire Vivante des Questions (<code class="text-purple-400 font-mono text-xl">clarifications.json</code>)
+        </h2>
+        <p class="text-sm text-zinc-400 leading-relaxed mb-4">
+          Quand vous posez une question à Antigravity sur une notion difficile, le système consulte son arbre d'évolution des incompréhensions :
+        </p>
+
+        <div class="p-5 rounded-2xl bg-zinc-900/80 border border-purple-500/30 text-xs sm:text-sm space-y-3 mb-6">
+          <div class="text-purple-300 font-semibold">« Tu avais déjà posé cette question il y a quelques jours quand on abordait ce chapitre... »</div>
+          <p class="text-zinc-400 leading-relaxed">
+            Au lieu de vous ré-expliquer passivement la même chose 300 fois, Antigravity identifie le saut cognitif manquant, fait progresser le raisonnement vers le niveau supérieur et génère automatiquement une <strong>flashcard FSRS de déblocage</strong> pour ancrer la distinction définitivement.
+          </p>
+        </div>
+      </section>
+
+      <!-- CHAPTER 6: FAQ & TROUBLESHOOTING -->
+      <section id="faq" class="mb-16 border-t border-border/60 pt-12">
+        <h2 class="text-2xl font-bold text-white mb-6">
+          Foire Aux Questions & Dépannage
+        </h2>
+
+        <div class="space-y-4 text-xs sm:text-sm">
+          <div class="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
+            <h4 class="font-bold text-white mb-1">Comment modifier ma clé Gemini après l'installation ?</h4>
+            <p class="text-zinc-400">Ouvrez le fichier <code class="text-zinc-200">.env</code> dans le dossier <code class="text-zinc-200">cours</code> et modifiez la ligne <code class="text-zinc-200">GEMINI_API_KEY=votre_cle</code>, puis relancez le serveur.</p>
+          </div>
+
+          <div class="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
+            <h4 class="font-bold text-white mb-1">Le port 3002 est déjà utilisé par une autre application ?</h4>
+            <p class="text-zinc-400">Changez simplement la variable <code class="text-zinc-200">BIOMIA_PORT=3005</code> dans votre fichier <code class="text-zinc-200">.env</code>.</p>
+          </div>
+
+          <div class="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
+            <h4 class="font-bold text-white mb-1">Comment fonctionne la synchronisation mobile en 4G à l'extérieur ?</h4>
+            <p class="text-zinc-400">Utilisez Tailscale (VPN privé gratuit) avec la commande <code class="text-zinc-200">tailscale serve --bg http://127.0.0.1:3002</code> pour obtenir une URL HTTPS sécurisée accessible depuis votre smartphone partout.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="py-8 border-t border-border text-center text-xs text-zinc-500 bg-background">
+    <p>Cours (Revision OS) • Plateforme Open Source sous licence MIT</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const pre = btn.parentElement.nextElementSibling;
+      const text = pre.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.innerText = 'Copié !';
+        setTimeout(() => { btn.innerText = 'Copier'; }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
