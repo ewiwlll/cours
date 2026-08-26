@@ -1,0 +1,606 @@
+{
+  "svgs": [
+    {
+      "index": 0,
+      "id": "icon-0",
+      "viewBox": "0 0 24 24",
+      "outerHTML": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-chevron-down size-[14px] shrink-0 transition-transform duration-200\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"></path></svg>"
+    },
+    {
+      "index": 1,
+      "id": "icon-1",
+      "viewBox": "0 0 24 24",
+      "outerHTML": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-chevron-down size-[14px] shrink-0 transition-transform duration-200\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"></path></svg>"
+    },
+    {
+      "index": 2,
+      "id": "icon-2",
+      "viewBox": "0 0 24 24",
+      "outerHTML": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-menu h-6 w-6\" aria-hidden=\"true\"><path d=\"M4 5h16\"></path><path d=\"M4 12h16\"></path><path d=\"M4 19h16\"></path></svg>"
+    },
+    {
+      "index": 3,
+      "id": "icon-3",
+      "viewBox": "0 0 22 22",
+      "outerHTML": "<svg viewBox=\"0 0 22 22\" aria-hidden=\"true\" class=\"size-[22px] shrink-0\"><path d=\"M4 11h14\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"></path><path d=\"M11 4v14\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"></path></svg>"
+    },
+    {
+      "index": 4,
+      "id": "icon-4",
+      "viewBox": "0 0 22 22",
+      "outerHTML": "<svg viewBox=\"0 0 22 22\" aria-hidden=\"true\" class=\"size-[22px] shrink-0\"><path d=\"M4 11h14\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"></path></svg>"
+    },
+    {
+      "index": 5,
+      "id": "icon-5",
+      "viewBox": "0 0 22 22",
+      "outerHTML": "<svg viewBox=\"0 0 22 22\" aria-hidden=\"true\" class=\"size-[22px] shrink-0\"><path d=\"M4 11h14\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"></path><path d=\"M11 4v14\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"></path></svg>"
+    },
+    {
+      "index": 6,
+      "id": "icon-6",
+      "viewBox": "0 0 22 22",
+      "outerHTML": "<svg viewBox=\"0 0 22 22\" aria-hidden=\"true\" class=\"size-[22px] shrink-0\"><path d=\"M4 11h14\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"></path><path d=\"M11 4v14\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"></path></svg>"
+    },
+    {
+      "index": 7,
+      "id": "icon-7",
+      "viewBox": "0 0 22 22",
+      "outerHTML": "<svg viewBox=\"0 0 22 22\" aria-hidden=\"true\" class=\"size-[22px] shrink-0\"><path d=\"M4 11h14\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"></path><path d=\"M11 4v14\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"></path></svg>"
+    },
+    {
+      "index": 8,
+      "id": "icon-8",
+      "viewBox": "0 0 11 11",
+      "outerHTML": "<svg viewBox=\"0 0 11 11\" class=\"size-[11px] text-gris-sombre\" aria-hidden=\"true\"><path d=\"M2.2 2.2l6.6 6.6M8.8 2.2l-6.6 6.6\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"></path></svg>"
+    },
+    {
+      "index": 9,
+      "id": "icon-9",
+      "viewBox": "0 0 11 11",
+      "outerHTML": "<svg viewBox=\"0 0 11 11\" class=\"size-[11px] text-gris-sombre\" aria-hidden=\"true\"><path d=\"M2.2 2.2l6.6 6.6M8.8 2.2l-6.6 6.6\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"></path></svg>"
+    },
+    {
+      "index": 10,
+      "id": "icon-10",
+      "viewBox": "0 0 11 11",
+      "outerHTML": "<svg viewBox=\"0 0 11 11\" class=\"size-[11px] text-gris-sombre\" aria-hidden=\"true\"><path d=\"M2.2 2.2l6.6 6.6M8.8 2.2l-6.6 6.6\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"></path></svg>"
+    },
+    {
+      "index": 11,
+      "id": "icon-11",
+      "viewBox": "0 0 11 11",
+      "outerHTML": "<svg viewBox=\"0 0 11 11\" class=\"size-[11px] text-gris-sombre\" aria-hidden=\"true\"><path d=\"M2.2 2.2l6.6 6.6M8.8 2.2l-6.6 6.6\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"></path></svg>"
+    },
+    {
+      "index": 12,
+      "id": "icon-12",
+      "viewBox": "0 0 11 11",
+      "outerHTML": "<svg viewBox=\"0 0 11 11\" class=\"size-[11px] text-gris-sombre\" aria-hidden=\"true\"><path d=\"M2.2 2.2l6.6 6.6M8.8 2.2l-6.6 6.6\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"></path></svg>"
+    },
+    {
+      "index": 13,
+      "id": "icon-13",
+      "viewBox": "0 0 580 27",
+      "outerHTML": "<svg class=\"absolute left-0 top-[118.36px] h-[27px] w-[580px]\" viewBox=\"0 0 580 27\" fill=\"none\" aria-hidden=\"true\"><path d=\"M290 0v27\" stroke=\"#3B3B39\"></path><path d=\"M290.5 0.02c0.16 3.83-1.6 11.5-9.9 11.5H171.3c-3.77 0.33-11.3 3.7-11.3 14.5\" stroke=\"#3B3B39\"></path><path d=\"M289.5 0.02c-0.16 3.83 1.6 11.5 9.9 11.5h109.3c3.77 0.33 11.3 3.7 11.3 14.5\" stroke=\"#3B3B39\"></path></svg>"
+    },
+    {
+      "index": 14,
+      "id": "icon-14",
+      "viewBox": "0 0 11 11",
+      "outerHTML": "<svg viewBox=\"0 0 11 11\" class=\"size-[10.8px] text-ink\" aria-hidden=\"true\"><path d=\"M2.2 5.6l2.2 2.2 4.4-4.4\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path></svg>"
+    },
+    {
+      "index": 15,
+      "id": "icon-15",
+      "viewBox": "0 0 11 11",
+      "outerHTML": "<svg viewBox=\"0 0 11 11\" class=\"size-[10.8px] text-ink\" aria-hidden=\"true\"><path d=\"M2.2 5.6l2.2 2.2 4.4-4.4\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path></svg>"
+    },
+    {
+      "index": 16,
+      "id": "icon-16",
+      "viewBox": "0 0 11 11",
+      "outerHTML": "<svg viewBox=\"0 0 11 11\" class=\"size-[10.8px] text-ink\" aria-hidden=\"true\"><path d=\"M2.2 5.6l2.2 2.2 4.4-4.4\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path></svg>"
+    },
+    {
+      "index": 17,
+      "id": "icon-17",
+      "viewBox": "0 0 11 11",
+      "outerHTML": "<svg viewBox=\"0 0 11 11\" class=\"size-[10.8px] text-ink\" aria-hidden=\"true\"><path d=\"M2.2 5.6l2.2 2.2 4.4-4.4\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path></svg>"
+    },
+    {
+      "index": 18,
+      "id": "icon-18",
+      "viewBox": "0 0 11 11",
+      "outerHTML": "<svg viewBox=\"0 0 11 11\" class=\"size-[10.8px] text-ink\" aria-hidden=\"true\"><path d=\"M2.2 5.6l2.2 2.2 4.4-4.4\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path></svg>"
+    },
+    {
+      "index": 19,
+      "id": "icon-19",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 20,
+      "id": "icon-20",
+      "viewBox": "0 0 13.75 13.75",
+      "outerHTML": "<svg viewBox=\"0 0 13.75 13.75\" class=\"size-[13.75px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M10.312 3.437L3.437 10.312M3.437 3.437l6.875 6.875\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 21,
+      "id": "icon-21",
+      "viewBox": "0 0 13.75 13.75",
+      "outerHTML": "<svg viewBox=\"0 0 13.75 13.75\" class=\"size-[13.75px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M10.312 3.437L3.437 10.312M3.437 3.437l6.875 6.875\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 22,
+      "id": "icon-22",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 23,
+      "id": "icon-23",
+      "viewBox": "0 0 13.75 13.75",
+      "outerHTML": "<svg viewBox=\"0 0 13.75 13.75\" class=\"size-[13.75px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M10.312 3.437L3.437 10.312M3.437 3.437l6.875 6.875\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 24,
+      "id": "icon-24",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 25,
+      "id": "icon-25",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 26,
+      "id": "icon-26",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 27,
+      "id": "icon-27",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 28,
+      "id": "icon-28",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 29,
+      "id": "icon-29",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 30,
+      "id": "icon-30",
+      "viewBox": "0 0 13.75 13.75",
+      "outerHTML": "<svg viewBox=\"0 0 13.75 13.75\" class=\"size-[13.75px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M10.312 3.437L3.437 10.312M3.437 3.437l6.875 6.875\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 31,
+      "id": "icon-31",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 32,
+      "id": "icon-32",
+      "viewBox": "0 0 13.75 13.75",
+      "outerHTML": "<svg viewBox=\"0 0 13.75 13.75\" class=\"size-[13.75px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M10.312 3.437L3.437 10.312M3.437 3.437l6.875 6.875\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 33,
+      "id": "icon-33",
+      "viewBox": "0 0 13.75 13.75",
+      "outerHTML": "<svg viewBox=\"0 0 13.75 13.75\" class=\"size-[13.75px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M10.312 3.437L3.437 10.312M3.437 3.437l6.875 6.875\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 34,
+      "id": "icon-34",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 35,
+      "id": "icon-35",
+      "viewBox": "0 0 13.75 13.75",
+      "outerHTML": "<svg viewBox=\"0 0 13.75 13.75\" class=\"size-[13.75px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M10.312 3.437L3.437 10.312M3.437 3.437l6.875 6.875\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 36,
+      "id": "icon-36",
+      "viewBox": "0 0 13.75 13.75",
+      "outerHTML": "<svg viewBox=\"0 0 13.75 13.75\" class=\"size-[13.75px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M10.312 3.437L3.437 10.312M3.437 3.437l6.875 6.875\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 37,
+      "id": "icon-37",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 38,
+      "id": "icon-38",
+      "viewBox": "0 0 13.75 13.75",
+      "outerHTML": "<svg viewBox=\"0 0 13.75 13.75\" class=\"size-[13.75px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M10.312 3.437L3.437 10.312M3.437 3.437l6.875 6.875\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 39,
+      "id": "icon-39",
+      "viewBox": "0 0 13.75 13.75",
+      "outerHTML": "<svg viewBox=\"0 0 13.75 13.75\" class=\"size-[13.75px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M10.312 3.437L3.437 10.312M3.437 3.437l6.875 6.875\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 40,
+      "id": "icon-40",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 41,
+      "id": "icon-41",
+      "viewBox": "0 0 13.75 13.75",
+      "outerHTML": "<svg viewBox=\"0 0 13.75 13.75\" class=\"size-[13.75px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M10.312 3.437L3.437 10.312M3.437 3.437l6.875 6.875\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 42,
+      "id": "icon-42",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 43,
+      "id": "icon-43",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 44,
+      "id": "icon-44",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 45,
+      "id": "icon-45",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 46,
+      "id": "icon-46",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 47,
+      "id": "icon-47",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 48,
+      "id": "icon-48",
+      "viewBox": "0 0 13.75 13.75",
+      "outerHTML": "<svg viewBox=\"0 0 13.75 13.75\" class=\"size-[13.75px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M10.312 3.437L3.437 10.312M3.437 3.437l6.875 6.875\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    },
+    {
+      "index": 49,
+      "id": "icon-49",
+      "viewBox": "0 0 13.5 13.5",
+      "outerHTML": "<svg viewBox=\"0 0 13.5 13.5\" class=\"size-[13.5px] text-ink\" aria-hidden=\"true\" fill=\"none\"><path d=\"M11.25 3.375L5.062 9.562 2.25 6.75\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+    }
+  ],
+  "images": [
+    {
+      "src": "https://neverboring.ai/v2/site/logo-nav.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "Never Boring AI",
+      "width": 185,
+      "height": 34
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Fciel-hero.jpg&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 1440,
+      "height": 555
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-1.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-2.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-3.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-4.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-5.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-6.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/logo-linkedin.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "LinkedIn",
+      "width": 61,
+      "height": 61
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Fapercu-hero.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "Le calendrier éditorial de Never Boring AI, avec une semaine de posts programmés",
+      "width": 1120,
+      "height": 425
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/logos-agences.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 540,
+      "height": 42
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Fetape-2.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "Écran de l'étape : Génère un programme",
+      "width": 656,
+      "height": 552
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Fetape-2.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "Écran de l'étape : Génère un programme",
+      "width": 656,
+      "height": 552
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/mascotte-halo.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 288,
+      "height": 288
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/agent-editorial.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 14,
+      "height": 14
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/agent-stratege.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 14,
+      "height": 14
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/agent-memoire.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 14,
+      "height": 14
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/mascotte-halo.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 288,
+      "height": 288
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/agent-editorial.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 14,
+      "height": 14
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/agent-stratege.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 14,
+      "height": 14
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/agent-memoire.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 14,
+      "height": 14
+    },
+    {
+      "src": "https://neverboring.ai/v2/paywall/mascotte.svg",
+      "alt": "",
+      "width": 82,
+      "height": 82
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-1.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-2.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-3.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-4.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-5.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-6.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Fapercu-inscription.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 734,
+      "height": 440
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/tableau/programme.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/tableau/vecu.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/tableau/voix.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/tableau/publication.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/tableau/agent.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/tableau/pret.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/tableau/programme.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/tableau/vecu.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/tableau/voix.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/tableau/publication.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/tableau/agent.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "src": "https://neverboring.ai/v2/site/tableau/pret.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Favis%2Fjonah.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Ftemoin-mirim.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "Lucas Chevalier, CEO de l'agence Mirim",
+      "width": 376,
+      "height": 408
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Favis%2Flouis.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Ftemoin-hover.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "Andrea Cella, CEO de Hover",
+      "width": 376,
+      "height": 408
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Favis%2Fwill.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Ftemoin-mirim.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "Lucas Chevalier, CEO de l'agence Mirim",
+      "width": 376,
+      "height": 408
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Favis%2Fwill.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Ftemoin-hover.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "Andrea Cella, CEO de Hover",
+      "width": 376,
+      "height": 408
+    },
+    {
+      "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Favis%2Flouis.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+      "alt": "",
+      "width": 48,
+      "height": 48
+    }
+  ]
+}

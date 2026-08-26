@@ -344,7 +344,7 @@ class CoursAppDelegate: NSObject, NSApplicationDelegate, WKUIDelegate, WKNavigat
     @objc func showAbout() {
         let alert = NSAlert()
         alert.messageText = "Cours"
-        alert.informativeText = "BioMIA Revision OS — Version Desktop macOS\nEnregistrement amphi, rappel actif et entraînement FSRS."
+        alert.informativeText = "Cours — Revision OS (Version Desktop macOS)\nEnregistrement amphi, rappel actif et entraînement FSRS."
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }

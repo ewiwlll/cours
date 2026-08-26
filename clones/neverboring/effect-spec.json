@@ -1,0 +1,687 @@
+{
+  "schemaVersion": 1,
+  "id": "click",
+  "source": {
+    "url": "https://neverboring.ai",
+    "capturedAt": "2026-08-26T22:15:35.603Z",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  "reference": {
+    "viewportScreenshot": "viewport.png",
+    "fullPageScreenshot": "screenshot.png"
+  },
+  "intent": null,
+  "classification": {
+    "suggestedScope": "page",
+    "suggestedCategory": "curseur"
+  },
+  "evidence": {
+    "cssRules": [
+      ":root,:host{--font-sans:var(--font-geist-sans), system-ui, -apple-system, \"Segoe UI\", sans-serif;--font-mono:var(--font-geist-mono), ui-monospace, SFMono-Regular, \"SF Mono\", Menlo, monospace;--color-purple-500:#ac4bff;--color-pink-500:#f6339a;--color-slate-950:#020618;--color-zinc-200:#e4e4e7;--color-zinc-400:#9f9fa9;--color-zinc-500:#71717b;--color-zinc-700:#3f3f46;--color-zinc-800:#27272a;--color-black:#000;--color-white:#fff;--spacing:.25rem;--container-sm:24rem;--container-md:28rem;--container-2xl:42rem;--text-xs:.75rem;--text-xs--line-height:calc(1 / .75);--text-sm:.875rem;--text-sm--line-height:calc(1.25 / .875);--text-base:1rem;--text-base--line-height:calc(1.5 / 1);--text-lg:1.125rem;--text-lg--line-height:calc(1.75 / 1.125);--font-weight-light:300;--font-weight-normal:400;--font-weight-medium:500;--font-weight-semibold:600;--tracking-tight:-.025em;--tracking-wide:.025em;--tracking-widest:.1em;--leading-tight:1.25;--leading-snug:1.375;--leading-normal:1.5;--leading-relaxed:1.625;--radius-sm:8px;--ease-out:cubic-bezier(0, 0, .2, 1);--animate-spin:spin 1s linear infinite;--animate-ping:ping 1s cubic-bezier(0, 0, .2, 1) infinite;--animate-pulse:pulse 2s cubic-bezier(.4, 0, .6, 1) infinite;--animate-bounce:bounce 1s infinite;--blur-sm:8px;--blur-md:12px;--default-transition-duration:.15s;--default-transition-timing-function:cubic-bezier(.4, 0, .2, 1);--default-font-family:var(--font-geist-sans), system-ui, -apple-system, \"Segoe UI\", sans-serif;--default-mono-font-family:var(--font-geist-mono), ui-monospace, SFMono-Regular, \"SF Mono\", Menlo, monospace;--breakpoint-maquette:1440px;--text-display:32px;--spacing-site-108:108px;--color-paper:#f6f6f3;--color-ink:#1d1d1b;--color-jaune:#fcff55;--color-jaune-fonce:#ebef0f;--color-trait-sombre:#3b3b39;--color-trait-clair:#d8d8d8;--color-gris:#6a6a73;--color-gris-sombre:#55555a;--color-gris-sur-sombre:#8f8f96;--color-boite-sombre:#2c2c2b;--color-boite-douce:#eeeef4;--color-boite-claire:#fff;--color-boite-fond:#f7f7f7;--color-trait-doux:#dcdce0;--color-bleu-1:#e3f2fd;--color-bleu-2:#1d6f8a;--color-vert-1:#e8f8e7;--color-vert-2:#277a21;--color-ambre-1:#fff3e0;--color-ambre-2:#b45309;--color-rouge-1:#ffe0e0;--color-rouge-2:#be0a0a;--color-violet-2:#7b1fa2;--font-v2:var(--font-v2-sans), system-ui, -apple-system, \"Segoe UI\", sans-serif}",
+      "*,:after,:before,::backdrop{box-sizing:border-box;border:0 solid;margin:0;padding:0}",
+      "img,svg,video,canvas,audio,iframe,embed,object{vertical-align:middle;display:block}",
+      "body{background-color:var(--background);color:var(--foreground);background-image:radial-gradient(circle at 1px 1px,#ffffff05 1px,#0000 0);background-size:32px 32px;background-attachment:fixed}",
+      "html:has(.landing-root){scroll-behavior:smooth}",
+      "::-webkit-scrollbar{width:8px;height:8px}",
+      "::-webkit-scrollbar-track{background:0 0}",
+      "::-webkit-scrollbar-thumb{background:#ffffff14 padding-box padding-box;border:2px solid #0000;border-radius:0}",
+      "::-webkit-scrollbar-thumb:hover{background:#ffffff29 padding-box padding-box}",
+      ".label-caps{text-transform:uppercase;letter-spacing:.08em;font-weight:600}",
+      ".transition-default{transition:all .18s cubic-bezier(.25,.46,.45,.94)}",
+      ".pointer-events-auto{pointer-events:auto}",
+      ".pointer-events-none{pointer-events:none}",
+      ".sr-only{clip-path:inset(50%);white-space:nowrap;border-width:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}",
+      ".origin-\\(--transform-origin\\){transform-origin:var(--transform-origin)}",
+      ".origin-left{transform-origin:0}",
+      ".-translate-x-1\\/2{--tw-translate-x:calc(calc(1 / 2 * 100%) * -1);translate:var(--tw-translate-x) var(--tw-translate-y)}",
+      ".translate-x-0{--tw-translate-x:calc(var(--spacing) * 0);translate:var(--tw-translate-x) var(--tw-translate-y)}",
+      ".translate-x-4{--tw-translate-x:calc(var(--spacing) * 4);translate:var(--tw-translate-x) var(--tw-translate-y)}",
+      ".-translate-y-1\\/2{--tw-translate-y:calc(calc(1 / 2 * 100%) * -1);translate:var(--tw-translate-x) var(--tw-translate-y)}",
+      ".-rotate-90{rotate:-90deg}",
+      ".-rotate-180{rotate:-180deg}",
+      ".-rotate-\\[6\\.71deg\\]{rotate:-6.71deg}",
+      ".-rotate-\\[6\\.87deg\\]{rotate:-6.87deg}",
+      ".rotate-90{rotate:90deg}",
+      ".rotate-180{rotate:180deg}",
+      ".rotate-\\[6\\.71deg\\]{rotate:6.71deg}",
+      ".transform{transform:var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,)}",
+      ".shimmer{--_spread:var(--shimmer-spread,calc(3ch + 40px));--_base:currentColor;--_highlight:var(--shimmer-color,oklch(from currentColor l c h / calc(alpha* .2)));background-image:var(--shimmer-image,linear-gradient(calc(90deg + var(--shimmer-angle)), var(--_base) calc(50% - var(--_spread)), var(--_highlight) calc(50% - var(--_spread) * .5), var(--_highlight) 50%, var(--_highlight) calc(50% + var(--_spread) * .5), var(--_base) calc(50% + var(--_spread))))}",
+      ".shimmer{background-image:var(--shimmer-image,linear-gradient(calc(90deg + var(--shimmer-angle)), var(--_base) calc(50% - var(--_spread)), color-mix(in oklch, var(--_highlight), var(--_base) 50%) calc(50% - var(--_spread) * .5), var(--_highlight) 50%, color-mix(in oklch, var(--_highlight), var(--_base) 50%) calc(50% + var(--_spread) * .5), var(--_base) calc(50% + var(--_spread))))}",
+      ".shimmer{background-repeat:no-repeat;background-size:calc(200% + var(--_spread) * 2) 100%;-webkit-text-fill-color:var(--shimmer-text-fill,transparent);animation:tw-shimmer var(--shimmer-duration,2s) linear infinite;background-position:0 0;-webkit-background-clip:text;background-clip:text}",
+      ".shimmer:where([dir=rtl],[dir=rtl] *){animation-direction:reverse}",
+      ".animate-bounce{animation:var(--animate-bounce)}",
+      ".animate-fade-in{animation:.3s ease-out fade-in}",
+      ".animate-ping{animation:var(--animate-ping)}",
+      ".animate-pop-in{animation:.35s cubic-bezier(.175,.885,.32,1.275) pop-in}",
+      ".animate-pulse{animation:var(--animate-pulse)}",
+      ".animate-slide-in-left{animation:.28s cubic-bezier(.25,.46,.45,.94) slide-in-left}",
+      ".animate-slide-in-right{animation:.28s cubic-bezier(.25,.46,.45,.94) slide-in-right}",
+      ".animate-slide-in-up{animation:.22s cubic-bezier(.25,.46,.45,.94) slide-in-up}",
+      ".animate-spin{animation:var(--animate-spin)}",
+      ".cursor-default{cursor:default}",
+      ".cursor-grab{cursor:grab}",
+      ".cursor-not-allowed{cursor:not-allowed}",
+      ".cursor-pointer{cursor:pointer}",
+      ".cursor-text{cursor:text}",
+      ".cursor-wait{cursor:wait}",
+      ".snap-x{scroll-snap-type:x var(--tw-scroll-snap-strictness)}",
+      ".snap-mandatory{--tw-scroll-snap-strictness:mandatory}",
+      ".snap-center{scroll-snap-align:center}",
+      ".scroll-my-1{scroll-margin-block:calc(var(--spacing) * 1)}",
+      ".bg-gradient-to-b{--tw-gradient-position:to bottom in oklab;background-image:linear-gradient(var(--tw-gradient-stops))}",
+      ".bg-gradient-to-br{--tw-gradient-position:to bottom right in oklab;background-image:linear-gradient(var(--tw-gradient-stops))}",
+      ".bg-gradient-to-r{--tw-gradient-position:to right in oklab;background-image:linear-gradient(var(--tw-gradient-stops))}",
+      ".bg-gradient-to-t{--tw-gradient-position:to top in oklab;background-image:linear-gradient(var(--tw-gradient-stops))}",
+      ".bg-\\[repeating-linear-gradient\\(to_right\\,var\\(--color-gris-sur-sombre\\)_0_4px\\,transparent_4px_8px\\)\\]{background-image:repeating-linear-gradient(to right,var(--color-gris-sur-sombre) 0 4px,transparent 4px 8px)}",
+      ".from-paper{--tw-gradient-from:#f6f6f3;--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position))}",
+      ".from-purple-500{--tw-gradient-from:var(--color-purple-500);--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position))}",
+      ".from-transparent{--tw-gradient-from:transparent;--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position))}",
+      ".from-zinc-700{--tw-gradient-from:var(--color-zinc-700);--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position))}",
+      ".from-\\[63\\.462\\%\\]{--tw-gradient-from-position:63.462%}",
+      ".to-boite-claire{--tw-gradient-to:#fff;--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position))}",
+      ".to-paper{--tw-gradient-to:#f6f6f3;--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position))}",
+      ".to-pink-500{--tw-gradient-to:var(--color-pink-500);--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position))}",
+      ".to-transparent{--tw-gradient-to:transparent;--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position))}",
+      ".to-zinc-800{--tw-gradient-to:var(--color-zinc-800);--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position))}",
+      ".capitalize{text-transform:capitalize}",
+      ".uppercase{text-transform:uppercase}",
+      ".blur{--tw-blur:blur(8px);filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}",
+      ".blur-\\[2px\\]{--tw-blur:blur(2px);filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}",
+      ".filter{filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}",
+      ".backdrop-blur-md{--tw-backdrop-blur:blur(var(--blur-md));-webkit-backdrop-filter:var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);backdrop-filter:var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,)}",
+      ".backdrop-blur-sm{--tw-backdrop-blur:blur(var(--blur-sm));-webkit-backdrop-filter:var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);backdrop-filter:var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,)}",
+      ".backdrop-filter{-webkit-backdrop-filter:var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);backdrop-filter:var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,)}",
+      ".transition{transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to,opacity,box-shadow,transform,translate,scale,rotate,filter,-webkit-backdrop-filter,backdrop-filter,display,content-visibility,overlay,pointer-events;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}",
+      ".transition-\\[color\\,box-shadow\\]{transition-property:color,box-shadow;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}",
+      ".transition-\\[width\\]{transition-property:width;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}",
+      ".transition-all{transition-property:all;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}",
+      ".transition-colors{transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}",
+      ".transition-opacity{transition-property:opacity;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}"
+    ],
+    "listeners": [
+      {
+        "type": "click",
+        "target": "document"
+      },
+      {
+        "type": "click",
+        "target": "document"
+      },
+      {
+        "type": "mousemove",
+        "target": "document"
+      },
+      {
+        "type": "mousemove",
+        "target": "document"
+      },
+      {
+        "type": "pointermove",
+        "target": "document"
+      },
+      {
+        "type": "pointermove",
+        "target": "document"
+      },
+      {
+        "type": "scroll",
+        "target": "document"
+      },
+      {
+        "type": "touchmove",
+        "target": "document"
+      },
+      {
+        "type": "touchmove",
+        "target": "document"
+      },
+      {
+        "type": "wheel",
+        "target": "document"
+      },
+      {
+        "type": "wheel",
+        "target": "document"
+      },
+      {
+        "type": "dblclick",
+        "target": "document"
+      },
+      {
+        "type": "dblclick",
+        "target": "document"
+      },
+      {
+        "type": "scroll",
+        "target": "div.flex.w-full"
+      },
+      {
+        "type": "click",
+        "target": "document"
+      },
+      {
+        "type": "scroll",
+        "target": "window"
+      },
+      {
+        "type": "click",
+        "target": "div#__next-route-announcer__"
+      },
+      {
+        "type": "click",
+        "target": "div#__next-route-announcer__"
+      },
+      {
+        "type": "mousemove",
+        "target": "div#__next-route-announcer__"
+      },
+      {
+        "type": "mousemove",
+        "target": "div#__next-route-announcer__"
+      },
+      {
+        "type": "pointermove",
+        "target": "div#__next-route-announcer__"
+      },
+      {
+        "type": "pointermove",
+        "target": "div#__next-route-announcer__"
+      },
+      {
+        "type": "scroll",
+        "target": "div#__next-route-announcer__"
+      },
+      {
+        "type": "touchmove",
+        "target": "div#__next-route-announcer__"
+      },
+      {
+        "type": "touchmove",
+        "target": "div#__next-route-announcer__"
+      },
+      {
+        "type": "wheel",
+        "target": "div#__next-route-announcer__"
+      },
+      {
+        "type": "wheel",
+        "target": "div#__next-route-announcer__"
+      },
+      {
+        "type": "dblclick",
+        "target": "div#__next-route-announcer__"
+      },
+      {
+        "type": "dblclick",
+        "target": "div#__next-route-announcer__"
+      }
+    ],
+    "animations": [
+      {
+        "type": "transition",
+        "property": "opacity",
+        "duration": "0.3s",
+        "timing": "cubic-bezier(0.4, 0, 0.2, 1)"
+      },
+      {
+        "type": "transition",
+        "property": "opacity",
+        "duration": "0.15s",
+        "timing": "cubic-bezier(0.4, 0, 0.2, 1)"
+      },
+      {
+        "type": "transition",
+        "property": "transform, translate, scale, rotate",
+        "duration": "0.2s",
+        "timing": "cubic-bezier(0.4, 0, 0.2, 1)"
+      },
+      {
+        "type": "transition",
+        "property": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+        "duration": "0.15s",
+        "timing": "cubic-bezier(0.4, 0, 0.2, 1)"
+      },
+      {
+        "type": "animation",
+        "name": "nb-entree",
+        "duration": "0.72s",
+        "timing": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "delay": "0.06s",
+        "iteration": "1"
+      },
+      {
+        "type": "transition",
+        "property": "opacity",
+        "duration": "0.7s",
+        "timing": "cubic-bezier(0.16, 1, 0.3, 1)"
+      },
+      {
+        "type": "transition",
+        "property": "transform",
+        "duration": "0.34s",
+        "timing": "cubic-bezier(0.33, 1, 0.68, 1)"
+      },
+      {
+        "type": "transition",
+        "property": "transform",
+        "duration": "0.3s",
+        "timing": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      {
+        "type": "transition",
+        "property": "opacity, transform",
+        "duration": "0.62s, 0.62s",
+        "timing": "cubic-bezier(0.16, 1, 0.3, 1), cubic-bezier(0.16, 1, 0.3, 1)"
+      },
+      {
+        "type": "transition",
+        "property": "transform, border-color, box-shadow",
+        "duration": "0.22s, 0.22s, 0.22s",
+        "timing": "cubic-bezier(0.16, 1, 0.3, 1), ease, ease"
+      },
+      {
+        "type": "animation",
+        "name": "nb-progression-etape",
+        "duration": "6s",
+        "timing": "linear",
+        "delay": "0s",
+        "iteration": "1"
+      },
+      {
+        "type": "transition",
+        "property": "transform, box-shadow",
+        "duration": "0.26s, 0.26s",
+        "timing": "cubic-bezier(0.16, 1, 0.3, 1), ease"
+      },
+      {
+        "type": "animation",
+        "name": "nb-defilement-avis",
+        "duration": "61.7s",
+        "timing": "linear",
+        "delay": "0s",
+        "iteration": "infinite"
+      },
+      {
+        "type": "transition",
+        "property": "grid-template-rows",
+        "duration": "0.32s",
+        "timing": "cubic-bezier(0.16, 1, 0.3, 1)"
+      },
+      {
+        "type": "transition",
+        "property": "opacity",
+        "duration": "0.26s",
+        "timing": "ease"
+      },
+      {
+        "type": "transition",
+        "property": "opacity",
+        "duration": "0.2s",
+        "timing": "ease"
+      }
+    ],
+    "targetHints": [
+      "document",
+      "div.flex.w-full",
+      "window",
+      "div#__next-route-announcer__"
+    ],
+    "assets": [
+      {
+        "src": "https://neverboring.ai/v2/site/logo-nav.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "Never Boring AI",
+        "width": 185,
+        "height": 34
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Fciel-hero.jpg&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 1440,
+        "height": 555
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-1.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-2.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-3.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-4.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-5.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-6.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/logo-linkedin.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "LinkedIn",
+        "width": 61,
+        "height": 61
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Fapercu-hero.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "Le calendrier éditorial de Never Boring AI, avec une semaine de posts programmés",
+        "width": 1120,
+        "height": 425
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/logos-agences.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 540,
+        "height": 42
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Fetape-2.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "Écran de l'étape : Génère un programme",
+        "width": 656,
+        "height": 552
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Fetape-2.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "Écran de l'étape : Génère un programme",
+        "width": 656,
+        "height": 552
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/mascotte-halo.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 288,
+        "height": 288
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/agent-editorial.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 14,
+        "height": 14
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/agent-stratege.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 14,
+        "height": 14
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/agent-memoire.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 14,
+        "height": 14
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/mascotte-halo.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 288,
+        "height": 288
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/agent-editorial.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 14,
+        "height": 14
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/agent-stratege.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 14,
+        "height": 14
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/agent-memoire.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 14,
+        "height": 14
+      },
+      {
+        "src": "https://neverboring.ai/v2/paywall/mascotte.svg",
+        "alt": "",
+        "width": 82,
+        "height": 82
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-1.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-2.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-3.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-4.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-5.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Favatars%2Favatar-6.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Fapercu-inscription.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 734,
+        "height": 440
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/tableau/programme.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 18,
+        "height": 18
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/tableau/vecu.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 18,
+        "height": 18
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/tableau/voix.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 18,
+        "height": 18
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/tableau/publication.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 18,
+        "height": 18
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/tableau/agent.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 18,
+        "height": 18
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/tableau/pret.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 18,
+        "height": 18
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/tableau/programme.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 18,
+        "height": 18
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/tableau/vecu.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 18,
+        "height": 18
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/tableau/voix.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 18,
+        "height": 18
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/tableau/publication.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 18,
+        "height": 18
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/tableau/agent.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 18,
+        "height": 18
+      },
+      {
+        "src": "https://neverboring.ai/v2/site/tableau/pret.svg?dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 18,
+        "height": 18
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Favis%2Fjonah.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Ftemoin-mirim.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "Lucas Chevalier, CEO de l'agence Mirim",
+        "width": 376,
+        "height": 408
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Favis%2Flouis.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Ftemoin-hover.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "Andrea Cella, CEO de Hover",
+        "width": 376,
+        "height": 408
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Favis%2Fwill.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Ftemoin-mirim.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "Lucas Chevalier, CEO de l'agence Mirim",
+        "width": 376,
+        "height": 408
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Favis%2Fwill.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Ftemoin-hover.png&w=3840&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "Andrea Cella, CEO de Hover",
+        "width": 376,
+        "height": 408
+      },
+      {
+        "src": "https://neverboring.ai/_next/image?url=%2Fv2%2Fsite%2Favis%2Flouis.png&w=96&q=75&dpl=dpl_HSoyJkGct7BRvPYom6rirMo9edmJ",
+        "alt": "",
+        "width": 48,
+        "height": 48
+      }
+    ]
+  },
+  "parameters": [
+    {
+      "key": "color",
+      "type": "color",
+      "detectedValues": [
+        "#ac4bff",
+        "#f6339a",
+        "#020618",
+        "#e4e4e7",
+        "#9f9fa9",
+        "#71717b",
+        "#3f3f46",
+        "#27272a"
+      ],
+      "confidence": "high"
+    },
+    {
+      "key": "duration",
+      "type": "select",
+      "detectedValues": [
+        "1s",
+        "2s",
+        "15s",
+        "18s",
+        "3s",
+        "35s",
+        "28s",
+        "22s"
+      ],
+      "confidence": "high"
+    },
+    {
+      "key": "opacity",
+      "type": "slider",
+      "confidence": "medium"
+    },
+    {
+      "key": "intensity",
+      "type": "slider",
+      "confidence": "low"
+    }
+  ],
+  "proposal": {
+    "moduleId": "click",
+    "scope": "page",
+    "target": "overlay",
+    "status": "needs-review",
+    "notes": [
+      "Conserver les sélecteurs d'instance via context.selector.",
+      "Ne pas recopier une identité visuelle ou des assets propriétaires sans autorisation."
+    ]
+  }
+}

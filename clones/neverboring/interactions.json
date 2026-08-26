@@ -1,0 +1,121 @@
+{
+  "recordedListeners": [
+    {
+      "type": "click",
+      "target": "document"
+    },
+    {
+      "type": "click",
+      "target": "document"
+    },
+    {
+      "type": "mousemove",
+      "target": "document"
+    },
+    {
+      "type": "mousemove",
+      "target": "document"
+    },
+    {
+      "type": "pointermove",
+      "target": "document"
+    },
+    {
+      "type": "pointermove",
+      "target": "document"
+    },
+    {
+      "type": "scroll",
+      "target": "document"
+    },
+    {
+      "type": "touchmove",
+      "target": "document"
+    },
+    {
+      "type": "touchmove",
+      "target": "document"
+    },
+    {
+      "type": "wheel",
+      "target": "document"
+    },
+    {
+      "type": "wheel",
+      "target": "document"
+    },
+    {
+      "type": "dblclick",
+      "target": "document"
+    },
+    {
+      "type": "dblclick",
+      "target": "document"
+    },
+    {
+      "type": "scroll",
+      "target": "div.flex.w-full"
+    },
+    {
+      "type": "click",
+      "target": "document"
+    },
+    {
+      "type": "scroll",
+      "target": "window"
+    },
+    {
+      "type": "click",
+      "target": "div#__next-route-announcer__"
+    },
+    {
+      "type": "click",
+      "target": "div#__next-route-announcer__"
+    },
+    {
+      "type": "mousemove",
+      "target": "div#__next-route-announcer__"
+    },
+    {
+      "type": "mousemove",
+      "target": "div#__next-route-announcer__"
+    },
+    {
+      "type": "pointermove",
+      "target": "div#__next-route-announcer__"
+    },
+    {
+      "type": "pointermove",
+      "target": "div#__next-route-announcer__"
+    },
+    {
+      "type": "scroll",
+      "target": "div#__next-route-announcer__"
+    },
+    {
+      "type": "touchmove",
+      "target": "div#__next-route-announcer__"
+    },
+    {
+      "type": "touchmove",
+      "target": "div#__next-route-announcer__"
+    },
+    {
+      "type": "wheel",
+      "target": "div#__next-route-announcer__"
+    },
+    {
+      "type": "wheel",
+      "target": "div#__next-route-announcer__"
+    },
+    {
+      "type": "dblclick",
+      "target": "div#__next-route-announcer__"
+    },
+    {
+      "type": "dblclick",
+      "target": "div#__next-route-announcer__"
+    }
+  ],
+  "interactionAttributes": []
+}

@@ -1,8 +1,8 @@
-# Règles Agent — Projet Cours (BioMIA Revision OS)
+# Règles Agent — Projet Cours (Revision OS)
 
 ## Présentation & Vision du Projet
 
-**Cours** (BioMIA Revision OS) est une plateforme complète et autonome d'apprentissage, d'enregistrement d'amphi et de révision active pour la licence BioMIA L1 (Biologie, Mathématiques, Informatique, Applications).
+**Cours** (Revision OS) est une plateforme complète et autonome d'apprentissage, d'enregistrement d'amphi et de révision active pour tous les étudiants, universités et classes préparatoires.
 
 L'application repose sur la science cognitive de la mémoire :
 - **Récupération active obligatoire (Active Recall Testing)** : verrouillage de la fiche brute à la création du cours jusqu'à la première tentative d'explication sans aide.

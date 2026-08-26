@@ -1,0 +1,610 @@
+{
+  "sections": [
+    {
+      "tag": "main",
+      "id": null,
+      "ariaLabel": null,
+      "className": "min-h-dvh bg-paper font-[family-name:var(--font-v2)]",
+      "textSnippet": "FonctionnalitésOutils gratuitsTarifsAffiliationSe connecterRejoindre la liste d'attenteDéjà adopté p",
+      "childCount": 11
+    },
+    {
+      "tag": "header",
+      "id": null,
+      "ariaLabel": null,
+      "className": "fixed inset-x-0 z-30",
+      "textSnippet": "FonctionnalitésOutils gratuitsTarifsAffiliationSe connecterRejoindre la liste d'attente",
+      "childCount": 2
+    },
+    {
+      "tag": "a",
+      "id": null,
+      "ariaLabel": "Never Boring AI, accueil",
+      "className": "shrink-0",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "nav",
+      "id": null,
+      "ariaLabel": null,
+      "className": "hidden items-center gap-8 xl:flex",
+      "textSnippet": "FonctionnalitésOutils gratuitsTarifsAffiliation",
+      "childCount": 4
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "ariaLabel": "Ouvrir le menu",
+      "className": "flex h-11 w-11 shrink-0 items-center justify-center rounded-site-10 text-ink transition-colors hover",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "section",
+      "id": null,
+      "ariaLabel": null,
+      "className": "relative isolate overflow-hidden lg:h-[1008px]",
+      "textSnippet": "Déjà adopté par138 entrepreneursTransforme ton vécu enenpostet attire + de clientsTon agent IA te cr",
+      "childCount": 3
+    },
+    {
+      "tag": "section",
+      "id": null,
+      "ariaLabel": null,
+      "className": "mx-auto w-full max-w-[1440px] flex flex-col items-center gap-14 bg-paper px-6 lg:px-site-132 pt-[72p",
+      "textSnippet": "Utilisé par les fondateurs des plus grandes agences138Utilisateurs936Messages chat IA283Posts généré",
+      "childCount": 2
+    },
+    {
+      "tag": "section",
+      "id": null,
+      "ariaLabel": null,
+      "className": "w-full bg-paper px-6",
+      "textSnippet": "Comment ça marche ?Seulement 5 étapes pour assurer ta présence constante sur LinkedIn.Discute avec t",
+      "childCount": 1
+    },
+    {
+      "tag": "section",
+      "id": null,
+      "ariaLabel": null,
+      "className": "mx-auto w-full max-w-[1440px] flex flex-col items-center gap-14 bg-paper px-6 py-site-124 max-md:py-",
+      "textSnippet": "Poster ne seraplus jamais une corvéeTon agent IA est là pour te rendre constant et organisé dans ta ",
+      "childCount": 2
+    },
+    {
+      "tag": "section",
+      "id": null,
+      "ariaLabel": null,
+      "className": "w-full bg-paper px-6",
+      "textSnippet": "Ton agentt'attend !La nouvelle version vient de sortir, réservée aux comptes existants. Laisse ton e",
+      "childCount": 1
+    },
+    {
+      "tag": "section",
+      "id": null,
+      "ariaLabel": null,
+      "className": "mx-auto w-full max-w-[1440px] flex flex-col items-center gap-14 bg-paper px-6 py-site-124 max-md:py-",
+      "textSnippet": "Toujours pas convaincu ?La différence se voit au 10e post : celui que tu n'aurais jamais publié sans",
+      "childCount": 3
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-jaune",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-jaune",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-jaune",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-jaune",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-jaune",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-jaune",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-jaune",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-jaune",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-jaune",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-jaune",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-jaune",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Oui",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-jaune",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "ariaLabel": "Non",
+      "className": "mx-auto flex size-[22.5px] items-center justify-center rounded-full bg-boite-douce",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "section",
+      "id": null,
+      "ariaLabel": null,
+      "className": "mx-auto w-full max-w-[1440px] flex flex-col items-center gap-14 bg-paper px-6 pb-site-124 max-md:pb-",
+      "textSnippet": "Noté 5/5 par les utilisateurs138 entrepreneurs ont fait confiance à Never Boring lors de la bêta et ",
+      "childCount": 2
+    },
+    {
+      "tag": "div",
+      "id": null,
+      "ariaLabel": "Avis",
+      "className": "flex flex-wrap items-center justify-center",
+      "textSnippet": "",
+      "childCount": 8
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "ariaLabel": "Avis 1 sur 8",
+      "className": "flex h-11 w-8 items-center justify-center",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "ariaLabel": "Avis 2 sur 8",
+      "className": "flex h-11 w-8 items-center justify-center",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "ariaLabel": "Avis 3 sur 8",
+      "className": "flex h-11 w-8 items-center justify-center",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "ariaLabel": "Avis 4 sur 8",
+      "className": "flex h-11 w-8 items-center justify-center",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "ariaLabel": "Avis 5 sur 8",
+      "className": "flex h-11 w-8 items-center justify-center",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "ariaLabel": "Avis 6 sur 8",
+      "className": "flex h-11 w-8 items-center justify-center",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "ariaLabel": "Avis 7 sur 8",
+      "className": "flex h-11 w-8 items-center justify-center",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "ariaLabel": "Avis 8 sur 8",
+      "className": "flex h-11 w-8 items-center justify-center",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "section",
+      "id": null,
+      "ariaLabel": null,
+      "className": "mx-auto w-full max-w-[1440px] flex flex-col gap-14 bg-paper px-6 pb-site-124 max-md:pb-14 lg:flex-ro",
+      "textSnippet": "Une questionavant de te lancer ?30 minutes en visio et tu vois tout : le programme, la rédaction, la",
+      "childCount": 2
+    },
+    {
+      "tag": "a",
+      "id": null,
+      "ariaLabel": "Never Boring AI sur X",
+      "className": "text-ink transition-opacity hover:opacity-70 relative after:absolute after:left-1/2 after:top-1/2 af",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "a",
+      "id": null,
+      "ariaLabel": "Never Boring AI sur LinkedIn",
+      "className": "text-ink transition-opacity hover:opacity-70 relative after:absolute after:left-1/2 after:top-1/2 af",
+      "textSnippet": "",
+      "childCount": 1
+    },
+    {
+      "tag": "section",
+      "id": null,
+      "ariaLabel": null,
+      "className": "w-full bg-paper px-6 pb-20 max-md:pb-10 pt-10",
+      "textSnippet": "Entre en avant-premièreLes inscriptions rouvrent bientôt. Laisse ton email : tu entres avant l'annon",
+      "childCount": 1
+    },
+    {
+      "tag": "footer",
+      "id": null,
+      "ariaLabel": null,
+      "className": "w-full bg-ink",
+      "textSnippet": "Never Boring AI est un agent IA pour LinkedIn qui crée ta stratégie de contenu sur mesure et publie ",
+      "childCount": 1
+    },
+    {
+      "tag": "script",
+      "id": "_R_",
+      "ariaLabel": null,
+      "className": null,
+      "textSnippet": "",
+      "childCount": 0
+    }
+  ],
+  "headings": [
+    {
+      "level": "h1",
+      "text": "Transforme ton vécu enenpostet attire + de clients"
+    },
+    {
+      "level": "h2",
+      "text": "Comment ça marche ?"
+    },
+    {
+      "level": "h2",
+      "text": "Poster ne seraplus jamais une corvée"
+    },
+    {
+      "level": "h2",
+      "text": "Ton agentt'attend !"
+    },
+    {
+      "level": "h2",
+      "text": "Toujours pas convaincu ?"
+    },
+    {
+      "level": "h2",
+      "text": "Noté 5/5 par les utilisateurs"
+    },
+    {
+      "level": "h2",
+      "text": "Une questionavant de te lancer ?"
+    },
+    {
+      "level": "h2",
+      "text": "Entre en avant-première"
+    }
+  ],
+  "navLinks": [
+    {
+      "text": "Fonctionnalités",
+      "href": "/fonctionnalites"
+    },
+    {
+      "text": "Outils gratuits",
+      "href": "/outils/scan-de-post"
+    },
+    {
+      "text": "Tarifs",
+      "href": "/tarifs"
+    },
+    {
+      "text": "Affiliation",
+      "href": "/affiliation"
+    },
+    {
+      "text": "Se connecter",
+      "href": "https://app.neverboring.ai/login"
+    },
+    {
+      "text": "Rejoindre la liste d'attente",
+      "href": "https://app.neverboring.ai/register"
+    }
+  ],
+  "buttons": [
+    {
+      "text": "Discute avec ton agent IA",
+      "classes": "flex w-full items-center justify-between gap-4 text-left text-site-20-m tracking"
+    },
+    {
+      "text": "Génère un programme",
+      "classes": "flex w-full items-center justify-between gap-4 text-left text-site-20-m tracking"
+    },
+    {
+      "text": "Génère tes posts",
+      "classes": "flex w-full items-center justify-between gap-4 text-left text-site-20-m tracking"
+    },
+    {
+      "text": "Ton agent IA planifie",
+      "classes": "flex w-full items-center justify-between gap-4 text-left text-site-20-m tracking"
+    },
+    {
+      "text": "Garde un oeil sur ta progression",
+      "classes": "flex w-full items-center justify-between gap-4 text-left text-site-20-m tracking"
+    },
+    {
+      "text": "L'IA écrit à ma place ?−",
+      "classes": "flex w-full items-center justify-between gap-4 text-left max-md:min-h-[44px]"
+    },
+    {
+      "text": "Est-ce que ça publie tout seul sur LinkedIn ?+",
+      "classes": "flex w-full items-center justify-between gap-4 text-left max-md:min-h-[44px]"
+    },
+    {
+      "text": "Combien de temps ça me prend par semaine ?+",
+      "classes": "flex w-full items-center justify-between gap-4 text-left max-md:min-h-[44px]"
+    },
+    {
+      "text": "Comment marche l'essai de 7 jours ?+",
+      "classes": "flex w-full items-center justify-between gap-4 text-left max-md:min-h-[44px]"
+    },
+    {
+      "text": "Mes données sont-elles protégées ?+",
+      "classes": "flex w-full items-center justify-between gap-4 text-left max-md:min-h-[44px]"
+    }
+  ]
+}

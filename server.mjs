@@ -838,14 +838,14 @@ async function handleApi(req, res, url) {
     const key = process.env.GEMINI_API_KEY || "";
     const maskedKey = key.length > 8 ? `${key.slice(0, 4)}...${key.slice(-4)}` : (key ? "****" : "");
     
+    let tailscaleIp = null;
     let tailscaleUrl = null;
     try {
       const { execSync } = await import("node:child_process");
-      const statusStr = execSync("tailscale status --json", { stdio: ["pipe", "pipe", "ignore"], encoding: "utf8" });
-      const status = JSON.parse(statusStr);
-      const dnsName = status?.Self?.DNSName?.replace(/\.$/, "");
-      if (dnsName) {
-        tailscaleUrl = `https://${dnsName}`;
+      const ip = execSync("tailscale ip -4", { stdio: ["pipe", "pipe", "ignore"], encoding: "utf8" }).trim();
+      if (ip) {
+        tailscaleIp = ip;
+        tailscaleUrl = `http://${ip}:${PORT}`;
       }
     } catch {}
 
@@ -855,6 +855,7 @@ async function handleApi(req, res, url) {
       geminiModel: process.env.GEMINI_MODEL || "gemini-3.7-flash",
       port: PORT,
       localIp,
+      tailscaleIp,
       tailscaleUrl,
       mobileConnectUrl: `http://${localIp}:${PORT}`,
     });

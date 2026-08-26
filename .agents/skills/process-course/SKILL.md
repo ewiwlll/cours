@@ -1,13 +1,14 @@
 ---
 name: process-course
 description: >-
-  Pipeline de décomposition atomique et de structuration exhaustive des cours BioMIA L1
-  (MOC, concepts atomiques Feynman, tableaux comparatifs 'X vs Y', fiches exhaustives KaTeX,
-  flashcards FSRS-5, QCM diagnostiques avec analyse des distracteurs, callouts de pièges et sas de rappel actif).
+  Pipeline de décomposition atomique et de structuration exhaustive des cours
+  universitaires (MOC, concepts atomiques Feynman, tableaux comparatifs 'X vs Y',
+  fiches exhaustives KaTeX, flashcards FSRS-5, QCM diagnostiques avec analyse des
+  distracteurs, callouts de pièges et sas de rappel actif).
   Déclencher dès que l'utilisateur demande de compiler, traiter ou structurer un cours.
 ---
 
-# Pipeline de Décomposition Atomique & MOC (BioMIA Revision OS)
+# Pipeline de Décomposition Atomique & MOC (Cours — Revision OS)
 
 Ce skill enseigne à l'agent Antigravity comment effectuer une **décomposition atomique intégrale et adaptée** d'un cours d'amphi selon le standard d'excellence pédagogique observé dans le vault (MOC, Technique Feynman, Théorie de la Charge Cognitive de Sweller, et **Tableaux Comparatifs « X vs Y »**).
 

@@ -821,7 +821,7 @@ export function CoursApp() {
           {tab === "amphi" && (
             <View style={styles.tabContent}>
               <View style={styles.recorderStudioCard}>
-                <Text style={styles.studioHeaderTitle}>🎙️ Studio Amphi BioMIA</Text>
+                <Text style={styles.studioHeaderTitle}>🎙️ Studio Amphi Cours</Text>
                 <Text style={styles.studioHeaderSubtitle}>
                   Enregistre le prof en direct, pose tes balises d attention et prends des photos du tableau.
                 </Text>

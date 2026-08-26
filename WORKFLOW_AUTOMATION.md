@@ -1,6 +1,6 @@
 # Pipeline & Workflow — Cours (Studio Antigravity & Cockpit)
 
-Ce document décrit le fonctionnement du flux de travail complet de **Cours** (BioMIA Revision OS), articulé entre le **Studio Antigravity** (orchestration et compilation intelligente) et le **Cockpit Cours** (révisions actives quotidiennes sur Mac et Mobile).
+Ce document décrit le fonctionnement du flux de travail complet de **Cours** (Revision OS), articulé entre le **Studio Antigravity** (orchestration et compilation intelligente) et le **Cockpit Cours** (révisions actives quotidiennes sur Mac et Mobile).
 
 ---
 

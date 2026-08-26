@@ -1,0 +1,7 @@
+/* Tailwind v4 @theme configuration */
+@theme {
+  --color-background: rgb(246, 246, 243);
+  --color-text-main: rgb(255, 255, 255);
+  --color-primary: rgb(216, 216, 216);
+  --font-sans: "Inter", sans-serif;
+}

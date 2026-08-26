@@ -2,12 +2,13 @@
 name: oral-tutor
 description: >-
   Simulation d'examen oral et tuteur socratique bienveillant pour tester la maîtrise
-  active des cours BioMIA L1, identifier les pièges d'examen et évaluer la restitution
+  active de tous vos cours, identifier les pièges d'examen et évaluer la restitution
   de l'étudiant avec une grille diagnostique grounded. Déclencher quand l'étudiant
-  demande de passer un oral blanc, de se faire interroger ou de réviser un chapitre en direct.
+  demande de passer un oral blanc, de se faire interroger ou de réviser un chapitre
+  en direct.
 ---
 
-# Skill : Tuteur d'Examen Oral & Interrogation Socratique (BioMIA)
+# Skill : Tuteur d'Examen Oral & Interrogation Socratique (Cours)
 
 Ce skill enseigne à l'agent Antigravity comment mener une séance d'interrogation orale active, simuler un partiel oral ou tester la solidité de la mémoire de l'étudiant sur une matière donnée.
 

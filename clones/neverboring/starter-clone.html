@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clone de neverboring.ai</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandBg: 'rgb(246, 246, 243)',
+            brandText: 'rgb(255, 255, 255)',
+            brandPrimary: 'rgb(216, 216, 216)',
+          },
+          fontFamily: {
+            sans: ['"Inter"', 'Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Styles personnalisés extraits */
+    body { background-color: var(--tw-colors-brandBg, rgb(246, 246, 243)); color: var(--tw-colors-brandText, rgb(255, 255, 255)); }
+  </style>
+</head>
+<body class="min-h-screen antialiased">
+  <!-- Header / Navigation -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-gray-100 px-6 py-4 flex items-center justify-between">
+    <div class="font-bold text-xl tracking-tight">neverboring.ai</div>
+    <nav class="hidden md:flex space-x-6 text-sm font-medium">
+      <a href="/fonctionnalites" class="hover:text-blue-600 transition">Fonctionnalités</a>
+      <a href="/outils/scan-de-post" class="hover:text-blue-600 transition">Outils gratuits</a>
+      <a href="/tarifs" class="hover:text-blue-600 transition">Tarifs</a>
+      <a href="/affiliation" class="hover:text-blue-600 transition">Affiliation</a>
+      <a href="https://app.neverboring.ai/login" class="hover:text-blue-600 transition">Se connecter</a>
+    </nav>
+    <div>
+      <button class="bg-black text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition">
+        Discute avec ton agent IA
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="max-w-6xl mx-auto px-6 py-20 text-center">
+      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6">
+        Transforme ton vécu enenpostet attire + de clients
+      </h1>
+      <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-10">
+        Comment ça marche ?
+      </p>
+    </section>
+  </main>
+</body>
+</html>

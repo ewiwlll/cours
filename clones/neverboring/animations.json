@@ -1,0 +1,104 @@
+[
+  {
+    "type": "transition",
+    "property": "opacity",
+    "duration": "0.3s",
+    "timing": "cubic-bezier(0.4, 0, 0.2, 1)"
+  },
+  {
+    "type": "transition",
+    "property": "opacity",
+    "duration": "0.15s",
+    "timing": "cubic-bezier(0.4, 0, 0.2, 1)"
+  },
+  {
+    "type": "transition",
+    "property": "transform, translate, scale, rotate",
+    "duration": "0.2s",
+    "timing": "cubic-bezier(0.4, 0, 0.2, 1)"
+  },
+  {
+    "type": "transition",
+    "property": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+    "duration": "0.15s",
+    "timing": "cubic-bezier(0.4, 0, 0.2, 1)"
+  },
+  {
+    "type": "animation",
+    "name": "nb-entree",
+    "duration": "0.72s",
+    "timing": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "delay": "0.06s",
+    "iteration": "1"
+  },
+  {
+    "type": "transition",
+    "property": "opacity",
+    "duration": "0.7s",
+    "timing": "cubic-bezier(0.16, 1, 0.3, 1)"
+  },
+  {
+    "type": "transition",
+    "property": "transform",
+    "duration": "0.34s",
+    "timing": "cubic-bezier(0.33, 1, 0.68, 1)"
+  },
+  {
+    "type": "transition",
+    "property": "transform",
+    "duration": "0.3s",
+    "timing": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+  },
+  {
+    "type": "transition",
+    "property": "opacity, transform",
+    "duration": "0.62s, 0.62s",
+    "timing": "cubic-bezier(0.16, 1, 0.3, 1), cubic-bezier(0.16, 1, 0.3, 1)"
+  },
+  {
+    "type": "transition",
+    "property": "transform, border-color, box-shadow",
+    "duration": "0.22s, 0.22s, 0.22s",
+    "timing": "cubic-bezier(0.16, 1, 0.3, 1), ease, ease"
+  },
+  {
+    "type": "animation",
+    "name": "nb-progression-etape",
+    "duration": "6s",
+    "timing": "linear",
+    "delay": "0s",
+    "iteration": "1"
+  },
+  {
+    "type": "transition",
+    "property": "transform, box-shadow",
+    "duration": "0.26s, 0.26s",
+    "timing": "cubic-bezier(0.16, 1, 0.3, 1), ease"
+  },
+  {
+    "type": "animation",
+    "name": "nb-defilement-avis",
+    "duration": "61.7s",
+    "timing": "linear",
+    "delay": "0s",
+    "iteration": "infinite"
+  },
+  {
+    "type": "transition",
+    "property": "grid-template-rows",
+    "duration": "0.32s",
+    "timing": "cubic-bezier(0.16, 1, 0.3, 1)"
+  },
+  {
+    "type": "transition",
+    "property": "opacity",
+    "duration": "0.26s",
+    "timing": "ease"
+  },
+  {
+    "type": "transition",
+    "property": "opacity",
+    "duration": "0.2s",
+    "timing": "ease"
+  }
+]
