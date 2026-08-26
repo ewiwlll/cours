@@ -8,6 +8,7 @@ import {
   RotateCw,
   Sparkles,
   Layers,
+  Settings,
 } from 'lucide-react';
 import { useStore } from '../lib/store';
 import type { ViewType } from '../lib/types';
@@ -141,6 +142,15 @@ export function TopBar() {
           </span>
           <span className="hidden sm:inline">Synchro auto</span>
         </div>
+
+        {/* Settings Modal Button */}
+        <button
+          onClick={() => openModal('settings')}
+          className="p-2 rounded-lg bg-surface-elevated hover:bg-surface-muted text-zinc-400 hover:text-zinc-100 border border-border transition-colors"
+          title="Paramètres (Clé Gemini, Port, Connexion Mobile & 4G)"
+        >
+          <Settings className="w-4 h-4" />
+        </button>
       </div>
     </header>
   );

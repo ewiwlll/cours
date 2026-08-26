@@ -15,6 +15,7 @@ import {
   ChapterEditorModal,
 } from './components/modals';
 import { HowItWorksModal } from './components/modals/HowItWorksModal';
+import { SettingsModal } from './components/modals/SettingsModal';
 import {
   createStudyCourse,
   createChapterDefinition,
@@ -224,6 +225,9 @@ export function App() {
           if (action === 'record') openModal('recording');
         }}
       />
+
+      {/* 6. Settings Modal */}
+      <SettingsModal />
     </div>
   );
 }

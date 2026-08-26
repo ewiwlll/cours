@@ -4,6 +4,9 @@
   "description": "Cours — L'OS d'apprentissage et de révision active pour tous vos cours, amphis et classes",
   "type": "module",
   "main": "server.mjs",
+  "bin": {
+    "cours": "./bin/cours.mjs"
+  },
   "scripts": {
     "start": "node start.mjs",
     "test": "node --test tests/learning-engine.test.mjs tests/recall-correction.test.mjs tests/e2e-fictitious-course.test.mjs",

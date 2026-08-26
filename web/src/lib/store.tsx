@@ -90,6 +90,7 @@ const INITIAL_MODALS: ModalsState = {
   occlusionStudio: false,
   examPlanner: false,
   howItWorks: false,
+  settings: false,
   activeCourseIdForEditor: null,
 };
 

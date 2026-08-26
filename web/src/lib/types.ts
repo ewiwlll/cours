@@ -630,5 +630,6 @@ export interface ModalsState {
   occlusionStudio: boolean;
   examPlanner: boolean;
   howItWorks: boolean;
+  settings: boolean;
   activeCourseIdForEditor?: string | null;
 }

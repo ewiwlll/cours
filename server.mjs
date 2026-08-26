@@ -818,6 +818,126 @@ async function syncLegacyCourses() {
 
 async function handleApi(req, res, url) {
   console.log(`[API REQUEST] ${req.method} ${url.pathname}`);
+
+  // SETTINGS API
+  if (req.method === "GET" && url.pathname === "/api/settings") {
+    let localIp = "127.0.0.1";
+    try {
+      const os = await import("node:os");
+      const nets = os.networkInterfaces();
+      for (const name of Object.keys(nets)) {
+        for (const net of nets[name] || []) {
+          if (net.family === "IPv4" && !net.internal) {
+            localIp = net.address;
+            break;
+          }
+        }
+      }
+    } catch {}
+
+    const key = process.env.GEMINI_API_KEY || "";
+    const maskedKey = key.length > 8 ? `${key.slice(0, 4)}...${key.slice(-4)}` : (key ? "****" : "");
+    
+    let tailscaleUrl = null;
+    try {
+      const { execSync } = await import("node:child_process");
+      const statusStr = execSync("tailscale status --json", { stdio: ["pipe", "pipe", "ignore"], encoding: "utf8" });
+      const status = JSON.parse(statusStr);
+      const dnsName = status?.Self?.DNSName?.replace(/\.$/, "");
+      if (dnsName) {
+        tailscaleUrl = `https://${dnsName}`;
+      }
+    } catch {}
+
+    return json(res, 200, {
+      geminiConfigured: Boolean(key && key !== "your_gemini_api_key_here"),
+      geminiApiKeyMasked: maskedKey,
+      geminiModel: process.env.GEMINI_MODEL || "gemini-3.7-flash",
+      port: PORT,
+      localIp,
+      tailscaleUrl,
+      mobileConnectUrl: `http://${localIp}:${PORT}`,
+    });
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/settings") {
+    try {
+      const payload = JSON.parse(await readBody(req));
+      const envPath = path.join(ROOT, ".env");
+      let envContent = "";
+      try {
+        envContent = await readFile(envPath, "utf8");
+      } catch {
+        envContent = "";
+      }
+
+      if (payload.geminiApiKey !== undefined) {
+        const newKey = String(payload.geminiApiKey || "").trim();
+        process.env.GEMINI_API_KEY = newKey;
+        if (/GEMINI_API_KEY=/.test(envContent)) {
+          envContent = envContent.replace(/GEMINI_API_KEY=.*/g, `GEMINI_API_KEY=${newKey}`);
+        } else {
+          envContent += `\nGEMINI_API_KEY=${newKey}\n`;
+        }
+      }
+
+      if (payload.geminiModel !== undefined) {
+        const newModel = String(payload.geminiModel || "gemini-3.7-flash").trim();
+        process.env.GEMINI_MODEL = newModel;
+        if (/GEMINI_MODEL=/.test(envContent)) {
+          envContent = envContent.replace(/GEMINI_MODEL=.*/g, `GEMINI_MODEL=${newModel}`);
+        } else {
+          envContent += `\nGEMINI_MODEL=${newModel}\n`;
+        }
+      }
+
+      if (payload.port !== undefined) {
+        const newPort = parseInt(payload.port, 10);
+        if (Number.isFinite(newPort) && newPort > 0 && newPort < 65536) {
+          process.env.BIOMIA_PORT = String(newPort);
+          if (/BIOMIA_PORT=/.test(envContent)) {
+            envContent = envContent.replace(/BIOMIA_PORT=.*/g, `BIOMIA_PORT=${newPort}`);
+          } else {
+            envContent += `\nBIOMIA_PORT=${newPort}\n`;
+          }
+        }
+      }
+
+      await writeFile(envPath, envContent.trim() + "\n", "utf8");
+      return json(res, 200, { ok: true, message: "Paramètres enregistrés avec succès" });
+    } catch (error) {
+      return json(res, 400, { error: error.message || "Impossible de sauvegarder les paramètres" });
+    }
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/settings/test-gemini") {
+    try {
+      const payload = JSON.parse(await readBody(req));
+      const keyToTest = String(payload.geminiApiKey || process.env.GEMINI_API_KEY || "").trim();
+      if (!keyToTest) return json(res, 400, { ok: false, error: "Aucune clé API fournie" });
+      
+      const model = payload.geminiModel || process.env.GEMINI_MODEL || "gemini-3.7-flash";
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(keyToTest)}`;
+      const testRes = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: "Reponds par le mot OK" }] }],
+          generationConfig: { maxOutputTokens: 5 },
+        }),
+      });
+
+      if (!testRes.ok) {
+        const errText = await testRes.text();
+        return json(res, 400, { ok: false, error: `Erreur API Gemini (${testRes.status}) : ${errText.slice(0, 150)}` });
+      }
+
+      return json(res, 200, { ok: true, message: "Clé Gemini API valide et opérationnelle !" });
+    } catch (error) {
+      return json(res, 500, { ok: false, error: error.message || "Erreur de connexion à Gemini" });
+    }
+  }
+
   if (req.method === "GET" && url.pathname === "/api/courses") {
     return json(res, 200, await readJsonFile(path.join(DATA, "courses.json"), { courses: [] }));
   }
