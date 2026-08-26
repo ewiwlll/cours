@@ -87,13 +87,6 @@
     .animate-wave {
       animation: wave 1.2s ease-in-out infinite;
     }
-    @keyframes pulse-subtle {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.85; transform: scale(1.02); }
-    }
-    .animate-subtle {
-      animation: pulse-subtle 4s ease-in-out infinite;
-    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white">
@@ -277,7 +270,7 @@
 
         </div>
 
-        <!-- RIGHT: DYNAMIC SYNCHRONIZED MOCKUP FRAME (PHOTOSYNTHÈSE) -->
+        <!-- RIGHT: DYNAMIC SYNCHRONIZED MOCKUP FRAME -->
         <div class="lg:col-span-7 sticky top-24">
           <div class="relative w-full rounded-3xl p-4 sm:p-8 overflow-hidden border border-zinc-800 bg-gradient-to-br from-zinc-900/90 via-zinc-950 to-zinc-900 shadow-2xl shadow-black/80 min-h-[460px] flex items-center justify-center">
             
@@ -434,7 +427,7 @@
   </section>
 
   <!-- =================================================================================== -->
-  <!-- SECTION DÉMO INTERACTIVE LIVE DU RAPPEL ACTIF                                      -->
+  <!-- SECTION DÉMO INTERACTIVE VÉRITABLE & GROUNDED DU RAPPEL ACTIF                      -->
   <!-- =================================================================================== -->
   <section id="demo" class="py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="glass-card rounded-3xl p-8 sm:p-12 border border-blue-500/30 shadow-2xl">
@@ -444,7 +437,7 @@
           Essayez le Sas de Rappel Actif Maintenant
         </h2>
         <p class="text-xs sm:text-sm text-zinc-400 mt-2">
-          Tapez une phrase pour expliquer la photosynthèse avec vos propres mots et testez l'évaluation diagnostique instantanée :
+          Tapez une phrase pour expliquer la <strong>photosynthèse</strong> avec vos propres mots : le moteur analyse réellement la présence des concepts clés, les omissions et les pièges classiques !
         </p>
       </div>
 
@@ -454,17 +447,26 @@
             id="demoInput"
             rows="3"
             class="w-full bg-zinc-950/90 border border-zinc-800 rounded-2xl p-4 text-xs sm:text-sm text-zinc-200 focus:outline-none focus:border-blue-500 font-sans transition-all placeholder:text-zinc-600"
-            placeholder="Ex: La photosynthèse permet aux plantes de fabriquer du sucre (glucose) à partir d'eau et de CO2 grâce à l'énergie de la lumière..."
+            placeholder="Ex: Les plantes utilisent la lumière pour transformer l'eau et le CO2 en sucre dans les chloroplastes..."
           ></textarea>
         </div>
 
-        <div class="flex items-center justify-between gap-3">
-          <button
-            onclick="fillDemoText()"
-            class="text-xs text-zinc-400 hover:text-zinc-200 underline font-medium"
-          >
-            Remplir avec une réponse type
-          </button>
+        <div class="flex items-center justify-between gap-3 flex-wrap">
+          <div class="flex items-center gap-2">
+            <button
+              onclick="fillDemoText('good')"
+              class="text-xs text-blue-400 hover:text-blue-300 underline font-medium"
+            >
+              Exemple complet (95/100)
+            </button>
+            <span class="text-zinc-600">•</span>
+            <button
+              onclick="fillDemoText('trap')"
+              class="text-xs text-rose-400 hover:text-rose-300 underline font-medium"
+            >
+              Exemple avec piège exam (45/100)
+            </button>
+          </div>
           <button
             onclick="runLiveDemoEval()"
             class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg shadow-blue-500/25 transition-all active:scale-95 flex items-center gap-2"
@@ -473,25 +475,20 @@
           </button>
         </div>
 
-        <!-- DEMO RESULT BOX -->
-        <div id="demoResult" class="hidden p-5 rounded-2xl bg-zinc-950 border border-emerald-500/30 space-y-3 animate-fade-in mt-4">
+        <!-- DEMO RESULT BOX (DYNAMIC GROUNDED RENDERING) -->
+        <div id="demoResult" class="hidden p-5 rounded-2xl bg-zinc-950 border transition-all space-y-3 mt-4">
           <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
-            <span class="text-xs font-bold text-emerald-400">Diagnostic Grounded IA</span>
-            <span class="text-xs font-mono font-bold bg-emerald-500/15 text-emerald-300 px-2.5 py-1 rounded border border-emerald-500/30">Note : 94 / 100</span>
+            <span class="text-xs font-bold text-zinc-200">Diagnostic Concept par Concept</span>
+            <span id="demoScoreBadge" class="text-xs font-mono font-bold px-2.5 py-1 rounded border"></span>
           </div>
-          <div class="space-y-1.5 text-xs">
-            <div class="flex items-center justify-between text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded">
-              <span>✓ Rôle des chloroplastes et de la lumière</span>
-              <span class="text-[10px] font-bold">MAÎTRISÉ</span>
-            </div>
-            <div class="flex items-center justify-between text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded">
-              <span>✓ Production de glucose à partir de CO₂ et H₂O</span>
-              <span class="text-[10px] font-bold">MAÎTRISÉ</span>
-            </div>
+          
+          <div id="demoConceptsList" class="space-y-2 text-xs"></div>
+
+          <div class="pt-2 border-t border-zinc-800/80 flex items-start gap-2">
+            <div id="demoFeedback" class="text-xs text-zinc-300 leading-relaxed flex-1"></div>
           </div>
-          <p class="text-[11px] text-zinc-400 pt-1">
-            <strong>Conseil Pédagogique :</strong> Excellent rappel ! Pensez à préciser que l'oxygène rejeté provient de la coupure de l'eau (photolyse). Fiche débloquée !
-          </p>
+
+          <div id="demoUnlockBanner" class="text-center pt-1"></div>
         </div>
       </div>
     </div>
@@ -575,7 +572,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT POUR AUTO-CYCLE 6s, DEMO EVAL ET COPIE -->
+  <!-- SCRIPT POUR AUTO-CYCLE 6s, EVALUATION DIAGNOSTIQUE DYNAMIQUE ET COPIE -->
   <script>
     let currentStep = 0;
     const totalSteps = 5;
@@ -713,21 +710,165 @@
       }
     }
 
-    // LIVE DEMO SIMULATION
-    function fillDemoText() {
-      document.getElementById('demoInput').value = "Les cellules végétales chlorophylliennes utilisent la lumière pour transformer l'eau et le CO2 en matière organique (glucose) et rejettent de l'oxygène O2 dans l'atmosphère.";
+    // REAL GROUNDED EVALUATION ENGINE FOR PHOTOSYNTHÈSE
+    function evaluatePhotosyntheseAnswer(text) {
+      const t = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      
+      if (!t || t.trim().length < 5) {
+        return {
+          score: 0,
+          unlocked: false,
+          concepts: [
+            { name: "Réactifs & Produits (CO₂, H₂O, Glucose, O₂)", status: "MANQUANT", color: "rose", note: "Aucun réactif mentionné" },
+            { name: "Source d'énergie & Chloroplastes", status: "MANQUANT", color: "rose", note: "Lumière et organite absents" },
+            { name: "Origine du dioxygène (O₂)", status: "MANQUANT", color: "rose", note: "Non mentionné" }
+          ],
+          feedback: "⚠️ Votre explication est vide. Veuillez rédiger au moins une phrase pour résumer le cours."
+        };
+      }
+
+      // Detection
+      const hasLight = /lumiere|soleil|photon|lumineuse|rayon/.test(t);
+      const hasChloroplast = /chloroplaste|chlorophylle|feuille|vegetal|plante|thylakoide|stroma/.test(t);
+      const hasWater = /eau|h2o|hydrique/.test(t);
+      const hasCO2 = /co2|dioxyde de carbone|gaz carbonique|carbone/.test(t);
+      const hasSugar = /glucose|sucre|matiere organique|glucide|amidon|nourriture|carburant/.test(t);
+      const hasOxygen = /o2|oxygene|dioxygene/.test(t);
+
+      // Traps
+      const hasTrapO2FromCO2 = (/o2|oxygene|dioxygene/.test(t) && /vient de.*co2|a partir de.*co2|transforme.*co2 en o2|rejette le co2 en o2/.test(t));
+      const isTooVague = (/molecule|truc|chose|machin|ca marche/.test(t) && !hasWater && !hasCO2 && !hasLight && !hasSugar);
+
+      if (isTooVague) {
+        return {
+          score: 12,
+          unlocked: false,
+          concepts: [
+            { name: "Réactifs & Produits (CO₂, H₂O, Glucose)", status: "MANQUANT", color: "rose", note: "Trop vague : vous devez nommer l'eau, le CO₂ et le sucre" },
+            { name: "Énergie lumineuse & Chloroplastes", status: "MANQUANT", color: "rose", note: "La lumière et les chloroplastes ne sont pas mentionnés" },
+            { name: "Libération de dioxygène (O₂)", status: "MANQUANT", color: "rose", note: "Non mentionné" }
+          ],
+          feedback: "❌ Restitution beaucoup trop vague (12/100). Dire « c'est avec des molécules » ne démontre aucune maîtrise. Nommez précisément les réactifs (eau, CO₂), la lumière et le glucose produit."
+        };
+      }
+
+      let score = 5;
+      const concepts = [];
+
+      // Concept 1: Lumière & Chloroplaste (35 pts)
+      if (hasLight && hasChloroplast) {
+        score += 35;
+        concepts.push({ name: "Énergie lumineuse & Chloroplastes", status: "MAÎTRISÉ", color: "emerald", note: "Rôle énergétique parfaitement identifié" });
+      } else if (hasLight || hasChloroplast) {
+        score += 18;
+        concepts.push({ name: "Énergie lumineuse & Chloroplastes", status: "PARTIEL", color: "amber", note: hasLight ? "Précisez que cela se passe dans les chloroplastes" : "Précisez que l'énergie provient de la lumière" });
+      } else {
+        concepts.push({ name: "Énergie lumineuse & Chloroplastes", status: "MANQUANT", color: "rose", note: "Ni la lumière ni les chloroplastes ne sont mentionnés" });
+      }
+
+      // Concept 2: Réactifs & Synthèse de Matière Organique (35 pts)
+      if ((hasWater || hasCO2) && hasSugar) {
+        score += 35;
+        concepts.push({ name: "Production de Glucose à partir de CO₂ et H₂O", status: "MAÎTRISÉ", color: "emerald", note: "Équation bilan comprise" });
+      } else if (hasWater || hasCO2 || hasSugar) {
+        score += 18;
+        concepts.push({ name: "Production de Glucose à partir de CO₂ et H₂O", status: "PARTIEL", color: "amber", note: "Mentionnez à la fois l'eau, le dioxyde de carbone et le glucose produit" });
+      } else {
+        concepts.push({ name: "Production de Glucose à partir de CO₂ et H₂O", status: "MANQUANT", color: "rose", note: "Absence des réactifs principaux" });
+      }
+
+      // Concept 3: Origine de l'Oxygène (30 pts)
+      if (hasTrapO2FromCO2) {
+        score -= 10;
+        concepts.push({ name: "Origine du dioxygène (O₂)", status: "ERRONÉ", color: "rose", note: "⚠️ Piège exam classique : l'O₂ rejeté provient de l'eau (H₂O coupée par la lumière), pas du CO₂ !" });
+      } else if (hasOxygen) {
+        score += 25;
+        concepts.push({ name: "Libération de dioxygène (O₂)", status: "MAÎTRISÉ", color: "emerald", note: "Rejet d'O₂ bien mentionné" });
+      } else {
+        concepts.push({ name: "Libération de dioxygène (O₂)", status: "MANQUANT", color: "rose", note: "Le dioxygène n'est pas mentionné" });
+      }
+
+      score = Math.max(5, Math.min(100, score));
+      const unlocked = score >= 75;
+
+      let feedback = "";
+      if (score >= 85) {
+        feedback = "🎉 <strong>Excellente restitution !</strong> Vous avez identifié tous les concepts fondamentaux de la photosynthèse. La fiche est débloquée et vos cartes FSRS sont programmées.";
+      } else if (score >= 60) {
+        feedback = "⚠️ <strong>Compréhension partielle (" + score + "/100).</strong> Vous avez saisi certains éléments, mais des notions clés manquent (voir ci-dessus). La fiche est débloquée avec avertissement pour votre révision de demain.";
+      } else {
+        feedback = "🔒 <strong>Score insuffisant (" + score + "/100).</strong> Fiche maintenue verrouillée. Prenez 30 secondes pour reformuler en incluant les réactifs (eau, CO₂), la lumière et le glucose produit.";
+      }
+
+      return { score, unlocked, concepts, feedback };
+    }
+
+    function fillDemoText(type) {
+      const input = document.getElementById('demoInput');
+      if (type === 'good') {
+        input.value = "Les cellules végétales utilisent l'énergie de la lumière dans les chloroplastes pour transformer l'eau et le CO2 en matière organique (glucose), tout en libérant de l'oxygène O2.";
+      } else if (type === 'trap') {
+        input.value = "Les plantes captent le CO2 avec la lumière pour le transformer directement en O2.";
+      }
+      runLiveDemoEval();
     }
 
     function runLiveDemoEval() {
-      const text = document.getElementById('demoInput').value.trim();
+      const text = document.getElementById('demoInput').value;
       const btnText = document.getElementById('demoBtnText');
       const resultBox = document.getElementById('demoResult');
+      const scoreBadge = document.getElementById('demoScoreBadge');
+      const conceptsList = document.getElementById('demoConceptsList');
+      const feedbackEl = document.getElementById('demoFeedback');
+      const unlockBanner = document.getElementById('demoUnlockBanner');
       
       btnText.innerText = "Évaluation en cours...";
+      
       setTimeout(() => {
         btnText.innerText = "Évaluer mon explication";
+        const result = evaluatePhotosyntheseAnswer(text);
+
+        // Update score badge
+        scoreBadge.innerText = `Note : ${result.score} / 100`;
+        if (result.score >= 75) {
+          scoreBadge.className = "text-xs font-mono font-bold px-2.5 py-1 rounded border bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+          resultBox.className = "p-5 rounded-2xl bg-zinc-950 border border-emerald-500/40 space-y-3 mt-4";
+        } else if (result.score >= 50) {
+          scoreBadge.className = "text-xs font-mono font-bold px-2.5 py-1 rounded border bg-amber-500/15 text-amber-400 border-amber-500/30";
+          resultBox.className = "p-5 rounded-2xl bg-zinc-950 border border-amber-500/40 space-y-3 mt-4";
+        } else {
+          scoreBadge.className = "text-xs font-mono font-bold px-2.5 py-1 rounded border bg-rose-500/15 text-rose-400 border-rose-500/30";
+          resultBox.className = "p-5 rounded-2xl bg-zinc-950 border border-rose-500/40 space-y-3 mt-4";
+        }
+
+        // Render concepts
+        conceptsList.innerHTML = result.concepts.map(c => {
+          const bg = c.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-400' : (c.color === 'amber' ? 'bg-amber-500/10 text-amber-400' : 'bg-rose-500/10 text-rose-400');
+          const border = c.color === 'emerald' ? 'border-emerald-500/20' : (c.color === 'amber' ? 'border-amber-500/20' : 'border-rose-500/20');
+          const icon = c.status === 'MAÎTRISÉ' ? '✓' : (c.status === 'PARTIEL' ? '⚠️' : '✗');
+          return `
+            <div class="p-2.5 rounded-xl ${bg} border ${border} space-y-1">
+              <div class="flex items-center justify-between font-semibold">
+                <span>${icon} ${c.name}</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded bg-black/30">${c.status}</span>
+              </div>
+              ${c.note ? `<p class="text-[11px] opacity-80 pl-4">${c.note}</p>` : ''}
+            </div>
+          `;
+        }).join('');
+
+        // Feedback text
+        feedbackEl.innerHTML = result.feedback;
+
+        // Unlock banner
+        if (result.unlocked) {
+          unlockBanner.innerHTML = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-xs font-bold">🔓 Fiche débloquée avec succès</span>`;
+        } else {
+          unlockBanner.innerHTML = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/15 text-rose-400 border border-rose-500/30 text-xs font-bold">🔒 Fiche verrouillée (Rappel insuffisant)</span>`;
+        }
+
         resultBox.classList.remove('hidden');
-      }, 600);
+      }, 400);
     }
   </script>
 </body>
