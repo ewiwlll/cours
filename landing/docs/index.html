@@ -273,48 +273,39 @@
           <li>Connectez votre compte Google si demandé (zéro clé payante nécessaire).</li>
         </ol>
 
-        <h3 class="text-lg font-bold text-white mb-3">Les 3 phrases magiques à taper dans le chat Antigravity :</h3>
-        <div class="space-y-3 mb-6">
-          
-          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 space-y-2">
-            <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
-              <span class="font-bold text-blue-400">1. Pour compiler tous vos amphis enregistrés :</span>
-              <button onclick="copyPrompt('prompt1', this)" class="hover:text-white">Copier le prompt</button>
-            </div>
-            <p id="prompt1" class="font-mono text-xs text-zinc-200 bg-black/40 p-2.5 rounded-lg border border-zinc-800 select-all">
-              Traite tous mes enregistrements audio en attente et génère mes fiches de cours KaTeX avec les flashcards FSRS.
-            </p>
-            <p class="text-[11px] text-zinc-400">
-              ➔ <em>Antigravity transcrit l'audio via Whisper Metal, structure les fiches avec LaTeX, tableaux « X vs Y » et initialise le sas de rappel actif.</em>
-            </p>
+        <h3 class="text-lg font-bold text-white mb-3">Le Prompt Magique & Universel :</h3>
+        <div class="p-5 rounded-2xl bg-zinc-900 border border-blue-500/30 space-y-3 mb-6">
+          <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
+            <span class="font-bold text-blue-400">Tapez simplement ce mot dans le chat d'Antigravity :</span>
+            <button onclick="copyPrompt('magicWord', this)" class="hover:text-white text-blue-400">Copier</button>
           </div>
-
-          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 space-y-2">
-            <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
-              <span class="font-bold text-emerald-400">2. Pour passer un oral blanc / interrogation personnalisée :</span>
-              <button onclick="copyPrompt('prompt2', this)" class="hover:text-white">Copier le prompt</button>
-            </div>
-            <p id="prompt2" class="font-mono text-xs text-zinc-200 bg-black/40 p-2.5 rounded-lg border border-zinc-800 select-all">
-              Fais-moi passer un oral blanc bienveillant sur la Photosynthèse, interroge-moi sur les pièges fréquents et évalue mes réponses.
-            </p>
-            <p class="text-[11px] text-zinc-400">
-              ➔ <em>Antigravity prend le rôle d'un examinateur socratique, analyse votre restitution et met en avant vos points de vigilance.</em>
-            </p>
+          <div class="flex items-center gap-3">
+            <span id="magicWord" class="font-mono text-xl sm:text-2xl font-black text-emerald-400 bg-black/60 px-4 py-2 rounded-xl border border-zinc-800">
+              cours
+            </span>
+            <span class="text-xs text-zinc-400 font-sans">ou simplement <code class="text-blue-300 font-mono">fait tout</code></span>
           </div>
-
-          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 space-y-2">
-            <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
-              <span class="font-bold text-purple-400">3. Pour débloquer un doute ou une incompréhension :</span>
-              <button onclick="copyPrompt('prompt3', this)" class="hover:text-white">Copier le prompt</button>
+          <p class="text-xs text-zinc-300 leading-relaxed pt-1">
+            Dès que vous envoyez ce message, votre agent tuteur s'occupe de tout et vous propose un menu interactif immédiat :
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs">
+            <div class="p-3 bg-black/40 rounded-xl border border-zinc-800 space-y-1">
+              <span class="font-bold text-emerald-400 flex items-center gap-1.5">🚀 1. Mode « Fait Tout »</span>
+              <p class="text-[11px] text-zinc-400">Compile vos audios en fiches KaTeX, crée vos flashcards et prépare vos révisions automatiquement.</p>
             </div>
-            <p id="prompt3" class="font-mono text-xs text-zinc-200 bg-black/40 p-2.5 rounded-lg border border-zinc-800 select-all">
-              Je n'ai pas compris la différence entre thylakoïdes et stroma, réexplique-moi avec une analogie concrète et crée une carte de rappel.
-            </p>
-            <p class="text-[11px] text-zinc-400">
-              ➔ <em>Antigravity met à jour votre arbre de mémoire vivante (<code class="text-zinc-300 font-mono">clarifications.json</code>) et injecte une nouvelle flashcard dans votre pile du lendemain.</em>
-            </p>
+            <div class="p-3 bg-black/40 rounded-xl border border-zinc-800 space-y-1">
+              <span class="font-bold text-blue-400 flex items-center gap-1.5">🎙️ 2. Oral Blanc</span>
+              <p class="text-[11px] text-zinc-400">Vous interroge à l'oral avec bienveillance et sans chrono pour tester votre niveau.</p>
+            </div>
+            <div class="p-3 bg-black/40 rounded-xl border border-zinc-800 space-y-1">
+              <span class="font-bold text-purple-400 flex items-center gap-1.5">💡 3. Débloquer un Doute</span>
+              <p class="text-[11px] text-zinc-400">Posez n'importe quelle question sur un cours pour avoir une analogie Feynman concrète.</p>
+            </div>
           </div>
+        </div>
 
+        <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800 text-xs flex items-center justify-between">
+          <span class="text-zinc-300">Une fois terminé, il ne vous reste plus qu'à ouvrir <code class="text-blue-300 font-mono">/Applications/Cours.app</code> ou votre smartphone !</span>
         </div>
       </section>
 
