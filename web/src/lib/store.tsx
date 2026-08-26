@@ -21,6 +21,7 @@ import type {
   SemesterFilter,
   ModalsState,
 } from './types';
+import { type Language, type TranslationDict, translations, detectDefaultLanguage } from './i18n';
 import {
   getSubjects,
   getStudyCourses,
@@ -45,6 +46,11 @@ interface StoreContextValue {
   setSemesterFilter: (filter: SemesterFilter) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+
+  // Language & i18n
+  lang: Language;
+  setLang: (lang: Language) => void;
+  t: TranslationDict;
 
   // Active interactive session (e.g. active review or oral recall)
   activeSession: any | null;
@@ -101,6 +107,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [view, setView] = useState<ViewType>('accueil');
   const [semesterFilter, setSemesterFilter] = useState<SemesterFilter>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+
+  // Language state & auto-detection
+  const [lang, setLangState] = useState<Language>(() => detectDefaultLanguage());
+  const setLang = useCallback((newLang: Language) => {
+    setLangState(newLang);
+    try {
+      localStorage.setItem('cours_lang', newLang);
+    } catch {}
+  }, []);
+  const t = useMemo(() => translations[lang] || translations.fr, [lang]);
 
   // Active session
   const [activeSession, setActiveSession] = useState<any | null>(null);
@@ -315,6 +331,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setSemesterFilter,
     searchQuery,
     setSearchQuery,
+    lang,
+    setLang,
+    t,
     activeSession,
     setActiveSession,
     modals,

@@ -9,6 +9,7 @@ import {
   Sparkles,
   Layers,
   Settings,
+  Globe,
 } from 'lucide-react';
 import { useStore } from '../lib/store';
 import type { ViewType } from '../lib/types';
@@ -22,13 +23,16 @@ export function TopBar() {
     isRefreshing,
     totalDueCards,
     automationStatus,
+    lang,
+    setLang,
+    t,
   } = useStore();
 
   const tabs: Array<{ id: ViewType; label: string; icon: React.ComponentType<{ className?: string }>; badge?: number }> = [
-    { id: 'accueil', label: 'Accueil', icon: LayoutDashboard },
-    { id: 'subjects', label: 'Matières', icon: BookOpen },
-    { id: 'anki', label: 'Entraînement', icon: Zap, badge: totalDueCards },
-    { id: 'planning', label: 'Planning', icon: Calendar },
+    { id: 'accueil', label: lang === 'en' ? 'Dashboard' : 'Accueil', icon: LayoutDashboard },
+    { id: 'subjects', label: lang === 'en' ? 'Subjects' : 'Matières', icon: BookOpen },
+    { id: 'anki', label: lang === 'en' ? 'Practice' : 'Entraînement', icon: Zap, badge: totalDueCards },
+    { id: 'planning', label: lang === 'en' ? 'Schedule' : 'Planning', icon: Calendar },
   ];
 
   return (
@@ -142,6 +146,16 @@ export function TopBar() {
           </span>
           <span className="hidden sm:inline">Synchro auto</span>
         </div>
+
+        {/* Language Switcher Toggle */}
+        <button
+          onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')}
+          className="flex items-center gap-1 px-2 py-1.5 rounded-lg bg-surface-elevated hover:bg-surface-muted text-zinc-300 hover:text-white border border-border text-xs font-mono font-bold transition-all"
+          title={lang === 'fr' ? 'Switch to English' : 'Passer en Français'}
+        >
+          <Globe className="w-3.5 h-3.5 text-blue-400" />
+          <span>{lang.toUpperCase()}</span>
+        </button>
 
         {/* Settings Modal Button */}
         <button

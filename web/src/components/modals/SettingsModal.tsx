@@ -16,7 +16,7 @@ import {
 import { useStore } from '../../lib/store';
 
 export function SettingsModal() {
-  const { modals, closeModal } = useStore();
+  const { modals, closeModal, lang, setLang, t } = useStore();
   const [apiKey, setApiKey] = useState('');
   const [showKey, setShowKey] = useState(false);
   const [model, setModel] = useState('gemini-3.7-flash');
@@ -68,12 +68,12 @@ export function SettingsModal() {
       });
       const data = await res.json();
       if (res.ok && data.ok) {
-        setTestResult({ ok: true, message: data.message || 'Clé valide et opérationnelle !' });
+        setTestResult({ ok: true, message: data.message || t.keyValid });
       } else {
-        setTestResult({ ok: false, message: data.error || 'Clé API invalide ou refusée par Google' });
+        setTestResult({ ok: false, message: data.error || t.keyInvalid });
       }
     } catch (err: any) {
-      setTestResult({ ok: false, message: err.message || 'Erreur réseau lors du test' });
+      setTestResult({ ok: false, message: err.message || t.keyInvalid });
     } finally {
       setTesting(false);
     }
@@ -118,86 +118,117 @@ export function SettingsModal() {
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-surface-elevated/50">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
-              <Server className="w-4 h-4" />
+            <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+              <Server className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="font-bold text-sm text-zinc-100">Paramètres & Configuration</h2>
-              <p className="text-[11px] text-zinc-400 font-mono">Modifiez vos clés et connexions directement depuis l'application</p>
+              <h2 className="text-base font-bold text-zinc-100">{t.settingsTitle}</h2>
+              <p className="text-xs text-zinc-400">{t.settingsSubtitle}</p>
             </div>
           </div>
           <button
             onClick={() => closeModal('settings')}
             className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-surface-muted transition-colors"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className="p-6 overflow-y-auto space-y-6">
           {loading ? (
-            <div className="py-12 text-center text-zinc-400 text-xs font-mono flex items-center justify-center gap-2">
-              <RefreshCw className="w-4 h-4 animate-spin text-blue-400" />
-              Chargement des paramètres...
+            <div className="flex flex-col items-center justify-center py-12 text-zinc-500 text-xs">
+              <RefreshCw className="w-6 h-6 animate-spin mb-2 text-blue-400" />
+              <span>Chargement...</span>
             </div>
           ) : (
-            <form onSubmit={handleSave} className="space-y-6">
+            <form onSubmit={handleSave} className="space-y-5">
               
+              {/* SECTION: LANGUAGE SELECTION */}
+              <div className="p-4 rounded-xl bg-surface-elevated/40 border border-border space-y-2">
+                <label className="block text-xs font-bold text-zinc-200 flex items-center gap-1.5">
+                  <Globe className="w-3.5 h-3.5 text-blue-400" />
+                  <span>{t.languageLabel}</span>
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setLang('fr')}
+                    className={`py-2 px-3 rounded-lg border text-xs font-semibold flex items-center justify-center gap-2 transition-all ${
+                      lang === 'fr'
+                        ? 'bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-500/20'
+                        : 'bg-surface-muted text-zinc-400 border-border hover:text-white'
+                    }`}
+                  >
+                    <span>🇫🇷 Français</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLang('en')}
+                    className={`py-2 px-3 rounded-lg border text-xs font-semibold flex items-center justify-center gap-2 transition-all ${
+                      lang === 'en'
+                        ? 'bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-500/20'
+                        : 'bg-surface-muted text-zinc-400 border-border hover:text-white'
+                    }`}
+                  >
+                    <span>🇬🇧 English</span>
+                  </button>
+                </div>
+              </div>
+
               {/* SECTION 1: GEMINI API KEY */}
               <div className="p-4 rounded-xl bg-surface-elevated/40 border border-border space-y-3">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-xs font-bold text-zinc-200">
+                  <label className="text-xs font-bold text-zinc-200 flex items-center gap-1.5">
                     <Key className="w-3.5 h-3.5 text-blue-400" />
-                    <span>Clé Google Gemini API</span>
-                  </div>
+                    <span>{t.geminiKeyLabel}</span>
+                  </label>
                   {geminiConfigured ? (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                    <span className="text-[11px] font-bold text-emerald-400 flex items-center gap-1">
                       <CheckCircle2 className="w-3 h-3" /> Configurée
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                    <span className="text-[11px] font-bold text-amber-400 flex items-center gap-1">
                       <AlertCircle className="w-3 h-3" /> Non renseignée
                     </span>
                   )}
                 </div>
 
-                <p className="text-[11px] text-zinc-400 leading-relaxed">
-                  Nécessaire pour le Sas de Rappel Actif et la correction diagnostique grounded.{' '}
-                  <a
-                    href="https://aistudio.google.com/"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-blue-400 underline font-medium"
-                  >
-                    Obtenir une clé gratuite sur Google AI Studio
-                  </a>
-                </p>
-
-                <div className="relative flex items-center gap-2">
+                <div className="relative">
                   <input
                     type={showKey ? 'text' : 'password'}
                     value={apiKey}
                     onChange={(e) => setApiKey(e.target.value)}
-                    placeholder={geminiConfigured ? '••••••••••••••••••••••••••••••••' : 'Collez votre clé AIzaSy...'}
-                    className="flex-1 bg-surface-muted border border-border rounded-lg px-3 py-2 text-xs text-zinc-100 font-mono focus:outline-none focus:border-blue-500"
+                    placeholder={geminiConfigured ? '••••••••••••••••••••••••••••••••' : t.geminiKeyPlaceholder}
+                    className="w-full bg-surface-muted border border-border rounded-lg pl-3 pr-10 py-2 text-xs text-zinc-100 font-mono focus:outline-none focus:border-blue-500"
                   />
                   <button
                     type="button"
                     onClick={() => setShowKey(!showKey)}
-                    className="p-2 rounded-lg bg-surface border border-border text-zinc-400 hover:text-zinc-200"
-                    title={showKey ? 'Masquer' : 'Afficher'}
+                    className="absolute right-2.5 top-2.5 text-zinc-500 hover:text-zinc-300"
                   >
                     {showKey ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                   </button>
+                </div>
+
+                <div className="flex items-center justify-between pt-1">
+                  <a
+                    href="https://aistudio.google.com/app/apikey"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[11px] text-blue-400 hover:text-blue-300 underline font-medium"
+                  >
+                    {t.getKeyLink} (Google AI Studio) →
+                  </a>
+
                   <button
                     type="button"
                     onClick={handleTestGemini}
-                    disabled={testing || (!apiKey && !geminiConfigured)}
-                    className="px-3 py-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs font-semibold disabled:opacity-50 flex items-center gap-1.5"
+                    disabled={testing}
+                    className="px-3 py-1 rounded-lg bg-surface-muted hover:bg-zinc-700 text-xs font-semibold text-zinc-200 border border-border flex items-center gap-1.5 transition-colors disabled:opacity-50"
                   >
-                    {testing ? <RefreshCw className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
-                    <span>Tester</span>
+                    {testing ? <RefreshCw className="w-3 h-3 animate-spin text-blue-400" /> : <Sparkles className="w-3 h-3 text-blue-400" />}
+                    <span>{testing ? t.testingKey : t.testKeyBtn}</span>
                   </button>
                 </div>
 
@@ -218,20 +249,20 @@ export function SettingsModal() {
               {/* SECTION 2: MODEL & PORT */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-xl bg-surface-elevated/40 border border-border space-y-2">
-                  <label className="block text-xs font-bold text-zinc-200">Modèle d'évaluation IA</label>
+                  <label className="block text-xs font-bold text-zinc-200">{t.modelLabel}</label>
                   <select
                     value={model}
                     onChange={(e) => setModel(e.target.value)}
                     className="w-full bg-surface-muted border border-border rounded-lg px-3 py-2 text-xs text-zinc-100 font-mono focus:outline-none focus:border-blue-500"
                   >
-                    <option value="gemini-3.7-flash">gemini-3.7-flash (Recommandé)</option>
+                    <option value="gemini-3.7-flash">gemini-3.7-flash</option>
                     <option value="gemini-2.5-flash">gemini-2.5-flash</option>
                     <option value="gemini-2.5-pro">gemini-2.5-pro</option>
                   </select>
                 </div>
 
                 <div className="p-4 rounded-xl bg-surface-elevated/40 border border-border space-y-2">
-                  <label className="block text-xs font-bold text-zinc-200">Port du Serveur Local</label>
+                  <label className="block text-xs font-bold text-zinc-200">{t.portLabel}</label>
                   <input
                     type="number"
                     value={port}
