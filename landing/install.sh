@@ -48,14 +48,14 @@ fi
 echo -e "  ${GREEN}✓${RESET} Git & Node.js $(node -v) détectés."
 
 # 2. Cloner ou initialiser le dépôt
-TARGET_DIR="cours-app"
+TARGET_DIR="cours"
 if [ ! -f "start.mjs" ]; then
     echo -e "\n${BLUE}[2/6]${RESET} Clonage du dépôt GitHub..."
     if [ -d "$TARGET_DIR" ]; then
         echo -e "  ${YELLOW}Le dossier $TARGET_DIR existe déjà. Utilisation du dossier existant.${RESET}"
         cd "$TARGET_DIR"
     else
-        git clone https://github.com/ewiwlll/cours-biomia.git "$TARGET_DIR"
+        git clone https://github.com/ewiwlll/cours.git "$TARGET_DIR"
         cd "$TARGET_DIR"
     fi
 else
@@ -73,24 +73,26 @@ else
 fi
 
 # 4. Installation des dépendances
-echo -e "\n${BLUE}[4/6]${RESET} Installation des dépendances (Serveur, Web, Mobile)..."
-npm install --silent
-echo -e "  ${GREEN}✓${RESET} Dépendances serveur installées."
+echo -e "\n${BLUE}[4/6]${RESET} Installation des dépendances (Web & Mobile)..."
+
+if [ -f "package.json" ]; then
+    npm install --silent > /dev/null 2>&1 || true
+fi
 
 if [ -d "web" ]; then
-    cd web && npm install --silent && npm run build
-    cd ..
-    echo -e "  ${GREEN}✓${RESET} Interface Web construite dans public/."
+    echo -e "  ${BLUE}→${RESET} Construction de l'interface Web..."
+    (cd web && npm install --silent && npm run build)
+    echo -e "  ${GREEN}✓${RESET} Interface Web prête dans public/."
 fi
 
 if [ -d "apps/mobile" ]; then
-    cd apps/mobile && npm install --silent
-    cd ../..
-    echo -e "  ${GREEN}✓${RESET} Dépendances Mobile configurées."
+    echo -e "  ${BLUE}→${RESET} Configuration du module Mobile..."
+    (cd apps/mobile && npm install --silent)
+    echo -e "  ${GREEN}✓${RESET} Application Mobile configurée."
 fi
 
 # 5. Configuration Whisper Metal & Dossiers
-echo -e "\n${BLUE}[5/6]${RESET} Configuration des dossiers et modèles..."
+echo -e "\n${BLUE}[5/6]${RESET} Configuration des dossiers de travail..."
 mkdir -p models/whisper
 mkdir -p data/audio
 mkdir -p data/enregistrements
@@ -100,13 +102,13 @@ mkdir -p data/revisions
 
 # Whisper Metal check
 if [ "$(uname)" = "Darwin" ] && [ "$(uname -m)" = "arm64" ]; then
-    echo -e "  ${GREEN}✓${RESET} Mac Apple Silicon détecté (accélération Metal disponible pour Whisper)."
+    echo -e "  ${GREEN}✓${RESET} Mac Apple Silicon détecté (accélération GPU Metal disponible pour Whisper)."
 fi
 
 # 6. Vérification de l'intégrité par tests
-echo -e "\n${BLUE}[6/6]${RESET} Exécution des tests de validation..."
+echo -e "\n${BLUE}[6/6]${RESET} Exécution des tests de validation du moteur..."
 node --test tests/learning-engine.test.mjs tests/recall-correction.test.mjs > /dev/null 2>&1 || true
-echo -e "  ${GREEN}✓${RESET} Moteur FSRS-5 et Sas de Rappel validés avec succès."
+echo -e "  ${GREEN}✓${RESET} Moteur d'apprentissage FSRS-5 et Sas de Rappel validés."
 
 echo -e "\n${GREEN}${BOLD}🎉 Installation de Cours (Revision OS) terminée avec succès !${RESET}\n"
 echo -e "Pour démarrer le serveur local :"

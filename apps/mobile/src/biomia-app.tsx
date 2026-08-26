@@ -45,7 +45,7 @@ import { formatMath, MobileMarkdownViewer } from "./format-math";
 
 LogBox.ignoreAllLogs();
 
-export function BioMIAApp() {
+export function CoursApp() {
   const [tab, setTab] = useState<"accueil" | "matieres" | "amphi" | "entrainement" | "planning">("accueil");
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [courses, setCourses] = useState<StudyCourse[]>([]);

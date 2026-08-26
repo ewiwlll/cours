@@ -1,0 +1,24 @@
+{
+  "name": "cours",
+  "version": "1.0.0",
+  "description": "Cours — L'OS d'apprentissage et de révision active pour tous vos cours, amphis et classes",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node start.mjs",
+    "test": "node --test tests/learning-engine.test.mjs tests/recall-correction.test.mjs tests/e2e-fictitious-course.test.mjs",
+    "build:web": "cd web && npm install && npm run build",
+    "dev:web": "cd web && npm run dev",
+    "mobile": "cd apps/mobile && npm start"
+  },
+  "keywords": [
+    "education",
+    "active-recall",
+    "fsrs-5",
+    "whisper",
+    "learning-engine",
+    "spaced-repetition"
+  ],
+  "author": "Cours Authors",
+  "license": "MIT"
+}

@@ -1,6 +1,6 @@
 # Cours — Revision OS
 
-[![Site Web](https://img.shields.io/badge/Site_Web-cours--biomia.pages.dev-blue?style=flat-square)](https://cours-biomia.pages.dev)
+[![Site Web](https://img.shields.io/badge/Site_Web-cours--awc.pages.dev-blue?style=flat-square)](https://cours-awc.pages.dev)
 [![Licence MIT](https://img.shields.io/badge/Licence-MIT-emerald?style=flat-square)](LICENSE)
 [![FSRS-5](https://img.shields.io/badge/Moteur-FSRS--5-amber?style=flat-square)](docs/learning-engine.md)
 [![Whisper Metal](https://img.shields.io/badge/Voix-Whisper_Metal_Local-cyan?style=flat-square)](docs/adr/0002-moteur-ia-gemini-et-transcription-whisper.md)
@@ -13,7 +13,7 @@
 ## ⚡ Installation Rapide en 1 Ligne (macOS & Linux)
 
 ```bash
-curl -fsSL https://cours-biomia.pages.dev/install.sh | bash
+curl -fsSL https://cours-awc.pages.dev/install.sh | bash
 ```
 
 ---
@@ -61,7 +61,7 @@ Double-cliquez sur **Cours** dans le dossier **Applications** (ou via Spotlight 
 
 ### Option 2 : Ligne de commande
 ```bash
-cd "/Users/ewilien/Documents/Code/BioMIA Revision OS"
+cd cours
 node start.mjs
 ```
 Puis ouvrez [http://localhost:3002](http://localhost:3002).
