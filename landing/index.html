@@ -107,6 +107,8 @@
         <a href="#how-it-works" class="hover:text-white transition-colors">Comment ça marche ?</a>
         <a href="#features" class="hover:text-white transition-colors">Fonctionnalités</a>
         <a href="#qr-connect" class="hover:text-white transition-colors">Mobile & QR Code</a>
+        <a href="#docs" class="hover:text-white transition-colors">Documentation</a>
+        <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
       </nav>
 
       <div class="flex items-center gap-3">
@@ -399,7 +401,7 @@
                   </div>
                   <div class="bg-zinc-900/90 rounded-xl p-3 text-xs text-zinc-300 space-y-2">
                     <div class="text-purple-400 font-semibold text-[11px]">« Tu avais déjà posé une question sur la sève brute et la sève élaborée il y a 4 jours. »</div>
-                    <p class="text-zinc-400 text-[11px]">Ton raisonnement progresse : la sève brute monte l'eau par le xylème, la sève élaborée transporte le glucose fabriqué par le phloème.</p>
+                    <p class="text-zinc-400 text-[11px]">Ton raisonnement progresse : la sève brute monte l'eau par le xylème, la sève élaborée transporte le glucose par le phloème.</p>
                   </div>
                   <div class="bg-purple-950/30 border border-purple-800/40 rounded-xl p-3 text-xs text-zinc-200">
                     <span class="text-emerald-400 font-bold">Nouvelle Flashcard FSRS créée :</span>
@@ -449,6 +451,92 @@
             <p class="text-[11px] font-mono text-zinc-400">http://192.168.1.x:3002</p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================================== -->
+  <!-- SECTION DOCUMENTATION & GUIDE UTILISATEUR                                           -->
+  <!-- =================================================================================== -->
+  <section id="docs" class="py-20 bg-zinc-950/90 border-t border-b border-border/50 relative z-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-xs font-bold uppercase tracking-widest text-blue-400 mb-2 inline-block">Guide & Architecture</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
+          Documentation Complète de l'Utilisateur
+        </h2>
+        <p class="text-base text-zinc-400">
+          Tout ce qu'il faut savoir pour installer, exploiter et maîtriser Cours au quotidien.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+        
+        <!-- DOC CARD 1 -->
+        <div class="glass-card rounded-2xl p-6 space-y-3">
+          <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm">1</div>
+          <h3 class="font-bold text-base text-white">Installation & Configuration</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            La commande <code class="text-blue-300">curl</code> installe le serveur Node.js, compile le client Web et configure l'environnement. Renseignez votre <code class="text-zinc-300">GEMINI_API_KEY</code> dans le fichier <code class="text-zinc-300">.env</code> pour activer la correction IA.
+          </p>
+        </div>
+
+        <!-- DOC CARD 2 -->
+        <div class="glass-card rounded-2xl p-6 space-y-3">
+          <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm">2</div>
+          <h3 class="font-bold text-base text-white">En Amphi & Photos Horodatées</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Lancez l'enregistrement d'une touche. Les balises rapides et les photos du tableau sont horodatées (<code class="text-amber-300">offsetMs</code>) pour caler l'image exactement sur l'audio correspondant.
+          </p>
+        </div>
+
+        <!-- DOC CARD 3 -->
+        <div class="glass-card rounded-2xl p-6 space-y-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">3</div>
+          <h3 class="font-bold text-base text-white">Sas de Rappel & Moteur FSRS-5</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Chaque cours reste verrouillé jusqu'à votre premier rappel actif de 1-2 min. Les notions oubliées sont automatiquement prioritaires dans votre pile FSRS du jour sans aucun stress de chrono.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================================== -->
+  <!-- SECTION FAQ                                                                         -->
+  <!-- =================================================================================== -->
+  <section id="faq" class="py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center max-w-2xl mx-auto mb-14">
+      <h2 class="text-3xl font-extrabold tracking-tight text-white mb-3">
+        Questions Fréquentes (FAQ)
+      </h2>
+      <p class="text-sm text-zinc-400">
+        Réponses rapides aux questions les plus courantes des nouveaux utilisateurs.
+      </p>
+    </div>
+
+    <div class="space-y-4">
+      <div class="glass-card rounded-2xl p-6 border border-zinc-800">
+        <h3 class="font-bold text-sm sm:text-base text-white mb-2">Comment obtenir ma clé Gemini ?</h3>
+        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+          Google AI Studio propose des clés API gratuites sur <a href="https://aistudio.google.com/" target="_blank" class="text-blue-400 underline">aistudio.google.com</a>. Il vous suffit de copier votre clé dans le fichier <code class="text-zinc-200">.env</code> à la ligne <code class="text-zinc-200">GEMINI_API_KEY=...</code>.
+        </p>
+      </div>
+
+      <div class="glass-card rounded-2xl p-6 border border-zinc-800">
+        <h3 class="font-bold text-sm sm:text-base text-white mb-2">Mes données et enregistrements sont-ils privés ?</h3>
+        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+          Oui, à 100%. Tout tourne en local sur votre machine. La transcription Whisper utilise le GPU de votre Mac (Metal) sans envoyer d'audio sur Internet. Vos fichiers audios et transcriptions restent stockés sur votre disque.
+        </p>
+      </div>
+
+      <div class="glass-card rounded-2xl p-6 border border-zinc-800">
+        <h3 class="font-bold text-sm sm:text-base text-white mb-2">Puis-je réviser sans connexion Internet ?</h3>
+        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+          Oui ! Le moteur d'apprentissage FSRS-5, les flashcards, les QCM et les fiches de cours sont entièrement mis en cache et fonctionnent hors-ligne sur votre ordinateur et votre téléphone.
+        </p>
       </div>
     </div>
   </section>
