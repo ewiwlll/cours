@@ -153,46 +153,34 @@ export function Sidebar() {
               <button
                 key={subj.id}
                 onClick={() => handleSubjectClick(subj)}
-                className={`w-full text-left p-2.5 rounded-xl transition-all flex items-start justify-between gap-2 group ${
+                className={`w-full text-left p-3 rounded-2xl transition-all flex items-start justify-between gap-2 group ${
                   isSelected
-                    ? 'bg-blue-600/15 border border-blue-500/30 text-white shadow-sm'
-                    : 'hover:bg-surface-elevated text-zinc-300 border border-transparent'
+                    ? 'bg-blue-600/15 border border-blue-500/40 text-white shadow-sm'
+                    : 'hover:bg-zinc-900/80 text-zinc-300 border border-transparent hover:border-zinc-800/80'
                 }`}
               >
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span
-                      className={`text-[9px] font-bold px-1.5 py-0.2 rounded border ${
-                        subj.semester === 'S1'
-                          ? 'bg-blue-950/40 text-blue-400 border-blue-800/40'
-                          : 'bg-emerald-950/40 text-emerald-400 border-emerald-800/40'
-                      }`}
-                    >
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-full bg-zinc-800 text-zinc-300">
                       {subj.semester}
                     </span>
-                    <span className="text-[9px] font-semibold text-zinc-400">
+                    <span className="text-[10px] text-zinc-400 font-medium">
                       {subj.ects} ECTS
                     </span>
-                    <span
-                      className={`text-[9px] font-mono font-bold px-1 rounded ${
-                        subj.priority === 'A'
-                          ? 'text-amber-400 bg-amber-950/40'
-                          : 'text-zinc-400 bg-zinc-800/40'
-                      }`}
-                    >
-                      Prio {subj.priority}
-                    </span>
+                    {subj.priority === 'A' && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400" title="Priorité A" />
+                    )}
                   </div>
 
                   <h3
-                    className={`text-xs font-medium leading-snug truncate ${
-                      isSelected ? 'text-blue-300 font-semibold' : 'text-zinc-200 group-hover:text-white'
+                    className={`text-xs font-semibold leading-snug truncate ${
+                      isSelected ? 'text-blue-400 font-bold' : 'text-zinc-200 group-hover:text-white'
                     }`}
                   >
                     {subj.title}
                   </h3>
 
-                  <div className="flex items-center gap-2 mt-1 text-[10px] text-zinc-400">
+                  <div className="flex items-center gap-2 mt-1 text-[10px] text-zinc-500">
                     <span>{coursesCount} cours</span>
                     <span>•</span>
                     <span className="truncate">{subj.category}</span>
@@ -202,14 +190,14 @@ export function Sidebar() {
                 {/* Due cards indicator badge */}
                 {dueCount > 0 ? (
                   <span
-                    className="shrink-0 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30"
+                    className="shrink-0 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/15 text-blue-400 border border-blue-500/30"
                     title={`${dueCount} cartes à réviser aujourd'hui`}
                   >
                     {dueCount}
                   </span>
                 ) : coursesCount > 0 ? (
                   <span
-                    className="shrink-0 px-1.5 py-0.5 rounded text-[9px] text-zinc-400 bg-surface-muted"
+                    className="shrink-0 text-[10px] text-emerald-400/80 font-bold"
                     title="Cartes à jour"
                   >
                     ✓
