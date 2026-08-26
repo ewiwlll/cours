@@ -953,6 +953,81 @@
     // MULTILINGUAL (FR / EN) ENGINE
     let currentLandingLang = localStorage.getItem('cours_landing_lang') || (navigator.language.startsWith('en') ? 'en' : 'fr');
 
+    const landingTranslations = {
+      fr: {
+        navHow: "Comment ça marche ?",
+        navDemo: "Démo Interactive",
+        navMobile: "Mobile & 4G",
+        navDocs: "Documentation",
+        heroPill: "Pour tous vos cours • Amphis, classes et études supérieures",
+        heroTitle: "Enregistrez le cours. <br class=\"hidden sm:inline\"/><span class=\"text-gradient-blue\">Concentrez-vous à 100%.</span>",
+        heroSub: "Fini le stress d'oublier de noter une phrase : la transcription automatique locale s'occupe de tout capturer. Votre unique mission pendant le cours : <strong class=\"text-white font-semibold\">visualiser les concepts dans votre tête</strong> et être constant.",
+        copyBtn: "Copier",
+        copiedBtn: "Copié !",
+        heroFoot: "Installation automatique en 1 clic • Lancez ensuite avec la commande <code class=\"text-blue-400 font-mono font-bold\">cours</code>",
+        flowTag: "Le Flux Sans Stress",
+        flowTitle: "Comment ça marche ?",
+        flowSub: "Seulement 5 étapes pour passer de l'écoute en cours à une maîtrise parfaite et durable.",
+        step1Title: "1. En Cours : Capture & Visualisation",
+        step1Desc: "Un clic pour lancer le micro. Ne perdez plus votre attention à recopier les slides : visualisez les concepts et posez des balises instantanées (Important, Piège exam, Pas compris, Photo tableau synchronisée).",
+        step2Title: "2. Antigravity : Synthèse & Whisper Metal",
+        step2Desc: "Whisper Metal local transcrit l'audio en toute confidentialité à 0€ de coût API. Antigravity extrait les analogies Feynman, les formules bilans et les tableaux comparatifs « X vs Y ».",
+        step3Title: "3. Le Sas : Déblocage par Rappel Actif",
+        step3Desc: "Pour briser l'illusion de facilité de la simple relecture passive, la fiche reste verrouillée. Prenez 1 à 2 minutes pour restituer ce que vous avez retenu sans aide : l'IA diagnostique vos lacunes et débloque le cours.",
+        step4Title: "4. Moteur FSRS-5 Quotidien sans Chrono",
+        step4Desc: "Chaque jour, votre pile de flashcards dues s'ajuste scientifiquement selon votre stabilité de mémoire et probabilité d'oubli. Pas de compte à rebours stressant : vous révisez à votre propre rythme.",
+        step5Title: "5. Mémoire Vivante : Arbre des Questions",
+        step5Desc: "Vous bloquez sur un point ? Antigravity se rappelle de vos incompréhensions passées pour éviter de répéter 300 fois la même question, approfondit le raisonnement et génère des cartes de déblocage ciblées.",
+        demoTag: "Test en Direct",
+        demoTitle: "Essayez le Sas de Rappel Actif Maintenant",
+        demoSub: "Tapez une phrase pour expliquer la <strong>photosynthèse</strong> avec vos propres mots : le moteur analyse réellement la présence des concepts clés, les omissions et les pièges classiques !",
+        demoGood: "Exemple complet (95/100)",
+        demoTrap: "Exemple avec piège exam (45/100)",
+        demoBtn: "Évaluer mon explication",
+        qrTag: "📱 Synchronisation Instantanée",
+        qrTitle: "Scannez le QR Code dans votre terminal pour ouvrir l'app sur mobile.",
+        qrSub: "Dès que vous lancez <code class=\"text-blue-400 font-mono\">cours</code> sur votre Mac, un QR Code s'affiche dans votre terminal. Scannez-le avec votre iPhone ou Android : votre téléphone se connecte directement à votre Mac en Wi-Fi local ou en 4G privée via Tailscale.",
+        ctaTitle: "Prêt à transformer votre manière d'apprendre ?",
+        ctaSub: "Installez l'OS en 1 seule ligne de commande dans votre terminal. L'application, le serveur local et les modules d'IA se configurent immédiatement."
+      },
+      en: {
+        navHow: "How it works",
+        navDemo: "Interactive Demo",
+        navMobile: "Mobile & 4G",
+        navDocs: "Documentation",
+        heroPill: "For all your courses • Lectures, classes & higher education",
+        heroTitle: "Record the lecture. <br class=\"hidden sm:inline\"/><span class=\"text-gradient-blue\">Focus 100% on understanding.</span>",
+        heroSub: "No more stress of missing notes: local AI transcription captures everything. Your only mission during class: <strong class=\"text-white font-semibold\">visualize the concepts in your head</strong> and stay consistent.",
+        copyBtn: "Copy",
+        copiedBtn: "Copied!",
+        heroFoot: "1-click automatic installation • Start anytime with the command <code class=\"text-blue-400 font-mono font-bold\">cours</code>",
+        flowTag: "The Stress-Free Flow",
+        flowTitle: "How does it work?",
+        flowSub: "Only 5 steps from listening in class to durable, effortless mastery.",
+        step1Title: "1. In Class: Capture & Visualization",
+        step1Desc: "1 click to record. Stop wasting focus scribbling slides: visualize mechanisms and drop instant markers (Important, Exam trap, Didn't understand, Board photo sync).",
+        step2Title: "2. Antigravity: Synthesis & Local Whisper",
+        step2Desc: "Local Whisper Metal transcribes audio in private at 0€ API cost. Antigravity extracts Feynman analogies, formula summaries, and comparative tables \"X vs Y\".",
+        step3Title: "3. The Gate: Active Recall Unlocking",
+        step3Desc: "To break the illusion of ease from passive re-reading, course notes stay locked. Take 1-2 minutes to recall key ideas without help: AI grades your gaps and unlocks the course.",
+        step4Title: "4. Daily FSRS-5 Engine (No Timer)",
+        step4Desc: "Every day, your due flashcards deck adjusts scientifically to your memory stability and retention probability. No stressful countdown: practice at your own pace.",
+        step5Title: "5. Living Memory: Questions Tree",
+        step5Desc: "Stuck on a concept? Antigravity recalls your past misunderstandings to avoid repeating the same answers, deepens explanations, and creates targeted unblock cards.",
+        demoTag: "Live Trial",
+        demoTitle: "Try the Active Recall Gate Now",
+        demoSub: "Type a sentence explaining <strong>photosynthesis</strong> in your own words: the engine genuinely analyzes concepts, omissions, and exam traps!",
+        demoGood: "Full example (95/100)",
+        demoTrap: "Example with exam trap (45/100)",
+        demoBtn: "Evaluate my explanation",
+        qrTag: "📱 Instant Synchronization",
+        qrTitle: "Scan the QR Code in your terminal to open the app on mobile.",
+        qrSub: "As soon as you launch <code class=\"text-blue-400 font-mono\">cours</code> on your Mac, a QR Code appears in your terminal. Scan it with your iPhone or Android: your phone connects directly via local Wi-Fi or private 4G Tailscale.",
+        ctaTitle: "Ready to transform the way you learn?",
+        ctaSub: "Install the OS with a single command line in your terminal. The app, local server, and AI modules configure immediately."
+      }
+    };
+
     function toggleLandingLanguage() {
       currentLandingLang = currentLandingLang === 'fr' ? 'en' : 'fr';
       localStorage.setItem('cours_landing_lang', currentLandingLang);
@@ -965,6 +1040,72 @@
       const code = document.getElementById('langCode');
       if (flag) flag.innerText = isEn ? '🇬🇧' : '🇫🇷';
       if (code) code.innerText = isEn ? 'EN' : 'FR';
+
+      const t = landingTranslations[currentLandingLang] || landingTranslations.fr;
+
+      // Nav
+      const navLinks = document.querySelectorAll('nav a');
+      if (navLinks[0]) navLinks[0].innerText = t.navHow;
+      if (navLinks[1]) navLinks[1].innerText = t.navDemo;
+      if (navLinks[2]) navLinks[2].innerText = t.navMobile;
+
+      // Hero
+      const heroPill = document.querySelector('section .inline-flex span:nth-child(2)');
+      if (heroPill) heroPill.innerText = t.heroPill;
+      const heroTitle = document.querySelector('h1');
+      if (heroTitle) heroTitle.innerHTML = t.heroTitle;
+      const heroSub = document.querySelector('h1 + p');
+      if (heroSub) heroSub.innerHTML = t.heroSub;
+      const copyText = document.getElementById('copyText');
+      if (copyText && copyText.innerText !== 'Copié !' && copyText.innerText !== 'Copied!') copyText.innerText = t.copyBtn;
+      const bottomCopyText = document.getElementById('bottomCopyText');
+      if (bottomCopyText && bottomCopyText.innerText !== 'Copié !' && bottomCopyText.innerText !== 'Copied!') bottomCopyText.innerText = t.copyBtn;
+
+      // How it works
+      const flowTag = document.querySelector('#how-it-works span.text-amber-400');
+      if (flowTag) flowTag.innerText = t.flowTag;
+      const flowTitle = document.querySelector('#how-it-works h2');
+      if (flowTitle) flowTitle.innerText = t.flowTitle;
+      const flowSub = document.querySelector('#how-it-works h2 + p');
+      if (flowSub) flowSub.innerText = t.flowSub;
+
+      // Steps
+      const stepTitles = document.querySelectorAll('.step-title');
+      const stepTexts = document.querySelectorAll('.step-content > p');
+      if (stepTitles[0]) stepTitles[0].innerText = t.step1Title;
+      if (stepTexts[0]) stepTexts[0].innerText = t.step1Desc;
+      if (stepTitles[1]) stepTitles[1].innerText = t.step2Title;
+      if (stepTexts[1]) stepTexts[1].innerText = t.step2Desc;
+      if (stepTitles[2]) stepTitles[2].innerText = t.step3Title;
+      if (stepTexts[2]) stepTexts[2].innerText = t.step3Desc;
+      if (stepTitles[3]) stepTitles[3].innerText = t.step4Title;
+      if (stepTexts[3]) stepTexts[3].innerText = t.step4Desc;
+      if (stepTitles[4]) stepTitles[4].innerText = t.step5Title;
+      if (stepTexts[4]) stepTexts[4].innerText = t.step5Desc;
+
+      // Demo
+      const demoTag = document.querySelector('#demo span.text-blue-400');
+      if (demoTag) demoTag.innerText = t.demoTag;
+      const demoTitle = document.querySelector('#demo h2');
+      if (demoTitle) demoTitle.innerText = t.demoTitle;
+      const demoSub = document.querySelector('#demo h2 + p');
+      if (demoSub) demoSub.innerHTML = t.demoSub;
+      const demoBtnText = document.getElementById('demoBtnText');
+      if (demoBtnText) demoBtnText.innerText = t.demoBtn;
+
+      // QR Sync
+      const qrTag = document.querySelector('#qr-connect .inline-flex');
+      if (qrTag) qrTag.innerText = t.qrTag;
+      const qrTitle = document.querySelector('#qr-connect h2');
+      if (qrTitle) qrTitle.innerText = t.qrTitle;
+      const qrSub = document.querySelector('#qr-connect h2 + p');
+      if (qrSub) qrSub.innerHTML = t.qrSub;
+
+      // CTA
+      const ctaTitle = document.querySelector('section:last-of-type h2');
+      if (ctaTitle) ctaTitle.innerText = t.ctaTitle;
+      const ctaSub = document.querySelector('section:last-of-type h2 + p');
+      if (ctaSub) ctaSub.innerText = t.ctaSub;
     }
 
     // Apply auto-detected language on load
