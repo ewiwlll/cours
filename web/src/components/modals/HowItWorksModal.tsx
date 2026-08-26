@@ -137,16 +137,37 @@ export const HowItWorksModal: React.FC<HowItWorksModalProps> = ({
         {/* Feature Explanations */}
         <div className="space-y-3 pt-1">
           <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
-            Fonctionnalités Clés & Confort d'Apprentissage
+            Le Studio Antigravity : Ton Super-Tuteur IA (0€ Quotas Google)
           </h3>
+
+          <div className="p-4 rounded-xl bg-gradient-to-r from-blue-950/30 to-purple-950/30 border border-blue-500/30 space-y-3">
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm shrink-0 mt-0.5">
+                ✦
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-xs font-bold text-white">Comment utiliser Antigravity avec ton projet Cours ?</h4>
+                <p className="text-[11px] text-zinc-300 leading-relaxed">
+                  Ouvre simplement le dossier <code className="text-blue-300 font-mono px-1 py-0.2 bg-black/40 rounded">cours</code> dans Antigravity. En connectant ton compte Google, tu disposes de <strong>quotas gratuits généreux</strong> avec le modèle <code className="text-emerald-300 font-mono">gemini-3.7-flash</code>.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-black/50 p-3 rounded-lg border border-zinc-800 space-y-1.5">
+              <div className="text-[10px] text-zinc-400 font-mono uppercase tracking-wider font-bold">Phrases magiques à taper dans le chat Antigravity :</div>
+              <div className="text-xs text-blue-300 font-mono">💬 « Traite tous mes enregistrements en attente et génère mes fiches »</div>
+              <div className="text-xs text-emerald-300 font-mono">💬 « Interroge-moi sur la Photosynthèse comme à l'oral d'examen »</div>
+              <div className="text-xs text-purple-300 font-mono">💬 « Je n'ai pas compris la sève brute vs élaborée, débloque-moi »</div>
+            </div>
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="p-3 rounded-xl bg-surface-muted/50 border border-border-subtle flex gap-3">
               <BrainCircuit className="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-xs font-bold text-white">🌳 Mémoire des Questions & Arbre Vivant</h4>
+                <h4 className="text-xs font-bold text-white">🌳 Mémoire Vivante des Questions</h4>
                 <p className="text-[11px] text-zinc-400 mt-0.5">
-                  Quand tu bloques sur une notion, Antigravity se rappelle de tes questions précédentes, fait évoluer l'explication et crée une flashcard FSRS d'ancrage.
+                  Quand tu bloques, Antigravity consulte l'arbre de tes questions passées (<code className="text-zinc-300">clarifications.json</code>) pour ne pas répéter la même chose et créer des flashcards de déblocage.
                 </p>
               </div>
             </div>
@@ -157,26 +178,6 @@ export const HowItWorksModal: React.FC<HowItWorksModalProps> = ({
                 <h4 className="text-xs font-bold text-white">📸 Photos & Balises Synchronisées</h4>
                 <p className="text-[11px] text-zinc-400 mt-0.5">
                   Tes photos de tableau et repères <em>« Pas compris »</em> sont insérés exactement là où le prof en parlait, avec un bilan modifiable en fin d'amphi.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-3 rounded-xl bg-surface-muted/50 border border-border-subtle flex gap-3">
-              <Layers className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
-              <div>
-                <h4 className="text-xs font-bold text-white">Schémas Masqués (Image Occlusion)</h4>
-                <p className="text-[11px] text-zinc-400 mt-0.5">
-                  Masque les légendes des figures d'amphi pour t'entraîner visuellement à les retrouver de mémoire.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-3 rounded-xl bg-surface-muted/50 border border-border-subtle flex gap-3">
-              <Keyboard className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-              <div>
-                <h4 className="text-xs font-bold text-white">Raccourcis Clavier Rapides</h4>
-                <p className="text-[11px] text-zinc-400 mt-0.5">
-                  Touche <strong className="text-white">Espace</strong> pour retourner une carte, puis <strong className="text-white">1, 2, 3 ou 4</strong> pour noter la facilité.
                 </p>
               </div>
             </div>

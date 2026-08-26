@@ -48,6 +48,10 @@
       border-left: 3px solid #f59e0b;
       background: rgba(245, 158, 11, 0.08);
     }
+    .callout-purple {
+      border-left: 3px solid #a855f7;
+      background: rgba(168, 85, 247, 0.08);
+    }
     .code-block {
       background: #111114;
       border: 1px solid #27272a;
@@ -102,34 +106,35 @@
             <li><a href="#quickstart" class="nav-link block py-1 px-1.5 rounded hover:text-white">1. Démarrage Rapide</a></li>
             <li><a href="#architecture" class="nav-link block py-1 px-1.5 rounded hover:text-white">2. Vue d'Ensemble & CLI</a></li>
             <li><a href="#gemini-setup" class="nav-link block py-1 px-1.5 rounded hover:text-white">3. Configuration & Modale</a></li>
+            <li><a href="#antigravity-guide" class="nav-link block py-1 px-1.5 rounded hover:text-white text-purple-400 font-semibold">4. Studio Antigravity (0€)</a></li>
           </ul>
         </div>
 
         <div>
           <h4 class="font-bold text-zinc-300 uppercase tracking-wider text-[11px] mb-3">En Amphi & En Cours</h4>
           <ul class="space-y-1.5 text-zinc-400">
-            <li><a href="#recording" class="nav-link block py-1 px-1.5 rounded hover:text-white">4. Enregistrement & Balises</a></li>
-            <li><a href="#photos-sync" class="nav-link block py-1 px-1.5 rounded hover:text-white">5. Photos Synchronisées (offsetMs)</a></li>
-            <li><a href="#whisper-metal" class="nav-link block py-1 px-1.5 rounded hover:text-white">6. Transcription Whisper Metal</a></li>
+            <li><a href="#recording" class="nav-link block py-1 px-1.5 rounded hover:text-white">5. Enregistrement & Balises</a></li>
+            <li><a href="#photos-sync" class="nav-link block py-1 px-1.5 rounded hover:text-white">6. Photos Synchronisées (offsetMs)</a></li>
+            <li><a href="#whisper-metal" class="nav-link block py-1 px-1.5 rounded hover:text-white">7. Transcription Whisper Metal</a></li>
           </ul>
         </div>
 
         <div>
           <h4 class="font-bold text-zinc-300 uppercase tracking-wider text-[11px] mb-3">Méthode Cognitive</h4>
           <ul class="space-y-1.5 text-zinc-400">
-            <li><a href="#active-recall" class="nav-link block py-1 px-1.5 rounded hover:text-white">7. Le Sas de Rappel Actif</a></li>
-            <li><a href="#fsrs5-engine" class="nav-link block py-1 px-1.5 rounded hover:text-white">8. Moteur FSRS-5 Sans Chrono</a></li>
-            <li><a href="#atomic-concepts" class="nav-link block py-1 px-1.5 rounded hover:text-white">9. Concepts Atomiques « X vs Y »</a></li>
-            <li><a href="#memory-tree" class="nav-link block py-1 px-1.5 rounded hover:text-white">10. Mémoire Vivante des Questions</a></li>
+            <li><a href="#active-recall" class="nav-link block py-1 px-1.5 rounded hover:text-white">8. Le Sas de Rappel Actif</a></li>
+            <li><a href="#fsrs5-engine" class="nav-link block py-1 px-1.5 rounded hover:text-white">9. Moteur FSRS-5 Sans Chrono</a></li>
+            <li><a href="#atomic-concepts" class="nav-link block py-1 px-1.5 rounded hover:text-white">10. Concepts Atomiques « X vs Y »</a></li>
+            <li><a href="#memory-tree" class="nav-link block py-1 px-1.5 rounded hover:text-white">11. Mémoire Vivante des Questions</a></li>
           </ul>
         </div>
 
         <div>
           <h4 class="font-bold text-zinc-300 uppercase tracking-wider text-[11px] mb-3">Clients & Déploiement</h4>
           <ul class="space-y-1.5 text-zinc-400">
-            <li><a href="#mobile-sync" class="nav-link block py-1 px-1.5 rounded hover:text-white">11. Synchro QR Code & 4G Tailscale</a></li>
-            <li><a href="#api-reference" class="nav-link block py-1 px-1.5 rounded hover:text-white">12. Référence API REST Backend</a></li>
-            <li><a href="#faq" class="nav-link block py-1 px-1.5 rounded hover:text-white">13. FAQ & Dépannage</a></li>
+            <li><a href="#mobile-sync" class="nav-link block py-1 px-1.5 rounded hover:text-white">12. Synchro QR Code & 4G Tailscale</a></li>
+            <li><a href="#api-reference" class="nav-link block py-1 px-1.5 rounded hover:text-white">13. Référence API REST Backend</a></li>
+            <li><a href="#faq" class="nav-link block py-1 px-1.5 rounded hover:text-white">14. FAQ & Dépannage</a></li>
           </ul>
         </div>
       </div>
@@ -157,12 +162,11 @@
 
         <div class="callout-tip p-4 rounded-xl mb-6 text-xs sm:text-sm">
           <strong class="text-emerald-400 block mb-1">💡 Ce que fait le script automatiquement :</strong>
-          1. Détecte votre système d'exploitation et vérifie <code class="text-zinc-200">git</code> et <code class="text-zinc-200">Node.js >= 18</code>.<br>
-          2. Clone le dépôt public officiel <code class="text-zinc-200">github.com/ewiwlll/cours</code>.<br>
-          3. <strong>Demande interactivement votre clé Gemini API</strong> directement dans la console pour l'écrire dans <code class="text-zinc-200">.env</code>.<br>
-          4. Installe la commande universelle <code class="text-blue-400 font-bold font-mono">cours</code> dans votre PATH.<br>
-          5. Compile le client Web Vite et prépare le module Mobile Expo.<br>
-          6. Valide le moteur FSRS-5 par 23 tests unitaires et affiche le <strong>QR Code mobile</strong>.
+          1. Détecte votre système et installe l'application native <code class="text-zinc-200">/Applications/Cours.app</code>.<br>
+          2. <strong>Demande interactivement votre clé Gemini API</strong> pour l'écrire dans <code class="text-zinc-200">.env</code>.<br>
+          3. Installe la commande universelle <code class="text-blue-400 font-bold font-mono">cours</code> dans votre terminal.<br>
+          4. Compile le client Web Vite et active le mode PWA autonome.<br>
+          5. Valide le moteur FSRS-5 par 23 tests unitaires et affiche le <strong>QR Code mobile</strong>.
         </div>
       </section>
 
@@ -179,9 +183,24 @@
           <pre class="font-mono text-sm text-emerald-300">cours</pre>
         </div>
 
-        <p class="text-sm text-zinc-400 leading-relaxed">
+        <p class="text-sm text-zinc-400 leading-relaxed mb-4">
           Cette commande démarre immédiatement le serveur backend, l'écouteur d'amphi, l'interface Web et affiche votre QR Code de synchronisation mobile.
         </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
+          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">
+            <span class="text-blue-400 font-bold block mb-1">cours</span>
+            <span class="text-zinc-400">Lance le serveur + interface</span>
+          </div>
+          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">
+            <span class="text-emerald-400 font-bold block mb-1">cours update</span>
+            <span class="text-zinc-400">Met à jour Git & Web</span>
+          </div>
+          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">
+            <span class="text-purple-400 font-bold block mb-1">cours tailscale</span>
+            <span class="text-zinc-400">Configure l'accès 4G</span>
+          </div>
+        </div>
       </section>
 
       <!-- CHAPTER 3: CONFIGURATION & MODALE DEDIEE -->
@@ -205,7 +224,101 @@
         </div>
       </section>
 
-      <!-- CHAPTER 4: EN AMPHI & BALISES -->
+      <!-- ============================================================================== -->
+      <!-- CHAPTER 4: LE STUDIO ANTIGRAVITY (GUIDE CLAIR, QUOTAS GRATUITS & PROMPTS)       -->
+      <!-- ============================================================================== -->
+      <section id="antigravity-guide" class="doc-section mb-16 border-t border-border/60 pt-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-xs font-bold text-purple-300 mb-3">
+          ✦ Super-Tuteur & Studio de Production
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-4">
+          Le Studio Antigravity : Comment l'utiliser avec vos cours ?
+        </h2>
+        
+        <p class="text-sm text-zinc-300 leading-relaxed mb-4">
+          Pour comprendre le fonctionnement de <strong>Cours</strong>, retenez cette distinction essentielle :
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div class="p-4 rounded-xl bg-blue-950/20 border border-blue-500/30 space-y-2 text-xs">
+            <div class="font-bold text-blue-300 flex items-center gap-2 text-sm">
+              <span>📱</span> L'Application Cours (Mac & Mobile)
+            </div>
+            <p class="text-zinc-400 leading-relaxed">
+              C'est votre <strong>Cockpit de révision quotidien</strong> : enregistrement micro en amphi, pile de cartes FSRS-5 dues du jour, QCM diagnostiques et sas de rappel actif.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-500/30 space-y-2 text-xs">
+            <div class="font-bold text-purple-300 flex items-center gap-2 text-sm">
+              <span>🧠</span> Le Studio Antigravity (Sur votre Mac)
+            </div>
+            <p class="text-zinc-400 leading-relaxed">
+              C'est votre <strong>Studio de fabrication lourde & Super-Tuteur IA</strong> : il analyse vos amphis, génère les fiches KaTeX et fait progresser votre arbre de mémoire vivante.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout-purple p-5 rounded-2xl mb-6 space-y-2 text-xs sm:text-sm">
+          <strong class="text-purple-300 font-bold block text-sm">🎁 Quotas Gratuits Google (0€ à vie) :</strong>
+          <p class="text-zinc-300 leading-relaxed">
+            Antigravity fonctionne directement avec votre <strong>compte Google gratuit</strong>. Les quotas offerts sur le modèle <code class="text-emerald-400 font-mono font-bold">gemini-3.7-flash</code> sont extrêmement généreux et largement suffisants pour traiter tous vos amphis, générer des centaines de fiches et réviser toute l'année sans dépenser un centime.
+          </p>
+        </div>
+
+        <h3 class="text-lg font-bold text-white mb-3">Comment lancer Antigravity en 3 étapes :</h3>
+        <ol class="space-y-3 text-xs sm:text-sm text-zinc-400 mb-8 list-decimal list-inside">
+          <li>Ouvrez l'application <strong>Google Antigravity</strong> sur votre Mac.</li>
+          <li>Faites <strong>File ➔ Open Folder</strong> et sélectionnez le dossier <code class="text-zinc-200 font-mono">cours</code> (ou votre dépôt cloné).</li>
+          <li>Connectez votre compte Google si demandé (zéro clé payante nécessaire).</li>
+        </ol>
+
+        <h3 class="text-lg font-bold text-white mb-3">Les 3 phrases magiques à taper dans le chat Antigravity :</h3>
+        <div class="space-y-3 mb-6">
+          
+          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 space-y-2">
+            <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
+              <span class="font-bold text-blue-400">1. Pour compiler tous vos amphis enregistrés :</span>
+              <button onclick="copyPrompt('prompt1', this)" class="hover:text-white">Copier le prompt</button>
+            </div>
+            <p id="prompt1" class="font-mono text-xs text-zinc-200 bg-black/40 p-2.5 rounded-lg border border-zinc-800 select-all">
+              Traite tous mes enregistrements audio en attente et génère mes fiches de cours KaTeX avec les flashcards FSRS.
+            </p>
+            <p class="text-[11px] text-zinc-400">
+              ➔ <em>Antigravity transcrit l'audio via Whisper Metal, structure les fiches avec LaTeX, tableaux « X vs Y » et initialise le sas de rappel actif.</em>
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 space-y-2">
+            <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
+              <span class="font-bold text-emerald-400">2. Pour passer un oral blanc / interrogation personnalisée :</span>
+              <button onclick="copyPrompt('prompt2', this)" class="hover:text-white">Copier le prompt</button>
+            </div>
+            <p id="prompt2" class="font-mono text-xs text-zinc-200 bg-black/40 p-2.5 rounded-lg border border-zinc-800 select-all">
+              Fais-moi passer un oral blanc bienveillant sur la Photosynthèse, interroge-moi sur les pièges fréquents et évalue mes réponses.
+            </p>
+            <p class="text-[11px] text-zinc-400">
+              ➔ <em>Antigravity prend le rôle d'un examinateur socratique, analyse votre restitution et met en avant vos points de vigilance.</em>
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 space-y-2">
+            <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
+              <span class="font-bold text-purple-400">3. Pour débloquer un doute ou une incompréhension :</span>
+              <button onclick="copyPrompt('prompt3', this)" class="hover:text-white">Copier le prompt</button>
+            </div>
+            <p id="prompt3" class="font-mono text-xs text-zinc-200 bg-black/40 p-2.5 rounded-lg border border-zinc-800 select-all">
+              Je n'ai pas compris la différence entre thylakoïdes et stroma, réexplique-moi avec une analogie concrète et crée une carte de rappel.
+            </p>
+            <p class="text-[11px] text-zinc-400">
+              ➔ <em>Antigravity met à jour votre arbre de mémoire vivante (<code class="text-zinc-300 font-mono">clarifications.json</code>) et injecte une nouvelle flashcard dans votre pile du lendemain.</em>
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- CHAPTER 5: EN AMPHI & BALISES -->
       <section id="recording" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
           Capture en Amphi & Balises Instantanées
@@ -220,7 +333,7 @@
         </div>
       </section>
 
-      <!-- CHAPTER 5: PHOTOS SYNCHRONISÉES -->
+      <!-- CHAPTER 6: PHOTOS SYNCHRONISÉES -->
       <section id="photos-sync" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
           Photos du Tableau Synchronisées (<code class="text-purple-400 font-mono text-xl">offsetMs</code>)
@@ -234,7 +347,7 @@
         </div>
       </section>
 
-      <!-- CHAPTER 6: WHISPER METAL LOCAL -->
+      <!-- CHAPTER 7: WHISPER METAL LOCAL -->
       <section id="whisper-metal" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
           Transcription Whisper Metal Locale (0€ API Vocale)
@@ -244,134 +357,134 @@
         </p>
       </section>
 
-      <!-- CHAPTER 7: SAS DE RAPPEL ACTIF -->
+      <!-- CHAPTER 8: SAS DE RAPPEL ACTIF -->
       <section id="active-recall" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
           Le Sas de Rappel Actif Obligatoire (Active Recall Testing)
         </h2>
         <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          Relire passivement une fiche crée une <strong>illusion de maîtrise</strong>. Pour tout nouveau cours, la fiche reste verrouillée jusqu'à votre premier rappel actif :
+          Dès qu'un cours est transcrit et structuré par Antigravity, <strong>la fiche brute reste initialement verrouillée</strong>.
         </p>
-
-        <div class="p-6 rounded-2xl bg-zinc-950 border border-amber-500/30 space-y-3 mb-6">
-          <div class="flex items-center gap-3">
-            <span class="text-2xl">🔒</span>
-            <h4 class="font-bold text-white text-sm">Protocole de Restitution (1 à 2 min) :</h4>
-          </div>
-          <ol class="list-decimal list-inside text-xs sm:text-sm text-zinc-300 space-y-2 pl-2">
-            <li><strong>Restitution sans aide</strong> : Vous expliquez au micro ce que vous avez retenu.</li>
-            <li><strong>Correction Diagnostique Grounded</strong> : Gemini évalue concept par concept sans hallucination (note sur 100).</li>
-            <li><strong>Déblocage</strong> : La synthèse complète s'ouvre, et les notions faibles sont planifiées pour demain.</li>
-          </ol>
+        <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs space-y-2 mb-4">
+          <span class="font-bold text-emerald-400">🎯 Pourquoi ce sas obligatoire ?</span>
+          <p class="text-zinc-400 leading-relaxed">
+            La science cognitive démontre que la relecture passive procure une illusion de maîtrise immédiate mais un oubli massif à 48h. En obligeant l'étudiant à restituer le cours pendant 1 à 2 minutes sans aide, l'effort synaptique ancre les notions en mémoire à long terme.
+          </p>
         </div>
       </section>
 
-      <!-- CHAPTER 8: MOTEUR FSRS-5 SANS CHRONO -->
+      <!-- CHAPTER 9: FSRS-5 SANS CHRONO -->
       <section id="fsrs5-engine" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
-          Moteur FSRS-5 & Répétition Espacée Sans Chrono
+          Moteur FSRS-5 (Free Spaced Repetition Scheduler v5)
         </h2>
         <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          L'algorithme officiel <strong>FSRS-5</strong> calcule chaque jour votre pile de révision optimale basée sur trois variables :
+          L'application abandonne les anciens algorithmes type SM-2 au profit de <strong>FSRS-5</strong>, le standard mathématique le plus précis de la répétition espacée.
         </p>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs">
-            <div class="text-blue-400 font-bold mb-1">Stabilité S (jours)</div>
-            <p class="text-zinc-400">Durée en jours pour que la probabilité de rappel chute à 90%.</p>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs mb-4">
+          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">
+            <span class="font-mono font-bold text-blue-400 block mb-1">Stabilité S</span>
+            <span class="text-zinc-400">Nombre de jours avant que la probabilité d'oubli n'atteigne 10%.</span>
           </div>
-          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs">
-            <div class="text-amber-400 font-bold mb-1">Difficulté D (1 à 10)</div>
-            <p class="text-zinc-400">Complexité intrinsèque du concept, calibrée selon vos réponses.</p>
+          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">
+            <span class="font-mono font-bold text-amber-400 block mb-1">Difficulté D</span>
+            <span class="text-zinc-400">Complexité intrinsèque de la notion (de 1 à 10).</span>
           </div>
-          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs">
-            <div class="text-emerald-400 font-bold mb-1">Rétention R (%)</div>
-            <p class="text-zinc-400">Probabilité prédite de souvenir à l'instant t : \(R = (1 + \text{Factor} \times t/S)^{\text{Power}}\).</p>
+          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">
+            <span class="font-mono font-bold text-emerald-400 block mb-1">Rétention R</span>
+            <span class="text-zinc-400">Probabilité calculée de rappel immédiat : \( R(t) = (1 + 0.19 \cdot t / S)^{-0.5} \)</span>
           </div>
-        </div>
-
-        <div class="callout-info p-4 rounded-xl text-xs sm:text-sm">
-          <strong class="text-blue-400 block mb-1">⚡ Révision Sereine :</strong>
-          Aucun compte à rebours stressant. Vous révisez à votre rythme naturel.
         </div>
       </section>
 
-      <!-- CHAPTER 9: CONCEPTS ATOMIQUES -->
+      <!-- CHAPTER 10: CONCEPTS ATOMIQUES -->
       <section id="atomic-concepts" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
           Concepts Atomiques Feynman & Tableaux « X vs Y »
         </h2>
         <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          Chaque chapitre est découpé en briques élémentaires : l'analogie concrète (Feynman), l'utilité première (Pourquoi on en a besoin) et des tableaux comparatifs « X vs Y » avec une règle de distinction en une ligne pour éliminer les confusions fréquentes.
+          Chaque fiche est rédigée selon la <strong>technique Feynman</strong> :
         </p>
+        <ul class="space-y-2 text-xs text-zinc-400 list-disc list-inside mb-4">
+          <li><strong>Analogie concrète</strong> en tête de chapitre pour matérialiser les mécanismes abstraits.</li>
+          <li><strong>Tableaux comparatifs « X vs Y »</strong> pour éviter les confusions classiques (ex: Phase lumineuse vs Cycle de Calvin).</li>
+          <li><strong>Callouts de pièges d'examen</strong> en rose pour identifier les distracteurs fréquents.</li>
+        </ul>
       </section>
 
-      <!-- CHAPTER 10: MEMOIRE VIVANTE DES QUESTIONS -->
+      <!-- CHAPTER 11: MÉMOIRE VIVANTE -->
       <section id="memory-tree" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
-          La Mémoire Vivante des Questions (<code class="text-purple-400 font-mono text-xl">clarifications.json</code>)
+          Mémoire Vivante des Questions (<code class="text-purple-400 font-mono text-xl">clarifications.json</code>)
         </h2>
         <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          Antigravity conserve un arbre d'évolution de vos questions passées. Quand une notion bloque, il s'appuie sur vos interrogations antérieures pour approfondir le raisonnement et générer des cartes FSRS de déblocage ciblées.
+          Quand vous posez une question ou butez sur une explication, le système enregistre l'incompréhension dans un arbre évolutif (<code class="text-zinc-200 font-mono">data/revisions/clarifications.json</code>).
         </p>
+        <div class="callout-info p-4 rounded-xl text-xs sm:text-sm">
+          <strong class="text-blue-400 block mb-1">🧠 Pourquoi c'est révolutionnaire ?</strong>
+          Antigravity se souvient de vos difficultés passées. Il n'explique plus la même chose en boucle : il approfondit le raisonnement, propose un nouvel angle et crée une carte de déblocage automatique.
+        </div>
       </section>
 
-      <!-- CHAPTER 11: MOBILE & TAILSCALE 4G -->
+      <!-- CHAPTER 12: MOBILE & TAILSCALE -->
       <section id="mobile-sync" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
-          Synchronisation Mobile Instantanée & 4G Automatique
+          Synchronisation Mobile & 4G Tailscale
         </h2>
         <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          Deux modes de connexion simplifiés pour votre smartphone (Pixel 8 ou iPhone) :
+          Vous pouvez réviser et enregistrer vos cours depuis votre smartphone (Pixel 8 ou iPhone) :
         </p>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs space-y-2">
-            <span class="font-bold text-emerald-400">📱 1. Wi-Fi Local (Chez vous / En cours)</span>
-            <p class="text-zinc-400">Scannez le QR Code affiché dans votre terminal ou la modale paramètres : votre téléphone s'ouvre instantanément sur le serveur de votre Mac.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
+            <span class="font-bold text-emerald-400">📶 À la maison (Wi-Fi Local)</span>
+            <p class="text-zinc-400">Scannez simplement le QR Code de votre terminal ou de votre barre d'application. Votre téléphone se connecte directement à l'IP locale.</p>
           </div>
-          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs space-y-2">
-            <span class="font-bold text-blue-400">🌐 2. 4G Extérieur (Automatique via Tailscale)</span>
-            <p class="text-zinc-400">Avec Tailscale activé, l'application détecte automatiquement votre URL HTTPS sécurisée et la partage à vos appareils sans configurer de box Internet.</p>
+          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
+            <span class="font-bold text-blue-400">🌍 En amphi / transport (4G Tailscale)</span>
+            <p class="text-zinc-400">Grâce à Tailscale, votre Mac et votre smartphone communiquent via un VPN privé chiffré sans ouvrir aucun port sur votre box.</p>
           </div>
         </div>
       </section>
 
-      <!-- CHAPTER 12: API REST -->
+      <!-- CHAPTER 13: REST API REFERENCE -->
       <section id="api-reference" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
-          Référence API REST Backend
+          Référence de l'API REST Backend
         </h2>
-        <div class="code-block p-4 text-xs font-mono space-y-2 text-zinc-300">
-          <div><span class="text-emerald-400 font-bold">GET</span>  /api/courses          <span class="text-zinc-500">// Liste des matières et chapitres</span></div>
-          <div><span class="text-blue-400 font-bold">POST</span> /api/courses/recordings <span class="text-zinc-500">// Upload et horodatage des amphis</span></div>
-          <div><span class="text-blue-400 font-bold">POST</span> /api/courses/recall     <span class="text-zinc-500">// Correction diagnostique du Sas</span></div>
-          <div><span class="text-emerald-400 font-bold">GET</span>  /api/fsrs/queue       <span class="text-zinc-500">// Cartes dues du jour (moteur FSRS-5)</span></div>
-          <div><span class="text-emerald-400 font-bold">GET</span>  /api/settings         <span class="text-zinc-500">// État Gemini, port et réseau</span></div>
-          <div><span class="text-blue-400 font-bold">POST</span> /api/settings         <span class="text-zinc-500">// Mise à jour des clés et configuration</span></div>
+        <div class="space-y-3 text-xs font-mono">
+          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-between">
+            <div><span class="text-emerald-400 font-bold">GET</span> <span class="text-zinc-200">/api/courses</span></div>
+            <span class="text-zinc-500">Liste exhaustive des cours</span>
+          </div>
+          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-between">
+            <div><span class="text-blue-400 font-bold">POST</span> <span class="text-zinc-200">/api/recall/evaluate</span></div>
+            <span class="text-zinc-500">Évaluation diagnostique du rappel</span>
+          </div>
+          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-between">
+            <div><span class="text-emerald-400 font-bold">GET</span> <span class="text-zinc-200">/api/fsrs/queue</span></div>
+            <span class="text-zinc-500">Cartes dues du jour</span>
+          </div>
+          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-between">
+            <div><span class="text-blue-400 font-bold">POST</span> <span class="text-zinc-200">/api/settings</span></div>
+            <span class="text-zinc-500">Configuration de l'API Key et du port</span>
+          </div>
         </div>
       </section>
 
-      <!-- CHAPTER 13: FAQ & TROUBLESHOOTING -->
+      <!-- CHAPTER 14: FAQ -->
       <section id="faq" class="doc-section mb-16 border-t border-border/60 pt-12">
-        <h2 class="text-2xl font-bold text-white mb-6">
-          Foire Aux Questions & Dépannage
+        <h2 class="text-2xl font-bold text-white mb-4">
+          FAQ & Dépannage
         </h2>
-
         <div class="space-y-4 text-xs sm:text-sm">
-          <div class="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
-            <h4 class="font-bold text-white mb-1">Comment modifier ma clé Gemini après l'installation ?</h4>
-            <p class="text-zinc-400">Ouvrez l'application et cliquez sur l'icône <strong>⚙️ Paramètres</strong> en haut à droite pour la mettre à jour et la tester en 1 clic.</p>
+          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
+            <span class="font-bold text-white">Comment mettre à jour Cours ?</span>
+            <p class="text-zinc-400">Tapez simplement <code class="text-blue-300 font-mono">cours update</code> dans votre terminal. Le script tire les dernières modifications de GitHub et recompile le client Web.</p>
           </div>
-
-          <div class="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
-            <h4 class="font-bold text-white mb-1">Le port 3002 est déjà utilisé par une autre application ?</h4>
-            <p class="text-zinc-400">Changez simplement le port dans la modale Paramètres (ex: 3005) ou dans le fichier <code class="text-zinc-200">.env</code>.</p>
-          </div>
-
-          <div class="p-5 rounded-xl bg-zinc-900 border border-zinc-800">
-            <h4 class="font-bold text-white mb-1">Comment fonctionne la synchronisation mobile en 4G à l'extérieur ?</h4>
-            <p class="text-zinc-400">L'application détecte automatiquement votre tunnel Tailscale (VPN privé gratuit) et fournit une URL HTTPS sécurisée accessible partout.</p>
+          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
+            <span class="font-bold text-white">Mes données restent-elles privées ?</span>
+            <p class="text-zinc-400">Oui. Tous vos audios, fiches de cours, photos et historiques FSRS-5 sont stockés localement sur votre disque dur dans le dossier <code class="text-zinc-200 font-mono">data/</code>.</p>
           </div>
         </div>
       </section>
@@ -379,56 +492,48 @@
     </main>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="py-8 border-t border-border text-center text-xs text-zinc-500 bg-background">
-    <p>Cours (Revision OS) • Plateforme Open Source sous licence MIT</p>
-  </footer>
-
-  <!-- SCRIPT SCROLLSPY INTELLIGENT & COPY CODE -->
+  <!-- SCROLLSPY SCRIPT -->
   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const sections = document.querySelectorAll('.doc-section');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach((link) => {
+              if (link.getAttribute('href') === `#${id}`) {
+                link.classList.add('active');
+              } else {
+                link.classList.remove('active');
+              }
+            });
+          }
+        });
+      }, {
+        rootMargin: '-20% 0px -70% 0px',
+        threshold: 0
+      });
+
+      sections.forEach((sec) => observer.observe(sec));
+    });
+
     function copyCode(btn) {
       const pre = btn.parentElement.nextElementSibling;
-      const text = pre.innerText;
-      navigator.clipboard.writeText(text).then(() => {
+      navigator.clipboard.writeText(pre.innerText).then(() => {
         btn.innerText = 'Copié !';
         setTimeout(() => { btn.innerText = 'Copier'; }, 2000);
       });
     }
 
-    // SCROLLSPY DYNAMIQUE
-    document.addEventListener('DOMContentLoaded', () => {
-      const sections = document.querySelectorAll('.doc-section');
-      const navLinks = document.querySelectorAll('.nav-link');
-
-      function onScroll() {
-        const scrollPos = window.scrollY + 120;
-        let currentId = '';
-
-        sections.forEach((section) => {
-          const top = section.offsetTop;
-          const height = section.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            currentId = section.getAttribute('id');
-          }
-        });
-
-        if (!currentId && sections.length > 0) {
-          currentId = sections[0].getAttribute('id');
-        }
-
-        navLinks.forEach((link) => {
-          const href = link.getAttribute('href').replace('#', '');
-          if (href === currentId) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
-        });
-      }
-
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    });
+    function copyPrompt(id, btn) {
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.innerText = 'Copié !';
+        setTimeout(() => { btn.innerText = 'Copier le prompt'; }, 2000);
+      });
+    }
   </script>
 </body>
 </html>
