@@ -29,18 +29,33 @@ curl -fsSL https://cours-awc.pages.dev/install.sh | bash
 
 ---
 
-## Le Contrat Méthodologique Universel
+## 🏗️ L'Arborescence & Hiérarchie Pédagogique d'un Cours (Pipeline Antigravity)
 
-Le système repose sur un flux de travail rigoureux et sans friction entre votre smartphone, votre Mac et Antigravity :
+Chaque cours traité par Antigravity ne se résume pas à un simple résumé textuel. Il est décomposé selon une **hiérarchie cognitive atomique en 9 niveaux** :
 
-1. **📱 1. Capture en amphi / classe** : Sur votre smartphone ou Mac, micro en 1 clic, balises rapides (*Important, Pas compris, Piège, Définition*) et photos du tableau synchronisées (`offsetMs`).
-   * **Bilan de fin d'amphi** : Vérification des balises, suppression des photos floues et validation sereine avant synchronisation.
-2. **🧠 2. Antigravity compile** : Whisper Metal transcrit en local (0 coût). Antigravity extrait les concepts atomiques, les analogies Feynman, les tableaux comparatifs « X vs Y » et ancre les photos et repères d'incompréhension exactement là où le professeur en parlait.
-3. **🔒 3. Cours verrouillé dans l'App** : Pour briser l'illusion de facilité de la simple relecture passive, la fiche reste verrouillée jusqu'à votre première restitution.
-4. **🎙️ 4. Rappel à froid (1-2 min)** : Vous dictez ou saisissez tout ce dont vous vous souvenez sans regarder votre cours. C'est cet effort de rappel actif qui ancre durablement la mémoire.
-5. **📊 5. Diagnostic IA & Déblocage** : La fiche se débloque. Les notions oubliées sont immédiatement injectées en priorité dans votre planning FSRS de révision du lendemain.
-6. **⚡ 6. FSRS quotidien sans chrono** : Chaque jour, écoulez votre pile de cartes dues du jour à votre rythme, sans compte à rebours stressant.
-7. **🌳 7. Mémoire Vivante des Questions** : Quand vous bloquez sur un concept, Antigravity se rappelle de vos questions passées, fait progresser le raisonnement et crée une flashcard FSRS d'ancrage.
+```
+🎙️ 0. Audio brut & Photos horodatées (offsetMs)
+ └── 📝 1. Transcription locale Whisper Metal (0€ API)
+      └── 🗺️ 2. MOC (Map of Content / Vue hélicoptère du chapitre)
+           └── 💡 3. Concepts Atomiques & Analogies Feynman concrètes
+                └── ⚖️ 4. Tableaux Comparatifs « X vs Y » (anti-confusion)
+                     └── 📐 5. Formules, équations et bilans KaTeX
+                          └── ⚠️ 6. Callouts de Pièges Fréquents d'Examen
+                               └── 🔒 7. Grille d'Évaluation du Sas de Rappel Actif
+                                    └── 🗂️ 8. Flashcards FSRS-5 & QCM diagnostiques
+                                         └── 🌳 9. Arbre de Mémoire Vivante (clarifications.json)
+```
+
+### Le Rôle de Chaque Étage :
+1. **Niveau 0 & 1 — Ingestion & Ancrage Temporel (`offsetMs`)** : L'audio original et les photos du tableau sont horodatés au millième de seconde près pour réécouter un passage précis.
+2. **Niveau 2 — Le MOC (Map of Content)** : Découpage arborescent pour réduire la charge cognitive et visualiser la structure globale du chapitre.
+3. **Niveau 3 — Concepts Atomiques & Technique Feynman** : Chaque notion abstraite est vulgarisée avec une analogie concrète du monde réel (*« Une feuille est une usine solaire miniature... »*).
+4. **Niveau 4 — Tableaux Comparatifs « X vs Y »** : Mise en opposition systématique des notions qui se confondent aux partiels (*Phase photochimique vs Cycle de Calvin*, *Sève brute vs Sève élaborée*).
+5. **Niveau 5 — Bilans Formels KaTeX** : Équations chimiques et formules mathématiques rigoureusement formalisées en LaTeX.
+6. **Niveau 6 — Callouts Pièges d'Examen** : Anticipation des erreurs classiques où 80% des étudiants perdent des points.
+7. **Niveau 7 — Sas de Rappel Actif** : Verrouillage obligatoire et préparation de la grille diagnostique (notions clés).
+8. **Niveau 8 — Piles FSRS-5 & QCM** : Génération de flashcards atomiques calibrées selon la mémoire espacée.
+9. **Niveau 9 — Mémoire Vivante (`clarifications.json`)** : Historique des doutes pour contextualiser les futures explications sans répéter les mêmes réponses.
 
 ---
 

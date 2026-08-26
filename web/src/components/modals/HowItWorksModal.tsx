@@ -153,11 +153,29 @@ export const HowItWorksModal: React.FC<HowItWorksModalProps> = ({
               </div>
             </div>
 
-            <div className="bg-black/50 p-3 rounded-lg border border-zinc-800 space-y-1.5">
-              <div className="text-[10px] text-zinc-400 font-mono uppercase tracking-wider font-bold">Phrases magiques à taper dans le chat Antigravity :</div>
-              <div className="text-xs text-blue-300 font-mono">💬 « Traite tous mes enregistrements en attente et génère mes fiches »</div>
-              <div className="text-xs text-emerald-300 font-mono">💬 « Interroge-moi sur la Photosynthèse comme à l'oral d'examen »</div>
-              <div className="text-xs text-purple-300 font-mono">💬 « Je n'ai pas compris la sève brute vs élaborée, débloque-moi »</div>
+            <div className="bg-black/50 p-3.5 rounded-xl border border-zinc-800 space-y-2">
+              <div className="flex items-center justify-between text-[11px] text-zinc-400 font-mono font-bold">
+                <span className="text-blue-400">Tape simplement dans Antigravity :</span>
+                <span className="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">cours</span>
+              </div>
+              <p className="text-[11px] text-zinc-300">
+                L'agent tuteur prend le relais, compile tes cours selon la hiérarchie pédagogique et prépare tes révisions automatiquement.
+              </p>
+            </div>
+
+            {/* 9-Level Pedagogical Generation Hierarchy */}
+            <div className="p-3.5 bg-black/40 rounded-xl border border-zinc-800/80 space-y-1.5 font-mono text-[10px] text-zinc-300">
+              <div className="text-zinc-400 font-bold uppercase tracking-wider mb-1 font-sans text-[11px]">🏗️ La Hiérarchie Cognitive de Génération Antigravity :</div>
+              <div className="text-rose-400">🎙️ 0. Audio brut & Photos horodatées (offsetMs)</div>
+              <div className="pl-3 border-l border-zinc-800 text-zinc-400">└── 📝 1. Transcription Whisper Metal Locale (0€)</div>
+              <div className="pl-6 border-l border-zinc-800 text-blue-400">└── 🗺️ 2. MOC (Map of Content / Vue globale)</div>
+              <div className="pl-9 border-l border-zinc-800 text-amber-400">└── 💡 3. Concepts Atomiques & Analogies Feynman</div>
+              <div className="pl-12 border-l border-zinc-800 text-purple-400">└── ⚖️ 4. Tableaux Comparatifs « X vs Y »</div>
+              <div className="pl-15 border-l border-zinc-800 text-emerald-400">└── 📐 5. Formules & Bilans formalisés KaTeX</div>
+              <div className="pl-18 border-l border-zinc-800 text-rose-400">└── ⚠️ 6. Callouts Pièges Fréquents d'Examen</div>
+              <div className="pl-21 border-l border-zinc-800 text-amber-300">└── 🔒 7. Sas de Rappel Actif (Grille diagnostique)</div>
+              <div className="pl-24 border-l border-zinc-800 text-cyan-400">└── 🗂️ 8. Flashcards FSRS-5 & QCM</div>
+              <div className="pl-27 border-l border-zinc-800 text-emerald-300 font-bold">└── 🌳 9. Mémoire Vivante (clarifications.json)</div>
             </div>
           </div>
 
