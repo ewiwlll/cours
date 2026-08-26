@@ -1083,7 +1083,7 @@
       if (stepTitles[4]) stepTitles[4].innerText = t.step5Title;
       if (stepTexts[4]) stepTexts[4].innerText = t.step5Desc;
 
-      // Mockups Translation (Right stage)
+      // Mockup 0 (En amphi)
       const m0Title = document.querySelector('#mockup0 .font-bold.text-sm');
       if (m0Title) m0Title.innerText = isEn ? 'Biology: Photosynthesis' : 'SVT : La Photosynthèse';
       const m0Desc = document.querySelector('#mockup0 p.text-zinc-400');
@@ -1093,15 +1093,21 @@
       if (m0Tags[1]) m0Tags[1].innerText = isEn ? '⚠️ Exam trap (24:18): Thylakoids vs Stroma' : '⚠️ Piège exam (24:18) : Thylakoïdes vs Stroma';
       if (m0Tags[2]) m0Tags[2].innerText = isEn ? '📷 Board photo (31:50): Chloroplast diagram' : '📷 Photo tableau (31:50) : Schéma chloroplaste';
 
+      // Mockup 1 (Antigravity)
       const m1Title = document.querySelector('#mockup1 span.text-emerald-400');
       if (m1Title) m1Title.innerText = isEn ? 'Atomic Note: Photosynthesis' : 'Fiche Atomique : La Photosynthèse';
       const m1Badge = document.querySelector('#mockup1 span.text-\\[10px\\]');
       if (m1Badge) m1Badge.innerText = isEn ? 'Local Whisper Metal 0€' : 'Whisper Metal 0€';
+      const m1FeynmanTitle = document.querySelector('#mockup1 .bg-amber-500\\/10 .text-amber-400');
+      if (m1FeynmanTitle) m1FeynmanTitle.innerText = isEn ? '💡 CONCRETE ANALOGY (FEYNMAN)' : '💡 L\'ANALOGIE CONCRÈTE (FEYNMAN)';
       const m1Feynman = document.querySelector('#mockup1 .bg-amber-500\\/10 p');
       if (m1Feynman) m1Feynman.innerText = isEn ? '“A miniature solar factory: leaves are solar panels, roots pump water, and the plant makes sugar while releasing oxygen for us.”' : '« Une usine solaire miniature : les feuilles sont les panneaux solaires, les racines pompent l\'eau, et la plante fabrique son sucre tout en rejetant de l\'oxygène pour nous. »';
+      const m1CompTitle = document.querySelector('#mockup1 .bg-purple-950\\/30 .text-purple-300');
+      if (m1CompTitle) m1CompTitle.innerText = isEn ? '⚖️ COMPARISON "X vs Y"' : '⚖️ COMPARAISON « X vs Y »';
       const m1Comp = document.querySelector('#mockup1 .bg-purple-950\\/30 p');
       if (m1Comp) m1Comp.innerHTML = isEn ? '<strong class=\"text-zinc-200\">Light Phase</strong> (Thylakoids, with light) vs <strong class=\"text-zinc-200\">Calvin Cycle</strong> (Stroma, glucose synthesis).' : '<strong class=\"text-zinc-200\">Phase Photochimique</strong> (Thylakoïdes, avec lumière) vs <strong class=\"text-zinc-200\">Cycle de Calvin</strong> (Stroma, fabrique le glucose).';
 
+      // Mockup 2 (Sas de Rappel)
       const m2Title = document.querySelector('#mockup2 .font-bold.text-xs');
       if (m2Title) m2Title.innerText = isEn ? 'Initial Active Recall Gate' : 'Sas de Rappel Actif Initial';
       const m2Note = document.querySelector('#mockup2 span.text-amber-400.bg-amber-500\\/15');
@@ -1112,17 +1118,42 @@
       if (m2Items[0]) m2Items[0].innerHTML = isEn ? '<span>✓ Balanced equation & role of chloroplasts</span><span class=\"text-[10px] font-bold\">MASTERED</span>' : '<span>✓ Équation bilan et rôle des chloroplastes</span><span class=\"text-[10px] font-bold\">MAÎTRISÉ</span>';
       if (m2Items[1]) m2Items[1].innerHTML = isEn ? '<span>✓ Water photolysis = origin of oxygen</span><span class=\"text-[10px] font-bold\">MASTERED</span>' : '<span>✓ Photolyse de l\'eau = origine du dioxygène</span><span class=\"text-[10px] font-bold\">MAÎTRISÉ</span>';
       if (m2Items[2]) m2Items[2].innerHTML = isEn ? '<span>⚠ Distinguish Raw sap (water) vs Elaborated sap (glucose)</span><span class=\"text-[10px] font-bold\">REVIEW TOMORROW</span>' : '<span>⚠ Distinguer Sève brute (eau) et Sève élaborée (glucose)</span><span class=\"text-[10px] font-bold\">À REVOIR DEMAIN</span>';
+      const m2UnlockBadge = document.querySelector('#mockup2 .text-center span');
+      if (m2UnlockBadge) m2UnlockBadge.innerText = isEn ? '🔓 Course unlocked successfully' : '🔓 Fiche débloquée avec succès';
 
+      // Mockup 3 (FSRS-5)
       const m3Title = document.querySelector('#mockup3 span.text-emerald-400');
-      if (m3Title) m3Title.innerText = isEn ? 'FSRS-5 Engine • No Timer' : 'Moteur FSRS-5 • Sans Chrono';
-      const m3Card = document.querySelector('#mockup3 span.text-mono');
+      if (m3Title) m3Title.innerText = isEn ? 'FSRS-5 ENGINE • NO TIMER' : 'MOTEUR FSRS-5 • SANS CHRONO';
+      const m3Card = document.querySelector('#mockup3 span.font-mono.text-zinc-400');
       if (m3Card) m3Card.innerText = isEn ? 'Card 2 / 12' : 'Carte 2 / 12';
+      const m3Header = document.querySelector('#mockup3 p.text-xs.text-zinc-400');
+      if (m3Header) m3Header.innerText = isEn ? 'Conceptual Flashcard :' : 'Flashcard Conceptuelle :';
       const m3Q = document.querySelector('#mockup3 p.text-sm.font-semibold');
       if (m3Q) m3Q.innerText = isEn ? 'Where does the oxygen (O₂) released during photosynthesis originate from?' : 'D\'où provient exactement le dioxygène (O₂) rejeté lors de la photosynthèse ?';
+      const m3StatLabels = document.querySelectorAll('#mockup3 .grid .text-\\[10px\\]');
+      if (m3StatLabels[0]) m3StatLabels[0].innerText = isEn ? 'Stability S' : 'Stabilité S';
+      if (m3StatLabels[1]) m3StatLabels[1].innerText = isEn ? 'Retention R' : 'Rétention R';
+      if (m3StatLabels[2]) m3StatLabels[2].innerText = isEn ? 'Difficulty D' : 'Difficulté D';
+      const m3StatVals = document.querySelectorAll('#mockup3 .grid .text-blue-400');
+      if (m3StatVals[0]) m3StatVals[0].innerText = isEn ? '18.4 days' : '18.4 jours';
       const m3Btns = document.querySelectorAll('#mockup3 .flex.items-center.justify-between.gap-2 button');
       if (m3Btns[0]) m3Btns[0].innerText = isEn ? 'Again (1d)' : 'À revoir (1j)';
       if (m3Btns[1]) m3Btns[1].innerText = isEn ? 'Good (5d)' : 'Correct (5j)';
       if (m3Btns[2]) m3Btns[2].innerText = isEn ? 'Easy (18d)' : 'Facile (18j)';
+
+      // Mockup 4 (Mémoire Vivante)
+      const m4Title = document.querySelector('#mockup4 .font-bold.text-xs.text-white');
+      if (m4Title) m4Title.innerText = isEn ? 'Living Questions Memory' : 'Mémoire Vivante des Questions';
+      const m4Badge = document.querySelector('#mockup4 span.text-\\[10px\\].font-mono');
+      if (m4Badge) m4Badge.innerText = isEn ? 'Evolving Tree' : 'Arbre Évolutif';
+      const m4Quote1 = document.querySelector('#mockup4 .text-purple-400.font-semibold');
+      if (m4Quote1) m4Quote1.innerText = isEn ? '“You already asked a question about raw vs elaborated sap 4 days ago.”' : '« Tu avais déjà posé une question sur la sève brute et la sève élaborée il y a 4 jours. »';
+      const m4Quote2 = document.querySelector('#mockup4 .bg-zinc-900\\/90 > p.text-zinc-400');
+      if (m4Quote2) m4Quote2.innerText = isEn ? 'Your reasoning progresses: raw sap ascends water through xylem, elaborated sap distributes glucose through phloem.' : 'Ton raisonnement progresse : la sève brute monte l\'eau par le xylème, la sève élaborée transporte le glucose par le phloème.';
+      const m4GenTitle = document.querySelector('#mockup4 .bg-purple-950\\/30 span.text-emerald-400');
+      if (m4GenTitle) m4GenTitle.innerText = isEn ? 'New FSRS Flashcard generated :' : 'Nouvelle Flashcard FSRS créée :';
+      const m4GenText = document.querySelector('#mockup4 .bg-purple-950\\/30 p.text-zinc-300');
+      if (m4GenText) m4GenText.innerText = isEn ? '“Which plant tissue transports glucose produced by photosynthesis towards storage organs?”' : '« Quel tissu végétal transporte le glucose produit par la photosynthèse vers les organes de stockage ? »';
 
       // Demo
       const demoTag = document.querySelector('#demo span.text-blue-400');
