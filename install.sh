@@ -73,7 +73,7 @@ else
 fi
 
 # 4. Installation des dépendances
-echo -e "\n${BLUE}[4/6]${RESET} Installation des dépendances (Web & Mobile)..."
+echo -e "\n${BLUE}[4/6]${RESET} Installation des dépendances (Web, Mobile & QR Code)..."
 
 if [ -f "package.json" ]; then
     npm install --silent > /dev/null 2>&1 || true
@@ -111,6 +111,31 @@ node --test tests/learning-engine.test.mjs tests/recall-correction.test.mjs > /d
 echo -e "  ${GREEN}✓${RESET} Moteur d'apprentissage FSRS-5 et Sas de Rappel validés."
 
 echo -e "\n${GREEN}${BOLD}🎉 Installation de Cours (Revision OS) terminée avec succès !${RESET}\n"
+
+# QR Code mobile connect display
+node -e '
+import os from "node:os";
+import qrcode from "qrcode-terminal";
+const nets = os.networkInterfaces();
+let localIp = "127.0.0.1";
+for (const name of Object.keys(nets)) {
+  for (const net of nets[name] || []) {
+    if (net.family === "IPv4" && !net.internal) {
+      localIp = net.address;
+      break;
+    }
+  }
+}
+console.log("\x1b[33m\x1b[1m📱 Scannez ce QR Code avec votre smartphone pour synchroniser l\x27application :\x1b[0m");
+const qrGen = qrcode.default?.generate || qrcode.generate;
+if (qrGen) {
+  qrGen(`http://${localIp}:3002`, { small: true }, (qr) => {
+    console.log(qr);
+  });
+}
+console.log(`\x1b[36m👉 URL Mobile Wi-Fi : http://${localIp}:3002\x1b[0m\n`);
+' 2>/dev/null || true
+
 echo -e "Pour démarrer le serveur local :"
 echo -e "  ${CYAN}cd $(pwd)${RESET}"
 echo -e "  ${CYAN}npm start${RESET}  ou  ${CYAN}node start.mjs${RESET}\n"

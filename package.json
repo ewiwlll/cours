@@ -20,5 +20,8 @@
     "spaced-repetition"
   ],
   "author": "Cours Authors",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "qrcode-terminal": "^0.12.0"
+  }
 }

@@ -106,7 +106,7 @@
       <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-400">
         <a href="#how-it-works" class="hover:text-white transition-colors">Comment ça marche ?</a>
         <a href="#features" class="hover:text-white transition-colors">Fonctionnalités</a>
-        <a href="#parity" class="hover:text-white transition-colors">Mac & Mobile</a>
+        <a href="#qr-connect" class="hover:text-white transition-colors">Mobile & QR Code</a>
       </nav>
 
       <div class="flex items-center gap-3">
@@ -146,7 +146,7 @@
           <span class="text-blue-400 select-none font-bold">$</span>
           <span id="curlCommand" class="select-all whitespace-nowrap text-zinc-100">curl -fsSL https://cours-awc.pages.dev/install.sh | bash</span>
         </div>
-        <button id="copyBtn" onclick="copyInstallCommand()" class="shrink-0 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-sans font-semibold text-xs transition-all flex items-center gap-1.5 shadow-lg shadow-blue-500/20 active:scale-95">
+        <button id="copyBtn" onclick="copyInstallCommand('curlCommand', 'copyText', 'copyIcon')" class="shrink-0 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-sans font-semibold text-xs transition-all flex items-center gap-1.5 shadow-lg shadow-blue-500/20 active:scale-95">
           <svg id="copyIcon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
           <span id="copyText">Copier</span>
         </button>
@@ -168,7 +168,7 @@
           Comment ça marche ?
         </h2>
         <p class="text-base sm:text-lg text-zinc-400 max-w-xl">
-          Seulement 5 étapes pour passer de l'écoute en amphi à une maîtrise parfaite et durable.
+          Seulement 5 étapes pour passer de l'écoute en cours à une maîtrise parfaite et durable.
         </p>
       </div>
 
@@ -181,12 +181,12 @@
           <!-- STEP 1 -->
           <div class="step-card group cursor-pointer p-5 rounded-2xl border transition-all duration-300 bg-zinc-900/40 border-zinc-800/80" data-step="0">
             <div class="flex items-center justify-between">
-              <h3 class="font-bold text-base sm:text-lg text-white step-title">1. En Amphi : Capture & Visualisation</h3>
+              <h3 class="font-bold text-base sm:text-lg text-white step-title">1. En Cours : Capture & Visualisation</h3>
               <span class="text-zinc-400 text-lg font-mono step-icon">+</span>
             </div>
             <div class="step-content hidden pt-3">
               <p class="text-sm text-zinc-400 leading-relaxed">
-                Un clic pour lancer le micro. Ne perdez plus votre attention à recopier les slides : visualisez les concepts du professeur et posez des balises instantanées (Important, Piège exam, Pas compris, Photo tableau synchronisée).
+                Un clic pour lancer le micro. Ne perdez plus votre attention à recopier les slides : visualisez les concepts et posez des balises instantanées (Important, Piège exam, Pas compris, Photo tableau synchronisée).
               </p>
               <div class="mt-4 w-full bg-zinc-800 rounded-full h-[3px] overflow-hidden">
                 <div class="step-progress-bar w-0" id="progressBar0"></div>
@@ -202,7 +202,7 @@
             </div>
             <div class="step-content hidden pt-3">
               <p class="text-sm text-zinc-400 leading-relaxed">
-                Whisper Metal local transcrit l'audio en toute confidentialité à 0€ de coût API. Antigravity décompose le cours en concepts atomiques, analogies Feynman et tableaux comparatifs « X vs Y ».
+                Whisper Metal local transcrit l'audio en toute confidentialité à 0€ de coût API. Antigravity extrait les analogies Feynman, les formules bilans et les tableaux comparatifs « X vs Y ».
               </p>
               <div class="mt-4 w-full bg-zinc-800 rounded-full h-[3px] overflow-hidden">
                 <div class="step-progress-bar w-0" id="progressBar1"></div>
@@ -218,7 +218,7 @@
             </div>
             <div class="step-content hidden pt-3">
               <p class="text-sm text-zinc-400 leading-relaxed">
-                Pour briser l'illusion de facilité de la simple relecture passive, la fiche reste verrouillée. Prenez 1 à 2 minutes pour restituer ce que vous avez retenu : l'IA diagnostique vos lacunes et débloque le cours.
+                Pour briser l'illusion de facilité de la simple relecture passive, la fiche reste verrouillée. Prenez 1 à 2 minutes pour restituer ce que vous avez retenu sans aide : l'IA diagnostique vos lacunes et débloque le cours.
               </p>
               <div class="mt-4 w-full bg-zinc-800 rounded-full h-[3px] overflow-hidden">
                 <div class="step-progress-bar w-0" id="progressBar2"></div>
@@ -260,7 +260,7 @@
 
         </div>
 
-        <!-- RIGHT: DYNAMIC SYNCHRONIZED MOCKUP FRAME (NEVERBORING STYLE WITH ATMOSPHERIC SKY GLOW) -->
+        <!-- RIGHT: DYNAMIC SYNCHRONIZED MOCKUP FRAME (EXEMPLE CONCRET : LA PHOTOSYNTHÈSE) -->
         <div class="lg:col-span-7 sticky top-24">
           <div class="relative w-full rounded-3xl p-4 sm:p-8 overflow-hidden border border-zinc-800 bg-gradient-to-br from-zinc-900/90 via-zinc-950 to-zinc-900 shadow-2xl shadow-black/80 min-h-[460px] flex items-center justify-center">
             
@@ -270,60 +270,60 @@
             <!-- MOCKUP CONTAINER (FADES IN/OUT PER STEP) -->
             <div class="relative z-10 w-full max-w-lg transition-all duration-300" id="mockupContainer">
               
-              <!-- MOCKUP 0: EN AMPHI CAPTURE -->
+              <!-- MOCKUP 0: EN AMPHI / CLASSE (PHOTOSYNTHÈSE) -->
               <div class="mockup-view hidden space-y-4" id="mockup0">
                 <div class="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-5 shadow-xl backdrop-blur-xl">
                   <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3 mb-4">
                     <div class="flex items-center gap-2">
                       <span class="w-3 h-3 rounded-full bg-rose-500 animate-ping"></span>
-                      <span class="font-bold text-sm text-white">Enregistrement Amphi en cours</span>
+                      <span class="font-bold text-sm text-white">SVT : La Photosynthèse</span>
                     </div>
-                    <span class="font-mono text-xs font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">01:14:22</span>
+                    <span class="font-mono text-xs font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">34:12</span>
                   </div>
 
                   <!-- LIVE WAVEFORM SIMULATOR -->
                   <div class="flex items-center justify-center gap-1.5 h-12 py-2 mb-4 bg-zinc-900/50 rounded-xl px-4">
-                    <div class="w-1 bg-blue-500 rounded-full animate-wave" style="animation-delay: 0.1s"></div>
-                    <div class="w-1 bg-blue-400 rounded-full animate-wave" style="animation-delay: 0.3s"></div>
-                    <div class="w-1 bg-indigo-500 rounded-full animate-wave" style="animation-delay: 0.2s"></div>
-                    <div class="w-1 bg-blue-500 rounded-full animate-wave" style="animation-delay: 0.5s"></div>
+                    <div class="w-1 bg-emerald-500 rounded-full animate-wave" style="animation-delay: 0.1s"></div>
+                    <div class="w-1 bg-emerald-400 rounded-full animate-wave" style="animation-delay: 0.3s"></div>
+                    <div class="w-1 bg-teal-500 rounded-full animate-wave" style="animation-delay: 0.2s"></div>
+                    <div class="w-1 bg-emerald-500 rounded-full animate-wave" style="animation-delay: 0.5s"></div>
                     <div class="w-1 bg-cyan-400 rounded-full animate-wave" style="animation-delay: 0.4s"></div>
-                    <div class="w-1 bg-blue-600 rounded-full animate-wave" style="animation-delay: 0.6s"></div>
-                    <div class="w-1 bg-indigo-400 rounded-full animate-wave" style="animation-delay: 0.2s"></div>
-                    <div class="w-1 bg-blue-400 rounded-full animate-wave" style="animation-delay: 0.4s"></div>
+                    <div class="w-1 bg-emerald-600 rounded-full animate-wave" style="animation-delay: 0.6s"></div>
+                    <div class="w-1 bg-teal-400 rounded-full animate-wave" style="animation-delay: 0.2s"></div>
+                    <div class="w-1 bg-emerald-400 rounded-full animate-wave" style="animation-delay: 0.4s"></div>
                   </div>
 
                   <p class="text-xs text-zinc-400 mb-3 font-medium">Balises rapides posées en 1 clic pendant l'explication :</p>
                   <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1.5 rounded-xl bg-amber-500/15 text-amber-300 border border-amber-500/30 text-xs font-semibold">🔥 Important (42:10)</span>
-                    <span class="px-3 py-1.5 rounded-xl bg-rose-500/15 text-rose-300 border border-rose-500/30 text-xs font-semibold">⚠️ Piège exam (58:44)</span>
-                    <span class="px-3 py-1.5 rounded-xl bg-purple-500/15 text-purple-300 border border-purple-500/30 text-xs font-semibold">📷 Photo tableau (01:05:12)</span>
+                    <span class="px-3 py-1.5 rounded-xl bg-amber-500/15 text-amber-300 border border-amber-500/30 text-xs font-semibold">🔥 Important (12:04) : Photolyse de l'eau</span>
+                    <span class="px-3 py-1.5 rounded-xl bg-rose-500/15 text-rose-300 border border-rose-500/30 text-xs font-semibold">⚠️ Piège exam (24:18) : Thylakoïdes vs Stroma</span>
+                    <span class="px-3 py-1.5 rounded-xl bg-purple-500/15 text-purple-300 border border-purple-500/30 text-xs font-semibold">📷 Photo tableau (31:50) : Schéma chloroplaste</span>
                   </div>
                 </div>
               </div>
 
-              <!-- MOCKUP 1: ANTIGRAVITY SYNTHESIS -->
+              <!-- MOCKUP 1: ANTIGRAVITY SYNTHESIS (PHOTOSYNTHÈSE) -->
               <div class="mockup-view hidden space-y-4" id="mockup1">
                 <div class="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-5 shadow-xl backdrop-blur-xl space-y-3">
                   <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3">
-                    <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Fiche Structurée • Antigravity Studio</span>
+                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Fiche Atomique : La Photosynthèse</span>
                     <span class="text-[10px] font-bold bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20">Whisper Metal 0€</span>
                   </div>
                   <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 text-xs">
-                    <div class="text-amber-400 font-bold mb-1">💡 POURQUOI ON EN A BESOIN</div>
-                    <p class="text-zinc-300 text-[11px]">Prédire la spontanéité d'un phénomène sans mesurer l'entropie de tout l'univers.</p>
+                    <div class="text-amber-400 font-bold mb-1">💡 L'ANALOGIE CONCRÈTE (FEYNMAN)</div>
+                    <p class="text-zinc-300 text-[11px]">« Une usine solaire miniature : les feuilles sont les panneaux solaires, les racines pompent l'eau, et la plante fabrique son sucre tout en rejetant de l'oxygène pour nous. »</p>
                   </div>
-                  <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-center text-blue-300 font-mono text-xs font-bold">
-                    ΔG = ΔH - T ΔS
+                  <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-center text-emerald-300 font-mono text-xs font-bold">
+                    6 CO₂ + 6 H₂O + Lumière ➔ C₆H₁₂O₆ + 6 O₂
                   </div>
                   <div class="bg-purple-950/30 border border-purple-800/40 rounded-xl p-3 text-xs">
-                    <div class="text-purple-300 font-bold mb-1">⚖️ TABLEAU COMPARATIF « X vs Y »</div>
-                    <p class="text-zinc-400 text-[11px]">ΔG (variable instantanée) vs ΔG°' (constante standard tabulée).</p>
+                    <div class="text-purple-300 font-bold mb-1">⚖️ COMPARAISON « X vs Y »</div>
+                    <p class="text-zinc-400 text-[11px]"><strong class="text-zinc-200">Phase Photochimique</strong> (Thylakoïdes, avec lumière) vs <strong class="text-zinc-200">Cycle de Calvin</strong> (Stroma, fabrique le glucose).</p>
                   </div>
                 </div>
               </div>
 
-              <!-- MOCKUP 2: ACTIVE RECALL GATEWAY -->
+              <!-- MOCKUP 2: ACTIVE RECALL GATEWAY (PHOTOSYNTHÈSE) -->
               <div class="mockup-view hidden space-y-4" id="mockup2">
                 <div class="bg-zinc-950/90 border border-amber-500/30 rounded-2xl p-5 shadow-xl backdrop-blur-xl space-y-3">
                   <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3">
@@ -331,20 +331,20 @@
                       <span class="text-amber-400 text-sm">🔒</span>
                       <span class="font-bold text-xs text-white">Sas de Rappel Actif Initial</span>
                     </div>
-                    <span class="font-mono text-xs font-bold text-amber-400 bg-amber-500/15 px-2 py-0.5 rounded border border-amber-500/30">Note : 84/100</span>
+                    <span class="font-mono text-xs font-bold text-amber-400 bg-amber-500/15 px-2 py-0.5 rounded border border-amber-500/30">Note : 96/100</span>
                   </div>
-                  <p class="text-xs text-zinc-300 italic">« Le ΔG mesure l'énergie libre disponible. Si ΔG &lt; 0, la réaction est exergonique et spontanée... »</p>
+                  <p class="text-xs text-zinc-300 italic">« Les cellules végétales utilisent l'énergie de la lumière pour transformer l'eau et le CO2 en sucre dans les chloroplastes, en libérant de l'O2... »</p>
                   <div class="space-y-1.5 pt-2 border-t border-zinc-800/80 text-xs">
                     <div class="flex items-center justify-between text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded">
-                      <span>✓ Définition enthalpie libre ΔG</span>
+                      <span>✓ Équation bilan et rôle des chloroplastes</span>
                       <span class="text-[10px] font-bold">MAÎTRISÉ</span>
                     </div>
                     <div class="flex items-center justify-between text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded">
-                      <span>✓ Couplage énergétique par l'ATP</span>
+                      <span>✓ Photolyse de l'eau = origine du dioxygène</span>
                       <span class="text-[10px] font-bold">MAÎTRISÉ</span>
                     </div>
                     <div class="flex items-center justify-between text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded">
-                      <span>⚠ Ne pas confondre ΔG et vitesse cinétique</span>
+                      <span>⚠ Distinguer Sève brute (eau) et Sève élaborée (glucose)</span>
                       <span class="text-[10px] font-bold">À REVOIR DEMAIN</span>
                     </div>
                   </div>
@@ -354,40 +354,40 @@
                 </div>
               </div>
 
-              <!-- MOCKUP 3: FSRS-5 PLAYER -->
+              <!-- MOCKUP 3: FSRS-5 PLAYER (PHOTOSYNTHÈSE) -->
               <div class="mockup-view hidden space-y-4" id="mockup3">
                 <div class="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-5 shadow-xl backdrop-blur-xl space-y-4">
                   <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3">
                     <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Moteur FSRS-5 • Sans Chrono</span>
-                    <span class="text-xs font-mono text-zinc-400">Carte 4 / 18</span>
+                    <span class="text-xs font-mono text-zinc-400">Carte 2 / 12</span>
                   </div>
                   <div class="bg-zinc-900 border border-zinc-800/80 rounded-xl p-4 text-center">
                     <p class="text-xs text-zinc-400 mb-1">Flashcard Conceptuelle :</p>
-                    <p class="text-sm font-semibold text-white">Quelle est la condition thermodynamique pour qu'une réaction anabolique ait lieu dans la cellule ?</p>
+                    <p class="text-sm font-semibold text-white">D'où provient exactement le dioxygène (O₂) rejeté lors de la photosynthèse ?</p>
                   </div>
                   <div class="grid grid-cols-3 gap-2 text-center text-xs font-mono">
                     <div class="bg-zinc-900 p-2 rounded-lg border border-zinc-800">
                       <div class="text-[10px] text-zinc-500">Stabilité S</div>
-                      <div class="text-blue-400 font-bold">14.2 jours</div>
+                      <div class="text-blue-400 font-bold">18.4 jours</div>
                     </div>
                     <div class="bg-zinc-900 p-2 rounded-lg border border-zinc-800">
                       <div class="text-[10px] text-zinc-500">Rétention R</div>
-                      <div class="text-emerald-400 font-bold">90%</div>
+                      <div class="text-emerald-400 font-bold">94%</div>
                     </div>
                     <div class="bg-zinc-900 p-2 rounded-lg border border-zinc-800">
                       <div class="text-[10px] text-zinc-500">Difficulté D</div>
-                      <div class="text-amber-400 font-bold">4.8 / 10</div>
+                      <div class="text-amber-400 font-bold">3.2 / 10</div>
                     </div>
                   </div>
                   <div class="flex items-center justify-between gap-2 pt-1">
                     <button class="flex-1 py-1.5 rounded-lg bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs font-semibold">À revoir (1j)</button>
-                    <button class="flex-1 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-semibold">Correct (4j)</button>
-                    <button class="flex-1 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">Facile (14j)</button>
+                    <button class="flex-1 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-semibold">Correct (5j)</button>
+                    <button class="flex-1 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">Facile (18j)</button>
                   </div>
                 </div>
               </div>
 
-              <!-- MOCKUP 4: QUESTIONS MEMORY TREE -->
+              <!-- MOCKUP 4: QUESTIONS MEMORY TREE (PHOTOSYNTHÈSE) -->
               <div class="mockup-view hidden space-y-4" id="mockup4">
                 <div class="bg-zinc-950/90 border border-purple-500/30 rounded-2xl p-5 shadow-xl backdrop-blur-xl space-y-3">
                   <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3">
@@ -398,12 +398,12 @@
                     <span class="text-[10px] font-mono text-purple-300 bg-purple-500/15 px-2 py-0.5 rounded border border-purple-500/30">Arbre Évolutif</span>
                   </div>
                   <div class="bg-zinc-900/90 rounded-xl p-3 text-xs text-zinc-300 space-y-2">
-                    <div class="text-purple-400 font-semibold text-[11px]">« Tu avais déjà posé cette question il y a 3 jours quand on parlait du potentiel chimique. »</div>
-                    <p class="text-zinc-400 text-[11px]">Ton raisonnement a progressé : tu avais compris le rôle de la concentration, mais tu hésitais sur la température standard.</p>
+                    <div class="text-purple-400 font-semibold text-[11px]">« Tu avais déjà posé une question sur la sève brute et la sève élaborée il y a 4 jours. »</div>
+                    <p class="text-zinc-400 text-[11px]">Ton raisonnement progresse : la sève brute monte l'eau par le xylème, la sève élaborée transporte le glucose fabriqué par le phloème.</p>
                   </div>
                   <div class="bg-purple-950/30 border border-purple-800/40 rounded-xl p-3 text-xs text-zinc-200">
                     <span class="text-emerald-400 font-bold">Nouvelle Flashcard FSRS créée :</span>
-                    <p class="text-[11px] text-zinc-300 mt-1">« Pourquoi la variation de température modifie-t-elle le signe de ΔG sans changer ΔH° ? »</p>
+                    <p class="text-[11px] text-zinc-300 mt-1">« Quel tissu végétal transporte le glucose produit par la photosynthèse vers les organes de stockage ? »</p>
                   </div>
                 </div>
               </div>
@@ -416,73 +416,40 @@
     </div>
   </section>
 
-  <!-- FEATURES GRID -->
-  <section id="features" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="text-center max-w-3xl mx-auto mb-16">
-      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
-        Un système complet pour réussir toutes vos matières.
-      </h2>
-      <p class="text-base sm:text-lg text-zinc-400">
-        Sciences, Droit, Santé, Lettres, Ingénierie, Économie... L'architecture s'adapte à n'importe quel cursus.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-      <!-- CARD 1 -->
-      <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden">
-        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/25 flex items-center justify-center text-blue-400 text-2xl mb-6">
-          🎙️
-        </div>
-        <div>
-          <span class="text-[11px] font-bold uppercase tracking-wider text-blue-400">Capture Universelle</span>
-          <h3 class="text-xl font-bold text-white mt-1 mb-3">En Amphi & Photos Synchronisées</h3>
-          <p class="text-sm text-zinc-400 leading-relaxed mb-6">
-            Micro natif en 1 clic. Posez des balises (Important, Pas compris, Piège, Définition) et prenez des photos du tableau synchronisées à la seconde exacte de l'explication.
+  <!-- =================================================================================== -->
+  <!-- SECTION QR CODE MOBILE SYNC                                                         -->
+  <!-- =================================================================================== -->
+  <section id="qr-connect" class="py-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="glass-card rounded-3xl p-8 sm:p-12 border border-zinc-800 relative overflow-hidden">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+        <div class="md:col-span-7 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-semibold text-emerald-400">
+            📱 Synchronisation Instantanée
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+            Scannez le QR Code dans votre terminal pour ouvrir l'app sur mobile.
+          </h2>
+          <p class="text-sm text-zinc-400 leading-relaxed">
+            Dès que vous exécutez la commande d'installation sur votre Mac, un QR Code s'affiche dans votre terminal. Pointez votre appareil photo (iPhone ou Android) : votre téléphone se connecte directement à votre Mac en Wi-Fi local ou en 4G privée.
           </p>
+          <div class="flex items-center gap-4 pt-2 text-xs font-mono text-zinc-400">
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Zéro configuration</span>
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-400"></span> Synchro temps réel</span>
+          </div>
         </div>
-        <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 text-xs font-mono text-zinc-300">
-          <span class="text-blue-400">01:14:22</span> • <span class="text-amber-400">⭐ Important</span><br>
-          <span class="text-purple-400">📷 Photo tableau synchronisée</span>
+
+        <div class="md:col-span-5 flex justify-center">
+          <div class="p-6 bg-zinc-950 border border-zinc-800 rounded-2xl text-center shadow-2xl space-y-3">
+            <div class="w-40 h-40 mx-auto bg-white rounded-xl p-3 flex items-center justify-center shadow-inner">
+              <!-- SVG QR CODE MOCKUP -->
+              <svg viewBox="0 0 100 100" class="w-full h-full text-zinc-950 fill-current">
+                <path d="M0 0h30v30H0zm5 5v20h20V5zm5 5h10v10H10zm60-15h30v30H70zm5 5v20h20V5zm5 5h10v10H80zM0 70h30v30H0zm5 5v20h20V75zm5 5h10v10H10zm35-70h5v15h-5zm10 0h5v10h-5zm-10 20h15v5h-15zm35 50h5v15h-5zm10 0h5v10h-5zm-10 20h15v5h-15zm-45-20h10v5H35zm0 10h5v15h-5zm10 5h5v10h-5zm10-15h5v5h-5zm0 10h10v5H55zm15-5h10v5H70z"/>
+              </svg>
+            </div>
+            <p class="text-[11px] font-mono text-zinc-400">http://192.168.1.x:3002</p>
+          </div>
         </div>
       </div>
-
-      <!-- CARD 2 -->
-      <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden">
-        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 text-2xl mb-6">
-          🔒
-        </div>
-        <div>
-          <span class="text-[11px] font-bold uppercase tracking-wider text-amber-400">Active Recall Testing</span>
-          <h3 class="text-xl font-bold text-white mt-1 mb-3">Sas de Rappel Actif & Diagnostic</h3>
-          <p class="text-sm text-zinc-400 leading-relaxed mb-6">
-            Pour briser l'illusion de facilité de la simple relecture passive. Évaluation concept par concept basée uniquement sur le cours réel, sans hallucination.
-          </p>
-        </div>
-        <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 text-xs font-mono text-zinc-300">
-          <span class="text-emerald-400">✓ Notion A maîtrisée</span><br>
-          <span class="text-rose-400">⚠ Distinguer Notion A vs Notion B</span>
-        </div>
-      </div>
-
-      <!-- CARD 3 -->
-      <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden">
-        <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/25 flex items-center justify-center text-purple-400 text-2xl mb-6">
-          🧠
-        </div>
-        <div>
-          <span class="text-[11px] font-bold uppercase tracking-wider text-purple-400">Mémoire Vivante</span>
-          <h3 class="text-xl font-bold text-white mt-1 mb-3">Arbre des Questions Évolutif</h3>
-          <p class="text-sm text-zinc-400 leading-relaxed mb-6">
-            Antigravity mémorise vos doutes passés pour contextualiser vos questions, approfondir le raisonnement et créer des flashcards de déblocage ciblées.
-          </p>
-        </div>
-        <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 text-xs font-mono text-zinc-300">
-          <span class="text-purple-400 font-semibold">« Tu avais déjà demandé... »</span><br>
-          <span class="text-zinc-400">Raisonnement approfondi</span>
-        </div>
-      </div>
-
     </div>
   </section>
 
@@ -500,10 +467,11 @@
         <div class="code-pill rounded-2xl p-2.5 flex items-center justify-between gap-3 font-mono text-xs sm:text-sm text-zinc-200">
           <div class="flex items-center gap-2 overflow-x-auto py-1 pl-2">
             <span class="text-blue-400 select-none">$</span>
-            <span class="select-all whitespace-nowrap">curl -fsSL https://cours-awc.pages.dev/install.sh | bash</span>
+            <span id="bottomCurlCommand" class="select-all whitespace-nowrap">curl -fsSL https://cours-awc.pages.dev/install.sh | bash</span>
           </div>
-          <button onclick="copyInstallCommand()" class="shrink-0 px-4 py-2 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-sans font-bold text-xs transition-all">
-            Copier
+          <button id="bottomCopyBtn" onclick="copyInstallCommand('bottomCurlCommand', 'bottomCopyText', 'bottomCopyIcon')" class="shrink-0 px-4 py-2 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-sans font-bold text-xs transition-all flex items-center gap-1.5">
+            <svg id="bottomCopyIcon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span id="bottomCopyText">Copier</span>
           </button>
         </div>
       </div>
@@ -527,7 +495,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT POUR AUTO-CYCLE 6s ET INTERACTIVITE DES ETAPES -->
+  <!-- SCRIPT POUR AUTO-CYCLE 6s ET FONCTION COPIER ULTRA-FIABLE -->
   <script>
     let currentStep = 0;
     const totalSteps = 5;
@@ -578,10 +546,8 @@
       mockups.forEach((mockup, i) => {
         if (i === index) {
           mockup.classList.remove('hidden');
-          mockup.classList.add('opacity-100', 'translate-y-0');
         } else {
           mockup.classList.add('hidden');
-          mockup.classList.remove('opacity-100', 'translate-y-0');
         }
       });
 
@@ -633,15 +599,45 @@
     // Initialize first step
     activateStep(0);
 
-    function copyInstallCommand() {
-      const text = document.getElementById('curlCommand').innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        const copyText = document.getElementById('copyText');
+    // ROBUST 100% RELIABLE COPY FUNCTION WITH FALLBACK
+    function copyInstallCommand(elementId, textId, iconId) {
+      const el = document.getElementById(elementId);
+      const text = el ? el.innerText.trim() : "curl -fsSL https://cours-awc.pages.dev/install.sh | bash";
+      
+      const successFeedback = () => {
+        const copyText = document.getElementById(textId);
+        const copyIcon = document.getElementById(iconId);
         if (copyText) copyText.innerText = 'Copié !';
+        if (copyIcon) copyIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>';
         setTimeout(() => {
           if (copyText) copyText.innerText = 'Copier';
+          if (copyIcon) copyIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>';
         }, 2000);
-      });
+      };
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(successFeedback).catch(() => fallbackCopy(text, successFeedback));
+      } else {
+        fallbackCopy(text, successFeedback);
+      }
+    }
+
+    function fallbackCopy(text, callback) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      textArea.style.top = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        textArea.remove();
+        if (callback) callback();
+      } catch (err) {
+        textArea.remove();
+      }
     }
   </script>
 </body>

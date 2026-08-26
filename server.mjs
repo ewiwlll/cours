@@ -1915,8 +1915,35 @@ const server = http.createServer(async (req, res) => {
 
 const isMainModule = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (isMainModule) {
-  server.listen(PORT, HOST, () => {
-    console.log(`Cours : http://${HOST === "0.0.0.0" ? "<adresse-du-Mac>" : "localhost"}:${PORT}`);
+  server.listen(PORT, HOST, async () => {
+    let localIp = "127.0.0.1";
+    try {
+      const os = await import("node:os");
+      const nets = os.networkInterfaces();
+      for (const name of Object.keys(nets)) {
+        for (const net of nets[name] || []) {
+          if (net.family === "IPv4" && !net.internal) {
+            localIp = net.address;
+            break;
+          }
+        }
+      }
+    } catch {}
+
+    console.log(`\n\x1b[32m\x1b[1m🎉 Serveur Cours démarré avec succès !\x1b[0m`);
+    console.log(`💻 \x1b[36mMac / Web :\x1b[0m   http://localhost:${PORT}`);
+    console.log(`📱 \x1b[35mMobile Wi-Fi :\x1b[0m http://${localIp}:${PORT}\n`);
+
+    try {
+      const qrcode = await import("qrcode-terminal");
+      const qrGen = qrcode.default?.generate || qrcode.generate;
+      if (qrGen) {
+        console.log(`\x1b[33m\x1b[1m📱 Scannez ce QR Code avec votre téléphone pour ouvrir l'application :\x1b[0m`);
+        qrGen(`http://${localIp}:${PORT}`, { small: true }, (qr) => {
+          console.log(qr + "\n");
+        });
+      }
+    } catch {}
   });
 }
 
