@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" class="dark">
+<html lang="fr" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,33 +37,37 @@
       color: #f4f4f5;
       font-family: 'Inter', sans-serif;
       overflow-x: hidden;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 32px 32px;
     }
     .glow-radial {
-      background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.16) 0%, rgba(9, 9, 11, 0) 70%);
+      background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.18) 0%, rgba(9, 9, 11, 0) 70%);
     }
     .glow-sky {
-      background: radial-gradient(circle at 50% 40%, rgba(56, 189, 248, 0.18) 0%, rgba(99, 102, 241, 0.12) 50%, rgba(9, 9, 11, 0) 75%);
+      background: radial-gradient(circle at 50% 40%, rgba(56, 189, 248, 0.16) 0%, rgba(99, 102, 241, 0.1) 50%, rgba(9, 9, 11, 0) 75%);
     }
     .glass-card {
       background: rgba(18, 18, 22, 0.75);
       backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .glass-card:hover {
-      border-color: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
     }
     .code-pill {
       background: rgba(24, 24, 27, 0.85);
       border: 1px solid rgba(63, 63, 70, 0.6);
       box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+      transition: all 0.2s ease;
+    }
+    .code-pill:hover {
+      border-color: rgba(59, 130, 246, 0.5);
     }
     .text-gradient-blue {
       background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #93c5fd 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .text-gradient-amber {
-      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -78,10 +82,17 @@
     /* Waveform animation */
     @keyframes wave {
       0%, 100% { height: 4px; }
-      50% { height: 24px; }
+      50% { height: 26px; }
     }
     .animate-wave {
       animation: wave 1.2s ease-in-out infinite;
+    }
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.02); }
+    }
+    .animate-subtle {
+      animation: pulse-subtle 4s ease-in-out infinite;
     }
   </style>
 </head>
@@ -94,21 +105,25 @@
   <header class="sticky top-0 z-50 backdrop-blur-xl bg-background/80 border-b border-border/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white text-lg shadow-lg shadow-blue-500/20">
-          C
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="font-extrabold text-base tracking-tight text-white">Cours</span>
-          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">Revision OS</span>
-        </div>
+        <a href="/" class="flex items-center gap-2.5 group">
+          <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white text-lg shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
+            C
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-base tracking-tight text-white">Cours</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">Revision OS</span>
+          </div>
+        </a>
       </div>
 
       <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-400">
         <a href="#how-it-works" class="hover:text-white transition-colors">Comment ça marche ?</a>
-        <a href="#features" class="hover:text-white transition-colors">Fonctionnalités</a>
-        <a href="#qr-connect" class="hover:text-white transition-colors">Mobile & QR Code</a>
-        <a href="/docs" class="hover:text-white transition-colors">Documentation</a>
-        <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
+        <a href="#demo" class="hover:text-white transition-colors">Démo Interactive</a>
+        <a href="#qr-connect" class="hover:text-white transition-colors">Mobile & 4G</a>
+        <a href="/docs" class="hover:text-white transition-colors flex items-center gap-1.5 text-blue-400 font-semibold">
+          <span>Documentation</span>
+          <span class="text-[10px] px-1.5 py-0.2 bg-blue-500/15 rounded border border-blue-500/30">v1.0</span>
+        </a>
       </nav>
 
       <div class="flex items-center gap-3">
@@ -153,7 +168,7 @@
           <span id="copyText">Copier</span>
         </button>
       </div>
-      <p class="text-[11px] text-zinc-500 mt-2.5">Installation automatique en 1 clic • Compatible macOS & Linux • Zéro coût API voix</p>
+      <p class="text-[11px] text-zinc-500 mt-2.5">Installation automatique en 1 clic • Lancez ensuite avec la commande <code class="text-blue-400 font-mono font-bold">cours</code></p>
     </div>
   </section>
 
@@ -174,7 +189,7 @@
         </p>
       </div>
 
-      <!-- INTERACTIVE 2-COLUMN STAGE (LEFT: ACCORDION TABS, RIGHT: SYNCHRONIZED MOCKUP) -->
+      <!-- INTERACTIVE 2-COLUMN STAGE -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         <!-- LEFT: ACCORDION STEPS WITH 6s PROGRESS BAR -->
@@ -262,17 +277,17 @@
 
         </div>
 
-        <!-- RIGHT: DYNAMIC SYNCHRONIZED MOCKUP FRAME (EXEMPLE CONCRET : LA PHOTOSYNTHÈSE) -->
+        <!-- RIGHT: DYNAMIC SYNCHRONIZED MOCKUP FRAME (PHOTOSYNTHÈSE) -->
         <div class="lg:col-span-7 sticky top-24">
           <div class="relative w-full rounded-3xl p-4 sm:p-8 overflow-hidden border border-zinc-800 bg-gradient-to-br from-zinc-900/90 via-zinc-950 to-zinc-900 shadow-2xl shadow-black/80 min-h-[460px] flex items-center justify-center">
             
             <!-- SKY GLOW RADIAL -->
             <div class="absolute inset-0 pointer-events-none glow-sky"></div>
 
-            <!-- MOCKUP CONTAINER (FADES IN/OUT PER STEP) -->
+            <!-- MOCKUP CONTAINER -->
             <div class="relative z-10 w-full max-w-lg transition-all duration-300" id="mockupContainer">
               
-              <!-- MOCKUP 0: EN AMPHI / CLASSE (PHOTOSYNTHÈSE) -->
+              <!-- MOCKUP 0: EN AMPHI / CLASSE -->
               <div class="mockup-view hidden space-y-4" id="mockup0">
                 <div class="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-5 shadow-xl backdrop-blur-xl">
                   <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3 mb-4">
@@ -304,7 +319,7 @@
                 </div>
               </div>
 
-              <!-- MOCKUP 1: ANTIGRAVITY SYNTHESIS (PHOTOSYNTHÈSE) -->
+              <!-- MOCKUP 1: ANTIGRAVITY SYNTHESIS -->
               <div class="mockup-view hidden space-y-4" id="mockup1">
                 <div class="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-5 shadow-xl backdrop-blur-xl space-y-3">
                   <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3">
@@ -325,7 +340,7 @@
                 </div>
               </div>
 
-              <!-- MOCKUP 2: ACTIVE RECALL GATEWAY (PHOTOSYNTHÈSE) -->
+              <!-- MOCKUP 2: ACTIVE RECALL GATEWAY -->
               <div class="mockup-view hidden space-y-4" id="mockup2">
                 <div class="bg-zinc-950/90 border border-amber-500/30 rounded-2xl p-5 shadow-xl backdrop-blur-xl space-y-3">
                   <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3">
@@ -356,7 +371,7 @@
                 </div>
               </div>
 
-              <!-- MOCKUP 3: FSRS-5 PLAYER (PHOTOSYNTHÈSE) -->
+              <!-- MOCKUP 3: FSRS-5 PLAYER -->
               <div class="mockup-view hidden space-y-4" id="mockup3">
                 <div class="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-5 shadow-xl backdrop-blur-xl space-y-4">
                   <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3">
@@ -389,7 +404,7 @@
                 </div>
               </div>
 
-              <!-- MOCKUP 4: QUESTIONS MEMORY TREE (PHOTOSYNTHÈSE) -->
+              <!-- MOCKUP 4: QUESTIONS MEMORY TREE -->
               <div class="mockup-view hidden space-y-4" id="mockup4">
                 <div class="bg-zinc-950/90 border border-purple-500/30 rounded-2xl p-5 shadow-xl backdrop-blur-xl space-y-3">
                   <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3">
@@ -419,7 +434,71 @@
   </section>
 
   <!-- =================================================================================== -->
-  <!-- SECTION QR CODE MOBILE SYNC                                                         -->
+  <!-- SECTION DÉMO INTERACTIVE LIVE DU RAPPEL ACTIF                                      -->
+  <!-- =================================================================================== -->
+  <section id="demo" class="py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="glass-card rounded-3xl p-8 sm:p-12 border border-blue-500/30 shadow-2xl">
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <span class="text-xs font-bold uppercase tracking-widest text-blue-400 mb-2 inline-block">Test en Direct</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+          Essayez le Sas de Rappel Actif Maintenant
+        </h2>
+        <p class="text-xs sm:text-sm text-zinc-400 mt-2">
+          Tapez une phrase pour expliquer la photosynthèse avec vos propres mots et testez l'évaluation diagnostique instantanée :
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <div class="relative">
+          <textarea
+            id="demoInput"
+            rows="3"
+            class="w-full bg-zinc-950/90 border border-zinc-800 rounded-2xl p-4 text-xs sm:text-sm text-zinc-200 focus:outline-none focus:border-blue-500 font-sans transition-all placeholder:text-zinc-600"
+            placeholder="Ex: La photosynthèse permet aux plantes de fabriquer du sucre (glucose) à partir d'eau et de CO2 grâce à l'énergie de la lumière..."
+          ></textarea>
+        </div>
+
+        <div class="flex items-center justify-between gap-3">
+          <button
+            onclick="fillDemoText()"
+            class="text-xs text-zinc-400 hover:text-zinc-200 underline font-medium"
+          >
+            Remplir avec une réponse type
+          </button>
+          <button
+            onclick="runLiveDemoEval()"
+            class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg shadow-blue-500/25 transition-all active:scale-95 flex items-center gap-2"
+          >
+            <span id="demoBtnText">Évaluer mon explication</span>
+          </button>
+        </div>
+
+        <!-- DEMO RESULT BOX -->
+        <div id="demoResult" class="hidden p-5 rounded-2xl bg-zinc-950 border border-emerald-500/30 space-y-3 animate-fade-in mt-4">
+          <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+            <span class="text-xs font-bold text-emerald-400">Diagnostic Grounded IA</span>
+            <span class="text-xs font-mono font-bold bg-emerald-500/15 text-emerald-300 px-2.5 py-1 rounded border border-emerald-500/30">Note : 94 / 100</span>
+          </div>
+          <div class="space-y-1.5 text-xs">
+            <div class="flex items-center justify-between text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded">
+              <span>✓ Rôle des chloroplastes et de la lumière</span>
+              <span class="text-[10px] font-bold">MAÎTRISÉ</span>
+            </div>
+            <div class="flex items-center justify-between text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded">
+              <span>✓ Production de glucose à partir de CO₂ et H₂O</span>
+              <span class="text-[10px] font-bold">MAÎTRISÉ</span>
+            </div>
+          </div>
+          <p class="text-[11px] text-zinc-400 pt-1">
+            <strong>Conseil Pédagogique :</strong> Excellent rappel ! Pensez à préciser que l'oxygène rejeté provient de la coupure de l'eau (photolyse). Fiche débloquée !
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================================== -->
+  <!-- SECTION QR CODE & 4G SYNC                                                           -->
   <!-- =================================================================================== -->
   <section id="qr-connect" class="py-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="glass-card rounded-3xl p-8 sm:p-12 border border-zinc-800 relative overflow-hidden">
@@ -432,111 +511,24 @@
             Scannez le QR Code dans votre terminal pour ouvrir l'app sur mobile.
           </h2>
           <p class="text-sm text-zinc-400 leading-relaxed">
-            Dès que vous exécutez la commande d'installation sur votre Mac, un QR Code s'affiche dans votre terminal. Pointez votre appareil photo (iPhone ou Android) : votre téléphone se connecte directement à votre Mac en Wi-Fi local ou en 4G privée.
+            Dès que vous lancez <code class="text-blue-400 font-mono">cours</code> sur votre Mac, un QR Code s'affiche dans votre terminal. Scannez-le avec votre iPhone ou Android : votre téléphone se connecte directement à votre Mac en Wi-Fi local ou en 4G privée via Tailscale.
           </p>
           <div class="flex items-center gap-4 pt-2 text-xs font-mono text-zinc-400">
             <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Zéro configuration</span>
-            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-400"></span> Synchro temps réel</span>
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-400"></span> Synchro 4G Tailscale</span>
           </div>
         </div>
 
         <div class="md:col-span-5 flex justify-center">
           <div class="p-6 bg-zinc-950 border border-zinc-800 rounded-2xl text-center shadow-2xl space-y-3">
             <div class="w-40 h-40 mx-auto bg-white rounded-xl p-3 flex items-center justify-center shadow-inner">
-              <!-- SVG QR CODE MOCKUP -->
               <svg viewBox="0 0 100 100" class="w-full h-full text-zinc-950 fill-current">
                 <path d="M0 0h30v30H0zm5 5v20h20V5zm5 5h10v10H10zm60-15h30v30H70zm5 5v20h20V5zm5 5h10v10H80zM0 70h30v30H0zm5 5v20h20V75zm5 5h10v10H10zm35-70h5v15h-5zm10 0h5v10h-5zm-10 20h15v5h-15zm35 50h5v15h-5zm10 0h5v10h-5zm-10 20h15v5h-15zm-45-20h10v5H35zm0 10h5v15h-5zm10 5h5v10h-5zm10-15h5v5h-5zm0 10h10v5H55zm15-5h10v5H70z"/>
               </svg>
             </div>
-            <p class="text-[11px] font-mono text-zinc-400">http://192.168.1.x:3002</p>
+            <p class="text-[11px] font-mono text-zinc-400">Wi-Fi & 4G Tailscale Automatique</p>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =================================================================================== -->
-  <!-- SECTION DOCUMENTATION & GUIDE UTILISATEUR                                           -->
-  <!-- =================================================================================== -->
-  <section id="docs" class="py-20 bg-zinc-950/90 border-t border-b border-border/50 relative z-10">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="text-center max-w-3xl mx-auto mb-14">
-        <span class="text-xs font-bold uppercase tracking-widest text-blue-400 mb-2 inline-block">Guide & Architecture</span>
-        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
-          Documentation Complète de l'Utilisateur
-        </h2>
-        <p class="text-base text-zinc-400">
-          Tout ce qu'il faut savoir pour installer, exploiter et maîtriser Cours au quotidien.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-        
-        <!-- DOC CARD 1 -->
-        <div class="glass-card rounded-2xl p-6 space-y-3">
-          <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm">1</div>
-          <h3 class="font-bold text-base text-white">Installation & Configuration</h3>
-          <p class="text-xs text-zinc-400 leading-relaxed">
-            La commande <code class="text-blue-300">curl</code> installe le serveur Node.js, compile le client Web et configure l'environnement. Renseignez votre <code class="text-zinc-300">GEMINI_API_KEY</code> dans le fichier <code class="text-zinc-300">.env</code> pour activer la correction IA.
-          </p>
-        </div>
-
-        <!-- DOC CARD 2 -->
-        <div class="glass-card rounded-2xl p-6 space-y-3">
-          <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm">2</div>
-          <h3 class="font-bold text-base text-white">En Amphi & Photos Horodatées</h3>
-          <p class="text-xs text-zinc-400 leading-relaxed">
-            Lancez l'enregistrement d'une touche. Les balises rapides et les photos du tableau sont horodatées (<code class="text-amber-300">offsetMs</code>) pour caler l'image exactement sur l'audio correspondant.
-          </p>
-        </div>
-
-        <!-- DOC CARD 3 -->
-        <div class="glass-card rounded-2xl p-6 space-y-3">
-          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">3</div>
-          <h3 class="font-bold text-base text-white">Sas de Rappel & Moteur FSRS-5</h3>
-          <p class="text-xs text-zinc-400 leading-relaxed">
-            Chaque cours reste verrouillé jusqu'à votre premier rappel actif de 1-2 min. Les notions oubliées sont automatiquement prioritaires dans votre pile FSRS du jour sans aucun stress de chrono.
-          </p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- =================================================================================== -->
-  <!-- SECTION FAQ                                                                         -->
-  <!-- =================================================================================== -->
-  <section id="faq" class="py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="text-center max-w-2xl mx-auto mb-14">
-      <h2 class="text-3xl font-extrabold tracking-tight text-white mb-3">
-        Questions Fréquentes (FAQ)
-      </h2>
-      <p class="text-sm text-zinc-400">
-        Réponses rapides aux questions les plus courantes des nouveaux utilisateurs.
-      </p>
-    </div>
-
-    <div class="space-y-4">
-      <div class="glass-card rounded-2xl p-6 border border-zinc-800">
-        <h3 class="font-bold text-sm sm:text-base text-white mb-2">Comment obtenir ma clé Gemini ?</h3>
-        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-          Google AI Studio propose des clés API gratuites sur <a href="https://aistudio.google.com/" target="_blank" class="text-blue-400 underline">aistudio.google.com</a>. Il vous suffit de copier votre clé dans le fichier <code class="text-zinc-200">.env</code> à la ligne <code class="text-zinc-200">GEMINI_API_KEY=...</code>.
-        </p>
-      </div>
-
-      <div class="glass-card rounded-2xl p-6 border border-zinc-800">
-        <h3 class="font-bold text-sm sm:text-base text-white mb-2">Mes données et enregistrements sont-ils privés ?</h3>
-        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-          Oui, à 100%. Tout tourne en local sur votre machine. La transcription Whisper utilise le GPU de votre Mac (Metal) sans envoyer d'audio sur Internet. Vos fichiers audios et transcriptions restent stockés sur votre disque.
-        </p>
-      </div>
-
-      <div class="glass-card rounded-2xl p-6 border border-zinc-800">
-        <h3 class="font-bold text-sm sm:text-base text-white mb-2">Puis-je réviser sans connexion Internet ?</h3>
-        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-          Oui ! Le moteur d'apprentissage FSRS-5, les flashcards, les QCM et les fiches de cours sont entièrement mis en cache et fonctionnent hors-ligne sur votre ordinateur et votre téléphone.
-        </p>
       </div>
     </div>
   </section>
@@ -583,7 +575,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT POUR AUTO-CYCLE 6s ET FONCTION COPIER ULTRA-FIABLE -->
+  <!-- SCRIPT POUR AUTO-CYCLE 6s, DEMO EVAL ET COPIE -->
   <script>
     let currentStep = 0;
     const totalSteps = 5;
@@ -604,7 +596,6 @@
     function activateStep(index) {
       currentStep = index;
       
-      // Update Step Accordions
       stepCards.forEach((card, i) => {
         const content = card.querySelector('.step-content');
         const icon = card.querySelector('.step-icon');
@@ -630,7 +621,6 @@
         }
       });
 
-      // Update Mockups
       mockups.forEach((mockup, i) => {
         if (i === index) {
           mockup.classList.remove('hidden');
@@ -639,7 +629,6 @@
         }
       });
 
-      // Reset & Start Progress
       startProgressBar();
     }
 
@@ -662,7 +651,6 @@
         }
 
         if (elapsed >= stepDuration) {
-          // Move to next step
           activateStep((currentStep + 1) % totalSteps);
         } else {
           progressTimer = requestAnimationFrame(updateProgress);
@@ -672,7 +660,6 @@
       progressTimer = requestAnimationFrame(updateProgress);
     }
 
-    // Attach click listeners to cards
     stepCards.forEach((card, index) => {
       card.addEventListener('click', () => {
         activateStep(index);
@@ -684,10 +671,8 @@
       });
     });
 
-    // Initialize first step
     activateStep(0);
 
-    // ROBUST 100% RELIABLE COPY FUNCTION WITH FALLBACK
     function copyInstallCommand(elementId, textId, iconId) {
       const el = document.getElementById(elementId);
       const text = el ? el.innerText.trim() : "curl -fsSL https://cours-awc.pages.dev/install.sh | bash";
@@ -726,6 +711,23 @@
       } catch (err) {
         textArea.remove();
       }
+    }
+
+    // LIVE DEMO SIMULATION
+    function fillDemoText() {
+      document.getElementById('demoInput').value = "Les cellules végétales chlorophylliennes utilisent la lumière pour transformer l'eau et le CO2 en matière organique (glucose) et rejettent de l'oxygène O2 dans l'atmosphère.";
+    }
+
+    function runLiveDemoEval() {
+      const text = document.getElementById('demoInput').value.trim();
+      const btnText = document.getElementById('demoBtnText');
+      const resultBox = document.getElementById('demoResult');
+      
+      btnText.innerText = "Évaluation en cours...";
+      setTimeout(() => {
+        btnText.innerText = "Évaluer mon explication";
+        resultBox.classList.remove('hidden');
+      }, 600);
     }
   </script>
 </body>
