@@ -1,6 +1,19 @@
 # Cours — BioMIA Revision OS
 
+[![Site Web](https://img.shields.io/badge/Site_Web-cours--biomia.pages.dev-blue?style=flat-square)](https://cours-biomia.pages.dev)
+[![Licence MIT](https://img.shields.io/badge/Licence-MIT-emerald?style=flat-square)](LICENSE)
+[![FSRS-5](https://img.shields.io/badge/Moteur-FSRS--5-amber?style=flat-square)](docs/learning-engine.md)
+[![Whisper Metal](https://img.shields.io/badge/Voix-Whisper_Metal_Local-cyan?style=flat-square)](docs/adr/0002-moteur-ia-gemini-et-transcription-whisper.md)
+
 Plateforme locale d'apprentissage, d'enregistrement d'amphi et de révision active pour la licence BioMIA L1 (Biologie, Mathématiques, Informatique et Applications).
+
+---
+
+## ⚡ Installation Rapide en 1 Ligne (macOS & Linux)
+
+```bash
+curl -fsSL https://cours-biomia.pages.dev/install.sh | bash
+```
 
 ---
 
