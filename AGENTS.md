@@ -96,15 +96,13 @@ Pour que l'expérience soit ultra-simple pour n'importe quel étudiant sans comp
 
 Pour tous les prochains agents et sessions travaillant sur ce projet :
 - **Dépôt GitHub** : `https://github.com/ewiwlll/cours` (Branche `main`).
-- **Projets Cloudflare Pages** :
+- **Projet Cloudflare Pages** :
   - `cours` (URL de production : `https://cours-awc.pages.dev`)
-  - `cours-biomia` (URL miroir : `https://cours-biomia.pages.dev`)
 - **Documentation Publique** : `https://cours-awc.pages.dev/docs`
 - **Procédure de validation et déploiement systématique** :
   1. `cd web && npm run build` (compile le Web React 19 et génère `public/`)
   2. `npx wrangler pages deploy landing --project-name cours --commit-dirty=true`
-  3. `npx wrangler pages deploy landing --project-name cours-biomia --commit-dirty=true`
-  4. `git add -A && git commit -m "..." && git push origin main`
+  3. `git add -A && git commit -m "..." && git push origin main`
 
 ---
 
