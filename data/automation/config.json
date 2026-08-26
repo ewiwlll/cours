@@ -1,0 +1,15 @@
+{
+  "inboxPath": "./inbox",
+  "scanEveryMs": 8000,
+  "stableWaitMs": 1800,
+  "gemini": {
+    "model": "gemini-3.7-flash"
+  },
+  "transcription": {
+    "enabled": true,
+    "binary": "/opt/homebrew/opt/whisper-cpp/bin/whisper-cli",
+    "model": "./models/whisper/ggml-large-v3-turbo-q5_0.bin",
+    "ffmpeg": "/opt/homebrew/bin/ffmpeg",
+    "language": "fr"
+  }
+}

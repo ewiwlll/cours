@@ -1,0 +1,46 @@
+[
+  {
+    "recordingId": "mobile-1787082114029-620sn8eub2",
+    "filename": "2026-08-18__mathematiques-avancees-1__cours-du-2026-08-18__mobile-1787082114029-620sn8eub2.m4a",
+    "courseId": "mobile-mobile-1787082114029-620sn8eub2-1787082113966",
+    "subjectId": "s1-maths-avancees",
+    "title": "Cours du 2026-08-18",
+    "date": "2026-08-18",
+    "mimeType": "audio/m4a",
+    "bytes": 68341,
+    "createdAt": "2026-08-18T19:41:53.969Z"
+  },
+  {
+    "recordingId": "mobile-1787083398550-1dj7mrgcvhq",
+    "filename": "2026-08-18__mathematiques-avancees-1__cours-du-2026-08-18__mobile-1787083398550-1dj7mrgcvhq.m4a",
+    "courseId": "mobile-mobile-1787083398550-1dj7mrgcvhq-1787083399290",
+    "subjectId": "s1-maths-avancees",
+    "title": "Cours du 2026-08-18",
+    "date": "2026-08-18",
+    "mimeType": "audio/m4a",
+    "bytes": 173779,
+    "createdAt": "2026-08-18T20:03:19.296Z"
+  },
+  {
+    "recordingId": "mobile-1787093242080-f7sixw9vqp",
+    "filename": "2026-08-19__mathematiques-avancees-1__cours-1-organisation__mobile-1787093242080-f7sixw9vqp.m4a",
+    "courseId": "mobile-mobile-1787093242080-f7sixw9vqp-1787093241797",
+    "subjectId": "s1-maths-avancees",
+    "title": "Cours 1 — Organisation",
+    "date": "2026-08-19",
+    "mimeType": "audio/m4a",
+    "bytes": 176861,
+    "createdAt": "2026-08-18T22:47:21.800Z"
+  },
+  {
+    "recordingId": "mobile-audio-philo-1787606645165",
+    "filename": "2026-08-24__mineure-s1__philosophie-morale-le-devoir-et-la-raison-enregistrement-bru__mobile-audio-philo-1787606645165.m4a",
+    "courseId": "mobile-mobile-audio-philo-1787606645165-1787606645463",
+    "subjectId": "s1-mineure",
+    "title": "Philosophie morale — Le devoir et la raison (Enregistrement brut)",
+    "date": "2026-08-24",
+    "mimeType": "audio/m4a",
+    "bytes": 30870498,
+    "createdAt": "2026-08-24T21:24:05.521Z"
+  }
+]

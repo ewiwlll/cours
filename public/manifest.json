@@ -1,0 +1,18 @@
+{
+  "name": "Cours — BioMIA Revision OS",
+  "short_name": "Cours",
+  "description": "Système de révision et enregistrement amphi BioMIA L1",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+[
+  {
+    "id": "sess-1787571306724",
+    "type": "course-recall",
+    "courseId": "mobile-test-tailscale-1787571306708-1787571306717",
+    "subjectId": "s1-maths-avancees",
+    "score": 80,
+    "answerText": "Le prof a parlé de Michaelis Menten, de la vitesse maximale Vmax et de la constante d'affinité Km. Il faut faire attention aux unités.",
+    "weakConcepts": [],
+    "createdAt": "2026-08-24T11:35:06.724Z"
+  },
+  {
+    "id": "sess-1787571335038",
+    "type": "course-recall",
+    "courseId": "mobile-test-tailscale-1787571335026-1787571335032",
+    "subjectId": "s1-maths-avancees",
+    "score": 80,
+    "answerText": "Le prof a parlé de Michaelis Menten, de la vitesse maximale Vmax et de la constante d'affinité Km. Il faut faire attention aux unités.",
+    "weakConcepts": [],
+    "createdAt": "2026-08-24T11:35:35.038Z"
+  },
+  {
+    "id": "sess-1787606819407",
+    "type": "course-recall",
+    "courseId": "mobile-mobile-philo-1787605357741-1787605357779",
+    "subjectId": "s1-mineure",
+    "score": 46,
+    "answerText": "Dans ce cours de philosophie, nous avons analysé le devoir moral selon Kant, la distinction entre agir par devoir et conformément au devoir, la critique de la morale par Calliclès et Nietzsche (mauvaise conscience), ainsi que les critères de la désobéissance civile chez John Rawls.",
+    "weakConcepts": [
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-04",
+        "label": "Selon le cours, quelle est la fonction première des institutions (famille, école, lois, religion) dans la transmission des valeurs ?",
+        "status": "missing",
+        "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : Produire des valeurs dans une société c'est un truc fondamental des sociétés parce que la société fonctionne... valeurs communes qui vont lui permettre de coopérer.",
+        "source": "Produire des valeurs dans une société c'est un truc fondamental des sociétés parce que la société fonctionne... valeurs communes qui vont lui permettre de coopérer.",
+        "expected": "Elles créent des valeurs communes et un inconscient collectif partagé indispensables pour permettre aux individus de coopérer, d'échanger et de vivre ensemble sans que des désaccords fondamentaux ne fragmentent la société."
+      }
+    ],
+    "createdAt": "2026-08-24T21:26:59.407Z"
+  },
+  {
+    "id": "sess-1787609413699",
+    "type": "course-recall",
+    "courseId": "mobile-biomolecules-membranes-2026",
+    "subjectId": "s1-biomolecules",
+    "score": 0,
+    "answerText": "La membrane est une bicouche lipidique de phospholipides amphiphiles",
+    "weakConcepts": [],
+    "createdAt": "2026-08-24T22:10:13.699Z"
+  },
+  {
+    "id": "sess-1787609552017",
+    "type": "course-recall",
+    "courseId": "mobile-biomolecules-membranes-2026",
+    "subjectId": "s1-biomolecules",
+    "score": 0,
+    "answerText": "La membrane est une bicouche lipidique de phospholipides amphiphiles selon la mosaique fluide. Le cholesterol agit comme tampon thermique de fluidite. Transport passif sans ATP et transport actif avec ATP.",
+    "weakConcepts": [],
+    "createdAt": "2026-08-24T22:12:32.017Z"
+  },
+  {
+    "id": "sess-1787609570870",
+    "type": "course-recall",
+    "courseId": "mobile-biomolecules-membranes-2026",
+    "subjectId": "s1-biomolecules",
+    "score": 55,
+    "answerText": "La membrane est une bicouche lipidique fluide de phospholipides amphiphiles selon la mosaique fluide. Le cholesterol agit comme tampon thermique de fluidite. Transport passif sans ATP et transport actif primaire avec ATP.",
+    "weakConcepts": [],
+    "createdAt": "2026-08-24T22:12:50.870Z"
+  },
+  {
+    "id": "sess-1787609902045",
+    "type": "course-recall",
+    "courseId": "mobile-biomolecules-membranes-2026",
+    "subjectId": "s1-biomolecules",
+    "score": 0,
+    "answerText": "test",
+    "weakConcepts": [
+      {
+        "id": "card-membranes-01",
+        "label": "Quelle est la structure de base de la membrane plasmique et quel est le nom du modèle établi en 1972 ?",
+        "status": "missing",
+        "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : undefined",
+        "source": "Fiche de cours",
+        "expected": "C est une bicouche lipidique fluide d environ 7,5 nm constituée de phospholipides amphiphiles, selon le modèle de la mosaïque fluide (Singer et Nicolson, 1972)."
+      },
+      {
+        "id": "card-membranes-02",
+        "label": "Quel est le rôle exact du cholestérol dans la membrane plasmique ?",
+        "status": "missing",
+        "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : undefined",
+        "source": "Fiche de cours",
+        "expected": "Il agit comme un tampon thermique de fluidité : à haute température, il restreint les mouvements des lipides pour limiter la fluidité ; à basse température, il empêche la cristallisation et maintient la fluidité."
+      },
+      {
+        "id": "card-membranes-03",
+        "label": "Quelle est la différence fondamentale entre la diffusion facilitée et le transport actif primaire ?",
+        "status": "missing",
+        "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : undefined",
+        "source": "Fiche de cours",
+        "expected": "La diffusion facilitée se fait dans le sens du gradient électrochimique sans dépense d énergie (ATP), alors que le transport actif primaire s effectue contre le gradient et hydrolyse directement de l ATP."
+      }
+    ],
+    "createdAt": "2026-08-24T22:18:22.045Z"
+  },
+  {
+    "id": "sess-1787610162911",
+    "type": "course-recall",
+    "courseId": "mobile-biomolecules-membranes-2026",
+    "subjectId": "s1-biomolecules",
+    "score": 55,
+    "answerText": "La membrane est une bicouche lipidique de phospholipides amphiphiles selon la mosaique fluide. Le cholesterol agit comme tampon thermique de fluidite. Transport passif sans ATP et transport actif avec ATP.",
+    "weakConcepts": [],
+    "createdAt": "2026-08-24T22:22:42.911Z"
+  },
+  {
+    "id": "sess-1787691616084",
+    "type": "course-recall",
+    "courseId": "mobile-mobile-philo-1787605357741-1787605357779",
+    "subjectId": "s1-mineure",
+    "score": 0,
+    "answerText": "Ça parlait de philosophie",
+    "weakConcepts": [
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-01",
+        "label": "Critères de la désobéissance civile selon Rawls",
+        "status": "missing",
+        "feedback": "DANS LA SOURCE : Aucun des 4 critères (illégal, public, non violent, politique en démocratie) n'a été mentionné.",
+        "source": "La divence civile peut tout d'abord être défini... acte public non violent décidé en conscience politique contraire à la loi mais dans le but de changer la loi.",
+        "expected": "La désobéissance civile est un acte illégal, public, non violent, décidé en conscience et à visée politique pour changer la loi."
+      },
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-02",
+        "label": "Généalogie de la morale et mauvaise conscience (Nietzsche / Calliclès)",
+        "status": "missing",
+        "feedback": "DANS LA SOURCE : La notion d'inversion des valeurs et de culpabilisation du fort par la mauvaise conscience est absente.",
+        "source": "Les faibles ont réussi à inverser ce truc... ils ont inventé la mauvaise conscience... la morale va l'empêcher, il va se sentir mal et se blesser lui-même.",
+        "expected": "Les faibles créent la morale pour culpabiliser la force naturelle des puissants, provoquant le retournement de leur puissance contre eux-mêmes (mauvaise conscience / domestication)."
+      },
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-03",
+        "label": "Conflit des devoirs et figure tragique d'Antigone",
+        "status": "missing",
+        "feedback": "DANS LA SOURCE : L'exemple d'Antigone et la tension entre loi positive de l'État et devoir familial/religieux ne sont pas abordés.",
+        "source": "Antigone via son frère... conflit entre la loi... et d'un point de vue c'est par rapport à la religion... conflit des devoirs.",
+        "expected": "Antigone illustre le conflit entre la loi de la cité (décret de Créon) et le devoir moral et religieux d'offrir une sépulture à son frère."
+      },
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-04",
+        "label": "Rôle intégrateur des institutions et cohésion sociale",
+        "status": "missing",
+        "feedback": "DANS LA SOURCE : Le rôle de l'État, de l'école et de la famille dans la transmission de valeurs communes n'est pas restitué.",
+        "source": "Produire des valeurs dans une société c'est un truc fondamental des sociétés parce que la société fonctionne... valeurs communes qui vont lui permettre de coopérer.",
+        "expected": "Les institutions forgent des valeurs partagées et un inconscient collectif indispensables pour permettre la coopération et limiter les conflits."
+      },
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-05",
+        "label": "Effet stabilisateur de la désobéissance civile",
+        "status": "missing",
+        "feedback": "DANS LA SOURCE : Le paradoxe rawlsien de la stabilisation constitutionnelle par l'acte illégal n'a pas été expliqué.",
+        "source": "En fait, la désobéissance civile est un moyen de stabiliser un système constitutionnel... en résistant à l'injustice dans les limites de la fidélité à la loi.",
+        "expected": "La désobéissance civile stabilise la démocratie en permettant de corriger publiquement les lois injustes tout en maintenant la fidélité à la Constitution."
+      }
+    ],
+    "createdAt": "2026-08-25T21:00:16.084Z"
+  },
+  {
+    "id": "sess-1787691881241",
+    "type": "course-recall",
+    "courseId": "mobile-mobile-philo-1787605357741-1787605357779",
+    "subjectId": "s1-mineure",
+    "score": 0,
+    "answerText": "Ça parlait de philosophie",
+    "weakConcepts": [
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-01",
+        "label": "Quels sont les critères essentiels caractérisant la désobéissance civile selon le texte de John Rawls ?",
+        "status": "missing",
+        "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : La divence civile peut tout d'abord être défini... acte public non violent décidé en conscience politique contraire à la loi mais dans le but de changer la loi.",
+        "source": "La divence civile peut tout d'abord être défini... acte public non violent décidé en conscience politique contraire à la loi mais dans le but de changer la loi.",
+        "expected": "La désobéissance civile est un acte illégal, public, non violent, décidé en conscience et à visée politique, accompli pour provoquer un changement dans la loi ou la politique du gouvernement dans le cadre d'un État démocratique."
+      },
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-02",
+        "label": "En quoi consiste l'inversion des valeurs et la 'mauvaise conscience' selon la critique nietzschéenne de la morale ?",
+        "status": "missing",
+        "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : Les faibles ont réussi à inverser ce truc... ils ont inventé la mauvaise conscience... la morale va l'empêcher, il va se sentir mal et se blesser lui-même.",
+        "source": "Les faibles ont réussi à inverser ce truc... ils ont inventé la mauvaise conscience... la morale va l'empêcher, il va se sentir mal et se blesser lui-même.",
+        "expected": "Les faibles, incapables d'égaler la puissance naturelle des forts, inventent la morale pour culpabiliser la force. Le fort intériorise cette faute et retourne sa propre puissance contre lui-même sous forme de mauvaise conscience, devenant domestiqué."
+      },
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-03",
+        "label": "Quelle tension fondamentale la tragédie d'Antigone illustre-t-elle dans le domaine moral et politique ?",
+        "status": "missing",
+        "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : Antigone via son frère... conflit entre la loi... et d'un point de vue c'est par rapport à la religion... conflit des devoirs.",
+        "source": "Antigone via son frère... conflit entre la loi... et d'un point de vue c'est par rapport à la religion... conflit des devoirs.",
+        "expected": "Elle illustre le conflit des devoirs entre l'obéissance à la loi positive de la cité (le décret politique interdisant la sépulture du traître) et le devoir supérieur, familial et religieux (offrir les rites funéraires à son frère)."
+      },
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-04",
+        "label": "Selon le cours, quelle est la fonction première des institutions (famille, école, lois, religion) dans la transmission des valeurs ?",
+        "status": "missing",
+        "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : Produire des valeurs dans une société c'est un truc fondamental des sociétés parce que la société fonctionne... valeurs communes qui vont lui permettre de coopérer.",
+        "source": "Produire des valeurs dans une société c'est un truc fondamental des sociétés parce que la société fonctionne... valeurs communes qui vont lui permettre de coopérer.",
+        "expected": "Elles créent des valeurs communes et un inconscient collectif partagé indispensables pour permettre aux individus de coopérer, d'échanger et de vivre ensemble sans que des désaccords fondamentaux ne fragmentent la société."
+      },
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-05",
+        "label": "Selon John Rawls, pourquoi la désobéissance civile a-t-elle un effet stabilisateur sur le système démocratique ?",
+        "status": "missing",
+        "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : En fait, la désobéissance civile est un moyen de stabiliser un système constitutionnel... en résistant à l'injustice dans les limites de la fidélité à la loi.",
+        "source": "En fait, la désobéissance civile est un moyen de stabiliser un système constitutionnel... en résistant à l'injustice dans les limites de la fidélité à la loi.",
+        "expected": "Elle permet de corriger publiquement les lois injustes et de résister aux dérives sans rejeter la légitimité de la Constitution, ramenant ainsi la législation en conformité avec le sens de la justice partagé par la communauté."
+      },
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-06",
+        "label": "Parmi ces affirmations sur la désobéissance civile selon le texte étudié en cours, laquelle est VRAIE ?",
+        "status": "missing",
+        "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : C'est une définition... public non violent... on s'adresse au sens de la justice de la majorité de la communauté.",
+        "source": "C'est une définition... public non violent... on s'adresse au sens de la justice de la majorité de la communauté.",
+        "expected": "Elle doit être publique et non violente pour interpeller le sens de la justice de la majorité."
+      }
+    ],
+    "createdAt": "2026-08-25T21:04:41.241Z"
+  },
+  {
+    "id": "sess-1787780435290",
+    "type": "course-recall",
+    "courseId": "2026-08-27__biomolecules__thermodynamique-cellulaire",
+    "subjectId": "s1-biomolecules",
+    "score": 80,
+    "answerText": "Alors dans ce cours de thermodynamique, on a vu que la réaction est spontanée quand elle dégage de l énergie. Pour les réactions impossibles, la cellule fait un couplage avec l ATP qui est hydrolysé pour forcer le glucose à se transformer. Par contre j ai confondu delta H et delta G, et je ne me rappelle plus de la formule exacte entre delta G réel et delta G standard avec le quotient de réaction.",
+    "weakConcepts": [],
+    "createdAt": "2026-08-26T21:40:35.290Z"
+  }
+]

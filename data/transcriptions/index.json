@@ -1,0 +1,115 @@
+[
+  {
+    "filename": "2026-08-17__mathematiques-avancees-1__note-de-chatgpt.txt",
+    "title": "Note de ChatGPT",
+    "courseId": "s1-maths-avancees",
+    "courseTitle": "Mathématiques avancées 1",
+    "date": "2026-08-17"
+  },
+  {
+    "filename": "2026-08-18__mathematiques-avancees-1__cours-du-2026-08-18__mobile-1787082114029-620sn8eub2.txt",
+    "title": "Cours du 2026-08-18",
+    "courseId": "mobile-mobile-1787082114029-620sn8eub2-1787082113966",
+    "courseTitle": "Cours du 2026-08-18",
+    "date": "2026-08-18",
+    "provider": "whisper.cpp-local"
+  },
+  {
+    "filename": "2026-08-18__mathematiques-avancees-1__cours-du-2026-08-18__mobile-1787083398550-1dj7mrgcvhq.txt",
+    "title": "Cours du 2026-08-18",
+    "courseId": "mobile-mobile-1787083398550-1dj7mrgcvhq-1787083399290",
+    "courseTitle": "Cours du 2026-08-18",
+    "date": "2026-08-18",
+    "provider": "whisper.cpp-local"
+  },
+  {
+    "filename": "2026-08-19__mathematiques-avancees-1__cours-1-organisation__mobile-1787093242080-f7sixw9vqp.txt",
+    "title": "Cours 1 — Organisation",
+    "courseId": "mobile-mobile-1787093242080-f7sixw9vqp-1787093241797",
+    "courseTitle": "Cours 1 — Organisation",
+    "date": "2026-08-19",
+    "provider": "whisper.cpp-local",
+    "sourceValidation": {
+      "ok": false,
+      "reason": "trop-courte",
+      "message": "La transcription est trop courte pour produire une fiche fiable.",
+      "characters": 33,
+      "words": 3,
+      "letters": 29,
+      "quality": "insuffisante",
+      "checkedAt": "2026-08-18T22:47:28.388Z"
+    }
+  },
+  {
+    "filename": "2026-08-24__mathematiques-avancees-1__test-amphi-rennes-tailscale-4g__test-tailscale-1787571306708.txt",
+    "title": "Test Amphi Rennes (Tailscale 4G)",
+    "courseId": "mobile-test-tailscale-1787571306708-1787571306717",
+    "courseTitle": "Test Amphi Rennes (Tailscale 4G)",
+    "date": "2026-08-24",
+    "provider": "device",
+    "sourceValidation": {
+      "ok": true,
+      "reason": null,
+      "message": null,
+      "characters": 139,
+      "words": 21,
+      "letters": 115,
+      "quality": "normale",
+      "checkedAt": "2026-08-24T11:35:06.717Z"
+    }
+  },
+  {
+    "filename": "2026-08-24__mathematiques-avancees-1__test-amphi-rennes-tailscale-4g__test-tailscale-1787571335026.txt",
+    "title": "Test Amphi Rennes (Tailscale 4G)",
+    "courseId": "mobile-test-tailscale-1787571335026-1787571335032",
+    "courseTitle": "Test Amphi Rennes (Tailscale 4G)",
+    "date": "2026-08-24",
+    "provider": "device",
+    "sourceValidation": {
+      "ok": true,
+      "reason": null,
+      "message": null,
+      "characters": 139,
+      "words": 21,
+      "letters": 115,
+      "quality": "normale",
+      "checkedAt": "2026-08-24T11:35:35.032Z"
+    }
+  },
+  {
+    "filename": "2026-08-24__mineure-s1__le-devoir-le-sentiment-moral-et-les-institutions__mobile-philo-1787605357741.txt",
+    "title": "Le devoir, le sentiment moral et les institutions",
+    "courseId": "mobile-mobile-philo-1787605357741-1787605357779",
+    "courseTitle": "Le devoir, le sentiment moral et les institutions",
+    "date": "2026-08-24",
+    "provider": "device",
+    "sourceValidation": {
+      "ok": true,
+      "reason": null,
+      "message": null,
+      "characters": 39312,
+      "words": 7123,
+      "letters": 30828,
+      "quality": "normale",
+      "checkedAt": "2026-08-24T21:02:37.778Z"
+    }
+  },
+  {
+    "filename": "2026-08-24__mineure-s1__philosophie-morale-le-devoir-et-la-raison-enregistrement-brut__mobile-audio-philo-1787606645165.txt",
+    "title": "Philosophie morale — Le devoir et la raison (Enregistrement brut)",
+    "courseId": "mobile-mobile-audio-philo-1787606645165-1787606645463",
+    "courseTitle": "Philosophie morale — Le devoir et la raison (Enregistrement brut)",
+    "date": "2026-08-24",
+    "provider": "whisper.cpp-local",
+    "sourceValidation": {
+      "ok": true,
+      "reason": null,
+      "message": null,
+      "characters": 25215,
+      "words": 4612,
+      "letters": 19117,
+      "quality": "normale",
+      "checkedAt": "2026-08-24T21:33:58.417Z"
+    }
+  }
+]

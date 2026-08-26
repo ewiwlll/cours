@@ -1,0 +1,40 @@
+[
+  {
+    "courseId": "mobile-biomolecules-membranes-2026",
+    "cardId": "card-membranes-01",
+    "rating": 3,
+    "createdAt": "2026-08-25T19:58:41.114Z",
+    "lessonId": "mobile-biomolecules-membranes-2026",
+    "intervalDays": 3,
+    "reviewCount": 1,
+    "nextReviewAt": "2026-08-28T19:58:41.114Z",
+    "nextReview": "2026-08-28",
+    "schedule": {
+      "intervalDays": 3,
+      "legacyIntervalDays": 4,
+      "reviewCount": 1,
+      "successStreak": 0,
+      "nextReviewAt": "2026-08-28T19:58:41.114Z",
+      "nextReview": "2026-08-28",
+      "stability": 3.173,
+      "difficulty": 5.28243,
+      "retrievability": 1,
+      "lapses": 0,
+      "fsrs": {
+        "intervalDays": 3,
+        "stability": 3.173,
+        "difficulty": 5.28243,
+        "retrievability": 1,
+        "reviewCount": 1,
+        "successStreak": 1,
+        "lapses": 0,
+        "nextReviewAt": "2026-08-28T19:58:41.114Z",
+        "nextReview": "2026-08-28",
+        "targetRetention": 0.9,
+        "elapsedDays": 0
+      }
+    },
+    "weakCardIds": [],
+    "weakConcepts": []
+  }
+]

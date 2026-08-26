@@ -1,0 +1,865 @@
+[
+  {
+    "id": "2026-08-27__biomolecules__thermodynamique-cellulaire",
+    "subjectId": "s1-biomolecules",
+    "subjectTitle": "Biomolécules",
+    "title": "Thermodynamique cellulaire & Couplage ATP",
+    "date": "2026-08-27",
+    "kind": "CM",
+    "chapter": "Bioénergétique et métabolisme",
+    "status": "source-insuffisante",
+    "recallStatus": "unlocked",
+    "recallScore": 80,
+    "summaryFilename": "2026-08-27__biomolecules__thermodynamique-cellulaire.md",
+    "moc": {
+      "title": "MOC — Bioénergétique cellulaire",
+      "sections": [
+        "1. Critère de spontanéité de Gibbs ΔG",
+        "2. Distinction fondamentale ΔG vs ΔG°'",
+        "3. Couplage énergétique et hydrolyse de l'ATP"
+      ]
+    },
+    "atomicConcepts": [
+      {
+        "id": "concept-delta-g",
+        "title": "L'Enthalpie Libre de Gibbs (ΔG)",
+        "whyWeNeedIt": "Prédire le sens spontané d'une réaction sans devoir mesurer l'entropie de tout l'univers.",
+        "analogy": "Une bille sur une colline : si la pente descend (ΔG < 0), la bille roule toute seule. Si la pente monte (ΔG > 0), il faut la pousser.",
+        "definition": "Grandeur thermodynamique ΔG = ΔH - TΔS quantifiant l'énergie utile maximale extractible d'une réaction à T et P constantes.",
+        "comparison": {
+          "versus": "Énergie Libre Standard (ΔG°')",
+          "rule": "ΔG°' est une constante fixe tabulée dans des conditions idéales (1M, pH 7) ; ΔG est la variable réelle instantanée dans la cellule.",
+          "table": [
+            {
+              "critere": "Nature",
+              "a": "Variable dynamique dépendant des concentrations",
+              "b": "Constante thermodynamique fixe"
+            },
+            {
+              "critere": "Valeur à l'équilibre",
+              "a": "ΔG = 0 (aucun travail possible)",
+              "b": "ΔG°' = -RT ln(K_eq)"
+            },
+            {
+              "critere": "Spontanéité",
+              "a": "Définit le sens réel direct si négatif",
+              "b": "Indique seulement la position d'équilibre"
+            }
+          ]
+        },
+        "progressiveExamples": [
+          {
+            "level": "simple",
+            "title": "Dissolution du sel",
+            "explanation": "Processus spontané guidé par l'augmentation d'entropie ΔS > 0."
+          },
+          {
+            "level": "intermediaire",
+            "title": "Hydrolyse de l'ATP",
+            "explanation": "ΔG°' = -30.5 kJ/mol : forte répulsion des charges négatives des phosphates."
+          },
+          {
+            "level": "realiste",
+            "title": "Phosphorylation du Glucose",
+            "explanation": "Réaction endergonique +13.8 kJ/mol rendue spontanée par couplage (-16.7 kJ/mol global)."
+          }
+        ],
+        "traps": [
+          "Ne pas confondre ΔG < 0 (thermodynamique favorable) et la vitesse de réaction (cinétique dépendante de l'enzyme)."
+        ]
+      },
+      {
+        "id": "concept-couplage-atp",
+        "title": "Le Couplage Énergétique par l'ATP",
+        "whyWeNeedIt": "Permettre aux réactions anaboliques de synthèse du vivant d'avoir lieu malgré un ΔG° positif.",
+        "analogy": "Un système d'engrenage où un moteur puissant qui descend entraîne une charge lourde qui monte.",
+        "definition": "Mécanisme enzymatique associant une réaction endergonique (ΔG1 > 0) à l'hydrolyse exergonique de l'ATP (ΔG2 << 0) pour que la somme ΔG_total soit strictement négative."
+      }
+    ],
+    "cards": [
+      {
+        "id": "card-thermo-01",
+        "conceptId": "concept-delta-g",
+        "question": "Quelle condition thermodynamique détermine si une réaction est spontanée dans la cellule ?",
+        "answer": "Une réaction est spontanée si et seulement si sa variation d'enthalpie libre réelle est négative : ΔG < 0.",
+        "kind": "definition",
+        "trap": "C'est le signe de ΔG réel et non pas de ΔG°' qui détermine la spontanéité effective.",
+        "options": [
+          "ΔG < 0 (Variation d'enthalpie libre négative)",
+          "ΔH < 0 (Libération de chaleur uniquement)",
+          "ΔS < 0 (Diminution du désordre)",
+          "K_eq = 1 (Équilibre parfait)"
+        ],
+        "correctOption": 0
+      },
+      {
+        "id": "card-thermo-02",
+        "conceptId": "concept-delta-g",
+        "question": "Quelle est la relation entre ΔG réel, ΔG°' et les concentrations en réactifs [R] et produits [P] ?",
+        "answer": "ΔG = ΔG°' + RT ln([P] / [R]). À l'équilibre, ΔG = 0 d'où ΔG°' = -RT ln(K_eq).",
+        "kind": "formule"
+      },
+      {
+        "id": "card-thermo-03",
+        "conceptId": "concept-couplage-atp",
+        "question": "Comment l'hexokinase rend-elle la synthèse du Glucose-6-Phosphate thermodynamiquement spontanée ?",
+        "answer": "En couplant la phosphorylation du glucose (+13.8 kJ/mol) à l'hydrolyse de l'ATP (-30.5 kJ/mol), donnant un bilan global favorable de -16.7 kJ/mol.",
+        "kind": "mecanisme"
+      }
+    ],
+    "updatedAt": "2026-08-26T21:40:35.289Z",
+    "automationState": "blocked",
+    "automationRetryable": false,
+    "automationNextAttemptAt": null,
+    "sourceValidation": {
+      "ok": false,
+      "reason": "introuvable",
+      "message": "La transcription source est introuvable.",
+      "characters": 0,
+      "words": 0,
+      "letters": 0,
+      "quality": "insuffisante",
+      "checkedAt": "2026-08-26T21:39:31.175Z"
+    },
+    "automationEligible": false,
+    "automationError": "Source insuffisante : La transcription source est introuvable.",
+    "lastRecalledAt": "2026-08-26T21:40:35.289Z",
+    "recallDiagnostic": {
+      "score": 80,
+      "level": "good",
+      "summary": "Rappel libre enregistré avec succès. Fiche et flashcards déverrouillées.",
+      "concepts": [
+        {
+          "id": "c1",
+          "label": "Rappel initial",
+          "status": "mastered",
+          "feedback": "Excellent effort de récupération active avant lecture."
+        }
+      ]
+    }
+  },
+  {
+    "id": "mobile-biomolecules-membranes-2026",
+    "subjectId": "s1-biomolecules",
+    "subjectTitle": "Biomolécules",
+    "title": "Structure et dynamique des membranes cellulaires",
+    "date": "2026-08-25",
+    "kind": "CM",
+    "chapter": "Biophysique et transport membranaire",
+    "status": "traite",
+    "recallStatus": "unlocked",
+    "recallScore": 55,
+    "lastRecalledAt": "2026-08-24T22:22:42.907Z",
+    "recallDiagnostic": {
+      "score": 55,
+      "level": "partial",
+      "summary": "Rappel partiel. Consulte les concepts et la réponse modèle ci-dessous pour consolider ta mémoire.",
+      "concepts": [
+        {
+          "id": "card-membranes-01",
+          "label": "Quelle est la structure de base de la membrane plasmique et quel est le nom du modèle établi en 1972 ?",
+          "status": "partial",
+          "feedback": "Une partie des éléments est retrouvée ; compare avec l'attendu. DANS LA SOURCE : Fiche de cours",
+          "source": "Fiche de cours",
+          "expected": "C est une bicouche lipidique fluide d environ 7,5 nm constituée de phospholipides amphiphiles, selon le modèle de la mosaïque fluide (Singer et Nicolson, 1972)."
+        },
+        {
+          "id": "card-membranes-02",
+          "label": "Quel est le rôle exact du cholestérol dans la membrane plasmique ?",
+          "status": "partial",
+          "feedback": "Une partie des éléments est retrouvée ; compare avec l'attendu. DANS LA SOURCE : Fiche de cours",
+          "source": "Fiche de cours",
+          "expected": "Il agit comme un tampon thermique de fluidité : à haute température, il restreint les mouvements des lipides pour limiter la fluidité ; à basse température, il empêche la cristallisation et maintient la fluidité."
+        },
+        {
+          "id": "card-membranes-03",
+          "label": "Quelle est la différence fondamentale entre la diffusion facilitée et le transport actif primaire ?",
+          "status": "partial",
+          "feedback": "Une partie des éléments est retrouvée ; compare avec l'attendu. DANS LA SOURCE : Fiche de cours",
+          "source": "Fiche de cours",
+          "expected": "La diffusion facilitée se fait dans le sens du gradient électrochimique sans dépense d énergie (ATP), alors que le transport actif primaire s effectue contre le gradient et hydrolyse directement de l ATP."
+        }
+      ],
+      "improvedAnswer": "C est une bicouche lipidique fluide d environ 7,5 nm constituée de phospholipides amphiphiles, selon le modèle de la mosaïque fluide (Singer et Nicolson, 1972).\nIl agit comme un tampon thermique de fluidité : à haute température, il restreint les mouvements des lipides pour limiter la fluidité ; à basse température, il empêche la cristallisation et maintient la fluidité.\nLa diffusion facilitée se fait dans le sens du gradient électrochimique sans dépense d énergie (ATP), alors que le transport actif primaire s effectue contre le gradient et hydrolyse directement de l ATP.",
+      "nextQuestion": {
+        "question": "Quelle est la structure de base de la membrane plasmique et quel est le nom du modèle établi en 1972 ?",
+        "answer": "C est une bicouche lipidique fluide d environ 7,5 nm constituée de phospholipides amphiphiles, selon le modèle de la mosaïque fluide (Singer et Nicolson, 1972).",
+        "source": "À VÉRIFIER"
+      }
+    },
+    "summaryFilename": "2026-08-25__biomolecules__structure-membranes.md",
+    "photos": [
+      {
+        "id": "photo-membrane-1",
+        "filename": "schema-mosaique-fluide.jpg",
+        "url": "http://127.0.0.1:3002/cours-apk-qr.png"
+      }
+    ],
+    "cards": [
+      {
+        "id": "card-membranes-01",
+        "question": "Quelle est la structure de base de la membrane plasmique et quel est le nom du modèle établi en 1972 ?",
+        "answer": "C est une bicouche lipidique fluide d environ 7,5 nm constituée de phospholipides amphiphiles, selon le modèle de la mosaïque fluide (Singer et Nicolson, 1972).",
+        "kind": "definition",
+        "trap": "Ne pas oublier que les phospholipides sont amphiphiles (têtes hydrophiles vers l extérieur, queues hydrophobes vers l intérieur).",
+        "options": [
+          "Modèle de la mosaïque fluide (Singer et Nicolson)",
+          "Modèle en sandwich protéique (Davson-Danielli)",
+          "Modèle de la micelle inversée",
+          "Modèle du réseau rigide de peptidoglycane"
+        ],
+        "correctOption": 0
+      },
+      {
+        "id": "card-membranes-02",
+        "question": "Quel est le rôle exact du cholestérol dans la membrane plasmique ?",
+        "answer": "Il agit comme un tampon thermique de fluidité : à haute température, il restreint les mouvements des lipides pour limiter la fluidité ; à basse température, il empêche la cristallisation et maintient la fluidité.",
+        "kind": "mecanisme",
+        "trap": "Le cholestérol ne fluidifie pas toujours : il stabilise à chaud et empêche le gel à froid.",
+        "options": [
+          "Il sert uniquement de source d énergie pour les pompes ATPases",
+          "Il agit comme un tampon thermique stabilisant la fluidité à chaud et à froid",
+          "Il forme des canaux perméables pour le passage des ions sodium",
+          "Il détruit les phospholipides vieillissants"
+        ],
+        "correctOption": 1
+      },
+      {
+        "id": "card-membranes-03",
+        "question": "Quelle est la différence fondamentale entre la diffusion facilitée et le transport actif primaire ?",
+        "answer": "La diffusion facilitée se fait dans le sens du gradient électrochimique sans dépense d énergie (ATP), alors que le transport actif primaire s effectue contre le gradient et hydrolyse directement de l ATP.",
+        "kind": "comparaison",
+        "trap": "La diffusion facilitée utilise des protéines (canaux/perméases) mais reste un transport passif sans ATP."
+      }
+    ],
+    "updatedAt": "2026-08-24T22:22:42.908Z"
+  },
+  {
+    "id": "mobile-mobile-1787093242080-f7sixw9vqp-1787093241797",
+    "externalRecordingId": "mobile-1787093242080-f7sixw9vqp",
+    "source": "mobile",
+    "subjectId": "s1-maths-avancees",
+    "subjectTitle": "Mathématiques avancées 1",
+    "title": "Cours 1 — Organisation",
+    "date": "2026-08-19",
+    "kind": "cours",
+    "chapter": "Organisation",
+    "chapterId": "chapter-1787093211870-organisation",
+    "courseNumber": 1,
+    "partLabel": "1",
+    "status": "source-insuffisante",
+    "automationEligible": false,
+    "transcriptionFilename": "2026-08-19__mathematiques-avancees-1__cours-1-organisation__mobile-1787093242080-f7sixw9vqp.txt",
+    "summaryFilename": null,
+    "recordingFilename": "2026-08-19__mathematiques-avancees-1__cours-1-organisation__mobile-1787093242080-f7sixw9vqp.m4a",
+    "notes": "",
+    "photos": [],
+    "cards": [],
+    "sourceValidation": {
+      "ok": false,
+      "reason": "trop-courte",
+      "message": "La transcription est trop courte pour produire une fiche fiable.",
+      "characters": 33,
+      "words": 3,
+      "letters": 29,
+      "quality": "insuffisante",
+      "checkedAt": "2026-08-23T23:07:55.730Z"
+    },
+    "automationError": "Source insuffisante : La transcription est trop courte pour produire une fiche fiable.",
+    "createdAt": "2026-08-18T22:47:21.797Z",
+    "updatedAt": "2026-08-23T23:07:55.730Z",
+    "transcriptionProvider": "whisper.cpp-local",
+    "transcriptionError": null,
+    "transcriptionStartedAt": "2026-08-18T22:47:23.673Z",
+    "transcriptionCompletedAt": "2026-08-18T22:47:28.389Z",
+    "automationState": "blocked",
+    "automationRetryable": false,
+    "automationNextAttemptAt": null
+  },
+  {
+    "id": "mobile-mobile-philo-1787605357741-1787605357779",
+    "externalRecordingId": "mobile-philo-1787605357741",
+    "source": "mobile",
+    "subjectId": "s1-mineure",
+    "subjectTitle": "Mineure S1",
+    "title": "Le devoir, le sentiment moral et les institutions",
+    "date": "2026-08-24",
+    "kind": "cours",
+    "chapter": "Philosophie morale : Devoir, Raison et Institutions",
+    "chapterId": "chapter-1787605350145-philosophie-morale-devoir-raison-et-institutions",
+    "courseNumber": 1,
+    "partLabel": "Phase 1",
+    "partScope": null,
+    "status": "ready",
+    "transcriptionState": "received",
+    "transcriptionAttempts": 0,
+    "transcriptionRetryable": false,
+    "automationEligible": true,
+    "transcriptionFilename": "2026-08-24__mineure-s1__le-devoir-le-sentiment-moral-et-les-institutions__mobile-philo-1787605357741.txt",
+    "summaryFilename": "mobile-mobile-philo-1787605357741-1787605357779.md",
+    "recordingFilename": null,
+    "notes": "Enregistrement de cours magistral (1h30). Analyse du devoir moral selon Kant, critique du sentimentalisme, rôle de la raison et genèse sociale des devoirs par les institutions.",
+    "photos": [],
+    "recordingMarkers": [
+      {
+        "id": "m1",
+        "offsetMs": 180000,
+        "kind": "important",
+        "label": "Devoir conforme vs par devoir",
+        "createdAt": "2026-08-24T21:02:37.741Z"
+      },
+      {
+        "id": "m2",
+        "offsetMs": 1200000,
+        "kind": "important",
+        "label": "Critique du sentiment moral et rôle de la raison",
+        "createdAt": "2026-08-24T21:02:37.741Z"
+      },
+      {
+        "id": "m3",
+        "offsetMs": 3600000,
+        "kind": "important",
+        "label": "Rôle des institutions (famille, école, religion)",
+        "createdAt": "2026-08-24T21:02:37.741Z"
+      }
+    ],
+    "transcriptSections": [
+      {
+        "id": "section-1",
+        "title": "Section 1",
+        "startOffsetMs": 0,
+        "endOffsetMs": 675000,
+        "partStart": 1,
+        "partEnd": 1,
+        "status": "proposed"
+      },
+      {
+        "id": "section-2",
+        "title": "Section 2",
+        "startOffsetMs": 675000,
+        "endOffsetMs": 1350000,
+        "partStart": 2,
+        "partEnd": 2,
+        "status": "proposed"
+      },
+      {
+        "id": "section-3",
+        "title": "Section 3",
+        "startOffsetMs": 1350000,
+        "endOffsetMs": 2025000,
+        "partStart": 3,
+        "partEnd": 3,
+        "status": "proposed"
+      },
+      {
+        "id": "section-4",
+        "title": "Section 4",
+        "startOffsetMs": 2025000,
+        "endOffsetMs": 2700000,
+        "partStart": 4,
+        "partEnd": 4,
+        "status": "proposed"
+      },
+      {
+        "id": "section-5",
+        "title": "Section 5",
+        "startOffsetMs": 2700000,
+        "endOffsetMs": 3375000,
+        "partStart": 5,
+        "partEnd": 5,
+        "status": "proposed"
+      },
+      {
+        "id": "section-6",
+        "title": "Section 6",
+        "startOffsetMs": 3375000,
+        "endOffsetMs": 4050000,
+        "partStart": 6,
+        "partEnd": 6,
+        "status": "proposed"
+      },
+      {
+        "id": "section-7",
+        "title": "Section 7",
+        "startOffsetMs": 4050000,
+        "endOffsetMs": 4725000,
+        "partStart": 7,
+        "partEnd": 7,
+        "status": "proposed"
+      },
+      {
+        "id": "section-8",
+        "title": "Section 8",
+        "startOffsetMs": 4725000,
+        "endOffsetMs": 5400000,
+        "partStart": 8,
+        "partEnd": 8,
+        "status": "proposed"
+      }
+    ],
+    "audioDurationMs": 5400000,
+    "cards": [
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-01",
+        "question": "Quels sont les critères essentiels caractérisant la désobéissance civile selon le texte de John Rawls ?",
+        "answer": "La désobéissance civile est un acte illégal, public, non violent, décidé en conscience et à visée politique, accompli pour provoquer un changement dans la loi ou la politique du gouvernement dans le cadre d'un État démocratique.",
+        "kind": "definition",
+        "source": "La divence civile peut tout d'abord être défini... acte public non violent décidé en conscience politique contraire à la loi mais dans le but de changer la loi.",
+        "difficulty": 2,
+        "keywords": [
+          "désobéissance civile",
+          "John Rawls",
+          "illégal",
+          "public",
+          "non violent",
+          "politique"
+        ],
+        "commonMistakes": [
+          "Croire que la désobéissance civile est un acte secret ou clandestin",
+          "La confondre avec une rébellion armée ou violente"
+        ],
+        "trap": "La désobéissance civile s'effectue 'dans les limites de la fidélité à la loi' générale pour améliorer le système, non pour détruire l'État."
+      },
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-02",
+        "question": "En quoi consiste l'inversion des valeurs et la 'mauvaise conscience' selon la critique nietzschéenne de la morale ?",
+        "answer": "Les faibles, incapables d'égaler la puissance naturelle des forts, inventent la morale pour culpabiliser la force. Le fort intériorise cette faute et retourne sa propre puissance contre lui-même sous forme de mauvaise conscience, devenant domestiqué.",
+        "kind": "raisonner",
+        "source": "Les faibles ont réussi à inverser ce truc... ils ont inventé la mauvaise conscience... la morale va l'empêcher, il va se sentir mal et se blesser lui-même.",
+        "difficulty": 3,
+        "keywords": [
+          "Nietzsche",
+          "Calliclès",
+          "inversion des valeurs",
+          "mauvaise conscience",
+          "domestication",
+          "puissance"
+        ],
+        "commonMistakes": [
+          "Penser que pour Nietzsche la morale est naturellement bonne",
+          "Confondre le droit naturel de Calliclès avec le droit naturel des Droits de l'Homme"
+        ],
+        "trap": "Chez Calliclès/Nietzsche, la nature est l'expression de la puissance brute, alors que dans le droit moderne, la nature fonde l'égalité des droits."
+      },
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-03",
+        "question": "Quelle tension fondamentale la tragédie d'Antigone illustre-t-elle dans le domaine moral et politique ?",
+        "answer": "Elle illustre le conflit des devoirs entre l'obéissance à la loi positive de la cité (le décret politique interdisant la sépulture du traître) et le devoir supérieur, familial et religieux (offrir les rites funéraires à son frère).",
+        "kind": "appliquer",
+        "source": "Antigone via son frère... conflit entre la loi... et d'un point de vue c'est par rapport à la religion... conflit des devoirs.",
+        "difficulty": 2,
+        "keywords": [
+          "Antigone",
+          "conflit des devoirs",
+          "loi positive",
+          "devoir religieux",
+          "sépulture"
+        ],
+        "commonMistakes": [
+          "Réduire le geste d'Antigone à un caprice personnel",
+          "Oublier la dimension religieuse et familiale sacrée de son acte"
+        ],
+        "trap": "Antigone n'agit pas par délinquance mais au nom d'une légitimité morale supérieure à la légalité de Créon."
+      },
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-04",
+        "question": "Selon le cours, quelle est la fonction première des institutions (famille, école, lois, religion) dans la transmission des valeurs ?",
+        "answer": "Elles créent des valeurs communes et un inconscient collectif partagé indispensables pour permettre aux individus de coopérer, d'échanger et de vivre ensemble sans que des désaccords fondamentaux ne fragmentent la société.",
+        "kind": "comparer",
+        "source": "Produire des valeurs dans une société c'est un truc fondamental des sociétés parce que la société fonctionne... valeurs communes qui vont lui permettre de coopérer.",
+        "difficulty": 2,
+        "keywords": [
+          "institutions",
+          "valeurs communes",
+          "inconscient collectif",
+          "cohésion sociale",
+          "coopération"
+        ],
+        "commonMistakes": [
+          "Penser que la société peut fonctionner sans aucune valeur partagée",
+          "Croire que les institutions n'agissent que par la contrainte physique"
+        ],
+        "trap": "Les valeurs partagées peuvent être soit fermées/dogmatiques, soit ouvertes (tolérance, laïcité) comme dans les démocraties modernes."
+      },
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-05",
+        "question": "Selon John Rawls, pourquoi la désobéissance civile a-t-elle un effet stabilisateur sur le système démocratique ?",
+        "answer": "Elle permet de corriger publiquement les lois injustes et de résister aux dérives sans rejeter la légitimité de la Constitution, ramenant ainsi la législation en conformité avec le sens de la justice partagé par la communauté.",
+        "kind": "raisonner",
+        "source": "En fait, la désobéissance civile est un moyen de stabiliser un système constitutionnel... en résistant à l'injustice dans les limites de la fidélité à la loi.",
+        "difficulty": 2,
+        "keywords": [
+          "stabilisation",
+          "Constitution",
+          "justice",
+          "Rawls",
+          "fidélité à la loi"
+        ],
+        "commonMistakes": [
+          "Considérer la désobéissance civile comme une tentative de coup d'État ou d'anarchie"
+        ],
+        "trap": "Le paradoxe souligné par Rawls est qu'un moyen illégal sert à renforcer et assainir la légalité démocratique."
+      },
+      {
+        "id": "mobile-mobile-philo-1787605357741-1787605357779-06",
+        "question": "Parmi ces affirmations sur la désobéissance civile selon le texte étudié en cours, laquelle est VRAIE ?",
+        "answer": "Elle doit être publique et non violente pour interpeller le sens de la justice de la majorité.",
+        "kind": "qcm",
+        "source": "C'est une définition... public non violent... on s'adresse au sens de la justice de la majorité de la communauté.",
+        "difficulty": 1,
+        "keywords": [
+          "QCM",
+          "désobéissance civile",
+          "critères",
+          "non-violence"
+        ],
+        "commonMistakes": [
+          "Choisir la dissimulation ou l'intérêt personnel"
+        ],
+        "trap": "Cacher des personnes persécutées en secret, bien que moralement juste, relève de la résistance clandestine et non de la désobéissance civile au sens de Rawls.",
+        "options": [
+          "Elle doit être secrète pour éviter toute sanction judiciaire.",
+          "Elle a pour but premier d'obtenir un avantage personnel immédiat.",
+          "Elle doit être publique et non violente pour interpeller le sens de la justice de la majorité.",
+          "Elle ne peut s'exercer que sous une dictature totalitaire."
+        ],
+        "correctOption": 0,
+        "explanation": ""
+      }
+    ],
+    "sourceValidation": {
+      "ok": true,
+      "reason": null,
+      "message": null,
+      "characters": 39312,
+      "words": 7123,
+      "letters": 30828,
+      "quality": "normale",
+      "checkedAt": "2026-08-24T21:03:44.896Z"
+    },
+    "automationError": null,
+    "createdAt": "2026-08-24T21:02:37.779Z",
+    "transcriptionProvider": "device",
+    "transcriptionError": null,
+    "transcriptionCompletedAt": "2026-08-24T21:02:37.782Z",
+    "updatedAt": "2026-08-25T21:04:41.239Z",
+    "automationState": "completed",
+    "automationRetryable": false,
+    "automationAttempts": 3,
+    "automationLastAttemptAt": "2026-08-24T21:03:44.896Z",
+    "automationNextAttemptAt": null,
+    "automationStartedAt": "2026-08-24T21:03:44.896Z",
+    "automationFinishedAt": "2026-08-24T21:04:06.028Z",
+    "recallStatus": "unlocked",
+    "recallScore": 75,
+    "lastRecalledAt": "2026-08-25T21:04:41.239Z",
+    "recallDiagnostic": {
+      "score": 0,
+      "level": "missing",
+      "summary": "Rappel partiel. Consulte les concepts et la réponse modèle ci-dessous pour consolider ta mémoire.",
+      "concepts": [
+        {
+          "id": "mobile-mobile-philo-1787605357741-1787605357779-01",
+          "label": "Quels sont les critères essentiels caractérisant la désobéissance civile selon le texte de John Rawls ?",
+          "status": "missing",
+          "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : La divence civile peut tout d'abord être défini... acte public non violent décidé en conscience politique contraire à la loi mais dans le but de changer la loi.",
+          "source": "La divence civile peut tout d'abord être défini... acte public non violent décidé en conscience politique contraire à la loi mais dans le but de changer la loi.",
+          "expected": "La désobéissance civile est un acte illégal, public, non violent, décidé en conscience et à visée politique, accompli pour provoquer un changement dans la loi ou la politique du gouvernement dans le cadre d'un État démocratique."
+        },
+        {
+          "id": "mobile-mobile-philo-1787605357741-1787605357779-02",
+          "label": "En quoi consiste l'inversion des valeurs et la 'mauvaise conscience' selon la critique nietzschéenne de la morale ?",
+          "status": "missing",
+          "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : Les faibles ont réussi à inverser ce truc... ils ont inventé la mauvaise conscience... la morale va l'empêcher, il va se sentir mal et se blesser lui-même.",
+          "source": "Les faibles ont réussi à inverser ce truc... ils ont inventé la mauvaise conscience... la morale va l'empêcher, il va se sentir mal et se blesser lui-même.",
+          "expected": "Les faibles, incapables d'égaler la puissance naturelle des forts, inventent la morale pour culpabiliser la force. Le fort intériorise cette faute et retourne sa propre puissance contre lui-même sous forme de mauvaise conscience, devenant domestiqué."
+        },
+        {
+          "id": "mobile-mobile-philo-1787605357741-1787605357779-03",
+          "label": "Quelle tension fondamentale la tragédie d'Antigone illustre-t-elle dans le domaine moral et politique ?",
+          "status": "missing",
+          "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : Antigone via son frère... conflit entre la loi... et d'un point de vue c'est par rapport à la religion... conflit des devoirs.",
+          "source": "Antigone via son frère... conflit entre la loi... et d'un point de vue c'est par rapport à la religion... conflit des devoirs.",
+          "expected": "Elle illustre le conflit des devoirs entre l'obéissance à la loi positive de la cité (le décret politique interdisant la sépulture du traître) et le devoir supérieur, familial et religieux (offrir les rites funéraires à son frère)."
+        },
+        {
+          "id": "mobile-mobile-philo-1787605357741-1787605357779-04",
+          "label": "Selon le cours, quelle est la fonction première des institutions (famille, école, lois, religion) dans la transmission des valeurs ?",
+          "status": "missing",
+          "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : Produire des valeurs dans une société c'est un truc fondamental des sociétés parce que la société fonctionne... valeurs communes qui vont lui permettre de coopérer.",
+          "source": "Produire des valeurs dans une société c'est un truc fondamental des sociétés parce que la société fonctionne... valeurs communes qui vont lui permettre de coopérer.",
+          "expected": "Elles créent des valeurs communes et un inconscient collectif partagé indispensables pour permettre aux individus de coopérer, d'échanger et de vivre ensemble sans que des désaccords fondamentaux ne fragmentent la société."
+        },
+        {
+          "id": "mobile-mobile-philo-1787605357741-1787605357779-05",
+          "label": "Selon John Rawls, pourquoi la désobéissance civile a-t-elle un effet stabilisateur sur le système démocratique ?",
+          "status": "missing",
+          "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : En fait, la désobéissance civile est un moyen de stabiliser un système constitutionnel... en résistant à l'injustice dans les limites de la fidélité à la loi.",
+          "source": "En fait, la désobéissance civile est un moyen de stabiliser un système constitutionnel... en résistant à l'injustice dans les limites de la fidélité à la loi.",
+          "expected": "Elle permet de corriger publiquement les lois injustes et de résister aux dérives sans rejeter la légitimité de la Constitution, ramenant ainsi la législation en conformité avec le sens de la justice partagé par la communauté."
+        },
+        {
+          "id": "mobile-mobile-philo-1787605357741-1787605357779-06",
+          "label": "Parmi ces affirmations sur la désobéissance civile selon le texte étudié en cours, laquelle est VRAIE ?",
+          "status": "missing",
+          "feedback": "Élément non retrouvé dans la réponse. DANS LA SOURCE : C'est une définition... public non violent... on s'adresse au sens de la justice de la majorité de la communauté.",
+          "source": "C'est une définition... public non violent... on s'adresse au sens de la justice de la majorité de la communauté.",
+          "expected": "Elle doit être publique et non violente pour interpeller le sens de la justice de la majorité."
+        }
+      ],
+      "improvedAnswer": "La désobéissance civile est un acte illégal, public, non violent, décidé en conscience et à visée politique, accompli pour provoquer un changement dans la loi ou la politique du gouvernement dans le cadre d'un État démocratique.\nLes faibles, incapables d'égaler la puissance naturelle des forts, inventent la morale pour culpabiliser la force. Le fort intériorise cette faute et retourne sa propre puissance contre lui-même sous forme de mauvaise conscience, devenant domestiqué.\nElle illustre le conflit des devoirs entre l'obéissance à la loi positive de la cité (le décret politique interdisant la sépulture du traître) et le devoir supérieur, familial et religieux (offrir les rites funéraires à son frère).\nElles créent des valeurs communes et un inconscient collectif partagé indispensables pour permettre aux individus de coopérer, d'échanger et de vivre ensemble sans que des désaccords fondamentaux ne fragmentent la société.\nElle permet de corriger publiquement les lois injustes et de résister aux dérives sans rejeter la légitimité de la Constitution, ramenant ainsi la législation en conformité avec le sens de la justice partagé par la communauté.",
+      "nextQuestion": {
+        "question": "Quels sont les critères essentiels caractérisant la désobéissance civile selon le texte de John Rawls ?",
+        "answer": "La désobéissance civile est un acte illégal, public, non violent, décidé en conscience et à visée politique, accompli pour provoquer un changement dans la loi ou la politique du gouvernement dans le cadre d'un État démocratique.",
+        "source": "La divence civile peut tout d'abord être défini... acte public non violent décidé en conscience politique contraire à la loi mais dans le but de changer la loi."
+      }
+    }
+  },
+  {
+    "id": "mobile-mobile-audio-philo-1787606645165-1787606645463",
+    "externalRecordingId": "mobile-audio-philo-1787606645165",
+    "source": "mobile",
+    "subjectId": "s1-mineure",
+    "subjectTitle": "Mineure S1",
+    "title": "Philosophie morale — Le devoir et la raison (Enregistrement brut)",
+    "date": "2026-08-24",
+    "kind": "cours",
+    "chapter": "Philosophie morale : Devoir, Raison et Institutions",
+    "chapterId": "chapter-1787605350145-philosophie-morale-devoir-raison-et-institutions",
+    "courseNumber": 2,
+    "partLabel": "Phase 2",
+    "partScope": null,
+    "status": "ready",
+    "transcriptionState": "completed",
+    "transcriptionAttempts": 1,
+    "transcriptionRetryable": false,
+    "automationEligible": true,
+    "transcriptionFilename": "2026-08-24__mineure-s1__philosophie-morale-le-devoir-et-la-raison-enregistrement-brut__mobile-audio-philo-1787606645165.txt",
+    "summaryFilename": "mobile-mobile-audio-philo-1787606645165-1787606645463.md",
+    "recordingFilename": "2026-08-24__mineure-s1__philosophie-morale-le-devoir-et-la-raison-enregistrement-bru__mobile-audio-philo-1787606645165.m4a",
+    "notes": "Enregistrement direct depuis l'amphi sur le téléphone.",
+    "photos": [],
+    "recordingMarkers": [
+      {
+        "id": "m1",
+        "offsetMs": 300000,
+        "kind": "important",
+        "label": "Définition devoir Kantien",
+        "createdAt": "2026-08-24T21:24:05.165Z"
+      },
+      {
+        "id": "m2",
+        "offsetMs": 2400000,
+        "kind": "example",
+        "label": "Exemple Antigone et Rosa Parks",
+        "createdAt": "2026-08-24T21:24:05.166Z"
+      }
+    ],
+    "transcriptSections": [],
+    "audioDurationMs": 4922280,
+    "cards": [
+      {
+        "id": "mobile-mobile-audio-philo-1787606645165-1787606645463-01",
+        "question": "Quelle est la différence entre une action faite par devoir et une action conforme au devoir selon la perspective kantienne mentionnée dans le cours?",
+        "answer": "Une action faite par devoir suit les principes parce que ce sont des principes, c'est une bonne action. Une action conforme au devoir suit les principes juste par hasard ou par intérêt, ce n'est pas une bonne action même si elle respecte les règles.",
+        "kind": "definition",
+        "source": "Ensuite, d'autonomie, il y a des principes. Ça suit les principes parce que c'est des principes, donc par devoir, c'est une action. Ça suit les principes, juste par hasard, c'est une action qui est conforme aux devoirs, mais qui n'est pas une bonne action.",
+        "difficulty": 2,
+        "keywords": [
+          "Kant",
+          "devoir",
+          "autonomie",
+          "action morale",
+          "conformité au devoir"
+        ],
+        "commonMistakes": [
+          "Confondre la motivation de l'action avec son résultat.",
+          "Penser qu'une action conforme au devoir est moralement bonne."
+        ],
+        "trap": "Le piège est de juger la moralité d'une action uniquement par son apparence ou ses conséquences, sans considérer l'intention ou le principe sous-jacent."
+      },
+      {
+        "id": "mobile-mobile-audio-philo-1787606645165-1787606645463-02",
+        "question": "Selon le cours, quel est le rôle principal des valeurs communes dans une société?",
+        "answer": "Les valeurs communes sont fondamentales pour qu'une société puisse fonctionner. Elles permettent aux citoyens de coopérer, de discuter et d'échanger, réduisant ainsi les conflits et les désaccords fondamentaux qui rendraient la vie en société difficile.",
+        "kind": "definition",
+        "source": "L'idée, c'est qu'une société, elle a besoin de se baser sur des valeurs communes qui vont vous permettre de coopérer, de discuter, d'échanger, etc. C'est un des fondements du fait social.",
+        "difficulty": 1,
+        "keywords": [
+          "valeurs sociales",
+          "société",
+          "coopération",
+          "conflit",
+          "cohésion sociale"
+        ],
+        "commonMistakes": [
+          "Sous-estimer l'importance des valeurs communes pour la stabilité sociale.",
+          "Penser que la société peut fonctionner avec des désaccords fondamentaux sur tout."
+        ],
+        "trap": "Le piège est de croire que la simple coexistence physique des individus suffit à faire société, sans un socle de valeurs partagées."
+      },
+      {
+        "id": "mobile-mobile-audio-philo-1787606645165-1787606645463-03",
+        "question": "Quels sont les deux principaux vecteurs utilisés par l'État pour transmettre des valeurs à ses citoyens, selon le cours?",
+        "answer": "Les deux principaux vecteurs sont la loi (le droit) et l'éducation (ou la doctrine, qui inclut l'éducation des adultes sur ce qu'ils doivent penser).",
+        "kind": "definition",
+        "source": "L'état, il a quoi comme vecteur, effectivement, pour transmettre ces valeurs ? Il y a deux gros vecteurs. C'est quoi ? La loi. Ouais, la loi, le droit. Et l'autre, on l'a mis tout à l'heure. Qu'est-ce qu'on fait, là ? L'école ? Alors, l'éducation, c'est pas forcément auprès des enfants. Il y a aussi l'éducation auprès des adultes. Ça s'appelle comment quand l'État, il pense, mais il dit aux gens ce qu'ils doivent penser ? La doctrine, ouais, on va...",
+        "difficulty": 1,
+        "keywords": [
+          "État",
+          "transmission des valeurs",
+          "loi",
+          "droit",
+          "éducation",
+          "doctrine"
+        ],
+        "commonMistakes": [
+          "Oublier l'aspect 'doctrine' ou 'éducation des adultes' en se concentrant uniquement sur l'école.",
+          "Ne pas voir la loi comme un vecteur de valeurs."
+        ],
+        "trap": "Le piège est de limiter la transmission des valeurs par l'État aux seules institutions éducatives formelles, ignorant le rôle du cadre légal et de la persuasion idéologique."
+      },
+      {
+        "id": "mobile-mobile-audio-philo-1787606645165-1787606645463-04",
+        "question": "Comment les États libéraux modernes se distinguent-ils dans leur approche de la transmission des valeurs, par rapport à des États plus autoritaires?",
+        "answer": "Les États libéraux modernes n'essaient pas de transmettre des valeurs précises ou fermées, mais plutôt des valeurs ouvertes comme la tolérance et la laïcité. L'objectif est d'accepter que d'autres puissent avoir des valeurs différentes et de permettre leur coexistence, plutôt que d'imposer une religion ou une idéologie d'État unique.",
+        "kind": "comparer",
+        "source": "Ce qu'on essaye c'est pas de transmettre des valeurs, on essaye pas de transmettre des valeurs précises, on essaye de transmettre plutôt des valeurs ouvertes. Donc par exemple la tolérance, la laïcité, des choses comme ça. Alors on vous dit pas il faut croire cette religion là, c'est l'origine d'état, etc. On vous dit bah ce qu'il faut avoir comme valeur c'est accepter que loup puisse avoir cette religion et qu'on puisse la pratiquer dans la façon dont vous faites. D'accord ? On essaye de faire des valeurs qui permettent d'accepter nos valeurs différentes.",
+        "difficulty": 2,
+        "keywords": [
+          "État libéral",
+          "valeurs ouvertes",
+          "tolérance",
+          "laïcité",
+          "démocratie",
+          "gestion du conflit"
+        ],
+        "commonMistakes": [
+          "Confondre l'absence de valeurs précises avec l'absence totale de valeurs transmises.",
+          "Penser que les États libéraux ne transmettent aucune valeur."
+        ],
+        "trap": "Le piège est de ne pas saisir la nuance entre l'imposition de valeurs spécifiques et la promotion de valeurs permettant la coexistence de multiples systèmes de valeurs."
+      },
+      {
+        "id": "mobile-mobile-audio-philo-1787606645165-1787606645463-05",
+        "question": "Expliquez la définition de la désobéissance civile selon John Rawls, telle que présentée dans le cours.",
+        "answer": "Selon John Rawls, la désobéissance civile est un acte public, non-violent, politique et contraire à la loi. Elle est accomplie dans le but d'amener un changement dans la loi ou la politique du gouvernement. C'est une forme d'appel au sens de l'injustice de la majorité, déclarant que les principes de coopération sociale entre êtres libres et égaux ne sont pas respectés.",
+        "kind": "definition",
+        "source": "La désolation civile peut tout d'abord être définie comme un acte public non violent mais politique contraire à la loi contraire à la loi et accompli le plus souvent pour amener un changement dans la loi ou bien dans la politique du gouvernement... en agissant ainsi on s'adresse le sens de l'injustice de la majorité de la communauté et on déclare que selon son opinion nurement réfléchie les principes de la coopération sociale entre les êtres libres et gros ne sont pas actuellement respectés.",
+        "difficulty": 2,
+        "keywords": [
+          "désobéissance civile",
+          "John Rawls",
+          "acte illégal",
+          "non-violence",
+          "changement de loi",
+          "démocratie"
+        ],
+        "commonMistakes": [
+          "Confondre la désobéissance civile avec une simple infraction à la loi sans but politique.",
+          "Oublier l'aspect non-violent ou public de l'acte."
+        ],
+        "trap": "Le piège est de ne pas comprendre que, bien qu'illégale, la désobéissance civile est un acte politique et démocratique visant à améliorer le système, et non à le détruire."
+      },
+      {
+        "id": "mobile-mobile-audio-philo-1787606645165-1787606645463-06",
+        "question": "Quel est le paradoxe de la désobéissance civile dans une démocratie, selon John Rawls?",
+        "answer": "Le paradoxe est que la désobéissance civile, bien qu'étant un acte illégal et contraire à la loi, est en réalité un acte fondamentalement démocratique. Elle vise à manifester un problème et à faire pression sur la majorité pour changer les lois, ce qui est une manière d'exercer la démocratie et de la tester.",
+        "kind": "raisonner",
+        "source": "En gros pour prendre un peu de l'enjeu la bizarrerie désobillera la loi en fait c'est un acte démocratique dès que vous sentez ça c'est bien vous sentez ça clac ok c'est bon j'ai compris en gros du texte il y a un truc bizarre et une tension je l'écoute la désolation civile peut tout d'abord être définie comme un acte public non violent mais politique contraire à la loi contraire à la loi et accompli le plus souvent pour amener un changement dans la loi ou bien dans la politique du gouvernement.",
+        "difficulty": 3,
+        "keywords": [
+          "désobéissance civile",
+          "paradoxe",
+          "démocratie",
+          "John Rawls",
+          "légalité",
+          "légitimité"
+        ],
+        "commonMistakes": [
+          "Voir la désobéissance civile comme une simple rébellion anarchique.",
+          "Ne pas comprendre comment un acte illégal peut renforcer la démocratie."
+        ],
+        "trap": "Le piège est de ne pas saisir la tension entre le devoir d'obéir aux lois et le devoir de lutter contre l'injustice, qui est au cœur de la réflexion sur la désobéissance civile."
+      },
+      {
+        "id": "mobile-mobile-audio-philo-1787606645165-1787606645463-07",
+        "question": "Selon la brève mention de Nietzsche dans le cours, comment les faibles ont-ils réussi à inverser l'ordre naturel de la puissance?",
+        "answer": "Selon Nietzsche, les faibles ont inventé la morale, notamment l'idée d'égalité et l'amour. En inculquant ces valeurs aux puissants, ils ont réussi à leur faire ressentir de la culpabilité ou du mal-être lorsqu'ils exercent leur nature dominatrice, ce qui constitue une inversion des valeurs.",
+        "kind": "definition",
+        "source": "Les faibles, un jour, qu'est-ce qu'ils vont faire ? Ils vont inventer l'amour. C'est-à-dire qu'ils vont inventer l'idée d'égalité. [...] qu'il y a lui mettre dans la tête que c'est mal de faire ça. Et comme ça, à chaque fois qu'il dominera, parce que c'est sa nature, qu'il va dominer, qu'il va être poussé à dominer, à chaque fois qu'il va se sentir mal en même temps.",
+        "difficulty": 2,
+        "keywords": [
+          "Nietzsche",
+          "inversion des valeurs",
+          "morale",
+          "faibles",
+          "puissants",
+          "égalité",
+          "amour"
+        ],
+        "commonMistakes": [
+          "Penser que Nietzsche valorise cette inversion.",
+          "Confondre la description de Nietzsche avec une approbation morale."
+        ],
+        "trap": "Le piège est de ne pas comprendre que pour Nietzsche, cette invention de la morale par les faibles est une ruse pour contenir la puissance naturelle, et non un progrès moral."
+      }
+    ],
+    "sourceValidation": {
+      "ok": true,
+      "reason": null,
+      "message": null,
+      "characters": 25215,
+      "words": 4612,
+      "letters": 19117,
+      "quality": "normale",
+      "checkedAt": "2026-08-24T21:34:11.720Z"
+    },
+    "automationError": null,
+    "createdAt": "2026-08-24T21:24:05.463Z",
+    "updatedAt": "2026-08-24T21:34:40.465Z",
+    "transcriptionLastAttemptAt": "2026-08-24T21:24:09.062Z",
+    "transcriptionNextAttemptAt": null,
+    "transcriptionProvider": "whisper.cpp-local",
+    "transcriptionError": null,
+    "transcriptionStartedAt": "2026-08-24T21:24:09.062Z",
+    "transcriptionCompletedAt": "2026-08-24T21:33:58.418Z",
+    "automationState": "completed",
+    "automationRetryable": false,
+    "automationAttempts": 2,
+    "automationLastAttemptAt": "2026-08-24T21:34:11.720Z",
+    "automationNextAttemptAt": null,
+    "automationStartedAt": "2026-08-24T21:34:11.720Z",
+    "automationFinishedAt": "2026-08-24T21:34:40.465Z"
+  },
+  {
+    "id": "legacy-2026-08-17-mathematiques-avancees-1-note-de-chatgpt-txt",
+    "subjectId": "s1-maths-avancees",
+    "subjectTitle": "Mathématiques avancées 1",
+    "title": "Note de ChatGPT",
+    "date": "2026-08-17",
+    "kind": "cours",
+    "chapter": "",
+    "status": "source-insuffisante",
+    "automationEligible": false,
+    "transcriptionFilename": "2026-08-17__mathematiques-avancees-1__note-de-chatgpt.txt",
+    "summaryFilename": null,
+    "cards": [],
+    "createdAt": "2026-08-26T08:45:15.715Z",
+    "automationState": "blocked",
+    "automationRetryable": false,
+    "automationNextAttemptAt": null,
+    "sourceValidation": {
+      "ok": false,
+      "reason": "contenu-conversationnel",
+      "message": "La source ressemble à un test de micro ou à un message hors cours.",
+      "characters": 116,
+      "words": 18,
+      "letters": 93,
+      "quality": "insuffisante",
+      "checkedAt": "2026-08-26T08:45:18.895Z"
+    },
+    "automationError": "Source insuffisante : La source ressemble à un test de micro ou à un message hors cours.",
+    "updatedAt": "2026-08-26T08:45:18.895Z"
+  }
+]

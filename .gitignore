@@ -1,0 +1,65 @@
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+*.env
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+server.log
+
+# Large Whisper ML Models (>500MB)
+models/whisper/*.bin
+models/*.bin
+!models/whisper/.gitkeep
+
+# Audio Recordings
+data/enregistrements/*.m4a
+data/enregistrements/*.mp3
+data/enregistrements/*.wav
+data/audio/*.m4a
+data/audio/*.mp3
+data/audio/*.wav
+
+# Node & Web Builds
+node_modules/
+web/node_modules/
+apps/mobile/node_modules/
+.npm
+dist/
+.vite/
+
+# Mobile / Android / iOS Builds
+.expo/
+apps/mobile/android/.gradle/
+apps/mobile/android/app/build/
+apps/mobile/android/build/
+apps/mobile/android/local.properties
+apps/mobile/android/.idea/
+apps/mobile/ios/build/
+apps/mobile/ios/Pods/
+
+# Temporary screenshots & scratch
+phone_*.png
+scratch/
+.playwright-cli/
+output/
+
+# macOS / OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temp files
+*.tmp-*
+*.tmp
+*.swp
+*.swo
