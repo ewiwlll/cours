@@ -87,6 +87,14 @@
     .animate-wave {
       animation: wave 1.2s ease-in-out infinite;
     }
+    /* Cascade reveal animation */
+    @keyframes cascade {
+      0% { opacity: 0; transform: translateY(12px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-cascade {
+      animation: cascade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white">
@@ -427,7 +435,7 @@
   </section>
 
   <!-- =================================================================================== -->
-  <!-- SECTION DÉMO INTERACTIVE VÉRITABLE & GROUNDED DU RAPPEL ACTIF                      -->
+  <!-- SECTION DÉMO INTERACTIVE VÉRITABLE & CASCADE POST-DÉVERROUILLAGE                    -->
   <!-- =================================================================================== -->
   <section id="demo" class="py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="glass-card rounded-3xl p-8 sm:p-12 border border-blue-500/30 shadow-2xl">
@@ -476,7 +484,7 @@
         </div>
 
         <!-- DEMO RESULT BOX (DYNAMIC GROUNDED RENDERING) -->
-        <div id="demoResult" class="hidden p-5 rounded-2xl bg-zinc-950 border transition-all space-y-3 mt-4">
+        <div id="demoResult" class="hidden p-5 rounded-2xl bg-zinc-950 border transition-all space-y-4 mt-4">
           <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
             <span class="text-xs font-bold text-zinc-200">Diagnostic Concept par Concept</span>
             <span id="demoScoreBadge" class="text-xs font-mono font-bold px-2.5 py-1 rounded border"></span>
@@ -489,6 +497,65 @@
           </div>
 
           <div id="demoUnlockBanner" class="text-center pt-1"></div>
+
+          <!-- ================================================================================= -->
+          <!-- CASCADE ANIMÉE DES 4 ÉLÉMENTS ACTIVÉS IMMÉDIATEMENT APRÈS LE DÉVERROUILLAGE       -->
+          <!-- ================================================================================= -->
+          <div id="postUnlockCascade" class="hidden pt-4 border-t border-zinc-800 space-y-4">
+            <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              <span>Ce qui se met automatiquement en place dans l'OS :</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              
+              <!-- 1. FICHE BRUTE DÉBLOQUÉE -->
+              <div class="p-4 rounded-xl bg-zinc-900/90 border border-emerald-500/30 space-y-2 animate-cascade" style="animation-delay: 0.1s">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-white flex items-center gap-1.5">
+                    <span>📖</span> 1. Fiche Complète Débloquée
+                  </span>
+                  <span class="text-[9px] px-1.5 py-0.2 bg-emerald-500/20 text-emerald-400 rounded font-mono font-bold">ACCESSIBLE</span>
+                </div>
+                <p class="text-zinc-400 text-[11px]">Formules KaTeX, analogies Feynman et tableaux « X vs Y » deviennent consultables sans restriction.</p>
+              </div>
+
+              <!-- 2. PILE FSRS-5 INITIALISÉE -->
+              <div class="p-4 rounded-xl bg-zinc-900/90 border border-blue-500/30 space-y-2 animate-cascade" style="animation-delay: 0.25s">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-white flex items-center gap-1.5">
+                    <span>⚡</span> 2. Cartes FSRS-5 Calibrées
+                  </span>
+                  <span class="text-[9px] px-1.5 py-0.2 bg-blue-500/20 text-blue-400 rounded font-mono font-bold">4 CARTES DUES</span>
+                </div>
+                <p class="text-zinc-400 text-[11px]">Stabilité S et Difficulté D initialisées scientifiquement pour la révision de demain sans chrono.</p>
+              </div>
+
+              <!-- 3. ARBRE DE MÉMOIRE VIVANTE -->
+              <div class="p-4 rounded-xl bg-zinc-900/90 border border-purple-500/30 space-y-2 animate-cascade" style="animation-delay: 0.4s">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-white flex items-center gap-1.5">
+                    <span>🌳</span> 3. Mémoire Vivante Ancrée
+                  </span>
+                  <span class="text-[9px] px-1.5 py-0.2 bg-purple-500/20 text-purple-400 rounded font-mono font-bold">clarifications.json</span>
+                </div>
+                <p class="text-zinc-400 text-[11px]">Antigravity mémorise vos points forts et pièges évités pour contextualiser vos futurs oraux.</p>
+              </div>
+
+              <!-- 4. PLANNING RÉTROACTIF AJUSTÉ -->
+              <div class="p-4 rounded-xl bg-zinc-900/90 border border-amber-500/30 space-y-2 animate-cascade" style="animation-delay: 0.55s">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-white flex items-center gap-1.5">
+                    <span>📅</span> 4. Planning Partiel Mis à Jour
+                  </span>
+                  <span class="text-[9px] px-1.5 py-0.2 bg-amber-500/20 text-amber-400 rounded font-mono font-bold">R(t) = 95%</span>
+                </div>
+                <p class="text-zinc-400 text-[11px]">La courbe de rétention cible jusqu'au jour de l'examen s'ajuste automatiquement.</p>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -737,18 +804,18 @@
 
       // Traps
       const hasTrapO2FromCO2 = (/o2|oxygene|dioxygene/.test(t) && /vient de.*co2|a partir de.*co2|transforme.*co2 en o2|rejette le co2 en o2/.test(t));
-      const isTooVague = (/molecule|truc|chose|machin|ca marche/.test(t) && !hasWater && !hasCO2 && !hasLight && !hasSugar);
+      const isTooVague = (/molecule|truc|chose|machin|ca marche|papa|maman|test/.test(t) && !hasWater && !hasCO2 && !hasLight && !hasSugar);
 
       if (isTooVague) {
         return {
-          score: 12,
+          score: 10,
           unlocked: false,
           concepts: [
             { name: "Réactifs & Produits (CO₂, H₂O, Glucose)", status: "MANQUANT", color: "rose", note: "Trop vague : vous devez nommer l'eau, le CO₂ et le sucre" },
             { name: "Énergie lumineuse & Chloroplastes", status: "MANQUANT", color: "rose", note: "La lumière et les chloroplastes ne sont pas mentionnés" },
             { name: "Libération de dioxygène (O₂)", status: "MANQUANT", color: "rose", note: "Non mentionné" }
           ],
-          feedback: "❌ Restitution beaucoup trop vague (12/100). Dire « c'est avec des molécules » ne démontre aucune maîtrise. Nommez précisément les réactifs (eau, CO₂), la lumière et le glucose produit."
+          feedback: "❌ Restitution beaucoup trop vague (" + 10 + "/100). Dire des mots isolés ne démontre aucune maîtrise. Nommez précisément les réactifs (eau, CO₂), la lumière et le glucose produit."
         };
       }
 
@@ -821,6 +888,7 @@
       const conceptsList = document.getElementById('demoConceptsList');
       const feedbackEl = document.getElementById('demoFeedback');
       const unlockBanner = document.getElementById('demoUnlockBanner');
+      const postUnlockCascade = document.getElementById('postUnlockCascade');
       
       btnText.innerText = "Évaluation en cours...";
       
@@ -832,13 +900,13 @@
         scoreBadge.innerText = `Note : ${result.score} / 100`;
         if (result.score >= 75) {
           scoreBadge.className = "text-xs font-mono font-bold px-2.5 py-1 rounded border bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
-          resultBox.className = "p-5 rounded-2xl bg-zinc-950 border border-emerald-500/40 space-y-3 mt-4";
+          resultBox.className = "p-5 rounded-2xl bg-zinc-950 border border-emerald-500/40 space-y-4 mt-4";
         } else if (result.score >= 50) {
           scoreBadge.className = "text-xs font-mono font-bold px-2.5 py-1 rounded border bg-amber-500/15 text-amber-400 border-amber-500/30";
-          resultBox.className = "p-5 rounded-2xl bg-zinc-950 border border-amber-500/40 space-y-3 mt-4";
+          resultBox.className = "p-5 rounded-2xl bg-zinc-950 border border-amber-500/40 space-y-4 mt-4";
         } else {
           scoreBadge.className = "text-xs font-mono font-bold px-2.5 py-1 rounded border bg-rose-500/15 text-rose-400 border-rose-500/30";
-          resultBox.className = "p-5 rounded-2xl bg-zinc-950 border border-rose-500/40 space-y-3 mt-4";
+          resultBox.className = "p-5 rounded-2xl bg-zinc-950 border border-rose-500/40 space-y-4 mt-4";
         }
 
         // Render concepts
@@ -860,11 +928,17 @@
         // Feedback text
         feedbackEl.innerHTML = result.feedback;
 
-        // Unlock banner
+        // Unlock banner & cascade
         if (result.unlocked) {
           unlockBanner.innerHTML = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-xs font-bold">🔓 Fiche débloquée avec succès</span>`;
+          if (postUnlockCascade) {
+            postUnlockCascade.classList.remove('hidden');
+          }
         } else {
           unlockBanner.innerHTML = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/15 text-rose-400 border border-rose-500/30 text-xs font-bold">🔒 Fiche verrouillée (Rappel insuffisant)</span>`;
+          if (postUnlockCascade) {
+            postUnlockCascade.classList.add('hidden');
+          }
         }
 
         resultBox.classList.remove('hidden');
