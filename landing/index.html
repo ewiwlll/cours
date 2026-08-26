@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cours — L'OS d'Apprentissage & de Révision Active | Active Recall & FSRS-5</title>
+  <title>Cours — L'OS d'Apprentissage & de Révision Active</title>
   <meta name="description" content="Pour tous vos cours, amphis et classes. Enregistrez en 1 clic, libérez-vous de la prise de note et visualisez le cours. Sas de Rappel Actif et Répétition Espacée FSRS-5.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +25,7 @@
             border: '#27272a',
             accent: '#3b82f6',
             accentGlow: 'rgba(59, 130, 246, 0.15)',
+            nbYellow: '#f59e0b',
           }
         }
       }
@@ -38,33 +39,49 @@
       overflow-x: hidden;
     }
     .glow-radial {
-      background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.14) 0%, rgba(9, 9, 11, 0) 70%);
+      background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.16) 0%, rgba(9, 9, 11, 0) 70%);
     }
-    .glow-purple {
-      background: radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.08) 0%, rgba(9, 9, 11, 0) 70%);
+    .glow-sky {
+      background: radial-gradient(circle at 50% 40%, rgba(56, 189, 248, 0.18) 0%, rgba(99, 102, 241, 0.12) 50%, rgba(9, 9, 11, 0) 75%);
     }
     .glass-card {
-      background: rgba(18, 18, 22, 0.7);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(18, 18, 22, 0.75);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
     .glass-card:hover {
-      border-color: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.16);
     }
     .code-pill {
       background: rgba(24, 24, 27, 0.85);
       border: 1px solid rgba(63, 63, 70, 0.6);
       box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
     }
-    .text-gradient {
-      background: linear-gradient(135deg, #ffffff 30%, #a1a1aa 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
     .text-gradient-blue {
       background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #93c5fd 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+    }
+    .text-gradient-amber {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    /* Auto cycle progress bar */
+    .step-progress-bar {
+      height: 3px;
+      background: #f59e0b;
+      transform-origin: left;
+      border-radius: 9999px;
+      transition: width 0.05s linear;
+    }
+    /* Waveform animation */
+    @keyframes wave {
+      0%, 100% { height: 4px; }
+      50% { height: 24px; }
+    }
+    .animate-wave {
+      animation: wave 1.2s ease-in-out infinite;
     }
   </style>
 </head>
@@ -87,10 +104,9 @@
       </div>
 
       <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-400">
-        <a href="#vision" class="hover:text-white transition-colors">La Philosophie</a>
+        <a href="#how-it-works" class="hover:text-white transition-colors">Comment ça marche ?</a>
         <a href="#features" class="hover:text-white transition-colors">Fonctionnalités</a>
-        <a href="#active-recall" class="hover:text-white transition-colors">Sas de Rappel</a>
-        <a href="#fsrs" class="hover:text-white transition-colors">Moteur FSRS-5</a>
+        <a href="#parity" class="hover:text-white transition-colors">Mac & Mobile</a>
       </nav>
 
       <div class="flex items-center gap-3">
@@ -103,28 +119,28 @@
   </header>
 
   <!-- HERO SECTION -->
-  <section class="relative z-10 pt-20 pb-20 sm:pt-28 sm:pb-28 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
+  <section class="relative z-10 pt-20 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
     <!-- UNIVERSAL PILL -->
     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-xs font-semibold text-zinc-300 mb-8 backdrop-blur-md">
       <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
       <span>Pour tous vos cours • Amphis, classes et études supérieures</span>
       <span class="text-zinc-600">|</span>
-      <span class="text-blue-400">Open Source</span>
+      <span class="text-blue-400 font-mono">Open Source MIT</span>
     </div>
 
     <!-- TITLE -->
     <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08] text-balance mb-6">
-      Enregistrez votre cours. <br class="hidden sm:inline"/>
+      Enregistrez le cours. <br class="hidden sm:inline"/>
       <span class="text-gradient-blue">Concentrez-vous à 100%.</span>
     </h1>
 
     <!-- SUBTITLE -->
     <p class="text-base sm:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed mb-10 text-balance">
-      Fini le stress d'oublier de noter une phrase : la transcription automatique locale s'occupe de tout capturer. Votre unique mission pendant l'amphi : <strong class="text-white font-semibold">visualiser les concepts dans votre tête</strong> et être constant.
+      Fini le stress d'oublier de noter une phrase : la transcription automatique locale s'occupe de tout capturer. Votre unique mission pendant le cours : <strong class="text-white font-semibold">visualiser les concepts dans votre tête</strong> et être constant.
     </p>
 
     <!-- ONE-LINER CURL INSTALL WIDGET -->
-    <div class="max-w-2xl mx-auto mb-12">
+    <div class="max-w-2xl mx-auto mb-10">
       <div class="code-pill rounded-2xl p-2 sm:p-2.5 flex items-center justify-between gap-3 font-mono text-xs sm:text-sm text-zinc-200">
         <div class="flex items-center gap-3 overflow-x-auto py-1 pl-2">
           <span class="text-blue-400 select-none font-bold">$</span>
@@ -137,59 +153,265 @@
       </div>
       <p class="text-[11px] text-zinc-500 mt-2.5">Installation automatique en 1 clic • Compatible macOS & Linux • Zéro coût API voix</p>
     </div>
-
-    <!-- 4 CORE PROMISES -->
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto pt-4">
-      <div class="glass-card rounded-2xl p-4 text-center">
-        <div class="text-2xl sm:text-3xl font-black text-white mb-1">0%</div>
-        <div class="text-xs text-zinc-400">Stress de prise de notes</div>
-      </div>
-      <div class="glass-card rounded-2xl p-4 text-center">
-        <div class="text-2xl sm:text-3xl font-black text-emerald-400 mb-1">FSRS-5</div>
-        <div class="text-xs text-zinc-400">Répétition espacée sans chrono</div>
-      </div>
-      <div class="glass-card rounded-2xl p-4 text-center">
-        <div class="text-2xl sm:text-3xl font-black text-amber-400 mb-1">1-2 min</div>
-        <div class="text-xs text-zinc-400">Sas de Rappel Actif initial</div>
-      </div>
-      <div class="glass-card rounded-2xl p-4 text-center">
-        <div class="text-2xl sm:text-3xl font-black text-cyan-400 mb-1">100%</div>
-        <div class="text-xs text-zinc-400">Toutes vos matières & filières</div>
-      </div>
-    </div>
   </section>
 
-  <!-- MANIFESTO / PHILOSOPHIE -->
-  <section id="vision" class="py-20 bg-zinc-950/80 border-t border-b border-border/50 relative z-10">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <span class="text-xs font-bold uppercase tracking-widest text-blue-400 mb-3 inline-block">La Méthode Universelle</span>
-      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-6">
-        Pourquoi copier frénétiquement quand une machine peut écouter pour vous ?
-      </h2>
-      <div class="glass-card rounded-3xl p-8 sm:p-10 text-left space-y-6 border border-zinc-800 leading-relaxed text-zinc-300 text-sm sm:text-base">
-        <div class="flex items-start gap-4">
-          <div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold shrink-0 mt-0.5">1</div>
-          <div>
-            <strong class="text-white text-base">Pendant le cours : Écoute et Visualisation pure</strong>
-            <p class="text-zinc-400 text-sm mt-1">Vous lancez l'enregistrement d'une touche. Vous posez des balises rapides si une notion est importante ou floue. Vous ne passez plus 2 heures à recopier les slides : vous comprenez la logique du professeur en direct.</p>
+  <!-- =================================================================================== -->
+  <!-- "COMMENT ÇA MARCHE ?" — SECTION INTERACTIVE STYLE NEVERBORING.AI + GROK BOT        -->
+  <!-- =================================================================================== -->
+  <section id="how-it-works" class="py-20 bg-zinc-950/80 border-t border-b border-border/50 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- HEADER -->
+      <div class="mb-14">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-400 mb-2 inline-block">Le Flux Sans Stress</span>
+        <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-3">
+          Comment ça marche ?
+        </h2>
+        <p class="text-base sm:text-lg text-zinc-400 max-w-xl">
+          Seulement 5 étapes pour passer de l'écoute en amphi à une maîtrise parfaite et durable.
+        </p>
+      </div>
+
+      <!-- INTERACTIVE 2-COLUMN STAGE (LEFT: ACCORDION TABS, RIGHT: SYNCHRONIZED MOCKUP) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- LEFT: ACCORDION STEPS WITH 6s PROGRESS BAR -->
+        <div class="lg:col-span-5 space-y-4" id="stepsContainer">
+          
+          <!-- STEP 1 -->
+          <div class="step-card group cursor-pointer p-5 rounded-2xl border transition-all duration-300 bg-zinc-900/40 border-zinc-800/80" data-step="0">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-base sm:text-lg text-white step-title">1. En Amphi : Capture & Visualisation</h3>
+              <span class="text-zinc-400 text-lg font-mono step-icon">+</span>
+            </div>
+            <div class="step-content hidden pt-3">
+              <p class="text-sm text-zinc-400 leading-relaxed">
+                Un clic pour lancer le micro. Ne perdez plus votre attention à recopier les slides : visualisez les concepts du professeur et posez des balises instantanées (Important, Piège exam, Pas compris, Photo tableau synchronisée).
+              </p>
+              <div class="mt-4 w-full bg-zinc-800 rounded-full h-[3px] overflow-hidden">
+                <div class="step-progress-bar w-0" id="progressBar0"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="step-card group cursor-pointer p-5 rounded-2xl border transition-all duration-300 bg-zinc-900/40 border-zinc-800/80" data-step="1">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-base sm:text-lg text-white step-title">2. Antigravity : Synthèse & Whisper Metal</h3>
+              <span class="text-zinc-400 text-lg font-mono step-icon">+</span>
+            </div>
+            <div class="step-content hidden pt-3">
+              <p class="text-sm text-zinc-400 leading-relaxed">
+                Whisper Metal local transcrit l'audio en toute confidentialité à 0€ de coût API. Antigravity décompose le cours en concepts atomiques, analogies Feynman et tableaux comparatifs « X vs Y ».
+              </p>
+              <div class="mt-4 w-full bg-zinc-800 rounded-full h-[3px] overflow-hidden">
+                <div class="step-progress-bar w-0" id="progressBar1"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="step-card group cursor-pointer p-5 rounded-2xl border transition-all duration-300 bg-zinc-900/40 border-zinc-800/80" data-step="2">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-base sm:text-lg text-white step-title">3. Le Sas : Déblocage par Rappel Actif</h3>
+              <span class="text-zinc-400 text-lg font-mono step-icon">+</span>
+            </div>
+            <div class="step-content hidden pt-3">
+              <p class="text-sm text-zinc-400 leading-relaxed">
+                Pour briser l'illusion de facilité de la simple relecture passive, la fiche reste verrouillée. Prenez 1 à 2 minutes pour restituer ce que vous avez retenu : l'IA diagnostique vos lacunes et débloque le cours.
+              </p>
+              <div class="mt-4 w-full bg-zinc-800 rounded-full h-[3px] overflow-hidden">
+                <div class="step-progress-bar w-0" id="progressBar2"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4 -->
+          <div class="step-card group cursor-pointer p-5 rounded-2xl border transition-all duration-300 bg-zinc-900/40 border-zinc-800/80" data-step="3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-base sm:text-lg text-white step-title">4. Moteur FSRS-5 Quotidien sans Chrono</h3>
+              <span class="text-zinc-400 text-lg font-mono step-icon">+</span>
+            </div>
+            <div class="step-content hidden pt-3">
+              <p class="text-sm text-zinc-400 leading-relaxed">
+                Chaque jour, votre pile de flashcards dues s'ajuste scientifiquement selon votre stabilité de mémoire et probabilité d'oubli. Pas de compte à rebours stressant : vous révisez à votre propre rythme.
+              </p>
+              <div class="mt-4 w-full bg-zinc-800 rounded-full h-[3px] overflow-hidden">
+                <div class="step-progress-bar w-0" id="progressBar3"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 5 -->
+          <div class="step-card group cursor-pointer p-5 rounded-2xl border transition-all duration-300 bg-zinc-900/40 border-zinc-800/80" data-step="4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-base sm:text-lg text-white step-title">5. Mémoire Vivante : Arbre des Questions</h3>
+              <span class="text-zinc-400 text-lg font-mono step-icon">+</span>
+            </div>
+            <div class="step-content hidden pt-3">
+              <p class="text-sm text-zinc-400 leading-relaxed">
+                Vous bloquez sur un point ? Antigravity se rappelle de vos incompréhensions passées pour éviter de répéter 300 fois la même question, approfondit le raisonnement et génère des cartes de déblocage ciblées.
+              </p>
+              <div class="mt-4 w-full bg-zinc-800 rounded-full h-[3px] overflow-hidden">
+                <div class="step-progress-bar w-0" id="progressBar4"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: DYNAMIC SYNCHRONIZED MOCKUP FRAME (NEVERBORING STYLE WITH ATMOSPHERIC SKY GLOW) -->
+        <div class="lg:col-span-7 sticky top-24">
+          <div class="relative w-full rounded-3xl p-4 sm:p-8 overflow-hidden border border-zinc-800 bg-gradient-to-br from-zinc-900/90 via-zinc-950 to-zinc-900 shadow-2xl shadow-black/80 min-h-[460px] flex items-center justify-center">
+            
+            <!-- SKY GLOW RADIAL -->
+            <div class="absolute inset-0 pointer-events-none glow-sky"></div>
+
+            <!-- MOCKUP CONTAINER (FADES IN/OUT PER STEP) -->
+            <div class="relative z-10 w-full max-w-lg transition-all duration-300" id="mockupContainer">
+              
+              <!-- MOCKUP 0: EN AMPHI CAPTURE -->
+              <div class="mockup-view hidden space-y-4" id="mockup0">
+                <div class="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-5 shadow-xl backdrop-blur-xl">
+                  <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3 mb-4">
+                    <div class="flex items-center gap-2">
+                      <span class="w-3 h-3 rounded-full bg-rose-500 animate-ping"></span>
+                      <span class="font-bold text-sm text-white">Enregistrement Amphi en cours</span>
+                    </div>
+                    <span class="font-mono text-xs font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">01:14:22</span>
+                  </div>
+
+                  <!-- LIVE WAVEFORM SIMULATOR -->
+                  <div class="flex items-center justify-center gap-1.5 h-12 py-2 mb-4 bg-zinc-900/50 rounded-xl px-4">
+                    <div class="w-1 bg-blue-500 rounded-full animate-wave" style="animation-delay: 0.1s"></div>
+                    <div class="w-1 bg-blue-400 rounded-full animate-wave" style="animation-delay: 0.3s"></div>
+                    <div class="w-1 bg-indigo-500 rounded-full animate-wave" style="animation-delay: 0.2s"></div>
+                    <div class="w-1 bg-blue-500 rounded-full animate-wave" style="animation-delay: 0.5s"></div>
+                    <div class="w-1 bg-cyan-400 rounded-full animate-wave" style="animation-delay: 0.4s"></div>
+                    <div class="w-1 bg-blue-600 rounded-full animate-wave" style="animation-delay: 0.6s"></div>
+                    <div class="w-1 bg-indigo-400 rounded-full animate-wave" style="animation-delay: 0.2s"></div>
+                    <div class="w-1 bg-blue-400 rounded-full animate-wave" style="animation-delay: 0.4s"></div>
+                  </div>
+
+                  <p class="text-xs text-zinc-400 mb-3 font-medium">Balises rapides posées en 1 clic pendant l'explication :</p>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1.5 rounded-xl bg-amber-500/15 text-amber-300 border border-amber-500/30 text-xs font-semibold">🔥 Important (42:10)</span>
+                    <span class="px-3 py-1.5 rounded-xl bg-rose-500/15 text-rose-300 border border-rose-500/30 text-xs font-semibold">⚠️ Piège exam (58:44)</span>
+                    <span class="px-3 py-1.5 rounded-xl bg-purple-500/15 text-purple-300 border border-purple-500/30 text-xs font-semibold">📷 Photo tableau (01:05:12)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MOCKUP 1: ANTIGRAVITY SYNTHESIS -->
+              <div class="mockup-view hidden space-y-4" id="mockup1">
+                <div class="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-5 shadow-xl backdrop-blur-xl space-y-3">
+                  <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3">
+                    <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Fiche Structurée • Antigravity Studio</span>
+                    <span class="text-[10px] font-bold bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20">Whisper Metal 0€</span>
+                  </div>
+                  <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 text-xs">
+                    <div class="text-amber-400 font-bold mb-1">💡 POURQUOI ON EN A BESOIN</div>
+                    <p class="text-zinc-300 text-[11px]">Prédire la spontanéité d'un phénomène sans mesurer l'entropie de tout l'univers.</p>
+                  </div>
+                  <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-center text-blue-300 font-mono text-xs font-bold">
+                    ΔG = ΔH - T ΔS
+                  </div>
+                  <div class="bg-purple-950/30 border border-purple-800/40 rounded-xl p-3 text-xs">
+                    <div class="text-purple-300 font-bold mb-1">⚖️ TABLEAU COMPARATIF « X vs Y »</div>
+                    <p class="text-zinc-400 text-[11px]">ΔG (variable instantanée) vs ΔG°' (constante standard tabulée).</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MOCKUP 2: ACTIVE RECALL GATEWAY -->
+              <div class="mockup-view hidden space-y-4" id="mockup2">
+                <div class="bg-zinc-950/90 border border-amber-500/30 rounded-2xl p-5 shadow-xl backdrop-blur-xl space-y-3">
+                  <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3">
+                    <div class="flex items-center gap-2">
+                      <span class="text-amber-400 text-sm">🔒</span>
+                      <span class="font-bold text-xs text-white">Sas de Rappel Actif Initial</span>
+                    </div>
+                    <span class="font-mono text-xs font-bold text-amber-400 bg-amber-500/15 px-2 py-0.5 rounded border border-amber-500/30">Note : 84/100</span>
+                  </div>
+                  <p class="text-xs text-zinc-300 italic">« Le ΔG mesure l'énergie libre disponible. Si ΔG &lt; 0, la réaction est exergonique et spontanée... »</p>
+                  <div class="space-y-1.5 pt-2 border-t border-zinc-800/80 text-xs">
+                    <div class="flex items-center justify-between text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded">
+                      <span>✓ Définition enthalpie libre ΔG</span>
+                      <span class="text-[10px] font-bold">MAÎTRISÉ</span>
+                    </div>
+                    <div class="flex items-center justify-between text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded">
+                      <span>✓ Couplage énergétique par l'ATP</span>
+                      <span class="text-[10px] font-bold">MAÎTRISÉ</span>
+                    </div>
+                    <div class="flex items-center justify-between text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded">
+                      <span>⚠ Ne pas confondre ΔG et vitesse cinétique</span>
+                      <span class="text-[10px] font-bold">À REVOIR DEMAIN</span>
+                    </div>
+                  </div>
+                  <div class="pt-2 text-center">
+                    <span class="inline-block text-[11px] font-bold text-emerald-400 bg-emerald-500/15 px-3 py-1 rounded-full border border-emerald-500/30">🔓 Fiche débloquée avec succès</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MOCKUP 3: FSRS-5 PLAYER -->
+              <div class="mockup-view hidden space-y-4" id="mockup3">
+                <div class="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-5 shadow-xl backdrop-blur-xl space-y-4">
+                  <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3">
+                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Moteur FSRS-5 • Sans Chrono</span>
+                    <span class="text-xs font-mono text-zinc-400">Carte 4 / 18</span>
+                  </div>
+                  <div class="bg-zinc-900 border border-zinc-800/80 rounded-xl p-4 text-center">
+                    <p class="text-xs text-zinc-400 mb-1">Flashcard Conceptuelle :</p>
+                    <p class="text-sm font-semibold text-white">Quelle est la condition thermodynamique pour qu'une réaction anabolique ait lieu dans la cellule ?</p>
+                  </div>
+                  <div class="grid grid-cols-3 gap-2 text-center text-xs font-mono">
+                    <div class="bg-zinc-900 p-2 rounded-lg border border-zinc-800">
+                      <div class="text-[10px] text-zinc-500">Stabilité S</div>
+                      <div class="text-blue-400 font-bold">14.2 jours</div>
+                    </div>
+                    <div class="bg-zinc-900 p-2 rounded-lg border border-zinc-800">
+                      <div class="text-[10px] text-zinc-500">Rétention R</div>
+                      <div class="text-emerald-400 font-bold">90%</div>
+                    </div>
+                    <div class="bg-zinc-900 p-2 rounded-lg border border-zinc-800">
+                      <div class="text-[10px] text-zinc-500">Difficulté D</div>
+                      <div class="text-amber-400 font-bold">4.8 / 10</div>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between gap-2 pt-1">
+                    <button class="flex-1 py-1.5 rounded-lg bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs font-semibold">À revoir (1j)</button>
+                    <button class="flex-1 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-semibold">Correct (4j)</button>
+                    <button class="flex-1 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">Facile (14j)</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MOCKUP 4: QUESTIONS MEMORY TREE -->
+              <div class="mockup-view hidden space-y-4" id="mockup4">
+                <div class="bg-zinc-950/90 border border-purple-500/30 rounded-2xl p-5 shadow-xl backdrop-blur-xl space-y-3">
+                  <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3">
+                    <div class="flex items-center gap-2">
+                      <span class="text-purple-400 text-sm">🧠</span>
+                      <span class="font-bold text-xs text-white">Mémoire Vivante des Questions</span>
+                    </div>
+                    <span class="text-[10px] font-mono text-purple-300 bg-purple-500/15 px-2 py-0.5 rounded border border-purple-500/30">Arbre Évolutif</span>
+                  </div>
+                  <div class="bg-zinc-900/90 rounded-xl p-3 text-xs text-zinc-300 space-y-2">
+                    <div class="text-purple-400 font-semibold text-[11px]">« Tu avais déjà posé cette question il y a 3 jours quand on parlait du potentiel chimique. »</div>
+                    <p class="text-zinc-400 text-[11px]">Ton raisonnement a progressé : tu avais compris le rôle de la concentration, mais tu hésitais sur la température standard.</p>
+                  </div>
+                  <div class="bg-purple-950/30 border border-purple-800/40 rounded-xl p-3 text-xs text-zinc-200">
+                    <span class="text-emerald-400 font-bold">Nouvelle Flashcard FSRS créée :</span>
+                    <p class="text-[11px] text-zinc-300 mt-1">« Pourquoi la variation de température modifie-t-elle le signe de ΔG sans changer ΔH° ? »</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
 
-        <div class="flex items-start gap-4">
-          <div class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold shrink-0 mt-0.5">2</div>
-          <div>
-            <strong class="text-white text-base">Le soir : Sas de Rappel Actif (1 à 2 minutes)</strong>
-            <p class="text-zinc-400 text-sm mt-1">La fiche reste volontairement verrouillée. Vous faites l'effort sans aide de restituer les points clés à l'écrit ou au micro. L'IA analyse votre rappel, débloque la synthèse complète et injecte vos lacunes dans votre planning du lendemain.</p>
-          </div>
-        </div>
-
-        <div class="flex items-start gap-4">
-          <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shrink-0 mt-0.5">3</div>
-          <div>
-            <strong class="text-white text-base">Au quotidien : Régularité FSRS-5 sans stress</strong>
-            <p class="text-zinc-400 text-sm mt-1">Chaque jour, votre pile de flashcards dues s'ajuste scientifiquement selon votre stabilité de mémoire. Vous révisez à votre rythme, sans compte à rebours anxiogène, jusqu'au jour de l'examen.</p>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -305,7 +527,112 @@
     </div>
   </footer>
 
+  <!-- SCRIPT POUR AUTO-CYCLE 6s ET INTERACTIVITE DES ETAPES -->
   <script>
+    let currentStep = 0;
+    const totalSteps = 5;
+    const stepDuration = 6000; // 6 seconds
+    let progressTimer = null;
+    let progressStartTime = 0;
+    let isPaused = false;
+
+    const stepCards = document.querySelectorAll('.step-card');
+    const mockups = [
+      document.getElementById('mockup0'),
+      document.getElementById('mockup1'),
+      document.getElementById('mockup2'),
+      document.getElementById('mockup3'),
+      document.getElementById('mockup4'),
+    ];
+
+    function activateStep(index) {
+      currentStep = index;
+      
+      // Update Step Accordions
+      stepCards.forEach((card, i) => {
+        const content = card.querySelector('.step-content');
+        const icon = card.querySelector('.step-icon');
+        const title = card.querySelector('.step-title');
+        const progressBar = card.querySelector('.step-progress-bar');
+
+        if (i === index) {
+          card.classList.remove('bg-zinc-900/40', 'border-zinc-800/80');
+          card.classList.add('bg-zinc-900/90', 'border-amber-500/40', 'shadow-lg', 'shadow-amber-500/5');
+          content.classList.remove('hidden');
+          icon.innerText = '−';
+          icon.classList.add('text-amber-400');
+          title.classList.add('text-amber-300');
+          if (progressBar) progressBar.style.width = '0%';
+        } else {
+          card.classList.add('bg-zinc-900/40', 'border-zinc-800/80');
+          card.classList.remove('bg-zinc-900/90', 'border-amber-500/40', 'shadow-lg', 'shadow-amber-500/5');
+          content.classList.add('hidden');
+          icon.innerText = '+';
+          icon.classList.remove('text-amber-400');
+          title.classList.remove('text-amber-300');
+          if (progressBar) progressBar.style.width = '0%';
+        }
+      });
+
+      // Update Mockups
+      mockups.forEach((mockup, i) => {
+        if (i === index) {
+          mockup.classList.remove('hidden');
+          mockup.classList.add('opacity-100', 'translate-y-0');
+        } else {
+          mockup.classList.add('hidden');
+          mockup.classList.remove('opacity-100', 'translate-y-0');
+        }
+      });
+
+      // Reset & Start Progress
+      startProgressBar();
+    }
+
+    function startProgressBar() {
+      if (progressTimer) cancelAnimationFrame(progressTimer);
+      progressStartTime = performance.now();
+
+      function updateProgress(now) {
+        if (isPaused) {
+          progressTimer = requestAnimationFrame(updateProgress);
+          return;
+        }
+
+        const elapsed = now - progressStartTime;
+        const progress = Math.min((elapsed / stepDuration) * 100, 100);
+
+        const currentProgressBar = document.getElementById(`progressBar${currentStep}`);
+        if (currentProgressBar) {
+          currentProgressBar.style.width = `${progress}%`;
+        }
+
+        if (elapsed >= stepDuration) {
+          // Move to next step
+          activateStep((currentStep + 1) % totalSteps);
+        } else {
+          progressTimer = requestAnimationFrame(updateProgress);
+        }
+      }
+
+      progressTimer = requestAnimationFrame(updateProgress);
+    }
+
+    // Attach click listeners to cards
+    stepCards.forEach((card, index) => {
+      card.addEventListener('click', () => {
+        activateStep(index);
+      });
+      card.addEventListener('mouseenter', () => { isPaused = true; });
+      card.addEventListener('mouseleave', () => { 
+        isPaused = false; 
+        progressStartTime = performance.now() - (parseFloat(document.getElementById(`progressBar${currentStep}`)?.style.width || 0) / 100 * stepDuration);
+      });
+    });
+
+    // Initialize first step
+    activateStep(0);
+
     function copyInstallCommand() {
       const text = document.getElementById('curlCommand').innerText;
       navigator.clipboard.writeText(text).then(() => {
