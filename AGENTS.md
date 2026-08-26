@@ -88,7 +88,7 @@ Pour que l'expérience soit ultra-simple pour n'importe quel étudiant sans comp
     1. 🚀 **« Mode Fait Tout »** : Traiter automatiquement tous les enregistrements audio récents, générer les fiches KaTeX avec tableaux « X vs Y » et créer la pile de flashcards FSRS.
     2. 🎙️ **« Oral Blanc Bienveillant »** : Poser une question diagnostique posée sans chrono sur le chapitre de son choix.
     3. 💡 **« Débloquer une Notion »** : Expliquer n'importe quel concept abstrait avec une analogie Feynman concrète et créer une carte de révision.
-  - **Conclusion claire** : Toujours indiquer à l'étudiant qu'il peut simplement ouvrir son application `/Applications/Cours.app` ou son smartphone pour démarrer ses révisions quotidiennes.
+  - **Conclusion claire & encourageante** : Toujours conclure chaleureusement en disant que tout est prêt et qu'il n'y a plus qu'à ouvrir `/Applications/Cours.app` ou son smartphone pour réviser à son rythme (ex: *« Tout est prêt ! 🎉 Tu n'as plus qu'à ouvrir ton application Cours.app ou ton smartphone pour démarrer tes révisions, tu vas tout déchirer ! »*).
 
 ---
 
