@@ -169,6 +169,63 @@ export async function createSubject(payload: {
 }
 
 /**
+ * Generate official university curriculum with AI / grounding
+ */
+export async function generateCurriculum(query: string): Promise<{
+  program: string;
+  university?: string;
+  semester?: string;
+  subjects: Array<{
+    title: string;
+    category?: string;
+    ects: number;
+    priority: PriorityLevel;
+    semester?: 'S1' | 'S2';
+    chapters?: string[];
+  }>;
+} | null> {
+  try {
+    const res = await fetch(`${API_BASE}/api/curriculum/generate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query }),
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Import a full curriculum into courses.json and chapter-definitions.json
+ */
+export async function importCurriculum(subjects: Array<{
+  title: string;
+  category?: string;
+  ects: number;
+  priority: PriorityLevel;
+  semester?: 'S1' | 'S2';
+  chapters?: string[];
+}>): Promise<{
+  success: boolean;
+  importedSubjects: number;
+  importedChapters: number;
+} | null> {
+  try {
+    const res = await fetch(`${API_BASE}/api/curriculum/import`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subjects }),
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Delete a subject
  */
 export async function deleteSubject(id: string): Promise<boolean> {

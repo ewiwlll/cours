@@ -979,6 +979,235 @@ async function handleApi(req, res, url) {
       return json(res, 400, { error: error.message || "Matière impossible à supprimer" });
     }
   }
+
+  // ---------------- CURRICULUM AI GENERATOR & IMPORTER ----------------
+  if (req.method === "POST" && url.pathname === "/api/curriculum/generate") {
+    try {
+      const payload = JSON.parse(await readBody(req));
+      const query = String(payload.query || "").trim();
+      if (!query) {
+        return json(res, 400, { error: "Veuillez entrer le nom de votre formation ou université." });
+      }
+
+      const geminiKey = process.env.GEMINI_API_KEY || "";
+      const geminiModel = process.env.GEMINI_MODEL || "gemini-3.7-flash";
+
+      if (geminiKey) {
+        const prompt = `Tu es le doyen et responsable pédagogique des universités. Analyse la formation suivante et génère la maquette officielle des cours du semestre (totalisant 30 crédits ECTS) avec les crédits exacts et les chapitres fondamentaux clés :
+Formation / Université : "${query}"
+
+Règles impératives :
+1. Génère entre 4 et 8 matières réelles et officielles pour cette formation.
+2. Assigne les crédits ECTS réalistes (total ~30 ECTS par semestre) : 5-8 ECTS pour les matières majeures, 3-4 ECTS pour les matières secondaires, 1-3 ECTS pour les options/langues.
+3. Assigne la priorité d'examen : 'A' pour les gros coefficients (>= 5 ECTS), 'B' pour standard (3-4 ECTS), 'C' pour mineures/langues (1-2 ECTS).
+4. Pour chaque matière, propose 2 à 4 titres de chapitres fondamentaux réels et structurés (ex: "Chapitre 1 : ...", "Chapitre 2 : ...").
+
+Réponds STRICTEMENT sous format JSON valide avec ce schéma :
+{
+  "program": "Titre officiel de la formation",
+  "university": "Nom de l'université / établissement",
+  "semester": "S1",
+  "subjects": [
+    {
+      "title": "Nom précis de la matière",
+      "category": "Tronc commun / Majeure / Mineure",
+      "ects": 6,
+      "priority": "A",
+      "semester": "S1",
+      "chapters": ["Chapitre 1 : ...", "Chapitre 2 : ...", "Chapitre 3 : ..."]
+    }
+  ]
+}`;
+
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(geminiModel)}:generateContent?key=${encodeURIComponent(geminiKey)}`;
+        const aiRes = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: {
+              responseMimeType: "application/json",
+              temperature: 0.2,
+            },
+          }),
+        });
+
+        if (aiRes.ok) {
+          const aiJson = await aiRes.json();
+          const candidateText = aiJson.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (candidateText) {
+            try {
+              const parsed = JSON.parse(candidateText);
+              if (parsed && Array.isArray(parsed.subjects) && parsed.subjects.length > 0) {
+                return json(res, 200, parsed);
+              }
+            } catch (e) {
+              console.warn("Could not parse AI JSON output for curriculum, using fallback.", e);
+            }
+          }
+        }
+      }
+
+      // Fallback intelligent si pas de clé API ou recherche locale
+      const qLower = query.toLowerCase();
+      let fallbackData = null;
+
+      if (qLower.includes("droit") || qLower.includes("jurid")) {
+        fallbackData = {
+          program: "Licence 1 Droit",
+          university: query,
+          semester: "S1",
+          subjects: [
+            { title: "Droit constitutionnel 1", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Théorie de l'État et Souveraineté", "Chapitre 2 : La Constitution et le contrôle de constitutionnalité", "Chapitre 3 : Les régimes politiques comparés"] },
+            { title: "Droit civil : Les personnes et la famille", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : La personne physique et ses attributs", "Chapitre 2 : La filiation et l'autorité parentale", "Chapitre 3 : Le mariage et le divorce"] },
+            { title: "Histoire du droit et des institutions", category: "Fondamentale", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : L'héritage romain et chrétien", "Chapitre 2 : La monarchie capétienne et l'émergence de l'État", "Chapitre 3 : La Révolution et la codification napoléonienne"] },
+            { title: "Institutions juridictionnelles", category: "Fondamentale", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : L'organisation de la justice judiciaire", "Chapitre 2 : La justice administrative et le Conseil d'État", "Chapitre 3 : Les principes fondamentaux du procès équitable"] },
+            { title: "Relations internationales et géopolitique", category: "Complémentaire", ects: 3, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Les acteurs des relations internationales", "Chapitre 2 : L'ordre international et l'ONU", "Chapitre 3 : Les traités et conventions internationales"] },
+            { title: "Méthodologie juridique & Analyse d'arrêts", category: "Transversal", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : La fiche d'arrêt et le syllogisme", "Chapitre 2 : Le commentaire d'article", "Chapitre 3 : La dissertation juridique"] },
+            { title: "Anglais juridique", category: "Langue", ects: 3, priority: "C", semester: "S1", chapters: ["Chapitre 1 : The Common Law System", "Chapitre 2 : Court System and Legal Vocabulary"] },
+          ],
+        };
+      } else if (qLower.includes("pass") || qLower.includes("santé") || qLower.includes("medecine") || qLower.includes("médecine")) {
+        fallbackData = {
+          program: "Parcours Accès Santé Spécifique (PASS)",
+          university: query,
+          semester: "S1",
+          subjects: [
+            { title: "Biologie cellulaire et moléculaire", category: "Majeure", ects: 8, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Structure des membranes et transports", "Chapitre 2 : Cycle cellulaire, mitose et apoptose", "Chapitre 3 : Réplication, transcription et traduction de l'ADN"] },
+            { title: "Anatomie générale et morphologie", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Ostéologie et arthrologie générale", "Chapitre 2 : Le système cardiovasculaire et le cœur", "Chapitre 3 : Le système nerveux central et périphérique"] },
+            { title: "Biochimie structurale et métabolique", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Acides aminés, peptides et protéines", "Chapitre 2 : Glucides et métabolisme énergétique (glycolyse, Krebs)", "Chapitre 3 : Lipides et métabolisme des acides gras"] },
+            { title: "Biostatistiques et épidémiologie", category: "Fondamentale", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Statistiques descriptives et probabilités", "Chapitre 2 : Tests d'hypothèses et risques alpha/bêta", "Chapitre 3 : Épidémiologie et études de cohorte"] },
+            { title: "Sciences humaines et sociales (SHS) en santé", category: "Fondamentale", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Histoire de la médecine et épistémologie", "Chapitre 2 : Éthique médicale et bioéthique", "Chapitre 3 : Relation soignant-soigné et anthropologie de la santé"] },
+            { title: "Pharmacologie générale & Médicament", category: "Complémentaire", ects: 2, priority: "C", semester: "S1", chapters: ["Chapitre 1 : Pharmacocinétique (ADME)", "Chapitre 2 : Cibles des médicaments et pharmacodynamie"] },
+          ],
+        };
+      } else if (qLower.includes("info") || qLower.includes("informatique") || qLower.includes("ordinateur")) {
+        fallbackData = {
+          program: "Licence 1 Informatique",
+          university: query,
+          semester: "S1",
+          subjects: [
+            { title: "Algorithmique et Programmation 1", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Variables, types et structures de contrôle", "Chapitre 2 : Fonctions, portée et récursivité", "Chapitre 3 : Tableaux, listes et complexité algorithmique"] },
+            { title: "Mathématiques discrètes & Logique", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Logique des propositions et prédicats", "Chapitre 2 : Ensembles, relations et fonctions", "Chapitre 3 : Arithmétique modulaire et récurrence"] },
+            { title: "Architecture des ordinateurs", category: "Fondamentale", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Représentation des données (binaire, hexadécimal, flottants)", "Chapitre 2 : Circuits logiques et portes booléennes", "Chapitre 3 : Le processeur et le modèle de Von Neumann"] },
+            { title: "Introduction aux Systèmes et Réseaux", category: "Fondamentale", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Commandes Unix et Shell Linux", "Chapitre 2 : Gestion des fichiers, droits et processus", "Chapitre 3 : Les bases du modèle TCP/IP"] },
+            { title: "Analyse et Algèbre pour l'informatique", category: "Complémentaire", ects: 5, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Suites et fonctions usuelles", "Chapitre 2 : Espaces vectoriels et matrices"] },
+            { title: "Anglais pour l'informatique", category: "Langue", ects: 3, priority: "C", semester: "S1", chapters: ["Chapitre 1 : Technical Computing Terminology", "Chapitre 2 : Documentation and Code Presentation"] },
+          ],
+        };
+      } else if (qLower.includes("eco") || qLower.includes("économie") || qLower.includes("gestion")) {
+        fallbackData = {
+          program: "Licence 1 Économie & Gestion",
+          university: query,
+          semester: "S1",
+          subjects: [
+            { title: "Microéconomie 1 : Consommateur et Producteur", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : La théorie du consommateur et l'utilité", "Chapitre 2 : La demande individuelle et les élasticités", "Chapitre 3 : La fonction de production et les coûts de l'entreprise"] },
+            { title: "Macroéconomie 1 : Fondements et agrégats", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Le circuit économique et les comptes nationaux (PIB)", "Chapitre 2 : Le modèle revenu-dépense et le multiplicateur keynésien", "Chapitre 3 : La monnaie, l'inflation et la politique monétaire"] },
+            { title: "Mathématiques pour l'économie", category: "Fondamentale", ects: 5, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Fonctions d'une et plusieurs variables", "Chapitre 2 : Dérivation, convexité et optimisation sans contrainte", "Chapitre 3 : Optimisation sous contrainte et multiplicateurs de Lagrange"] },
+            { title: "Statistiques descriptives & Probabilités", category: "Fondamentale", ects: 5, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Séries statistiques à une variable et paramètres de position/dispersion", "Chapitre 2 : Séries à deux variables et régression linéaire", "Chapitre 3 : Fondements du calcul des probabilités"] },
+            { title: "Comptabilité financière générale", category: "Fondamentale", ects: 5, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Le bilan, le compte de résultat et la partie double", "Chapitre 2 : Les opérations d'achats, ventes et TVA", "Chapitre 3 : Les écritures d'inventaire et les amortissements"] },
+            { title: "Anglais des affaires et économie", category: "Langue", ects: 3, priority: "C", semester: "S1", chapters: ["Chapitre 1 : Business Environment and Trends", "Chapitre 2 : Financial Vocabulary and Graph Analysis"] },
+          ],
+        };
+      } else {
+        // Cursus généraliste universitaire
+        fallbackData = {
+          program: query,
+          university: "Université",
+          semester: "S1",
+          subjects: [
+            { title: `Notions Fondamentales - ${query}`, category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Concepts et définitions clés", "Chapitre 2 : Méthodologie et cadres d'analyse", "Chapitre 3 : Applications pratiques et cas d'étude"] },
+            { title: `Théories et Principes - ${query}`, category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Les grands auteurs et modèles", "Chapitre 2 : Les controverses et évolutions actuelles", "Chapitre 3 : Synthèse critique"] },
+            { title: "Méthodologie du travail universitaire", category: "Fondamentale", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Recherche documentaire et esprit critique", "Chapitre 2 : Rédaction académique et argumentation"] },
+            { title: "Outils quantitatifs et analyse de données", category: "Complémentaire", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Statistique descriptive", "Chapitre 2 : Interprétation des résultats et graphiques"] },
+            { title: "Anglais universitaire", category: "Langue", ects: 3, priority: "C", semester: "S1", chapters: ["Chapitre 1 : Academic English and Vocabulary", "Chapitre 2 : Oral Presentation Skills"] },
+          ],
+        };
+      }
+
+      return json(res, 200, fallbackData);
+    } catch (error) {
+      return json(res, 500, { error: error.message || "Erreur lors de la génération du cursus" });
+    }
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/curriculum/import") {
+    try {
+      const payload = JSON.parse(await readBody(req));
+      const subjectsToImport = Array.isArray(payload.subjects) ? payload.subjects : [];
+      if (!subjectsToImport.length) {
+        return json(res, 400, { error: "Aucune matière à importer." });
+      }
+
+      const coursesFile = path.join(DATA, "courses.json");
+      const catalog = await readJsonFile(coursesFile, { courses: [] });
+      const definitions = await readJsonFile(CHAPTER_DEFINITIONS, []);
+
+      let importedSubjectsCount = 0;
+      let importedChaptersCount = 0;
+
+      for (const subj of subjectsToImport) {
+        const title = String(subj.title || "").trim();
+        if (!title) continue;
+
+        const subjectId = subj.id || `custom-${Date.now()}-${slug(title)}-${Math.random().toString(36).slice(2, 6)}`;
+        
+        // Add or update in catalog
+        const existingSubjIndex = catalog.courses.findIndex((s) => s.title.toLowerCase() === title.toLowerCase());
+        const newSubject = {
+          id: subjectId,
+          title,
+          semester: subj.semester === "S2" ? "S2" : "S1",
+          category: subj.category || "Tronc commun",
+          ects: Number(subj.ects) || 3,
+          priority: subj.priority || "B",
+        };
+
+        if (existingSubjIndex !== -1) {
+          catalog.courses[existingSubjIndex] = { ...catalog.courses[existingSubjIndex], ...newSubject, id: catalog.courses[existingSubjIndex].id };
+        } else {
+          catalog.courses.push(newSubject);
+          importedSubjectsCount++;
+        }
+
+        const effectiveSubjectId = existingSubjIndex !== -1 ? catalog.courses[existingSubjIndex].id : subjectId;
+
+        // Import chapters if provided
+        if (Array.isArray(subj.chapters)) {
+          for (const chapTitle of subj.chapters) {
+            const cleanChap = String(chapTitle || "").trim();
+            if (!cleanChap) continue;
+
+            const existingChap = definitions.find(
+              (ch) => ch.subjectId === effectiveSubjectId && ch.title.toLowerCase() === cleanChap.toLowerCase()
+            );
+
+            if (!existingChap) {
+              definitions.push({
+                id: `chap-${Date.now()}-${slug(cleanChap)}-${Math.random().toString(36).slice(2, 6)}`,
+                subjectId: effectiveSubjectId,
+                title: cleanChap,
+                createdAt: new Date().toISOString(),
+              });
+              importedChaptersCount++;
+            }
+          }
+        }
+      }
+
+      await writeFile(coursesFile, JSON.stringify(catalog, null, 2) + "\n", "utf8");
+      await writeFile(CHAPTER_DEFINITIONS, JSON.stringify(definitions, null, 2) + "\n", "utf8");
+
+      return json(res, 200, {
+        success: true,
+        importedSubjects: importedSubjectsCount,
+        importedChapters: importedChaptersCount,
+        catalog: catalog.courses,
+      });
+    } catch (error) {
+      return json(res, 500, { error: error.message || "Erreur lors de l'importation du cursus" });
+    }
+  }
   if (req.method === "GET" && url.pathname === "/api/study-courses") {
     const courses = await syncLegacyCourses();
     const [chapterDefinitions, sessions, reviews] = await Promise.all([

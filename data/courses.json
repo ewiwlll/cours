@@ -26,50 +26,6 @@
       ]
     },
     {
-      "id": "s1-physique-vivant",
-      "title": "Physique pour les sciences du vivant",
-      "semester": "S1",
-      "category": "Tronc commun",
-      "ects": 3,
-      "priority": "A",
-      "questions": [
-        {
-          "prompt": "Quel modèle physique est utilisé et quelles sont ses hypothèses ?",
-          "criteria": "Modèle, hypothèses, grandeur observée."
-        },
-        {
-          "prompt": "Explique le phénomène étudié à quelqu'un qui connaît les maths mais pas la biologie.",
-          "criteria": "Lien entre équation, grandeur et phénomène vivant."
-        },
-        {
-          "prompt": "Que changerait une modification de la condition principale ?",
-          "criteria": "Prédiction justifiée, pas seulement intuitive."
-        }
-      ]
-    },
-    {
-      "id": "s1-chimie-1",
-      "title": "Chimie 1",
-      "semester": "S1",
-      "category": "Tronc commun",
-      "ects": 6,
-      "priority": "A",
-      "questions": [
-        {
-          "prompt": "Définis la notion centrale du cours et distingue-la d'une notion proche.",
-          "criteria": "Définition, critère de distinction, exemple."
-        },
-        {
-          "prompt": "Explique le mécanisme ou l'équilibre étape par étape.",
-          "criteria": "Étapes, espèces ou grandeurs impliquées, sens de variation."
-        },
-        {
-          "prompt": "Résous un cas simple puis vérifie unités, ordre de grandeur et hypothèses.",
-          "criteria": "Méthode, calcul, contrôle de cohérence."
-        }
-      ]
-    },
-    {
       "id": "s1-biomolecules",
       "title": "Biomolécules",
       "semester": "S1",
