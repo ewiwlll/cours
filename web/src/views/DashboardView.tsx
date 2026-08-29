@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Sparkles,
   Clock,
@@ -88,6 +88,37 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
     : null;
 
   const lockedCourses = courses.filter((c) => c.recallStatus === 'locked');
+
+  // Calcul du taux de maîtrise réel par cours (FSRS-5 & Rappel Actif)
+  const courseMasteryList = useMemo(() => {
+    return courses.map((course) => {
+      let score = 70;
+      if (course.recallStatus === 'locked') {
+        score = 0;
+      } else {
+        const baseRecall = Number(course.recallScore) || 75;
+        const isWeak = weaknesses.some((w) => w.courseId === course.id);
+        const cardCount = course.cards?.length || 0;
+        score = Math.min(100, Math.max(10, baseRecall - (isWeak ? 20 : 0) + (cardCount > 0 ? 10 : 0)));
+      }
+      return {
+        course,
+        masteryPercent: Math.round(score),
+      };
+    });
+  }, [courses, weaknesses]);
+
+  const masteredCourses = useMemo(() => {
+    return courseMasteryList
+      .filter((item) => item.masteryPercent >= 75 && item.course.recallStatus !== 'locked')
+      .sort((a, b) => b.masteryPercent - a.masteryPercent);
+  }, [courseMasteryList]);
+
+  const coursesToConsolidate = useMemo(() => {
+    return courseMasteryList
+      .filter((item) => item.masteryPercent < 75 || item.course.recallStatus === 'locked')
+      .sort((a, b) => a.masteryPercent - b.masteryPercent);
+  }, [courseMasteryList]);
 
   return (
     <div className="space-y-6 animate-fadeIn pb-12">
@@ -263,15 +294,114 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
       </div>
 
+      {/* 3. TABLEAU DE BORD DE MAÎTRISE PAR COURS */}
+      {courses.length > 0 && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {/* Colonne 1 : Cours à Consolider d'Urgence */}
+          <div className="rounded-3xl bg-surface border border-rose-500/20 p-5 shadow-md space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
+                <h3 className="text-sm font-bold text-white">🚨 Cours à Consolider & Débloquer ({coursesToConsolidate.length})</h3>
+              </div>
+              <span className="text-[11px] text-rose-400 font-semibold">&lt; 75% de rétention</span>
+            </div>
 
+            {coursesToConsolidate.length === 0 ? (
+              <div className="p-6 text-center bg-background rounded-2xl border border-border text-xs text-zinc-400">
+                🎉 Aucun cours en retard ou en difficulté !
+              </div>
+            ) : (
+              <div className="space-y-2.5">
+                {coursesToConsolidate.slice(0, 4).map(({ course, masteryPercent }) => (
+                  <div
+                    key={course.id}
+                    onClick={() => onOpenCourse?.(course.id)}
+                    className="p-3.5 rounded-2xl bg-background border border-border hover:border-rose-500/40 cursor-pointer transition-all flex items-center justify-between gap-3 group"
+                  >
+                    <div className="min-w-0 space-y-1">
+                      <div className="text-[10px] text-zinc-400 flex items-center gap-1.5 truncate">
+                        <span className="font-bold text-rose-400">{course.subjectTitle || 'Matière'}</span>
+                        <span>•</span>
+                        <span>{course.chapter || 'Général'}</span>
+                      </div>
+                      <h4 className="text-xs font-bold text-white truncate group-hover:text-rose-300 transition-colors">
+                        {course.title}
+                      </h4>
+                    </div>
 
-      {/* 4. LISTE DES COURS RÉCENTS OU GUIDE COMPLET D'ONBOARDING */}
+                    <div className="flex items-center gap-3 shrink-0">
+                      <div className="text-right">
+                        <span className="text-xs font-black text-rose-400 font-mono">{masteryPercent}%</span>
+                        <div className="w-16 h-1.5 bg-zinc-800 rounded-full overflow-hidden mt-1">
+                          <div className="h-full bg-rose-500 rounded-full" style={{ width: `${masteryPercent}%` }} />
+                        </div>
+                      </div>
+                      <span className="text-xs text-zinc-400 font-bold">→</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Colonne 2 : Cours Maîtrisés */}
+          <div className="rounded-3xl bg-surface border border-emerald-500/20 p-5 shadow-md space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                <h3 className="text-sm font-bold text-white">🟢 Cours Maîtrisés ({masteredCourses.length})</h3>
+              </div>
+              <span className="text-[11px] text-emerald-400 font-semibold">≥ 75% de rétention FSRS</span>
+            </div>
+
+            {masteredCourses.length === 0 ? (
+              <div className="p-6 text-center bg-background rounded-2xl border border-border text-xs text-zinc-400">
+                Révisez vos flashcards pour faire monter vos cours à 100% de maîtrise !
+              </div>
+            ) : (
+              <div className="space-y-2.5">
+                {masteredCourses.slice(0, 4).map(({ course, masteryPercent }) => (
+                  <div
+                    key={course.id}
+                    onClick={() => onOpenCourse?.(course.id)}
+                    className="p-3.5 rounded-2xl bg-background border border-border hover:border-emerald-500/40 cursor-pointer transition-all flex items-center justify-between gap-3 group"
+                  >
+                    <div className="min-w-0 space-y-1">
+                      <div className="text-[10px] text-zinc-400 flex items-center gap-1.5 truncate">
+                        <span className="font-bold text-emerald-400">{course.subjectTitle || 'Matière'}</span>
+                        <span>•</span>
+                        <span>{course.chapter || 'Général'}</span>
+                      </div>
+                      <h4 className="text-xs font-bold text-white truncate group-hover:text-emerald-300 transition-colors">
+                        {course.title}
+                      </h4>
+                    </div>
+
+                    <div className="flex items-center gap-3 shrink-0">
+                      <div className="text-right">
+                        <span className="text-xs font-black text-emerald-400 font-mono">{masteryPercent}%</span>
+                        <div className="w-16 h-1.5 bg-zinc-800 rounded-full overflow-hidden mt-1">
+                          <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${masteryPercent}%` }} />
+                        </div>
+                      </div>
+                      <span className="text-xs text-zinc-400 font-bold">→</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* 4. LISTE DES DERNIERS COURS AJOUTÉS */}
       {courses.length > 0 ? (
         <div className="rounded-3xl bg-surface border border-border p-6 shadow-md">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-bold text-white flex items-center gap-2">
               <BookOpen className="w-4 h-4 text-blue-400" />
-              <span>Derniers cours ajoutés</span>
+              <span>Tous mes cours récents</span>
             </h3>
             <button
               onClick={() => {

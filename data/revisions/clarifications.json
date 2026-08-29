@@ -1,0 +1,22 @@
+[
+  {
+    "id": "clarif-1788045253983-j80e",
+    "subjectId": "s1-biocel-mol",
+    "courseId": "course-1788045212874-organisation-de-la-bicouche-lipidique-et-transport-membranai",
+    "chapterId": null,
+    "initialQuestion": "Je ne comprends pas pourquoi le transport secondaire est actif alors qu il ne consomme pas directement d ATP.",
+    "topic": "Je ne comprends pas pourquoi le transport secondaire est actif alors qu il ne co",
+    "firstAskedAt": "2026-08-29T23:14:13.983Z",
+    "lastAskedAt": "2026-08-29T23:14:13.983Z",
+    "recurrenceCount": 1,
+    "livingSummary": "Analogie de la batterie rechargeable : Le transporteur primaire (comme la pompe Na+/K+) consomme de l ATP pour charger la batterie (créer une forte concentration de Na+ dehors). Le transporteur secondaire décharge cette batterie (laisse rentrer le Na+) et profite de cette chute d énergie pour faire passer une molécule de Glucose contre son gré !",
+    "history": [
+      {
+        "date": "2026-08-29T23:14:13.983Z",
+        "question": "Je ne comprends pas pourquoi le transport secondaire est actif alors qu il ne consomme pas directement d ATP.",
+        "answer": "Analogie de la batterie rechargeable : Le transporteur primaire (comme la pompe Na+/K+) consomme de l ATP pour charger la batterie (créer une forte concentration de Na+ dehors). Le transporteur secondaire décharge cette batterie (laisse rentrer le Na+) et profite de cette chute d énergie pour faire passer une molécule de Glucose contre son gré !",
+        "context": "Biocell S1 - Transport membranaire"
+      }
+    ]
+  }
+]

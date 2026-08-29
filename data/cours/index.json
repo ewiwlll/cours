@@ -1,1 +1,89 @@
-[]
+[
+  {
+    "id": "course-1788045212874-organisation-de-la-bicouche-lipidique-et-transport-membranai",
+    "subjectId": "s1-biocel-mol",
+    "subjectTitle": "Biologie Cellulaire et Moléculaire",
+    "title": "Organisation de la bicouche lipidique et transport membranaire",
+    "date": "2026-08-30",
+    "kind": "cours",
+    "chapter": "Structure et dynamique des membranes biologiques",
+    "chapterId": null,
+    "courseNumber": 1,
+    "partLabel": "Phase 1",
+    "partScope": null,
+    "status": "source-insuffisante",
+    "transcriptionFilename": null,
+    "summaryFilename": "course-1788045212874-organisation-de-la-bicouche-lipidique-et-transport-membranai.md",
+    "notes": "Les lipides membranaires sont amphiphiles. Le transport passif se fait selon le gradient électrochimique sans consommation d ATP, tandis que le transport actif primaire utilise directement l hydrolyse de l ATP (ex: pompe Na+/K+ ATPase).",
+    "photos": [],
+    "recordingMarkers": [],
+    "transcriptSections": [],
+    "cards": [
+      {
+        "id": "card-biocel-1",
+        "kind": "concept",
+        "question": "Quelle est la différence fondamentale entre transport passif et transport actif primaire ?",
+        "answer": "Le transport passif s'effectue dans le sens du gradient électrochimique sans consommation d'énergie (ATP), tandis que le transport actif primaire s'effectue contre le gradient et nécessite l'hydrolyse directe d'une molécule d'ATP.",
+        "keywords": [
+          "gradient électrochimique",
+          "sans consommation d'ATP",
+          "contre le gradient",
+          "hydrolyse directe d'ATP"
+        ],
+        "trap": "Confondre transport actif primaire (ATP directe) et secondaire (utilise le gradient ionique d'un autre soluté)."
+      },
+      {
+        "id": "card-biocel-2",
+        "kind": "formule",
+        "question": "Quelle est la stœchiométrie exacte des ions transportés par la pompe Na+/K+ ATPase par molécule d'ATP hydrolysée ?",
+        "answer": "La pompe Na+/K+ ATPase expulse 3 ions Na+ hors de la cellule et fait entrer 2 ions K+ dans le cytosol pour chaque molécule d'ATP hydrolysée.",
+        "keywords": [
+          "3 Na+ expulsés",
+          "2 K+ entrants",
+          "1 ATP"
+        ],
+        "trap": "Inverser le sens : le Na+ est expulsé vers l'extérieur et le K+ entre dans le cytoplasme."
+      },
+      {
+        "id": "card-biocel-3",
+        "kind": "qcm",
+        "question": "Parmi les propositions suivantes, laquelle caractérise un transport actif secondaire ?",
+        "options": [
+          "Il hydrolyse directement l'ATP à chaque cycle de transport.",
+          "Il utilise le gradient électrochimique généré par un transporteur primaire pour déplacer un soluté contre son gradient.",
+          "Il correspond à une simple diffusion à travers la bicouche lipidique sans protéine.",
+          "Il ne dépend jamais de la présence d'ions sodium."
+        ],
+        "correctOption": 1,
+        "answer": "Le transport actif secondaire utilise l'énergie emmagasinée sous forme de gradient électrochimique (souvent Na+) par une pompe primaire pour transporter un autre soluté (ex: symport Na+/Glucose).",
+        "keywords": [
+          "gradient électrochimique",
+          "transporteur primaire",
+          "symport ou antiport"
+        ],
+        "trap": "Penser que le transport secondaire est passif : il est actif car un soluté va contre son gradient !"
+      }
+    ],
+    "recallStatus": "locked",
+    "recallScore": 0,
+    "lastRecalledAt": null,
+    "recallDiagnostic": null,
+    "automationEligible": false,
+    "createdAt": "2026-08-29T23:13:32.874Z",
+    "automationState": "blocked",
+    "automationRetryable": false,
+    "automationNextAttemptAt": null,
+    "sourceValidation": {
+      "ok": false,
+      "reason": "introuvable",
+      "message": "La transcription source est introuvable.",
+      "characters": 0,
+      "words": 0,
+      "letters": 0,
+      "quality": "insuffisante",
+      "checkedAt": "2026-08-29T23:13:52.938Z"
+    },
+    "automationError": "Source insuffisante : La transcription source est introuvable.",
+    "updatedAt": "2026-08-29T23:13:52.938Z"
+  }
+]
