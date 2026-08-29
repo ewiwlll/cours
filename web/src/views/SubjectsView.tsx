@@ -234,79 +234,25 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
 
   if (!activeSubject) {
     return (
-      <div className="p-12 text-center text-zinc-500 text-sm">
-        Sélectionnez une matière pour afficher ses chapitres et cours.
+      <div className="p-12 text-center bg-surface rounded-3xl border border-border space-y-4 max-w-lg mx-auto mt-12">
+        <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mx-auto">
+          <BookOpen className="w-6 h-6" />
+        </div>
+        <h3 className="text-base font-bold text-white">Sélectionnez une matière</h3>
+        <p className="text-xs text-zinc-400 leading-relaxed">
+          Choisissez une matière dans la barre latérale à gauche pour explorer ses chapitres et ses séances de cours.
+        </p>
       </div>
     );
   }
 
   return (
     <div className="space-y-6 animate-fadeIn pb-16">
-      {/* BARRE DE SÉLECTION DE MATIÈRE RAPIDE */}
-      <div className="space-y-3 p-3.5 sm:p-4 rounded-2xl bg-surface/80 border border-border">
-        <div className="flex items-center justify-between gap-2">
-          {/* Filtres par Domaine / Catégorie */}
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
-            <button
-              onClick={() => setSelectedCategory('all')}
-              className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-                selectedCategory === 'all'
-                  ? 'bg-blue-600 text-white shadow'
-                  : 'bg-zinc-800/80 text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              Toutes les matières
-            </button>
-            {categoriesList.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-                  selectedCategory === cat
-                    ? 'bg-blue-600 text-white shadow'
-                    : 'bg-zinc-800/80 text-zinc-400 hover:text-zinc-200'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          <button
-            onClick={() => openModal('courseEditor', activeSubject?.id)}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-medium text-zinc-200 border border-zinc-700 transition-colors shrink-0"
-          >
-            <Plus className="w-3.5 h-3.5 text-blue-400" />
-            <span>+ Matière</span>
-          </button>
-        </div>
-
-        {/* Liste horizontale des pilules de matières */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar select-none">
-          {filteredSubjectsList.map((sub) => {
-            const isSelected = activeSubject?.id === sub.id;
-            return (
-              <button
-                key={sub.id}
-                onClick={() => setSelectedSubjectId(sub.id)}
-                className={`whitespace-nowrap px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                  isSelected
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 scale-[1.02]'
-                    : 'bg-surface-elevated text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 border border-border-subtle'
-                }`}
-              >
-                {sub.title}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* 1. EN-TÊTE ÉPURÉ DE LA MATIÈRE */}
-      <div className="p-7 sm:p-8 rounded-3xl bg-surface border border-border relative overflow-hidden shadow-lg">
+      {/* 1. EN-TÊTE ÉPURÉ ET AÉRÉ DE LA MATIÈRE */}
+      <div className="p-6 sm:p-8 rounded-3xl bg-surface border border-border relative overflow-hidden shadow-md">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-3">
-            {/* Meta badges */}
+            {/* Meta badges discrets */}
             <div className="flex items-center gap-2 flex-wrap">
               <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">
                 {activeSubject.category || 'Matière'}
@@ -315,7 +261,7 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
                 {activeSubject.ects} ECTS
               </span>
               {activeSubject.priority && (
-                <span className="text-xs text-zinc-400 font-medium">
+                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
                   Priorité {activeSubject.priority}
                 </span>
               )}
@@ -327,29 +273,29 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
             </h1>
 
             {/* Stats simples */}
-            <p className="text-xs text-zinc-400 flex items-center gap-3">
-              <span>📂 <strong>{subjectChapters.length}</strong> chapitres</span>
+            <p className="text-xs text-zinc-400 flex items-center gap-3 flex-wrap">
+              <span>📂 <strong>{subjectChapters.length}</strong> {subjectChapters.length > 1 ? 'chapitres' : 'chapitre'}</span>
               <span>•</span>
-              <span>📚 <strong>{subjectCourses.length}</strong> séances</span>
+              <span>📚 <strong>{subjectCourses.length}</strong> {subjectCourses.length > 1 ? 'séances' : 'séance'}</span>
               <span>•</span>
-              <span>🧠 <strong>{allSubjectFlashcards.length}</strong> flashcards</span>
+              <span>🧠 <strong>{allSubjectFlashcards.length}</strong> flashcards actives</span>
             </p>
           </div>
 
-          {/* Boutons d'action */}
+          {/* Boutons d'action clairs */}
           <div className="flex items-center gap-3 shrink-0 flex-wrap">
             <button
               onClick={() => onAddCourse ? onAddCourse(activeSubject.id) : openModal('courseEditor')}
-              className="px-4 py-2.5 rounded-xl bg-surface-elevated hover:bg-surface-muted text-zinc-200 hover:text-white border border-border text-xs font-bold transition-all flex items-center gap-2"
+              className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-md flex items-center gap-2"
             >
-              <Plus className="w-4 h-4 text-blue-400" />
-              <span>+ Nouveau cours</span>
+              <Plus className="w-4 h-4" />
+              <span>+ Ajouter un cours</span>
             </button>
 
             {allSubjectFlashcards.length > 0 && (
               <button
                 onClick={() => onStartSession?.(15, 'standard', activeSubject.id)}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-blue-500/20 hover:scale-105 transition-all flex items-center gap-2"
+                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold shadow-md flex items-center gap-2"
               >
                 <Zap className="w-4 h-4 fill-white" />
                 <span>S'entraîner ({allSubjectFlashcards.length})</span>
@@ -367,7 +313,7 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
         </div>
       </div>
 
-      {/* 2. ONGLETS COURS PAR CHAPITRES / FLASHCARDS */}
+      {/* 2. ONGLETS CLAIRS (CHAPITRES & COURS / FLASHCARDS) */}
       <div className="space-y-6">
         <div className="flex items-center gap-8 border-b border-border/80 px-2">
           <button
@@ -377,7 +323,7 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
             }`}
           >
             <BookOpen className={`w-4 h-4 ${activeTab === 'courses' ? 'text-blue-400' : 'text-zinc-500'}`} />
-            <span>Cours par chapitres ({subjectCourses.length})</span>
+            <span>Chapitres & Séances ({subjectCourses.length})</span>
             {activeTab === 'courses' && (
               <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500 rounded-full" />
             )}
@@ -397,42 +343,42 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
           </button>
         </div>
 
-        {/* ---------------- ONGLET 1 : ORGANISATION PAR CHAPITRES ---------------- */}
+        {/* ---------------- ONGLET 1 : CHAPITRES & SÉANCES ---------------- */}
         {activeTab === 'courses' && (
           <div className="space-y-6">
-            {/* Barre de création rapide de chapitre */}
+            {/* Barre de création de chapitre */}
             <form
               onSubmit={handleCreateChapter}
-              className="p-4 rounded-2xl bg-surface border border-border flex items-center gap-3 shadow-xs"
+              className="p-4 sm:p-5 rounded-2xl bg-surface border border-border flex items-center gap-3 shadow-xs"
             >
               <div className="text-zinc-400 text-lg pl-1">📂</div>
               <input
                 type="text"
                 value={newChapterTitle}
                 onChange={(e) => setNewChapterTitle(e.target.value)}
-                placeholder="Ajouter un nouveau chapitre (ex: Chapitre 1 : Espaces Vectoriels)..."
-                className="flex-1 px-3.5 py-2 rounded-xl bg-background border border-border text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-blue-500 transition-colors"
+                placeholder="Créer un nouveau chapitre (ex: Chapitre 1 : Espaces Vectoriels)..."
+                className="flex-1 px-4 py-2.5 rounded-xl bg-background border border-border text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-blue-500 transition-colors"
               />
               <button
                 type="submit"
                 disabled={!newChapterTitle.trim()}
-                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:pointer-events-none text-white text-xs font-bold shadow-md shrink-0 flex items-center gap-1.5 transition-all"
+                className="px-4 py-2.5 rounded-xl bg-surface-elevated hover:bg-surface-muted border border-border hover:border-zinc-600 disabled:opacity-40 text-white text-xs font-bold transition-all flex items-center gap-1.5 shrink-0"
               >
-                <Plus className="w-4 h-4" />
-                <span>Nouveau chapitre</span>
+                <Plus className="w-4 h-4 text-blue-400" />
+                <span>Créer le chapitre</span>
               </button>
             </form>
 
             {/* Liste des Chapitres */}
             {subjectChapters.length === 0 && coursesByChapter.unassigned.length === 0 ? (
-              <div className="p-12 text-center bg-surface rounded-2xl border border-border space-y-4">
+              <div className="p-12 text-center bg-surface rounded-3xl border border-border space-y-4">
                 <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mx-auto">
-                  <BookOpen className="w-6 h-6" />
+                  <FolderTree className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-white">Aucun chapitre ni cours enregistré</h3>
                   <p className="text-xs text-zinc-400 mt-1 max-w-md mx-auto">
-                    Créez votre premier chapitre ci-dessus ou lancez l'enregistrement d'un cours en amphi.
+                    Commencez par créer votre premier chapitre ci-dessus ou enregistrez une première séance de cours.
                   </p>
                 </div>
                 <button
@@ -445,7 +391,7 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
               </div>
             ) : (
               <div className="space-y-5">
-                {/* 1. LES CHAPITRES ET LEURS COURS EN ACCORDÉON */}
+                {/* 1. LES CHAPITRES ET LEURS SÉANCES */}
                 {subjectChapters.map((ch) => {
                   const chCourses = coursesByChapter.map[ch.title] || [];
                   const isCollapsed = !!collapsedChapters[ch.title];
@@ -466,7 +412,7 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
                             <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
                               <span>{ch.title}</span>
                               <span className="px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 text-[11px] font-semibold">
-                                {chCourses.length} {chCourses.length > 1 ? 'cours' : 'cours'}
+                                {chCourses.length} {chCourses.length > 1 ? 'séances' : 'séance'}
                               </span>
                             </h3>
                           </div>
@@ -530,7 +476,7 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
                                         </span>
                                       )}
                                       {c.recallStatus === 'locked' ? (
-                                        <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 text-[10px] font-bold border border-amber-500/20">
+                                        <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 text-[10px] font-bold border border-amber-500/20" title="Verrouillé jusqu'au premier rappel actif">
                                           🔒 Rappel requis
                                         </span>
                                       ) : (
@@ -576,11 +522,15 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
                     <div className="flex items-center justify-between px-1">
                       <div className="flex items-center gap-2">
                         <span className="text-base">📄</span>
-                        <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
-                          Autres cours sans chapitre ({coursesByChapter.unassigned.length})
-                        </h3>
+                        <div>
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
+                            Séances hors chapitre ({coursesByChapter.unassigned.length})
+                          </h3>
+                          <p className="text-[11px] text-zinc-500">
+                            Ces cours ne sont rattachés à aucun chapitre pour le moment.
+                          </p>
+                        </div>
                       </div>
-                      <span className="text-[11px] text-zinc-500">Non classés</span>
                     </div>
 
                     <div className="space-y-3">
