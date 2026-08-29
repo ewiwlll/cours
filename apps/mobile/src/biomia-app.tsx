@@ -32,7 +32,11 @@ import {
   getExamTrapsAndErrors,
   evaluateFeynman,
   syncPendingReviews,
+  syncPendingRecordings,
   enqueueOfflineReview,
+  deleteCourseWithTrash,
+  readTrashCourses,
+  restoreTrashCourse,
   getExams,
   createExam,
   deleteExam,
@@ -46,7 +50,7 @@ import {
   type Card,
   type CoursePhoto,
 } from "./api";
-import type { LocalRecordingPhoto, RecordingMarker } from "./storage";
+import { upsertRecording, type LocalRecordingPhoto, type RecordingMarker, type TrashedCourse } from "./storage";
 import { formatMath, MobileMarkdownViewer } from "./format-math";
 
 LogBox.ignoreAllLogs();
@@ -126,14 +130,24 @@ export function CoursApp() {
   const [newExamChapterIds, setNewExamChapterIds] = useState<string[]>([]);
   const [isOralPrepared, setIsOralPrepared] = useState(false);
 
+  // Trash & Network Modals State
+  const [trashList, setTrashList] = useState<TrashedCourse[]>([]);
+  const [showTrashModal, setShowTrashModal] = useState(false);
+  const [showNetworkModal, setShowNetworkModal] = useState(false);
+
   const fetchAppData = async () => {
     setLoading(true);
     try {
-      const [data, examList, weakList, calData] = await Promise.all([
+      // 1. Sync pending offline reviews & recordings in background
+      syncPendingReviews().catch(() => 0);
+      syncPendingRecordings().catch(() => 0);
+
+      const [data, examList, weakList, calData, trashed] = await Promise.all([
         loadData(),
         getExams().catch(() => []),
         getWeaknesses().catch(() => []),
         getRevisionCalendar(7).catch(() => null),
+        readTrashCourses().catch(() => []),
       ]);
 
       setSubjects(data.subjects || []);
@@ -141,6 +155,7 @@ export function CoursApp() {
       setChapters(data.chapterDefinitions || []);
       setExams(examList || []);
       setWeaknesses(weakList || []);
+      setTrashList(trashed || []);
 
       if (calData && (Array.isArray(calData.calendar) || Array.isArray(calData.days))) {
         setCalendarDays(calData.calendar || calData.days);
@@ -315,7 +330,7 @@ export function CoursApp() {
     return cards;
   }, [courses, trainingSubjectFilter]);
 
-  // Handle Amphi Recorder Timer & Actions
+  // Handle Amphi Recorder Timer & Actions (Local-First Resilience)
   const toggleRecording = async () => {
     if (isRecording) {
       clearInterval(timerRef.current);
@@ -325,42 +340,50 @@ export function CoursApp() {
       const targetSub = subjects.find((s) => s.id === recordingSubjectId) || subjects[0];
       const targetCh = chapters.find((ch) => ch.id === recordingChapterId);
       const title = recordingTitle.trim() || `Cours du ${new Date().toISOString().split("T")[0]}`;
+      const recId = `mobile-rec-${Date.now()}`;
+
+      const localRec: any = {
+        id: recId,
+        title,
+        subjectId: targetSub?.id || "s1-biomolecules",
+        subjectTitle: targetSub?.title || "Matière",
+        chapter: targetCh?.title || undefined,
+        chapterId: targetCh?.id || undefined,
+        date: new Date().toISOString().slice(0, 10),
+        uri: "",
+        mimeType: "audio/m4a",
+        notes: recordingNotes,
+        recordingMarkers,
+        photos: recordingPhotos,
+        audioDurationMs: recordingSeconds * 1000,
+        status: "local",
+      };
+
+      // 1. Sauvegarde locale immédiate (zéro perte même en cas de coupure de réseau en amphi)
+      await upsertRecording(localRec);
 
       try {
-        await syncRecording({
-          id: `mobile-rec-${Date.now()}`,
-          title,
-          subjectId: targetSub?.id || "s1-biomolecules",
-          subjectTitle: targetSub?.title || "Matière",
-          chapter: targetCh?.title || undefined,
-          chapterId: targetCh?.id || undefined,
-          date: new Date().toISOString().slice(0, 10),
-          uri: "",
-          mimeType: "audio/m4a",
-          notes: recordingNotes,
-          recordingMarkers,
-          photos: recordingPhotos,
-          audioDurationMs: recordingSeconds * 1000,
-          status: "synchronise",
-        });
+        // 2. Tentative de transmission au serveur Mac / Tailscale
+        await syncRecording(localRec);
+        await upsertRecording({ ...localRec, status: "synchronise", syncedAt: new Date().toISOString() });
 
         Alert.alert(
           "🎉 Enregistrement transmis !",
           `Le cours "${title}" (${Math.floor(recordingSeconds / 60)}m ${recordingSeconds % 60}s) a été transmis au serveur Mac.\n\nTranscription Whisper et génération IA en cours !`
         );
+      } catch (err: any) {
+        Alert.alert(
+          "💾 Sauvegardé sur le téléphone (Hors-ligne)",
+          `Durée : ${Math.floor(recordingSeconds / 60)}m ${recordingSeconds % 60}s.\n\nLe cours et ses ${recordingPhotos.length} photos sont stockés en sécurité sur ton téléphone. Ils seront transmis automatiquement dès le retour du Wi-Fi ou Tailscale.`
+        );
+      } finally {
         setRecordingTitle("");
         setRecordingNotes("");
         setRecordingMarkers([]);
         setRecordingPhotos([]);
         setRecordingSeconds(0);
-        fetchAppData();
-      } catch (err: any) {
-        Alert.alert(
-          "Enregistrement terminé",
-          `Durée : ${Math.floor(recordingSeconds / 60)}m ${recordingSeconds % 60}s.\nLe cours est sauvegardé localement et sera synchronisé dès la reconnexion au Mac.`
-        );
-      } finally {
         setIsSyncing(false);
+        fetchAppData();
       }
     } else {
       setRecordingSeconds(0);
@@ -561,12 +584,15 @@ export function CoursApp() {
         </View>
 
         <View style={styles.topRightActions}>
-          <View style={[styles.statusBadge, !isOnline && { backgroundColor: "rgba(245,158,11,0.15)", borderColor: "rgba(245,158,11,0.3)" }]}>
+          <Pressable
+            onPress={() => setShowNetworkModal(true)}
+            style={[styles.statusBadge, !isOnline && { backgroundColor: "rgba(245,158,11,0.15)", borderColor: "rgba(245,158,11,0.3)" }]}
+          >
             <View style={[styles.statusDot, !isOnline && { backgroundColor: "#f59e0b" }]} />
             <Text style={[styles.statusText, !isOnline && { color: "#f59e0b" }]}>
-              {isOnline ? "Connecté · Synchro auto" : "Mode local"}
+              {isOnline ? "Connecté · Synchro" : "Mode local"}
             </Text>
-          </View>
+          </Pressable>
         </View>
       </View>
 
@@ -742,12 +768,24 @@ export function CoursApp() {
                     ))}
                   </View>
 
-                  <Pressable
-                    onPress={() => setShowNewSubjectModal(true)}
-                    style={styles.addSubjectSmallBtn}
-                  >
-                    <Text style={styles.addSubjectSmallBtnText}>+ Matière</Text>
-                  </Pressable>
+                  <View style={{ flexDirection: "row", gap: 6 }}>
+                    {trashList.length > 0 && (
+                      <Pressable
+                        onPress={() => setShowTrashModal(true)}
+                        style={[styles.addSubjectSmallBtn, { backgroundColor: "rgba(244,63,94,0.15)", borderColor: "rgba(244,63,94,0.3)" }]}
+                      >
+                        <Text style={[styles.addSubjectSmallBtnText, { color: "#f43f5e" }]}>
+                          🗑️ ({trashList.length})
+                        </Text>
+                      </Pressable>
+                    )}
+                    <Pressable
+                      onPress={() => setShowNewSubjectModal(true)}
+                      style={styles.addSubjectSmallBtn}
+                    >
+                      <Text style={styles.addSubjectSmallBtnText}>+ Matière</Text>
+                    </Pressable>
+                  </View>
                 </View>
 
                 {/* HORIZONTAL SUBJECT PILLS */}
@@ -1643,6 +1681,122 @@ export function CoursApp() {
         </View>
       </Modal>
 
+      {/* MODAL: STATUT RÉSEAU & SYNCHRONISATION */}
+      <Modal visible={showNetworkModal} animationType="slide" transparent>
+        <View style={styles.modalBackdrop}>
+          <View style={styles.dialogCard}>
+            <Text style={styles.dialogTitle}>🌐 Connexion Studio Mac & Tailscale</Text>
+            <Text style={styles.dialogSubtitle}>
+              {isOnline ? "🟢 Connecté au serveur Mac" : "🔴 Mode local (Hors-ligne)"}
+            </Text>
+
+            <View style={{ backgroundColor: "#09090b", padding: 12, borderRadius: 10, borderWidth: 1, borderColor: "#27272a", marginVertical: 8, gap: 6 }}>
+              <Text style={{ color: "#a1a1aa", fontSize: 11 }}>Serveur actif :</Text>
+              <Text style={{ color: "#60a5fa", fontSize: 12, fontWeight: "700", fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" }}>
+                {getActiveServerUrl()}
+              </Text>
+              <Text style={{ color: "#a1a1aa", fontSize: 11, marginTop: 4 }}>Résilience hors-ligne :</Text>
+              <Text style={{ color: "#d4d4d8", fontSize: 11, lineHeight: 16 }}>
+                • Tous les cours et flashcards sont mis en cache localement.{"\n"}
+                • Vos révisions FSRS et enregistrements audio sont conservés et synchronisés automatiquement dès le retour du Wi-Fi ou de Tailscale.
+              </Text>
+            </View>
+
+            <View style={styles.dialogActionRow}>
+              <Pressable onPress={() => setShowNetworkModal(false)} style={styles.dialogCancelBtn}>
+                <Text style={styles.dialogCancelBtnText}>Fermer</Text>
+              </Pressable>
+              <Pressable
+                onPress={async () => {
+                  try {
+                    await fetchAppData();
+                    Alert.alert("Synchronisation", "Les données et révisions ont été synchronisées avec le Mac !");
+                    setShowNetworkModal(false);
+                  } catch (e: any) {
+                    Alert.alert("Mode hors-ligne", "Le serveur Mac n'est pas joignable pour l'instant. Vos données restent en sécurité sur le téléphone.");
+                  }
+                }}
+                style={styles.dialogConfirmBtn}
+              >
+                <Text style={styles.dialogConfirmBtnText}>🔄 Forcer la synchro</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* MODAL: CORBEILLE LOCALE 30 JOURS (SOFT DELETE) */}
+      <Modal visible={showTrashModal} animationType="slide" transparent>
+        <View style={styles.modalBackdrop}>
+          <View style={[styles.dialogCard, { maxHeight: "80%" }]}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Text style={styles.dialogTitle}>🗑️ Corbeille Locale (30 Jours)</Text>
+              <Text style={styles.dialogSubtitle}>
+                Les cours supprimés sont conservés 30 jours avant suppression définitive.
+              </Text>
+
+              {trashList.length === 0 ? (
+                <View style={{ paddingVertical: 20, alignItems: "center" }}>
+                  <Text style={{ color: "#71717a", fontSize: 12 }}>La corbeille est vide.</Text>
+                </View>
+              ) : (
+                trashList.map((item, idx) => {
+                  const daysLeft = Math.max(
+                    0,
+                    Math.ceil(
+                      (new Date(item.expiresAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)
+                    )
+                  );
+                  return (
+                    <View
+                      key={item.course?.id || idx}
+                      style={{
+                        backgroundColor: "#09090b",
+                        borderWidth: 1,
+                        borderColor: "#27272a",
+                        borderRadius: 12,
+                        padding: 12,
+                        marginBottom: 8,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ flex: 1, marginRight: 8 }}>
+                        <Text style={{ color: "#ffffff", fontSize: 13, fontWeight: "700" }}>
+                          {item.course?.title}
+                        </Text>
+                        <Text style={{ color: "#a1a1aa", fontSize: 11, marginTop: 2 }}>
+                          {item.course?.subjectTitle || "Matière"} • Expire dans {daysLeft}j
+                        </Text>
+                      </View>
+                      <Pressable
+                        onPress={async () => {
+                          const restored = await restoreTrashCourse(item.course.id);
+                          if (restored) {
+                            Alert.alert("✨ Cours restauré !", `Le cours "${restored.title}" est de nouveau actif.`);
+                            fetchAppData();
+                          }
+                        }}
+                        style={{ backgroundColor: "#22c55e", paddingHorizontal: 10, paddingVertical: 6, borderRadius: 8 }}
+                      >
+                        <Text style={{ color: "#09090b", fontSize: 11, fontWeight: "800" }}>Restaurer</Text>
+                      </Pressable>
+                    </View>
+                  );
+                })
+              )}
+
+              <View style={[styles.dialogActionRow, { marginTop: 12 }]}>
+                <Pressable onPress={() => setShowTrashModal(false)} style={styles.dialogCancelBtn}>
+                  <Text style={styles.dialogCancelBtnText}>Fermer</Text>
+                </Pressable>
+              </View>
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
+
       {/* MODAL: DÉTAIL DU COURS & SAS DE RAPPEL ACTIF */}
       <Modal visible={!!selectedCourse} animationType="slide" transparent={false} onRequestClose={() => setSelectedCourse(null)}>
         <SafeAreaView style={styles.modalContainer}>
@@ -1651,9 +1805,36 @@ export function CoursApp() {
             <Text style={styles.modalTitle} numberOfLines={1}>
               {selectedCourse?.title}
             </Text>
-            <Pressable onPress={() => setSelectedCourse(null)} style={styles.closeBtn}>
-              <Text style={styles.closeBtnText}>✕</Text>
-            </Pressable>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+              <Pressable
+                onPress={() => {
+                  if (!selectedCourse) return;
+                  Alert.alert(
+                    "Déplacer dans la corbeille ?",
+                    `Le cours "${selectedCourse.title}" sera conservé 30 jours dans la corbeille locale du téléphone avant suppression définitive.`,
+                    [
+                      { text: "Annuler", style: "cancel" },
+                      {
+                        text: "Déplacer dans la corbeille",
+                        style: "destructive",
+                        onPress: async () => {
+                          await deleteCourseWithTrash(selectedCourse);
+                          setSelectedCourse(null);
+                          fetchAppData();
+                          Alert.alert("🗑️ Cours dans la corbeille", "Tu peux le restaurer pendant 30 jours depuis l'onglet Matières.");
+                        },
+                      },
+                    ]
+                  );
+                }}
+                style={[styles.closeBtn, { backgroundColor: "rgba(244,63,94,0.15)" }]}
+              >
+                <Text style={{ fontSize: 13 }}>🗑️</Text>
+              </Pressable>
+              <Pressable onPress={() => setSelectedCourse(null)} style={styles.closeBtn}>
+                <Text style={styles.closeBtnText}>✕</Text>
+              </Pressable>
+            </View>
           </View>
 
           {/* BARRE D'ONGLETS ÉPINGLÉE (si cours débloqué) */}

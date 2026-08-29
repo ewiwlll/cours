@@ -1,6 +1,17 @@
 import * as FileSystem from "expo-file-system/legacy";
 import { apiUrl } from "./config";
-import type { LocalRecording, RecordingPartScope, RecordingMarker, LocalRecordingPhoto } from "./storage";
+import {
+  type LocalRecording,
+  type RecordingPartScope,
+  type RecordingMarker,
+  type LocalRecordingPhoto,
+  type TrashedCourse,
+  readRecordings,
+  upsertRecording,
+  moveToTrash,
+  readTrash,
+  restoreFromTrash,
+} from "./storage";
 
 export type Subject = { id: string; title: string; semester: string; category: string; ects: number; priority?: string };
 export type Card = { id: string; question: string; answer: string; kind?: string; source?: string; options?: Array<string | { id?: string; label?: string; text?: string }>; correctOption?: string | number; keywords?: string[]; trap?: string; commonMistakes?: string[] };
@@ -553,6 +564,52 @@ export async function getWeaknesses(): Promise<any[]> {
     console.warn("Failed to load weaknesses:", e);
     return [];
   }
+}
+
+// SYNCHRONISATION DES ENREGISTREMENTS HORS-LIGNE
+export async function syncPendingRecordings(): Promise<number> {
+  try {
+    const recordings = await readRecordings();
+    const pending = recordings.filter((r) => r.status === "local" || r.status === "erreur");
+    if (pending.length === 0) return 0;
+
+    let syncedCount = 0;
+    for (const rec of pending) {
+      try {
+        await syncRecording(rec);
+        await upsertRecording({ ...rec, status: "synchronise", syncedAt: new Date().toISOString() });
+        syncedCount++;
+      } catch (err) {
+        // Enregistrement préservé localement sur le smartphone
+      }
+    }
+    return syncedCount;
+  } catch (e) {
+    console.warn("Failed to sync pending recordings:", e);
+    return 0;
+  }
+}
+
+// GESTION DE LA CORBEILLE 30 JOURS (SOFT DELETE)
+export async function deleteCourseWithTrash(course: StudyCourse): Promise<boolean> {
+  try {
+    await moveToTrash(course);
+    try {
+      await deleteCourse(course.id);
+    } catch {}
+    return true;
+  } catch (e) {
+    console.warn("Failed to delete course with trash:", e);
+    return false;
+  }
+}
+
+export async function readTrashCourses(): Promise<TrashedCourse[]> {
+  return readTrash();
+}
+
+export async function restoreTrashCourse(courseId: string): Promise<StudyCourse | null> {
+  return restoreFromTrash(courseId);
 }
 
 

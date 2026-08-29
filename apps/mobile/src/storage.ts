@@ -91,3 +91,59 @@ export async function upsertRecording(item: LocalRecording): Promise<LocalRecord
   recordingsWriteQueue = operation.then(() => undefined, () => undefined);
   return operation;
 }
+
+// CORBEILLE LOCALE SÉCURISÉE (RÉTENTION 30 JOURS)
+const trashFile = FileSystem.documentDirectory ? `${FileSystem.documentDirectory}cours-trash.v1.json` : null;
+
+export type TrashedCourse = {
+  course: any;
+  deletedAt: string;
+  expiresAt: string;
+};
+
+export async function readTrash(): Promise<TrashedCourse[]> {
+  if (!trashFile) return [];
+  try {
+    const raw = await FileSystem.readAsStringAsync(trashFile, { encoding: FileSystem.EncodingType.UTF8 });
+    const list: TrashedCourse[] = JSON.parse(raw);
+    const now = Date.now();
+    // Purge automatique des cours supprimés il y a plus de 30 jours
+    const active = list.filter((item) => {
+      const deletedTime = new Date(item.deletedAt).getTime();
+      return now - deletedTime < 30 * 24 * 60 * 60 * 1000;
+    });
+    if (active.length !== list.length) {
+      await writeTrash(active);
+    }
+    return active;
+  } catch {
+    return [];
+  }
+}
+
+export async function writeTrash(items: TrashedCourse[]): Promise<void> {
+  if (!trashFile) return;
+  try {
+    await FileSystem.writeAsStringAsync(trashFile, JSON.stringify(items), { encoding: FileSystem.EncodingType.UTF8 });
+  } catch {}
+}
+
+export async function moveToTrash(course: any): Promise<void> {
+  const now = new Date();
+  const expires = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+  const trash = await readTrash();
+  const next = [
+    { course, deletedAt: now.toISOString(), expiresAt: expires.toISOString() },
+    ...trash.filter((t) => t.course.id !== course.id),
+  ];
+  await writeTrash(next);
+}
+
+export async function restoreFromTrash(courseId: string): Promise<any | null> {
+  const trash = await readTrash();
+  const found = trash.find((t) => t.course.id === courseId);
+  if (!found) return null;
+  const remaining = trash.filter((t) => t.course.id !== courseId);
+  await writeTrash(remaining);
+  return found.course;
+}
