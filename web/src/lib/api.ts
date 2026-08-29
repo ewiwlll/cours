@@ -270,10 +270,58 @@ export async function generateCurriculum(query: string): Promise<{
     };
   }
 
+  if (qLower.includes('terminale') || qLower.includes('lycee') || qLower.includes('lycée') || qLower.includes('bac') || qLower.includes('premiere') || qLower.includes('première') || qLower.includes('seconde')) {
+    if (qLower.includes('ses') || qLower.includes('eco') || qLower.includes('gestion')) {
+      return {
+        program: 'Terminale Générale (Spécialité SES)',
+        university: 'Lycée / Baccalauréat',
+        semester: 'S1',
+        subjects: [
+          { title: 'Sciences Économiques et Sociales (Spécialité)', category: 'Spécialité Bac (Coeff 16)', ects: 16, priority: 'A', semester: 'S1', chapters: ['Sources et défis de la croissance économique', 'Fondements du commerce international', 'Structure de la société française', 'Mutations du travail et de l\'emploi'] },
+          { title: 'Philosophie', category: 'Épreuve Terminale (Coeff 8)', ects: 8, priority: 'A', semester: 'S1', chapters: ['La liberté, le devoir et le bonheur', 'La vérité, la science et la raison', 'L\'État, la justice et le droit'] },
+          { title: 'Histoire-Géographie & EMC', category: 'Tronc commun (Coeff 6)', ects: 6, priority: 'B', semester: 'S1', chapters: ['L\'impact des crises de 1929 et de la Seconde Guerre mondiale', 'Guerre froide et nouveaux rapports de puissance', 'La France et la construction européenne'] },
+          { title: 'Enseignement Scientifique', category: 'Tronc commun (Coeff 6)', ects: 6, priority: 'B', semester: 'S1', chapters: ['Science, climat et société', 'Une histoire de la matière et de l\'énergie'] },
+          { title: 'Langue Vivante A (Anglais)', category: 'Tronc commun (Coeff 6)', ects: 6, priority: 'C', semester: 'S1', chapters: ['Art et pouvoir', 'Espaces et échanges mondiaux'] },
+        ],
+      };
+    }
+
+    if (qLower.includes('premiere') || qLower.includes('première') || qLower.includes('francais') || qLower.includes('français')) {
+      return {
+        program: 'Première Générale (Bac de Français)',
+        university: 'Lycée / Baccalauréat',
+        semester: 'S1',
+        subjects: [
+          { title: 'Français (Épreuves anticipées du Bac)', category: 'Bac de Français (Coeff 10)', ects: 10, priority: 'A', semester: 'S1', chapters: ['La poésie du XIXe au XXIe siècle (Baudelaire / Rimbaud)', 'La littérature d\'idées du XVIe au XVIIIe siècle (Lumières)', 'Le roman et le récit du Moyen Âge au XXIe siècle', 'Le théâtre du XVIIe au XXIe siècle (Molière / Racine)'] },
+          { title: 'Spécialité 1 (Majeure)', category: 'Spécialité (Coeff 8)', ects: 8, priority: 'A', semester: 'S1', chapters: ['Chapitre 1 : Notions fondamentales', 'Chapitre 2 : Méthodes et résolution', 'Chapitre 3 : Études approfondies'] },
+          { title: 'Spécialité 2', category: 'Spécialité (Coeff 8)', ects: 8, priority: 'A', semester: 'S1', chapters: ['Chapitre 1 : Notions clés', 'Chapitre 2 : Exercices d\'application'] },
+          { title: 'Histoire-Géographie & EMC', category: 'Tronc commun (Coeff 6)', ects: 6, priority: 'B', semester: 'S1', chapters: ['Nations, empires et nationalités (1789-1914)', 'La métropolisation et dynamiques territoriales'] },
+          { title: 'Enseignement Scientifique & Mathématiques', category: 'Tronc commun (Coeff 6)', ects: 6, priority: 'B', semester: 'S1', chapters: ['Une longue histoire de la matière', 'Le Soleil, notre source d\'énergie'] },
+          { title: 'Langue Vivante A (Anglais)', category: 'Tronc commun (Coeff 6)', ects: 6, priority: 'C', semester: 'S1', chapters: ['Identités et échanges', 'Innovations scientifiques et responsabilité'] },
+        ],
+      };
+    }
+
+    // Default Terminale Spé Maths / Physique-Chimie / SVT
+    return {
+      program: 'Terminale Générale (Spécialités Scientifiques)',
+      university: 'Lycée / Baccalauréat',
+      semester: 'S1',
+      subjects: [
+        { title: 'Mathématiques (Spécialité)', category: 'Spécialité Bac (Coeff 16)', ects: 16, priority: 'A', semester: 'S1', chapters: ['Suites, limites et récurrence', 'Continuité, dérivation et fonction exponentielle/logarithme', 'Géométrie dans l\'espace et produit scalaire', 'Probabilités et variables aléatoires'] },
+        { title: 'Physique-Chimie (Spécialité)', category: 'Spécialité Bac (Coeff 16)', ects: 16, priority: 'A', semester: 'S1', chapters: ['Ondes et signaux (Interférences, diffraction, effet Doppler)', 'Mouvement et interactions (Lois de Newton, Kepler)', 'Transformations acido-basiques et titrage avec suivi pH-métrique', 'Thermodynamique et transferts thermiques'] },
+        { title: 'Philosophie', category: 'Épreuve Terminale (Coeff 8)', ects: 8, priority: 'A', semester: 'S1', chapters: ['La conscience, l\'inconscient et le sujet', 'La liberté, le devoir et la morale', 'La vérité, la science et la technique', 'La justice, l\'État et la politique'] },
+        { title: 'Histoire-Géographie & EMC', category: 'Tronc commun (Coeff 6)', ects: 6, priority: 'B', semester: 'S1', chapters: ['Les régimes totalitaires au XXe siècle', 'La guerre froide et les nouveaux rapports de puissance', 'La France et la gouvernance européenne'] },
+        { title: 'Enseignement Scientifique', category: 'Tronc commun (Coeff 6)', ects: 6, priority: 'B', semester: 'S1', chapters: ['Science, climat et société contemporaine', 'L\'énergie : choix de développement et avenir'] },
+        { title: 'Langue Vivante A (Anglais)', category: 'Tronc commun (Coeff 6)', ects: 6, priority: 'C', semester: 'S1', chapters: ['Art et pouvoir dans le monde anglophone', 'Espaces et échanges internationaux'] },
+      ],
+    };
+  }
+
   // Universal Fallback for any other academic query
   return {
     program: cleanQuery,
-    university: 'Université',
+    university: 'Établissement',
     semester: 'S1',
     subjects: [
       { title: `Fondements & Concepts — ${cleanQuery}`, category: 'Majeure', ects: 6, priority: 'A', semester: 'S1', chapters: ['Chapitre 1 : Notions fondamentales et définitions', 'Chapitre 2 : Cadres théoriques et modèles d\'analyse', 'Chapitre 3 : Études de cas et applications'] },

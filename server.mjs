@@ -992,7 +992,10 @@ async function handleApi(req, res, url) {
       const geminiKey = process.env.GEMINI_API_KEY || "";
       const geminiModel = process.env.GEMINI_MODEL || "gemini-3.7-flash";
 
+      console.log(`\n[CURRICULUM] 🔍 Recherche et génération de maquette pour : "${query}"`);
+
       if (geminiKey) {
+        console.log(`[CURRICULUM] 🌐 Appel Gemini API avec Google Search Grounding (${geminiModel})...`);
         const prompt = `Tu es le doyen et responsable pédagogique des universités. Analyse la formation suivante et génère la maquette officielle des cours du semestre (totalisant 30 crédits ECTS) avec les crédits exacts et les chapitres fondamentaux clés :
 Formation / Université : "${query}"
 
@@ -1045,14 +1048,20 @@ Réponds STRICTEMENT sous format JSON valide avec ce schéma :
             try {
               const parsed = JSON.parse(candidateText);
               if (parsed && Array.isArray(parsed.subjects) && parsed.subjects.length > 0) {
+                console.log(`[CURRICULUM] ✅ Succès Gemini Search : ${parsed.subjects.length} matières extraites pour "${parsed.program || query}".`);
                 return json(res, 200, parsed);
               }
             } catch (e) {
-              console.warn("Could not parse AI JSON output for curriculum, using fallback.", e);
+              console.warn("[CURRICULUM] ⚠️ Échec de parsing JSON Gemini, bascule sur le template structuré.", e);
             }
           }
+        } else {
+          const errStatus = aiRes.status;
+          console.warn(`[CURRICULUM] ⚠️ Réponse API Gemini statut ${errStatus}, bascule sur le template structuré.`);
         }
       }
+
+      console.log(`[CURRICULUM] 📚 Utilisation de la maquette académique structurée pour "${query}".`);
 
       // Fallback intelligent si pas de clé API ou recherche locale
       const qLower = query.toLowerCase();
