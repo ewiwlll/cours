@@ -302,18 +302,30 @@ export async function generateCurriculum(query: string): Promise<{
       };
     }
 
-    // Default Terminale Spé Maths / Physique-Chimie / SVT
+    const hasSvt = qLower.includes('svt') || qLower.includes('biologie');
+    const hasNsi = qLower.includes('nsi') || qLower.includes('informatique');
+    const hasEspagnol = qLower.includes('espagnol');
+    const hasAllemand = qLower.includes('allemand');
+    const lv2Name = hasEspagnol ? 'Langue Vivante B (Espagnol)' : hasAllemand ? 'Langue Vivante B (Allemand)' : 'Langue Vivante B (Espagnol / Allemand)';
+
+    const spe2 = hasSvt
+      ? { title: 'Sciences de la Vie et de la Terre (Spécialité)', category: 'Spécialité Bac (Coeff 16)', ects: 16, priority: 'A' as PriorityLevel, semester: 'S1' as const, chapters: ['Génétique et dynamique des populations', 'De la plante sauvage à la plante domestiquée', 'À la recherche du passé géologique', 'Comportements, mouvement et système nerveux'] }
+      : hasNsi
+      ? { title: 'Numérique et Sciences Informatiques (Spécialité)', category: 'Spécialité Bac (Coeff 16)', ects: 16, priority: 'A' as PriorityLevel, semester: 'S1' as const, chapters: ['Structures de données (Arbres, Graphes, Piles)', 'Algorithmique (Diviser pour régner, Programmation dynamique)', 'Bases de données relationnelles et SQL', 'Architectures matérielles et protocoles de routage'] }
+      : { title: 'Physique-Chimie (Spécialité)', category: 'Spécialité Bac (Coeff 16)', ects: 16, priority: 'A' as PriorityLevel, semester: 'S1' as const, chapters: ['Ondes et signaux (Interférences, diffraction, effet Doppler)', 'Mouvement et interactions (Lois de Newton, Kepler)', 'Transformations acido-basiques et titrage pH-métrique', 'Thermodynamique et transferts thermiques'] };
+
     return {
-      program: 'Terminale Générale (Spécialités Scientifiques)',
+      program: `Terminale Générale (${hasSvt ? 'Spé Maths + SVT' : hasNsi ? 'Spé Maths + NSI' : 'Spé Maths + Physique-Chimie'})`,
       university: 'Lycée / Baccalauréat',
       semester: 'S1',
       subjects: [
-        { title: 'Mathématiques (Spécialité)', category: 'Spécialité Bac (Coeff 16)', ects: 16, priority: 'A', semester: 'S1', chapters: ['Suites, limites et récurrence', 'Continuité, dérivation et fonction exponentielle/logarithme', 'Géométrie dans l\'espace et produit scalaire', 'Probabilités et variables aléatoires'] },
-        { title: 'Physique-Chimie (Spécialité)', category: 'Spécialité Bac (Coeff 16)', ects: 16, priority: 'A', semester: 'S1', chapters: ['Ondes et signaux (Interférences, diffraction, effet Doppler)', 'Mouvement et interactions (Lois de Newton, Kepler)', 'Transformations acido-basiques et titrage avec suivi pH-métrique', 'Thermodynamique et transferts thermiques'] },
+        { title: 'Mathématiques (Spécialité)', category: 'Spécialité Bac (Coeff 16)', ects: 16, priority: 'A', semester: 'S1', chapters: ['Suites, limites et récurrence', 'Continuité, dérivation et logarithme népérien', 'Géométrie dans l\'espace et produit scalaire', 'Probabilités et variables aléatoires'] },
+        spe2,
         { title: 'Philosophie', category: 'Épreuve Terminale (Coeff 8)', ects: 8, priority: 'A', semester: 'S1', chapters: ['La conscience, l\'inconscient et le sujet', 'La liberté, le devoir et la morale', 'La vérité, la science et la technique', 'La justice, l\'État et la politique'] },
-        { title: 'Histoire-Géographie & EMC', category: 'Tronc commun (Coeff 6)', ects: 6, priority: 'B', semester: 'S1', chapters: ['Les régimes totalitaires au XXe siècle', 'La guerre froide et les nouveaux rapports de puissance', 'La France et la gouvernance européenne'] },
+        { title: 'Histoire-Géographie & EMC', category: 'Tronc commun (Coeff 6)', ects: 6, priority: 'B', semester: 'S1', chapters: ['Les régimes totalitaires au XXe siècle', 'La guerre froide et rapports de puissance', 'La France et la gouvernance européenne'] },
         { title: 'Enseignement Scientifique', category: 'Tronc commun (Coeff 6)', ects: 6, priority: 'B', semester: 'S1', chapters: ['Science, climat et société contemporaine', 'L\'énergie : choix de développement et avenir'] },
         { title: 'Langue Vivante A (Anglais)', category: 'Tronc commun (Coeff 6)', ects: 6, priority: 'C', semester: 'S1', chapters: ['Art et pouvoir dans le monde anglophone', 'Espaces et échanges internationaux'] },
+        { title: lv2Name, category: 'Tronc commun (Coeff 6)', ects: 6, priority: 'C', semester: 'S1', chapters: ['Identités et échanges culturels', 'Diversité et inclusion dans le monde hispanique/germanique'] },
       ],
     };
   }
