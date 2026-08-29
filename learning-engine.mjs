@@ -4,14 +4,14 @@ const CONCEPT_STATUSES = new Set(["mastered", "partial", "missing", "wrong"]);
 
 export const FSRS_FACTOR = 19 / 81;
 export const FSRS_POWER = -0.5;
-export const DEFAULT_TARGET_RETENTION = 0.90;
+export const DEFAULT_TARGET_RETENTION = 0.92;
 export const MIN_DIFFICULTY = 1.0;
 export const MAX_DIFFICULTY = 10.0;
 export const MIN_STABILITY = 0.01;
 export const MAX_INTERVAL = 36500;
 
 export const DEFAULT_FSRS_WEIGHTS = [
-  0.40255, 1.18385, 3.173, 15.69105,
+  0.40, 1.05, 2.40, 4.00,
   7.1949, 0.5345,
   1.4604, 0.0046,
   1.54575, 0.1192, 1.01925,
@@ -219,7 +219,10 @@ export function calculateFsrsSchedule({
   }
   if (grade === 1) lapses += 1;
 
-  const intervalDays = grade === 1 ? 1 : fsrsNextInterval(s, targetRetention, maxInterval);
+  let intervalDays = grade === 1 ? 1 : fsrsNextInterval(s, targetRetention, maxInterval);
+  if (validPrevious.length === 0) {
+    intervalDays = grade === 1 ? 1 : grade === 2 ? 1 : grade === 3 ? 2 : Math.min(4, intervalDays);
+  }
   const nextReviewAt = new Date(base.getTime());
   nextReviewAt.setUTCDate(nextReviewAt.getUTCDate() + intervalDays);
 
