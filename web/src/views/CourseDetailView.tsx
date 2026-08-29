@@ -323,125 +323,47 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
           <div className="space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-black">
               <Lock className="w-3.5 h-3.5" />
-              <span>ÉTAPE DE DÉBLOCAGE : RÉCUPÉRATION ACTIVE (CHOISIS TON MODE)</span>
+              <span>ÉTAPE OBLIGATOIRE : RÉCUPÉRATION ACTIVE (1 À 2 MIN)</span>
             </div>
 
             <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-              Active ta mémoire avant de lire la fiche
+              Fais ton premier rappel avant de lire la fiche
             </h2>
 
             <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed max-w-2xl">
-              Pour ancrer ce cours et éviter <strong>l'illusion de facilité</strong>, réponds à 3 questions rapides ou résume ce dont tu te souviens. L'algorithme FSRS-5 calera tes futures révisions.
+              Pour ancrer ce cours dans ta mémoire biologique et éliminer <strong>l'illusion de facilité</strong>, dis ou écris tout ce dont tu te souviens : définitions, grands mécanismes, formules, ce sur quoi le professeur a insisté.
             </p>
           </div>
 
-          {/* SÉLECTEUR DE MODE DE DÉBLOCAGE (ZÉRO BLOCAGE / ZÉRO FRICTION) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl">
-            {diagnosticQuiz.length > 0 && (
-              <button
-                type="button"
-                onClick={() => setUnlockMode('quiz')}
-                className={`p-3.5 rounded-2xl border text-left transition-all flex items-start gap-3 ${
-                  unlockMode === 'quiz'
-                    ? 'bg-amber-500/15 border-amber-500 text-white shadow-md ring-1 ring-amber-500/30'
-                    : 'bg-surface-elevated border-border-subtle text-zinc-400 hover:text-zinc-200'
-                }`}
-              >
-                <span className="text-xl">⚡</span>
-                <div>
-                  <div className="text-xs font-bold text-amber-300">1. Déblocage Éclair (30 sec)</div>
-                  <p className="text-[11px] text-zinc-400 mt-0.5">3 questions ciblées pour débloquer immédiatement sans page blanche.</p>
-                </div>
-              </button>
-            )}
-
-            <button
-              type="button"
-              onClick={() => setUnlockMode('free')}
-              className={`p-3.5 rounded-2xl border text-left transition-all flex items-start gap-3 ${
-                unlockMode === 'free'
-                  ? 'bg-amber-500/15 border-amber-500 text-white shadow-md ring-1 ring-amber-500/30'
-                  : 'bg-surface-elevated border-border-subtle text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              <span className="text-xl">🎙️</span>
-              <div>
-                <div className="text-xs font-bold text-amber-300">2. Rappel Libre ou Dictée</div>
-                <p className="text-[11px] text-zinc-400 mt-0.5">Dis ou écris librement tes souvenirs à la voix ou au clavier.</p>
+          {/* Formulaire de rappel libre (Voix ou Texte) */}
+          <form onSubmit={handleUnlockRecall} className="space-y-4">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <label className="text-xs font-bold text-zinc-300 block">
+                  ✍️ Ce dont je me rappelle de ce cours :
+                </label>
+                <button
+                  type="button"
+                  onClick={toggleDictation}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all border shadow-sm ${
+                    isDictating
+                      ? 'bg-rose-500/25 border-rose-500 text-rose-300 animate-pulse ring-2 ring-rose-500/30'
+                      : 'bg-amber-500/15 border-amber-500/40 text-amber-300 hover:bg-amber-500/25'
+                  }`}
+                >
+                  <Mic className={`w-4 h-4 ${isDictating ? 'text-rose-400' : 'text-amber-400'}`} />
+                  <span>{isDictating ? '🎙️ Enregistrement en cours (Parle librement)...' : '🎙️ Démarrer mon rappel oral (Micro)'}</span>
+                </button>
               </div>
-            </button>
-          </div>
 
-          {/* FORMULAIRE DE DÉVERROUILLAGE SELON LE MODE CHOISI */}
-          <form onSubmit={handleUnlockRecall} className="space-y-5 pt-2">
-            {unlockMode === 'quiz' && diagnosticQuiz.length > 0 ? (
-              /* MODE 1 : QUIZ ÉCLAIR 3 QUESTIONS */
-              <div className="space-y-4">
-                {diagnosticQuiz.map((q, qIdx) => (
-                  <div key={q.id || qIdx} className="p-4 rounded-2xl bg-surface-elevated border border-border space-y-2.5">
-                    <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300">
-                        Question {qIdx + 1}/3
-                      </span>
-                      <span className="text-xs font-bold text-white">{q.question}</span>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-2 pt-1">
-                      {q.options.map((opt: string, optIdx: number) => {
-                        const isSelected = quizSelections[qIdx] === optIdx;
-                        return (
-                          <button
-                            key={optIdx}
-                            type="button"
-                            onClick={() => setQuizSelections((prev) => ({ ...prev, [qIdx]: optIdx }))}
-                            className={`p-2.5 rounded-xl border text-left text-xs transition-all flex items-center gap-2.5 ${
-                              isSelected
-                                ? 'bg-amber-500/20 border-amber-500 text-amber-200 font-semibold shadow-sm'
-                                : 'bg-surface border-border hover:border-zinc-600 text-zinc-300'
-                            }`}
-                          >
-                            <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 ${
-                              isSelected ? 'bg-amber-500 text-black' : 'bg-surface-elevated text-zinc-400'
-                            }`}>
-                              {String.fromCharCode(65 + optIdx)}
-                            </span>
-                            <span>{opt}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              /* MODE 2 : RAPPEL LIBRE / DICTÉE VOCALE */
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold text-zinc-300 block">
-                    ✍️ Ce dont je me rappelle de ce cours :
-                  </label>
-                  <button
-                    type="button"
-                    onClick={toggleDictation}
-                    className={`px-3 py-1 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all border ${
-                      isDictating
-                        ? 'bg-rose-500/20 border-rose-500 text-rose-300 animate-pulse'
-                        : 'bg-surface-elevated border-border-subtle text-zinc-300 hover:text-white'
-                    }`}
-                  >
-                    <Mic className={`w-3.5 h-3.5 ${isDictating ? 'text-rose-400' : 'text-amber-400'}`} />
-                    <span>{isDictating ? 'Écoute en cours (parlez)...' : 'Dicter à la voix'}</span>
-                  </button>
-                </div>
-                <textarea
-                  value={recallInput}
-                  onChange={(e) => setRecallInput(e.target.value)}
-                  rows={5}
-                  placeholder="Ex: Dans ce cours, on a vu la structure des membranes avec les lipides amphiphiles, les protéines canaux, le gradient de concentration..."
-                  className="w-full p-4 rounded-2xl bg-background border border-amber-500/30 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400 transition-colors leading-relaxed"
-                />
-              </div>
-            )}
+              <textarea
+                value={recallInput}
+                onChange={(e) => setRecallInput(e.target.value)}
+                rows={6}
+                placeholder="Clique sur le micro ou écris ici : Dans ce cours, on a vu la structure des membranes avec les lipides amphiphiles, les protéines canaux, le gradient de concentration..."
+                className="w-full p-4 rounded-2xl bg-background border border-amber-500/30 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400 transition-colors leading-relaxed"
+              />
+            </div>
 
             {recallError && (
               <p className="text-xs text-amber-400 font-medium">{recallError}</p>
@@ -449,23 +371,23 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
             <div className="flex items-center justify-between gap-4 flex-wrap pt-2">
               <p className="text-[11px] text-zinc-400">
-                🌱 Tout est automatiquement intégré dans ton algorithme FSRS-5 pour tes prochaines révisions.
+                💡 Gemini analysera tes propos pour calculer ton taux de maîtrise (%) et calibrer tes flashcards.
               </p>
 
               <button
                 type="submit"
-                disabled={isEvaluatingRecall || (unlockMode === 'free' && !recallInput.trim())}
+                disabled={isEvaluatingRecall || !recallInput.trim()}
                 className="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black text-xs font-black shadow-lg shadow-amber-500/20 disabled:opacity-50 transition-all flex items-center gap-2"
               >
                 {isEvaluatingRecall ? (
                   <>
                     <div className="animate-spin w-4 h-4 border-2 border-black border-t-transparent rounded-full" />
-                    <span>Calage FSRS-5 en cours...</span>
+                    <span>Analyse de ton rappel en cours...</span>
                   </>
                 ) : (
                   <>
                     <Zap className="w-4 h-4 fill-black" />
-                    <span>⚡ Déverrouiller la fiche & Caler mes flashcards</span>
+                    <span>⚡ Déverrouiller ma fiche & Évaluer mon rappel</span>
                   </>
                 )}
               </button>
@@ -475,21 +397,22 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       ) : (
         /* ---------------- CAS 2 : COURS DÉVERROUILLÉ (CHOIX LIBRES) ---------------- */
         <div className="space-y-6 animate-fadeIn">
-          {/* DIAGNOSTIC DE CALAGE BIENVEILLANT (PAS D'ANXIÉTÉ DE NOTE) */}
+          {/* DIAGNOSTIC DE RESTITUTION AVEC POURCENTAGE EXACT */}
           {evaluationResult && (
-            <div className="p-5 rounded-2xl bg-gradient-to-r from-emerald-950/20 to-surface border border-emerald-500/30 space-y-3">
+            <div className="p-5 rounded-2xl bg-surface-elevated border border-border space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-emerald-300 flex items-center gap-1.5">
-                  <span>🌱</span>
-                  <span>Calage Pédagogique FSRS-5 Initialisé</span>
-                </span>
-                <span className="text-xs font-mono font-bold text-zinc-400">
-                  Rétention initiale : {evaluationResult.score || course.recallScore || 75}%
+                <span className="text-xs font-bold text-zinc-300">📊 Diagnostic de ton rappel :</span>
+                <span className={`text-xs font-mono font-black px-2.5 py-0.5 rounded-full border ${
+                  (evaluationResult.score || course.recallScore || 75) >= 75
+                    ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
+                    : 'bg-amber-500/15 border-amber-500/30 text-amber-400'
+                }`}>
+                  Score de maîtrise : {evaluationResult.score || course.recallScore || 75}%
                 </span>
               </div>
 
               {evaluationResult.summary && (
-                <p className="text-xs text-zinc-200 leading-relaxed bg-surface/80 p-3 rounded-xl border border-border">
+                <p className="text-xs text-zinc-300 leading-relaxed bg-surface p-3 rounded-xl border border-border">
                   {evaluationResult.summary}
                 </p>
               )}
@@ -504,11 +427,11 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
                           ? 'bg-emerald-500/5 border-emerald-500/20 text-emerald-300'
                           : c.status === 'partial'
                           ? 'bg-amber-500/5 border-amber-500/20 text-amber-300'
-                          : 'bg-zinc-800/60 border-zinc-700 text-zinc-300'
+                          : 'bg-rose-500/5 border-rose-500/20 text-rose-300'
                       }`}
                     >
                       <span className="font-bold shrink-0">
-                        {c.status === 'mastered' ? '🟢' : c.status === 'partial' ? '🟡' : '🎯'}
+                        {c.status === 'mastered' ? '🟢' : c.status === 'partial' ? '🟡' : '🔴'}
                       </span>
                       <div>
                         <span className="font-bold">{c.label} : </span>
