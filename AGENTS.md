@@ -79,15 +79,22 @@ Le projet repose sur une symbiose claire et sans friction entre deux rôles :
 
 ---
 
-## Interaction Proactive avec l'Étudiant (Mode Simple & « Fait Tout »)
+## Interaction Proactive avec l'Étudiant (Le Prompt Magique `cours`)
 
 Pour que l'expérience soit ultra-simple pour n'importe quel étudiant sans compétences techniques :
-- **Si l'utilisateur tape un mot simple** (`cours`, `fait tout`, `go`, `aide`, `start`, `interroge-moi`, ou n'importe quelle commande brève) :
+- **Si l'utilisateur tape un mot simple** (`cours`, `fait tout`, `go`, `aide`, `start`, `interroge-moi`, `débloque`, ou n'importe quelle commande brève) :
   - **Ne jamais lui renvoyer de commandes compliquées**.
-  - **Poser un menu clair à 3 options ou exécuter l'action immédiatement** :
-    1. 🚀 **« Mode Fait Tout »** : Traiter automatiquement tous les enregistrements audio récents, générer les fiches KaTeX avec tableaux « X vs Y » et créer la pile de flashcards FSRS.
-    2. 🎙️ **« Oral Blanc Bienveillant »** : Poser une question diagnostique posée sans chrono sur le chapitre de son choix.
-    3. 💡 **« Débloquer une Notion »** : Expliquer n'importe quel concept abstrait avec une analogie Feynman concrète et créer une carte de révision.
+  - **1. Analyser immédiatement l'état du workspace** (ex. `node scripts/course-helper.mjs pending` ou inspection de `data/enregistrements/` et `data/cours/`).
+  - **2. Afficher un bilan d'accueil chaleureux avec le statut réel** (ex. *« 4 enregistrements audio bruts détectés, 2 cours en attente de flashcards »*).
+  - **3. Proposer un menu clair à 4 options guidées** :
+    1. 🚀 **« Mode Fait Tout »** : Traiter automatiquement tous les enregistrements audio récents avec Whisper Metal, générer les fiches KaTeX avec tableaux « X vs Y », et créer la batterie de flashcards FSRS-5.
+    2. 💡 **« Débloquer une Notion / un Cours »** :
+       - L'agent liste directement les cours existants détectés dans `data/courses.json`.
+       - L'agent demande où l'étudiant bloque.
+       - L'agent explique la notion avec une **analogie concrète de Feynman** et des repères mnémotechniques.
+       - L'agent **génère automatiquement la flashcard FSRS de déblocage** et l'ajoute dans `data/courses.json` et `data/revisions/clarifications.json`.
+    3. 🎙️ **« Oral Blanc Bienveillant »** : Poser une question diagnostique posée sans chrono sur le chapitre de son choix, évaluer la restitution et encourager.
+    4. 🔒 **« Valider le Sas de Rappel Actif »** : Évaluer la restitution d'un cours verrouillé pour en débloquer la fiche.
   - **Conclusion claire & encourageante** : Toujours conclure chaleureusement en disant que tout est prêt et qu'il n'y a plus qu'à ouvrir `/Applications/Cours.app` ou son smartphone pour réviser à son rythme (ex: *« Tout est prêt ! 🎉 Tu n'as plus qu'à ouvrir ton application Cours.app ou ton smartphone pour démarrer tes révisions, tu vas tout déchirer ! »*).
 
 ---

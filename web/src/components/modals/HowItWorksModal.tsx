@@ -136,9 +136,20 @@ export const HowItWorksModal: React.FC<HowItWorksModalProps> = ({
 
         {/* Feature Explanations */}
         <div className="space-y-3 pt-1">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
-            Le Studio Antigravity : Ton Super-Tuteur IA (0€ Quotas Google)
-          </h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
+              Le Studio Antigravity : Ton Super-Tuteur IA (0€ Quotas Google)
+            </h3>
+            <a
+              href="https://antigravity.google"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 hover:bg-blue-500/20 px-2 py-0.5 rounded-lg border border-blue-500/20 transition-colors"
+            >
+              <span>Installer Antigravity</span>
+              <span>↗</span>
+            </a>
+          </div>
 
           <div className="p-4 rounded-xl bg-gradient-to-r from-blue-950/30 to-purple-950/30 border border-blue-500/30 space-y-3">
             <div className="flex items-start gap-3">
@@ -146,20 +157,23 @@ export const HowItWorksModal: React.FC<HowItWorksModalProps> = ({
                 ✦
               </div>
               <div className="space-y-1">
-                <h4 className="text-xs font-bold text-white">Comment utiliser Antigravity avec ton projet Cours ?</h4>
+                <h4 className="text-xs font-bold text-white">Comment installer & utiliser Antigravity ?</h4>
                 <p className="text-[11px] text-zinc-300 leading-relaxed">
-                  Ouvre simplement le dossier <code className="text-blue-300 font-mono px-1 py-0.2 bg-black/40 rounded">cours</code> dans Antigravity. En connectant ton compte Google, tu disposes de <strong>quotas gratuits généreux</strong> avec le modèle <code className="text-emerald-300 font-mono">gemini-3.7-flash</code>.
+                  1. Télécharge <strong>Google Antigravity</strong> gratuitement sur <a href="https://antigravity.google" target="_blank" rel="noopener noreferrer" className="text-blue-400 underline">antigravity.google</a>.<br />
+                  2. Connecte-toi avec ton compte Google (modèle <code className="text-emerald-300 font-mono">gemini-3.7-flash</code> gratuit inclus à vie, zéro carte bancaire).<br />
+                  3. Fais <strong className="text-white">File ➔ Open Folder</strong> et choisis le dossier <code className="text-blue-300 font-mono px-1 py-0.2 bg-black/40 rounded">cours</code>.<br />
+                  4. Ouvre un nouveau chat et tape simplement le mot magique ci-dessous :
                 </p>
               </div>
             </div>
 
             <div className="bg-black/50 p-3.5 rounded-xl border border-zinc-800 space-y-2">
               <div className="flex items-center justify-between text-[11px] text-zinc-400 font-mono font-bold">
-                <span className="text-blue-400">Tape simplement dans Antigravity :</span>
+                <span className="text-blue-400">Tape simplement dans le chat d'Antigravity :</span>
                 <span className="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">cours</span>
               </div>
               <p className="text-[11px] text-zinc-300">
-                L'agent tuteur prend le relais, compile tes cours selon la hiérarchie pédagogique et prépare tes révisions automatiquement.
+                L'agent tuteur scanne tes enregistrements et te propose un menu interactif immédiat : 🚀 <strong>Fait Tout</strong> (transcription + KaTeX + FSRS), 💡 <strong>Débloquer une notion</strong> (analogie Feynman + flashcard automatique), ou 🎙️ <strong>Oral blanc</strong> bienveillant sans chrono.
               </p>
             </div>
 

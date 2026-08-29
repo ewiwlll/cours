@@ -225,103 +225,296 @@
       </section>
 
       <!-- ============================================================================== -->
-      <!-- CHAPTER 4: LE STUDIO ANTIGRAVITY (GUIDE CLAIR, QUOTAS GRATUITS & PROMPTS)       -->
+      <!-- ============================================================================== -->
+      <!-- CHAPTER 4: LE STUDIO ANTIGRAVITY (GUIDE D'INSTALLATION, WORKFLOW & 0€)         -->
       <!-- ============================================================================== -->
       <section id="antigravity-guide" class="doc-section mb-16 border-t border-border/60 pt-12">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-xs font-bold text-purple-300 mb-3">
-          ✦ Super-Tuteur & Studio de Production
+          ✦ Super-Tuteur & Studio de Production IA Autonome
         </div>
         <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-4">
-          Le Studio Antigravity : Comment l'utiliser avec vos cours ?
+          Le Studio Antigravity : Guide d'Installation & Prise en Main
         </h2>
         
-        <p class="text-sm text-zinc-300 leading-relaxed mb-4">
-          Pour comprendre le fonctionnement de <strong>Cours</strong>, retenez cette distinction essentielle :
+        <p class="text-sm text-zinc-300 leading-relaxed mb-6">
+          Pour comprendre la puissance de <strong>Cours</strong>, il est crucial de comprendre la symbiose entre votre <strong>application quotidienne</strong> et votre <strong>Studio Antigravity</strong> :
         </p>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          <div class="p-4 rounded-xl bg-blue-950/20 border border-blue-500/30 space-y-2 text-xs">
+        <!-- Deux Rôles Clairs -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          <div class="p-5 rounded-2xl bg-blue-950/20 border border-blue-500/30 space-y-2.5 text-xs">
             <div class="font-bold text-blue-300 flex items-center gap-2 text-sm">
-              <span>📱</span> L'Application Cours (Mac & Mobile)
+              <span class="text-base">📱</span> L'Application Cours (Mac, Web, Mobile)
             </div>
             <p class="text-zinc-400 leading-relaxed">
-              C'est votre <strong>Cockpit de révision quotidien</strong> : enregistrement micro en amphi, pile de cartes FSRS-5 dues du jour, QCM diagnostiques et sas de rappel actif.
+              C'est votre <strong>Cockpit d'apprentissage quotidien</strong> : enregistrement 1-clic en amphi avec photos horodatées (<code class="text-blue-300">offsetMs</code>), révision des cartes FSRS-5 dues du jour sans chrono, QCM diagnostiques et sas de rappel actif.
             </p>
           </div>
 
-          <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-500/30 space-y-2 text-xs">
+          <div class="p-5 rounded-2xl bg-purple-950/20 border border-purple-500/30 space-y-2.5 text-xs">
             <div class="font-bold text-purple-300 flex items-center gap-2 text-sm">
-              <span>🧠</span> Le Studio Antigravity (Sur votre Mac)
+              <span class="text-base">🧠</span> Le Studio Antigravity (Sur votre Mac / PC)
             </div>
             <p class="text-zinc-400 leading-relaxed">
-              C'est votre <strong>Studio de fabrication lourde & Super-Tuteur IA</strong> : il analyse vos amphis, génère les fiches KaTeX et fait progresser votre arbre de mémoire vivante.
+              C'est votre <strong>Studio de fabrication lourde & Super-Tuteur IA</strong> : il orchestre la transcription locale Whisper Metal (0€), découpe vos amphis en fiches KaTeX atomiques, fabrique automatiquement vos flashcards FSRS et maintient l'arbre de mémoire vivante de vos incompréhensions.
             </p>
           </div>
         </div>
 
-        <div class="callout-purple p-5 rounded-2xl mb-6 space-y-2 text-xs sm:text-sm">
-          <strong class="text-purple-300 font-bold block text-sm">🎁 Quotas Gratuits Google (0€ à vie) :</strong>
-          <p class="text-zinc-300 leading-relaxed">
-            Antigravity fonctionne directement avec votre <strong>compte Google gratuit</strong>. Les quotas offerts sur le modèle <code class="text-emerald-400 font-mono font-bold">gemini-3.7-flash</code> sont extrêmement généreux et largement suffisants pour traiter tous vos amphis, générer des centaines de fiches et réviser toute l'année sans dépenser un centime.
+        <!-- Qu'est-ce qu'Antigravity & Pourquoi c'est 10x supérieur à une simple API -->
+        <div class="p-6 rounded-2xl bg-zinc-900/90 border border-zinc-800 space-y-4 mb-8">
+          <h3 class="text-base font-bold text-white flex items-center gap-2">
+            <span>✨</span> Qu'est-ce que Google Antigravity ?
+          </h3>
+          <p class="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+            <strong>Google Antigravity</strong> est la plateforme de développement et d'agents IA nouvelle génération créée par Google. Contrairement à un simple « bouton d'API web » qui envoie un texte aveugle sur le cloud avec des risques d'erreurs, de timeouts ou de surcoûts, Antigravity exécute un <strong>agent intelligent qui a la vision 360° sur l'intégralité de vos cours, de vos audios et de votre historique d'apprentissage</strong>.
           </p>
+
+          <!-- Tableau Comparatif Studio vs API -->
+          <div class="overflow-x-auto pt-2">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="border-b border-zinc-800 text-zinc-400">
+                  <th class="pb-2 font-semibold">Fonctionnalité</th>
+                  <th class="pb-2 font-semibold text-rose-400">Simple Bouton API Cloud</th>
+                  <th class="pb-2 font-semibold text-emerald-400">Studio Antigravity (Local)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-zinc-800/60 text-zinc-300">
+                <tr>
+                  <td class="py-2.5 font-medium text-white">Mémoire & Contexte</td>
+                  <td class="py-2.5 text-zinc-400">Fichier isolé, aucune vue d'ensemble</td>
+                  <td class="py-2.5 text-emerald-300 font-semibold">Vision 360° (tous les cours, fiches, photos & arbre mémoire)</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 font-medium text-white">Coût d'utilisation</td>
+                  <td class="py-2.5 text-rose-400 font-mono">Clés payantes / Facturation par token</td>
+                  <td class="py-2.5 text-emerald-400 font-bold">0€ à vie (Quotas Google Gemini gratuits inclus)</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 font-medium text-white">Transcription Audio</td>
+                  <td class="py-2.5 text-zinc-400">Envoi de gros fichiers sur le cloud (lent & payant)</td>
+                  <td class="py-2.5 text-emerald-300 font-semibold">Whisper.cpp Metal local (0€, rapide & confidentiel)</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 font-medium text-white">Qualité Pédagogique</td>
+                  <td class="py-2.5 text-zinc-400">Résumés basiques et cartes génériques</td>
+                  <td class="py-2.5 text-emerald-300">Hiérarchie en 9 étages (Feynman, KaTeX, FSRS-5, Tableaux X vs Y)</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 font-medium text-white">Interactivité</td>
+                  <td class="py-2.5 text-zinc-400">Réponse figée en un bloc bloquant</td>
+                  <td class="py-2.5 text-emerald-300 font-semibold">Dialogue socratique, déblocage pas-à-pas & oral blanc</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <h3 class="text-lg font-bold text-white mb-3">Comment lancer Antigravity en 3 étapes :</h3>
-        <ol class="space-y-3 text-xs sm:text-sm text-zinc-400 mb-8 list-decimal list-inside">
-          <li>Ouvrez l'application <strong>Google Antigravity</strong> sur votre Mac.</li>
-          <li>Faites <strong>File ➔ Open Folder</strong> et sélectionnez le dossier <code class="text-zinc-200 font-mono">cours</code> (ou votre dépôt cloné).</li>
-          <li>Connectez votre compte Google si demandé (zéro clé payante nécessaire).</li>
-        </ol>
+        <!-- ========================================================================= -->
+        <!-- GUIDE D'INSTALLATION PAS-À-PAS ILLUSTRE POUR DÉBUTANTS                    -->
+        <!-- ========================================================================= -->
+        <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+          <span>📦</span> Comment Installer et Démarrer Antigravity (Pas-à-Pas)
+        </h3>
+        <p class="text-xs text-zinc-400 mb-6">
+          Suivez ces 4 étapes simples pour installer le studio et commencer à générer vos cours en moins de 3 minutes :
+        </p>
 
-        <h3 class="text-lg font-bold text-white mb-3">Le Prompt Magique & Universel :</h3>
-        <div class="p-5 rounded-2xl bg-zinc-900 border border-blue-500/30 space-y-3 mb-6">
-          <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span class="font-bold text-blue-400">Tapez simplement ce mot dans le chat d'Antigravity :</span>
-            <button onclick="copyPrompt('magicWord', this)" class="hover:text-white text-blue-400">Copier</button>
-          </div>
-          <div class="flex items-center gap-3">
-            <span id="magicWord" class="font-mono text-xl sm:text-2xl font-black text-emerald-400 bg-black/60 px-4 py-2 rounded-xl border border-zinc-800">
-              cours
-            </span>
-            <span class="text-xs text-zinc-400 font-sans">ou simplement <code class="text-blue-300 font-mono">fait tout</code></span>
-          </div>
-          <p class="text-xs text-zinc-300 leading-relaxed pt-1">
-            Dès que vous envoyez ce message, votre agent tuteur s'occupe de tout et vous propose un menu interactif immédiat :
-          </p>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs">
-            <div class="p-3 bg-black/40 rounded-xl border border-zinc-800 space-y-1">
-              <span class="font-bold text-emerald-400 flex items-center gap-1.5">🚀 1. Mode « Fait Tout »</span>
-              <p class="text-[11px] text-zinc-400">Compile vos audios en fiches KaTeX, crée vos flashcards et prépare vos révisions automatiquement.</p>
+        <div class="space-y-6 mb-8">
+          
+          <!-- ÉTAPE 1 -->
+          <div class="p-5 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="w-7 h-7 rounded-xl bg-blue-500/20 border border-blue-500/30 text-blue-400 font-black text-xs flex items-center justify-center">
+                  1
+                </span>
+                <h4 class="text-sm font-bold text-white">Télécharger Google Antigravity depuis la source officielle</h4>
+              </div>
+              <a href="https://antigravity.google" target="_blank" rel="noopener noreferrer" class="text-xs px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold transition-all shadow-md shadow-blue-500/20 flex items-center gap-1.5">
+                <span>Aller sur antigravity.google</span>
+                <span class="text-xs">↗</span>
+              </a>
             </div>
-            <div class="p-3 bg-black/40 rounded-xl border border-zinc-800 space-y-1">
-              <span class="font-bold text-blue-400 flex items-center gap-1.5">🎙️ 2. Oral Blanc</span>
-              <p class="text-[11px] text-zinc-400">Vous interroge à l'oral avec bienveillance et sans chrono pour tester votre niveau.</p>
-            </div>
-            <div class="p-3 bg-black/40 rounded-xl border border-zinc-800 space-y-1">
-              <span class="font-bold text-purple-400 flex items-center gap-1.5">💡 3. Débloquer un Doute</span>
-              <p class="text-[11px] text-zinc-400">Posez n'importe quelle question sur un cours pour avoir une analogie Feynman concrète.</p>
+            <p class="text-xs text-zinc-300 leading-relaxed">
+              Rendez-vous sur le site officiel <strong><a href="https://antigravity.google" class="text-blue-400 underline hover:text-blue-300" target="_blank">antigravity.google</a></strong> et téléchargez la version correspondant à votre ordinateur :
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-xs">
+              <div class="p-3 bg-zinc-900/80 rounded-xl border border-zinc-800 space-y-1">
+                <span class="font-bold text-zinc-200 flex items-center gap-1.5">🍎 macOS Apple Silicon</span>
+                <p class="text-[11px] text-zinc-400">Pour Mac M1, M2, M3, M4 (recommandé pour Whisper Metal)</p>
+              </div>
+              <div class="p-3 bg-zinc-900/80 rounded-xl border border-zinc-800 space-y-1">
+                <span class="font-bold text-zinc-200 flex items-center gap-1.5">🍏 macOS Intel</span>
+                <p class="text-[11px] text-zinc-400">Pour les Mac équipés de processeurs Intel</p>
+              </div>
+              <div class="p-3 bg-zinc-900/80 rounded-xl border border-zinc-800 space-y-1">
+                <span class="font-bold text-zinc-200 flex items-center gap-1.5">🪟 Windows & Linux</span>
+                <p class="text-[11px] text-zinc-400">Installateur direct <code class="text-zinc-300">.exe</code> ou <code class="text-zinc-300">.deb / .AppImage</code></p>
+              </div>
             </div>
           </div>
-        <h3 class="text-lg font-bold text-white mb-3 pt-4">L'Arborescence & Hiérarchie Pédagogique d'un Cours généré :</h3>
-        <p class="text-xs text-zinc-400 mb-4">
-          Antigravity ne fait pas un banal résumé. Il décompose rigoureusement chaque amphi selon une **hiérarchie cognitive en 9 étages** :
+
+          <!-- ÉTAPE 2 -->
+          <div class="p-5 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-3">
+            <div class="flex items-center gap-3">
+              <span class="w-7 h-7 rounded-xl bg-purple-500/20 border border-purple-500/30 text-purple-400 font-black text-xs flex items-center justify-center">
+                2
+              </span>
+              <h4 class="text-sm font-bold text-white">Installer l'application & Se connecter avec son compte Google</h4>
+            </div>
+            <p class="text-xs text-zinc-300 leading-relaxed">
+              Sur Mac, glissez simplement l'icône <strong>Google Antigravity</strong> dans votre dossier <strong>Applications</strong>. Lancez l'application, puis connectez-vous avec votre <strong>compte Google habituel</strong>.
+            </p>
+            <div class="p-3.5 rounded-xl bg-emerald-950/20 border border-emerald-500/30 text-xs text-emerald-300 space-y-1">
+              <strong class="font-bold flex items-center gap-1.5">🎁 Zéro carte bancaire, 0€ à vie :</strong>
+              <p class="text-[11px] text-zinc-300">
+                La connexion à votre compte Google vous accorde immédiatement des quotas généreux gratuits sur le modèle <code class="text-emerald-400 font-mono font-bold">gemini-3.7-flash</code>. Vous n'avez aucune clé API payante à configurer.
+              </p>
+            </div>
+          </div>
+
+          <!-- ÉTAPE 3 -->
+          <div class="p-5 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-3">
+            <div class="flex items-center gap-3">
+              <span class="w-7 h-7 rounded-xl bg-amber-500/20 border border-amber-500/30 text-amber-400 font-black text-xs flex items-center justify-center">
+                3
+              </span>
+              <h4 class="text-sm font-bold text-white">Ouvrir le dossier du projet dans Antigravity (<code class="text-amber-300 font-mono">File ➔ Open Folder</code>)</h4>
+            </div>
+            <p class="text-xs text-zinc-300 leading-relaxed">
+              Dans Antigravity, cliquez sur le menu <strong>File</strong> en haut à gauche, puis sur <strong>Open Folder...</strong> (ou le raccourci <kbd class="px-1.5 py-0.5 bg-zinc-800 rounded border border-zinc-700 font-mono text-zinc-300">⌘ O</kbd> sur Mac / <kbd class="px-1.5 py-0.5 bg-zinc-800 rounded border border-zinc-700 font-mono text-zinc-300">Ctrl O</kbd> sur Windows).
+            </p>
+            <div class="p-4 rounded-xl bg-black/60 border border-zinc-800 space-y-2 font-mono text-xs">
+              <div class="text-zinc-400 flex items-center gap-2">
+                <span class="text-blue-400">📁</span> Sélectionnez le dossier où se trouve votre projet :
+              </div>
+              <div class="text-emerald-400 font-bold bg-zinc-900/90 px-3 py-2 rounded-lg border border-zinc-800">
+                BioMIA Revision OS <span class="text-zinc-500 font-normal">(ou le dossier "cours" cloné depuis GitHub)</span>
+              </div>
+              <p class="text-[11px] text-zinc-400 font-sans pt-1">
+                Dès l'ouverture du dossier, Antigravity charge automatiquement les règles pédagogiques (<code class="text-zinc-300 font-mono">AGENTS.md</code>), les compétences (<code class="text-zinc-300 font-mono">.agents/skills/</code>) et toute votre base de données de cours !
+              </p>
+            </div>
+          </div>
+
+          <!-- ÉTAPE 4 -->
+          <div class="p-5 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-3">
+            <div class="flex items-center gap-3">
+              <span class="w-7 h-7 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 font-black text-xs flex items-center justify-center">
+                4
+              </span>
+              <h4 class="text-sm font-bold text-white">Ouvrir le Chat et taper le mot magique</h4>
+            </div>
+            <p class="text-xs text-zinc-300 leading-relaxed">
+              Ouvrez le panneau de conversation à droite (ou appuyez sur <kbd class="px-1.5 py-0.5 bg-zinc-800 rounded border border-zinc-700 font-mono text-zinc-300">⌘ N</kbd> pour créer un nouveau chat), puis tapez simplement :
+            </p>
+            
+            <!-- Magic Word Box -->
+            <div class="p-4 rounded-xl bg-zinc-900 border border-blue-500/30 space-y-3">
+              <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
+                <span class="font-bold text-blue-400">Le Prompt Magique & Universel :</span>
+                <button onclick="copyPrompt('magicWord', this)" class="hover:text-white text-blue-400">Copier</button>
+              </div>
+              <div class="flex items-center gap-3">
+                <span id="magicWord" class="font-mono text-xl sm:text-2xl font-black text-emerald-400 bg-black/60 px-4 py-2 rounded-xl border border-zinc-800">
+                  cours
+                </span>
+                <span class="text-xs text-zinc-400 font-sans">ou simplement <code class="text-blue-300 font-mono">fait tout</code></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- LE FLUX CONVERSATIONNEL INTERACTIF (QUE FAIT L'AGENT EN DIRECT)           -->
+        <!-- ========================================================================= -->
+        <h3 class="text-xl font-bold text-white mb-3 flex items-center gap-2">
+          <span>🤖</span> Ce qui se passe quand vous tapez <code class="text-emerald-400 font-mono">cours</code> :
+        </h3>
+        <p class="text-xs text-zinc-400 mb-4 leading-relaxed">
+          L'agent Antigravity analyse immédiatement l'état réel de votre dossier (<code class="text-zinc-300 font-mono">data/enregistrements/</code>, <code class="text-zinc-300 font-mono">inbox/</code>, <code class="text-zinc-300 font-mono">data/cours/</code>) et vous guide pas-à-pas avec bienveillance :
+        </p>
+
+        <!-- Simulation Visuelle Chat Interactive -->
+        <div class="p-5 rounded-2xl bg-zinc-900/90 border border-zinc-800 space-y-4 mb-8">
+          
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white text-sm shrink-0">
+              C
+            </div>
+            <div class="space-y-2 flex-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-white">Super-Tuteur Antigravity</span>
+                <span class="text-[10px] text-zinc-500 font-mono">À l'instant</span>
+              </div>
+              <div class="p-4 rounded-xl bg-black/50 border border-zinc-800 text-xs space-y-3 text-zinc-200">
+                <p>👋 <strong>Salut !</strong> J'ai scanné ton espace de cours. Voici où nous en sommes :</p>
+                <div class="p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 space-y-1 font-mono text-[11px]">
+                  <div class="text-amber-400">🎙️ 4 enregistrements audio bruts en attente de transcription</div>
+                  <div class="text-blue-400">📚 2 fiches de cours en attente de flashcards / rappel actif</div>
+                </div>
+                <p class="font-semibold text-white">Que souhaites-tu faire aujourd'hui ?</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-xs">
+                  <div class="p-3 bg-zinc-900/90 rounded-xl border border-emerald-500/30 space-y-1">
+                    <span class="font-bold text-emerald-400 flex items-center gap-1">🚀 1. Mode « Fait Tout »</span>
+                    <p class="text-[11px] text-zinc-400">Transcrit avec Whisper Metal, génère les fiches KaTeX et les flashcards FSRS en 1 clic.</p>
+                  </div>
+                  <div class="p-3 bg-zinc-900/90 rounded-xl border border-purple-500/30 space-y-1">
+                    <span class="font-bold text-purple-400 flex items-center gap-1">💡 2. Débloquer une Notion</span>
+                    <p class="text-[11px] text-zinc-400">Pose une question ou choisis un cours difficile : l'agent t'explique avec une analogie Feynman et crée ta carte FSRS de déblocage.</p>
+                  </div>
+                  <div class="p-3 bg-zinc-900/90 rounded-xl border border-blue-500/30 space-y-1">
+                    <span class="font-bold text-blue-400 flex items-center gap-1">🎙️ 3. Oral Blanc</span>
+                    <p class="text-[11px] text-zinc-400">T'interroge sans chrono sur le chapitre de ton choix avec une correction diagnostique bienveillante.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-blue-950/20 border border-blue-500/30 text-xs text-blue-300">
+            <strong>💡 Exemple de Déblocage Magique :</strong> Si vous choisissez <em>« 2. Débloquer une notion »</em>, l'agent vous liste directement vos matières existantes, répond à vos doutes avec des exemples concrets, et insère <strong>automatiquement la flashcard de révision</strong> dans vos fiches sans que vous ayez à copier-coller quoi que ce soit !
+          </div>
+
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- LA HIÉRARCHIE COGNITIVE EN 9 ÉTAGES D'UN COURS STRUCTURÉ                  -->
+        <!-- ========================================================================= -->
+        <h3 class="text-xl font-bold text-white mb-3 flex items-center gap-2">
+          <span>🏗️</span> L'Arborescence & Hiérarchie Cognitive en 9 Étages
+        </h3>
+        <p class="text-xs text-zinc-400 mb-4 leading-relaxed">
+          Antigravity ne fait pas un banal résumé superficiel. Il applique rigoureusement les sciences cognitives de la mémoire pour décomposer chaque amphi en <strong>9 couches d'apprentissage</strong> :
         </p>
 
         <div class="p-5 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-3 font-mono text-xs mb-6 text-zinc-300">
           <div class="text-rose-400 font-bold">🎙️ 0. Audio brut & Photos horodatées (offsetMs)</div>
-          <div class="pl-4 text-zinc-400 border-l border-zinc-800">└── 📝 1. Transcription Whisper Metal Locale (0€ coût API)</div>
-          <div class="pl-8 text-blue-400 font-semibold border-l border-zinc-800">└── 🗺️ 2. MOC (Map of Content / Vue d'ensemble du chapitre)</div>
+          <div class="pl-4 text-zinc-400 border-l border-zinc-800">└── 📝 1. Transcription Whisper Metal Locale (0€ coût API, confidentiel)</div>
+          <div class="pl-8 text-blue-400 font-semibold border-l border-zinc-800">└── 🗺️ 2. MOC (Map of Content / Vue d'ensemble architecturale du chapitre)</div>
           <div class="pl-12 text-amber-400 border-l border-zinc-800">└── 💡 3. Concepts Atomiques & Analogies Feynman concrètes</div>
-          <div class="pl-16 text-purple-400 border-l border-zinc-800">└── ⚖️ 4. Tableaux Comparatifs « X vs Y » (anti-confusion)</div>
-          <div class="pl-20 text-emerald-400 border-l border-zinc-800">└── 📐 5. Formules, équations & bilans formalisés en KaTeX</div>
+          <div class="pl-16 text-purple-400 border-l border-zinc-800">└── ⚖️ 4. Tableaux Comparatifs « X vs Y » (anti-confusion mentale)</div>
+          <div class="pl-20 text-emerald-400 border-l border-zinc-800">└── 📐 5. Formules, équations & bilans formalisés en LaTeX KaTeX</div>
           <div class="pl-24 text-rose-400 border-l border-zinc-800">└── ⚠️ 6. Callouts Pièges Fréquents d'Examen</div>
           <div class="pl-28 text-amber-300 border-l border-zinc-800">└── 🔒 7. Sas de Rappel Actif (Grille diagnostique 3-5 notions clés)</div>
           <div class="pl-32 text-cyan-400 border-l border-zinc-800">└── 🗂️ 8. Piles de Flashcards FSRS-5 & QCM diagnostiques</div>
           <div class="pl-36 text-emerald-300 font-bold border-l border-zinc-800">└── 🌳 9. Arbre de Mémoire Vivante (clarifications.json)</div>
         </div>
 
-        <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800 text-xs flex items-center justify-between">
-          <span class="text-zinc-300">Une fois terminé, il ne vous reste plus qu'à ouvrir <code class="text-blue-300 font-mono">/Applications/Cours.app</code> ou votre smartphone !</span>
+        <div class="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/40 to-blue-950/40 border border-emerald-500/30 text-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <span class="text-xl">🎉</span>
+            <span class="text-zinc-200">Une fois le traitement terminé par Antigravity, tout est prêt ! Il ne vous reste plus qu'à ouvrir votre cockpit :</span>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <span class="font-mono text-emerald-300 font-bold bg-black/50 px-3 py-1.5 rounded-xl border border-zinc-800">
+              /Applications/Cours.app
+            </span>
+          </div>
         </div>
       </section>
 
