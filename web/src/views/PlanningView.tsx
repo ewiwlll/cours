@@ -55,6 +55,15 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
   const [chapterDefs, setChapterDefs] = useState<ChapterDefinition[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+  // Filtres d'horizon calendrier (7 jours, 15 jours, 1 mois, personnalisé)
+  const [horizonFilter, setHorizonFilter] = useState<'7' | '15' | '30' | 'custom'>('7');
+  const [customEndDate, setCustomEndDate] = useState<string>(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 45);
+    return d.toISOString().split('T')[0];
+  });
+  const [isFetchingCalendar, setIsFetchingCalendar] = useState<boolean>(false);
+
   // Form State
   const [isAddingExam, setIsAddingExam] = useState<boolean>(false);
   const [examKind, setExamKind] = useState<string>('partiel');
@@ -63,6 +72,43 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
   const [examDate, setExamDate] = useState<string>('');
   const [selectedChapterIds, setSelectedChapterIds] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  const fetchCalendarForHorizon = async (filter: '7' | '15' | '30' | 'custom', customEnd?: string) => {
+    setIsFetchingCalendar(true);
+    try {
+      let daysCount = 7;
+      if (filter === '15') daysCount = 15;
+      else if (filter === '30') daysCount = 30;
+      else if (filter === 'custom') {
+        const targetDateStr = customEnd || customEndDate;
+        const now = new Date();
+        const target = new Date(targetDateStr);
+        const diffTime = target.getTime() - now.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        daysCount = Math.max(1, Math.min(365, diffDays || 45));
+      }
+
+      const calData = await getRevisionCalendar({ days: daysCount });
+      if (Array.isArray(calData)) {
+        setCalendarDays(calData);
+      } else if (calData && (Array.isArray(calData.calendar) || Array.isArray(calData.days))) {
+        const list = calData.calendar || calData.days;
+        const mapped: DaySchedule[] = list.map((d: any) => ({
+          date: d.date,
+          dayName: d.dayName || 'Jour',
+          isToday: !!d.isToday,
+          dueCount: Array.isArray(d.cards) ? d.cards.length : Array.isArray(d.items) ? d.items.length : Number(d.dueCount || 0),
+          estimatedMinutes: 20,
+          items: d.items || [],
+        }));
+        setCalendarDays(mapped);
+      }
+    } catch (err) {
+      console.error('Error fetching calendar for horizon:', err);
+    } finally {
+      setIsFetchingCalendar(false);
+    }
+  };
 
   useEffect(() => {
     async function loadData() {
@@ -524,45 +570,136 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
         )}
       </div>
 
-      {/* 4. CALENDRIER PRÉVISIONNEL (7 PROCHAINS JOURS) */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-sm font-bold text-zinc-300 uppercase tracking-wider flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-emerald-400" />
-            <span>Calendrier prévisionnel (7 prochains jours)</span>
-          </h2>
-          <span className="text-xs text-zinc-500">Montée en charge FSRS</span>
+      {/* 4. CALENDRIER PRÉVISIONNEL & FILTRES D'HORIZON */}
+      <div className="space-y-4 pt-2">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-3">
+          <div className="space-y-1">
+            <h2 className="text-sm font-bold text-zinc-300 uppercase tracking-wider flex items-center gap-2">
+              <TrendingUp className="w-4 h-4 text-emerald-400" />
+              <span>Calendrier prévisionnel ({scheduleDays.length} jours)</span>
+              {isFetchingCalendar && (
+                <div className="animate-spin w-3.5 h-3.5 border-2 border-purple-400 border-t-transparent rounded-full ml-1" />
+              )}
+            </h2>
+            <p className="text-[11px] text-zinc-500">
+              Simulation algorithmique de la charge de travail FSRS-5 jour par jour.
+            </p>
+          </div>
+
+          {/* PILULES DE FILTRES D'HORIZON (7J, 15J, 1 MOIS, DATE PERSONNALISÉE) */}
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <button
+              onClick={() => {
+                setHorizonFilter('7');
+                fetchCalendarForHorizon('7');
+              }}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+                horizonFilter === '7'
+                  ? 'bg-purple-600 border-purple-500 text-white shadow-md'
+                  : 'bg-surface-elevated border-border-subtle text-zinc-400 hover:text-white'
+              }`}
+            >
+              7 jours
+            </button>
+
+            <button
+              onClick={() => {
+                setHorizonFilter('15');
+                fetchCalendarForHorizon('15');
+              }}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+                horizonFilter === '15'
+                  ? 'bg-purple-600 border-purple-500 text-white shadow-md'
+                  : 'bg-surface-elevated border-border-subtle text-zinc-400 hover:text-white'
+              }`}
+            >
+              15 jours
+            </button>
+
+            <button
+              onClick={() => {
+                setHorizonFilter('30');
+                fetchCalendarForHorizon('30');
+              }}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+                horizonFilter === '30'
+                  ? 'bg-purple-600 border-purple-500 text-white shadow-md'
+                  : 'bg-surface-elevated border-border-subtle text-zinc-400 hover:text-white'
+              }`}
+            >
+              1 mois
+            </button>
+
+            <button
+              onClick={() => {
+                setHorizonFilter('custom');
+                fetchCalendarForHorizon('custom');
+              }}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-1.5 ${
+                horizonFilter === 'custom'
+                  ? 'bg-purple-600 border-purple-500 text-white shadow-md'
+                  : 'bg-surface-elevated border-border-subtle text-zinc-400 hover:text-white'
+              }`}
+            >
+              <CalendarIcon className="w-3.5 h-3.5" />
+              <span>Date personnalisée</span>
+            </button>
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+        {/* DATE PICKER LORSQUE LE FILTRE PERSONNALISÉ EST ACTIF */}
+        {horizonFilter === 'custom' && (
+          <div className="p-3.5 rounded-2xl bg-surface-elevated border border-purple-500/30 flex items-center justify-between gap-4 flex-wrap animate-fadeIn">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-zinc-300">📅 Projeter jusqu'au :</span>
+              <input
+                type="date"
+                value={customEndDate}
+                onChange={(e) => {
+                  setCustomEndDate(e.target.value);
+                  if (e.target.value) {
+                    fetchCalendarForHorizon('custom', e.target.value);
+                  }
+                }}
+                className="px-3 py-1.5 rounded-xl bg-background border border-border text-xs text-white focus:outline-none focus:border-purple-500 font-mono"
+              />
+            </div>
+            <span className="text-xs font-medium text-purple-300">
+              🎯 Projection calculée sur <strong>{scheduleDays.length} jours</strong> jusqu'au {customEndDate.slice(8, 10)}/{customEndDate.slice(5, 7)}/{customEndDate.slice(0, 4)}
+            </span>
+          </div>
+        )}
+
+        {/* GRILLE ADAPTATIVE DE JOURS */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-2.5">
           {scheduleDays.map((day, idx) => (
             <div
               key={idx}
-              className={`p-3.5 rounded-2xl border text-center transition-all flex flex-col justify-between ${
+              className={`p-3 rounded-2xl border text-center transition-all flex flex-col justify-between ${
                 day.isToday
-                  ? 'bg-purple-500/10 border-purple-500 shadow-md ring-1 ring-purple-500/20'
-                  : 'bg-surface border-border'
+                  ? 'bg-purple-500/15 border-purple-500 shadow-md ring-1 ring-purple-500/30'
+                  : 'bg-surface border-border hover:border-zinc-700'
               }`}
             >
               <div>
-                <div className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">
+                <div className="text-[10px] font-black uppercase tracking-wider text-zinc-400">
                   {day.dayName}
                 </div>
                 <div className="text-xs font-bold text-white mt-0.5">{day.date.slice(8, 10)}/{day.date.slice(5, 7)}</div>
 
                 {day.isToday && (
-                  <span className="inline-block mt-1 px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 text-[9px] font-bold font-mono">
+                  <span className="inline-block mt-1 px-1.5 py-0.2 rounded bg-purple-500/25 text-purple-300 text-[9px] font-black font-mono">
                     Aujourd'hui
                   </span>
                 )}
               </div>
 
-              <div className="mt-3 pt-2 border-t border-border space-y-1">
-                <div className="text-[11px] text-zinc-400">
+              <div className="mt-2.5 pt-2 border-t border-border/60 space-y-1">
+                <div className="text-[11px] text-zinc-300">
                   Cartes : <strong className="text-white font-mono">{day.dueCount}</strong>
                 </div>
                 {day.exams && day.exams.length > 0 && (
-                  <span className="inline-block text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">
+                  <span className="inline-block text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold border border-rose-500/30 truncate max-w-full">
                     🎯 Épreuve !
                   </span>
                 )}

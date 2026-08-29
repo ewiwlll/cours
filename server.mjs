@@ -2029,7 +2029,7 @@ Réponds STRICTEMENT sous format JSON valide :
       readJsonFile(CHAPTERS, []),
       readJsonFile(CHAPTER_DEFINITIONS, []),
     ]);
-    const days = Math.min(60, Math.max(1, Number(url.searchParams.get("days") || 14)));
+    const days = Math.min(365, Math.max(1, Number(url.searchParams.get("days") || 14)));
     const plan = buildLearningPlan({
       courses,
       reviews,

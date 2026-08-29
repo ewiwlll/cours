@@ -124,6 +124,7 @@ export function CoursApp() {
   const [exams, setExams] = useState<any[]>([]);
   const [weaknesses, setWeaknesses] = useState<any[]>([]);
   const [calendarDays, setCalendarDays] = useState<any[]>([]);
+  const [mobileHorizonFilter, setMobileHorizonFilter] = useState<"7" | "15" | "30">("7");
   const [showNewExamModal, setShowNewExamModal] = useState(false);
   const [newExamTitle, setNewExamTitle] = useState("");
   const [newExamKind, setNewExamKind] = useState("partiel");
@@ -131,6 +132,17 @@ export function CoursApp() {
   const [newExamSubjectIds, setNewExamSubjectIds] = useState<string[]>([]);
   const [newExamChapterIds, setNewExamChapterIds] = useState<string[]>([]);
   const [isOralPrepared, setIsOralPrepared] = useState(false);
+
+  const fetchMobileCalendar = async (days: number) => {
+    try {
+      const calData = await getRevisionCalendar(days);
+      if (calData && (Array.isArray(calData.calendar) || Array.isArray(calData.days))) {
+        setCalendarDays(calData.calendar || calData.days);
+      } else if (Array.isArray(calData)) {
+        setCalendarDays(calData);
+      }
+    } catch {}
+  };
 
   // Trash & Network Modals State
   const [trashList, setTrashList] = useState<TrashedCourse[]>([]);
@@ -1656,10 +1668,47 @@ export function CoursApp() {
                 })
               )}
 
-              {/* CALENDRIER PRÉVISIONNEL (7 PROCHAINS JOURS CALCULÉ PAR LE SERVEUR) */}
-              <Text style={[styles.planningSubHeader, { marginTop: 16 }]}>Calendrier prévisionnel (7 prochains jours)</Text>
+              {/* CALENDRIER PRÉVISIONNEL ET FILTRES HORIZON MOBILE */}
+              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 16 }}>
+                <Text style={styles.planningSubHeader}>
+                  Calendrier ({mobileHorizonFilter === "7" ? "7j" : mobileHorizonFilter === "15" ? "15j" : "30j"})
+                </Text>
+                <View style={{ flexDirection: "row", gap: 4 }}>
+                  <Pressable
+                    onPress={() => {
+                      setMobileHorizonFilter("7");
+                      fetchMobileCalendar(7);
+                    }}
+                    style={[styles.smallSubjectPill, mobileHorizonFilter === "7" && styles.smallSubjectPillActive]}
+                  >
+                    <Text style={[styles.smallSubjectPillText, mobileHorizonFilter === "7" && styles.smallSubjectPillTextActive]}>7j</Text>
+                  </Pressable>
+                  <Pressable
+                    onPress={() => {
+                      setMobileHorizonFilter("15");
+                      fetchMobileCalendar(15);
+                    }}
+                    style={[styles.smallSubjectPill, mobileHorizonFilter === "15" && styles.smallSubjectPillActive]}
+                  >
+                    <Text style={[styles.smallSubjectPillText, mobileHorizonFilter === "15" && styles.smallSubjectPillTextActive]}>15j</Text>
+                  </Pressable>
+                  <Pressable
+                    onPress={() => {
+                      setMobileHorizonFilter("30");
+                      fetchMobileCalendar(30);
+                    }}
+                    style={[styles.smallSubjectPill, mobileHorizonFilter === "30" && styles.smallSubjectPillActive]}
+                  >
+                    <Text style={[styles.smallSubjectPillText, mobileHorizonFilter === "30" && styles.smallSubjectPillTextActive]}>1 mois</Text>
+                  </Pressable>
+                </View>
+              </View>
+
               <View style={styles.planningGrid}>
-                {(calendarDays && calendarDays.length > 0 ? calendarDays.slice(0, 7) : Array.from({ length: 7 })).map((d: any, i: number) => {
+                {(calendarDays && calendarDays.length > 0
+                  ? calendarDays.slice(0, mobileHorizonFilter === "7" ? 7 : mobileHorizonFilter === "15" ? 15 : 30)
+                  : Array.from({ length: Number(mobileHorizonFilter) || 7 })
+                ).map((d: any, i: number) => {
                   const dayDate = d?.date ? new Date(d.date) : new Date(Date.now() + i * 86400000);
                   const isToday = d?.isToday ?? (i === 0);
                   const dayName = d?.dayName || dayDate.toLocaleDateString("fr-FR", { weekday: "short" });
