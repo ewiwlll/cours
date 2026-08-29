@@ -14,6 +14,8 @@ import type {
   CoursePhoto,
   ReviewStatus,
   PriorityLevel,
+  CurriculumAnalysisResult,
+  CurriculumCustomizationQuestion,
 } from './types';
 
 const API_BASE = '';
@@ -171,19 +173,7 @@ export async function createSubject(payload: {
 /**
  * Generate official university curriculum with AI / grounding (or smart academic templates)
  */
-export async function generateCurriculum(query: string): Promise<{
-  program: string;
-  university?: string;
-  semester?: string;
-  subjects: Array<{
-    title: string;
-    category?: string;
-    ects: number;
-    priority: PriorityLevel;
-    semester?: 'S1' | 'S2';
-    chapters?: string[];
-  }>;
-} | null> {
+export async function generateCurriculum(query: string): Promise<CurriculumAnalysisResult | null> {
   const cleanQuery = (query || '').trim();
   if (!cleanQuery) return null;
 

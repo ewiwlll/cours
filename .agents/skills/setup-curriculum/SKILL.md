@@ -41,6 +41,18 @@ Ce skill se déclenche lorsque l'utilisateur fournit le nom de sa formation, son
 
 ---
 
+## 2.1 Cadrage & Questions Interactives Obligatoires (Ne jamais deviner à l'aveugle)
+
+Dès qu'une formation comporte des **choix d'options, spécialités ou filières** (ex: Lycée, PASS avec mineures, Licence avec parcours, CPGE) :
+1. **L'agent identifie le tronc commun obligatoire**.
+2. **L'agent pose des questions claires et ciblées à l'étudiant** pour arbitrer ses options :
+   - *Pour le Lycée* : « Quelles sont tes 2 spécialités de Terminale ? », « Quelle est ta LV2 (Espagnol, Allemand, Italien...) ? », « As-tu une option (Maths Expertes, DGEMC...) ? »
+   - *Pour le PASS Santé* : « Quelle est ta mineure disciplinaire (Droit, Psychologie, Mathématiques, Éco, SVT...) ? »
+   - *Pour une Licence* : « Quel est ton parcours (Classique, International, L.AS Santé) ? »
+3. **L'agent n'écrit les matières et chapitres définitifs qu'après confirmation des choix de l'étudiant.**
+
+---
+
 ## 3. Calibrage Automatique Pédagogique & FSRS-5
 
 Pour chaque matière extraite :

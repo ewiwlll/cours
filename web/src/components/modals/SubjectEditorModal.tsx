@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { createSubject, generateCurriculum, importCurriculum } from '../../lib/api';
 import { useStore } from '../../lib/store';
-import type { PriorityLevel } from '../../lib/types';
+import type { PriorityLevel, CurriculumAnalysisResult } from '../../lib/types';
 
 interface SubjectEditorModalProps {
   isOpen: boolean;
@@ -39,20 +39,7 @@ export const SubjectEditorModal: React.FC<SubjectEditorModalProps> = ({
   // AI Curriculum Generator State
   const [aiQuery, setAiQuery] = useState('');
   const [isSearchingAi, setIsSearchingAi] = useState(false);
-  const [aiCurriculum, setAiCurriculum] = useState<{
-    program: string;
-    university?: string;
-    semester?: string;
-    subjects: Array<{
-      title: string;
-      category?: string;
-      ects: number;
-      priority: PriorityLevel;
-      semester?: 'S1' | 'S2';
-      chapters?: string[];
-      selected?: boolean;
-    }>;
-  } | null>(null);
+  const [aiCurriculum, setAiCurriculum] = useState<CurriculumAnalysisResult | null>(null);
   const [isImportingCurriculum, setIsImportingCurriculum] = useState(false);
 
   if (!isOpen) return null;
@@ -500,10 +487,62 @@ export const SubjectEditorModal: React.FC<SubjectEditorModalProps> = ({
                         )}
                       </h4>
                       <p className="text-[11px] text-zinc-400">
-                        {aiCurriculum.subjects.length} matières détectées (~30 ECTS au total). Cochez celles à importer :
+                        {aiCurriculum.subjects.length} matières configurées. Vous pouvez cocher/décocher ou affiner les chapitres ci-dessous :
                       </p>
                     </div>
                   </div>
+
+                  {/* Questions de personnalisation dynamiques si l'IA en a détecté */}
+                  {aiCurriculum.customizationQuestions && aiCurriculum.customizationQuestions.length > 0 && (
+                    <div className="p-4 rounded-2xl bg-purple-500/10 border border-purple-500/25 space-y-3">
+                      <div className="text-xs font-bold text-purple-300 flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>Options & Spécialités à arbitrer</span>
+                      </div>
+
+                      <div className="space-y-3">
+                        {aiCurriculum.customizationQuestions.map((q) => (
+                          <div key={q.id} className="space-y-1.5">
+                            <label className="text-[11px] font-semibold text-zinc-300 block">
+                              {q.question}
+                            </label>
+                            <div className="flex flex-wrap gap-1.5">
+                              {q.options.map((opt) => (
+                                <button
+                                  key={opt.id}
+                                  type="button"
+                                  onClick={() => {
+                                    // Replace or add subject in curriculum
+                                    const exists = aiCurriculum.subjects.some((s) => s.title.toLowerCase() === opt.title.toLowerCase());
+                                    if (!exists) {
+                                      setAiCurriculum({
+                                        ...aiCurriculum,
+                                        subjects: [
+                                          ...aiCurriculum.subjects,
+                                          {
+                                            title: opt.title,
+                                            category: opt.category,
+                                            ects: opt.ects,
+                                            priority: opt.priority,
+                                            semester: 'S1',
+                                            chapters: opt.chapters,
+                                            selected: true,
+                                          },
+                                        ],
+                                      });
+                                    }
+                                  }}
+                                  className="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-background hover:bg-surface-elevated text-zinc-300 hover:text-white border border-border transition-all"
+                                >
+                                  + {opt.label}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   <div className="space-y-2.5 max-h-60 overflow-y-auto pr-1">
                     {aiCurriculum.subjects.map((subj, idx) => (

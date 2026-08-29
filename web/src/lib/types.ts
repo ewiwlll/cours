@@ -18,11 +18,45 @@ export interface Subject {
   coursesCount?: number;
 }
 
-export interface SubjectCatalog {
+export interface CurriculumCustomizationOption {
+  id: string;
+  label: string;
+  title: string;
+  category?: string;
+  ects: number;
+  priority: PriorityLevel;
+  chapters?: string[];
+}
+
+export interface CurriculumCustomizationQuestion {
+  id: string;
+  question: string;
+  type?: 'single' | 'multiple';
+  options: CurriculumCustomizationOption[];
+}
+
+export interface CurriculumAnalysisResult {
   program: string;
-  level: string;
-  year: string;
-  courses: Subject[];
+  university?: string;
+  semester?: string;
+  coreSubjects?: Array<{
+    title: string;
+    category?: string;
+    ects: number;
+    priority: PriorityLevel;
+    semester?: 'S1' | 'S2';
+    chapters?: string[];
+  }>;
+  customizationQuestions?: CurriculumCustomizationQuestion[];
+  subjects: Array<{
+    title: string;
+    category?: string;
+    ects: number;
+    priority: PriorityLevel;
+    semester?: 'S1' | 'S2';
+    chapters?: string[];
+    selected?: boolean;
+  }>;
 }
 
 export type CardKind =
