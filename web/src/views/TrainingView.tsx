@@ -294,12 +294,52 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [activeMode, currentCard, isAnswerRevealed, currentCardIndex, targetCardsList.length, trapCards, trapIndex, isTrapRevealed]);
 
-  const handleCopyAntigravityPrompt = () => {
-    const subTitle = subjects.find((s) => s.id === selectedSubjectId)?.title || 'mon cours';
-    const promptText = `cours oral sur ${subTitle}`;
-    navigator.clipboard.writeText(promptText);
+  // Prompt contextualisé selon le périmètre de sélection (Matière -> Chapitre -> Séance)
+  const dynamicOralPrompt = useMemo(() => {
+    if (selectedCourseId !== 'ALL') {
+      const c = courses.find((item) => item.id === selectedCourseId);
+      if (c) return `cours oral sur le cours "${c.title}" (${c.subjectTitle || 'Matière'})`;
+    }
+    if (selectedChapter !== 'ALL') {
+      const sub = subjects.find((s) => s.id === selectedSubjectId);
+      return `cours oral sur le chapitre "${selectedChapter}" (${sub?.title || 'Matière'})`;
+    }
+    if (selectedSubjectId !== 'ALL') {
+      const sub = subjects.find((s) => s.id === selectedSubjectId);
+      return `cours oral sur ${sub?.title || 'mon cours'}`;
+    }
+    return `cours oral sur l'ensemble de mes cours`;
+  }, [selectedSubjectId, selectedChapter, selectedCourseId, subjects, courses]);
+
+  const [isOralPrepared, setIsOralPrepared] = useState<boolean>(false);
+
+  const handlePrepareAndCopyOral = async () => {
+    const sub = subjects.find((s) => s.id === selectedSubjectId);
+    const course = courses.find((c) => c.id === selectedCourseId);
+
+    try {
+      await fetch('/api/oral/prepare', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subjectId: selectedSubjectId !== 'ALL' ? selectedSubjectId : null,
+          subjectTitle: sub?.title || null,
+          chapter: selectedChapter !== 'ALL' ? selectedChapter : null,
+          courseId: selectedCourseId !== 'ALL' ? selectedCourseId : null,
+          courseTitle: course?.title || null,
+          prompt: dynamicOralPrompt,
+        }),
+      });
+    } catch (err) {
+      console.error('Error preparing oral on server:', err);
+    }
+
+    navigator.clipboard.writeText(dynamicOralPrompt);
     setCopiedPrompt(true);
-    setTimeout(() => setCopiedPrompt(false), 2500);
+    setIsOralPrepared(true);
+    setTimeout(() => {
+      setCopiedPrompt(false);
+    }, 4000);
   };
 
   if (loading) {
@@ -938,25 +978,63 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
               Pour vous faire interroger à voix haute, réciter un chapitre sans chrono et obtenir un feedback approfondi avec des analogies de Feynman, utilisez directement le tuteur dans votre session Antigravity.
             </p>
 
-            <div className="p-3.5 rounded-xl bg-black/50 border border-amber-500/30 flex items-center justify-between gap-3 text-xs font-mono text-amber-300">
-              <span>cours oral sur {subjects.find((s) => s.id === selectedSubjectId)?.title || 'mes cours'}</span>
+            {/* Badges de contexte actif */}
+            <div className="flex items-center gap-2 flex-wrap text-xs">
+              <span className="text-zinc-400 font-medium">Cible sélectionnée :</span>
+              {selectedSubjectId !== 'ALL' && (
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30">
+                  {subjects.find((s) => s.id === selectedSubjectId)?.title}
+                </span>
+              )}
+              {selectedChapter !== 'ALL' && (
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30">
+                  📂 {selectedChapter}
+                </span>
+              )}
+              {selectedCourseId !== 'ALL' && (
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30">
+                  📄 {courses.find((c) => c.id === selectedCourseId)?.title}
+                </span>
+              )}
+              {selectedSubjectId === 'ALL' && (
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30">
+                  🌐 Ensemble des cours
+                </span>
+              )}
+            </div>
+
+            {/* Zone du Prompt Dynamique */}
+            <div className="space-y-3">
+              <div className="p-3.5 rounded-xl bg-black/60 border border-amber-500/30 flex items-center justify-between gap-3 text-xs font-mono text-amber-300">
+                <span className="truncate">{dynamicOralPrompt}</span>
+              </div>
+
               <button
-                onClick={handleCopyAntigravityPrompt}
-                className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold font-sans text-xs flex items-center gap-1.5 transition-all"
+                onClick={handlePrepareAndCopyOral}
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-zinc-950 font-bold text-xs shadow-lg shadow-amber-500/20 hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2"
               >
                 {copiedPrompt ? (
                   <>
-                    <Check className="w-3.5 h-3.5" />
-                    <span>Copié !</span>
+                    <Check className="w-4 h-4 text-zinc-950 stroke-[3]" />
+                    <span>✨ Session Enregistrée & Prompt Copié !</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3.5 h-3.5" />
-                    <span>Copier</span>
+                    <Zap className="w-4 h-4 fill-zinc-950" />
+                    <span>🚀 Préparer & Lancer l'Oral dans Antigravity</span>
                   </>
                 )}
               </button>
             </div>
+
+            {isOralPrepared && (
+              <div className="p-3.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-xs text-emerald-300 animate-fadeIn flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
+                <span>
+                  <strong>Parfait !</strong> La session a été sauvegardée. Ouvre Antigravity et colle le texte ou tape simplement <code className="bg-emerald-500/20 px-1 py-0.5 rounded font-mono font-bold">cours</code> pour démarrer !
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="p-5 rounded-2xl bg-surface border border-border space-y-3 text-xs text-zinc-400">

@@ -37,6 +37,7 @@ const REVISION_SESSIONS = path.join(DATA, "revisions", "sessions.json");
 const WEAK_CONCEPTS = path.join(DATA, "revisions", "weak-concepts.json");
 const AUTOMATION = path.join(DATA, "automation");
 const AUTOMATION_CONFIG = path.join(AUTOMATION, "config.json");
+const PENDING_ORAL = path.join(AUTOMATION, "pending-oral.json");
 const RECORDINGS = path.join(DATA, "enregistrements");
 const RECORDINGS_INDEX = path.join(RECORDINGS, "index.json");
 const COURSE_PHOTOS = path.join(DATA, "cours", "photos");
@@ -2147,6 +2148,36 @@ Réponds STRICTEMENT sous format JSON valide :
       return json(res, 201, { ok: true, ...result });
     } catch (error) {
       return json(res, 400, { error: error.message || "Enregistrement de clarification impossible" });
+    }
+  }
+  if (req.method === "POST" && url.pathname === "/api/oral/prepare") {
+    try {
+      const payload = JSON.parse(await readBody(req));
+      const sessionData = {
+        id: `oral-req-${Date.now()}`,
+        subjectId: payload.subjectId || null,
+        subjectTitle: payload.subjectTitle || null,
+        chapter: payload.chapter || null,
+        courseId: payload.courseId || null,
+        courseTitle: payload.courseTitle || null,
+        prompt: payload.prompt || "cours oral sur mes cours",
+        requestedAt: new Date().toISOString(),
+        status: "pending",
+      };
+      await writeFile(PENDING_ORAL, JSON.stringify(sessionData, null, 2) + "\n", "utf8");
+      return json(res, 200, { ok: true, session: sessionData });
+    } catch (error) {
+      return json(res, 400, { error: error.message || "Préparation de l'oral impossible" });
+    }
+  }
+  if (req.method === "GET" && url.pathname === "/api/oral/pending") {
+    try {
+      if (!existsSync(PENDING_ORAL)) return json(res, 200, { ok: true, session: null });
+      const raw = await readFile(PENDING_ORAL, "utf8");
+      const session = JSON.parse(raw);
+      return json(res, 200, { ok: true, session });
+    } catch {
+      return json(res, 200, { ok: true, session: null });
     }
   }
   if (req.method === "POST" && url.pathname === "/api/reviews/batch") {
