@@ -1002,21 +1002,47 @@ Formation demandée : "${query}"
 Règles de génération :
 1. Si la formation demandée concerne le **Lycée / Baccalauréat (Terminale, Première, Seconde, Bac)** :
    - Génère les véritables matières du programme officiel du Bulletin Officiel (BO).
-   - Utilise les coefficients officiels du Baccalauréat dans le champ "ects" (ex: Spécialités Coeff 16, Philo Coeff 8, Français Première Coeff 10, Histoire-Géo Coeff 6, Enseignement Scientifique Coeff 6, LVA Coeff 6, LVB Espagnol/Allemand Coeff 6, Option Coeff 2).
-   - "priority": 'A' pour coefficients >= 8, 'B' pour tronc commun (Coeff 6), 'C' pour langues/options (<= 6).
+   - Utilise les coefficients officiels du Baccalauréat dans le champ "ects" (ex: Spécialités Coeff 16, Philo Coeff 8, Grand Oral Coeff 10, Histoire-Géo Coeff 6, Enseignement Scientifique Coeff 6, LVA Coeff 6, LVB Coeff 6).
+   - "priority": 'A' pour coefficients >= 8, 'B' pour tronc commun (Coeff 6), 'C' pour options (<= 6).
    - "category": "Spécialité Bac (Coeff 16)", "Épreuve Terminale (Coeff 8)", "Tronc commun (Coeff 6)", etc.
-   - Les vrais chapitres officiels du programme du Bac.
+   - **Exhaustivité totale des chapitres** : Découpe chaque enseignement de spécialité en **l'intégralité de ses véritables chapitres officiels de l'année scolaire** (ex: en SVT Terminale, génère les 15 à 19 chapitres détaillés des 3 thèmes officiels : Génétique & Méiose, Complexification des génomes, Évolution humaine, Domaine continental & Géologie, Reconstitution climatique, Photosynthèse, Domestication des plantes, Réflexe myotatique, Plasticité cérébrale, Immunité adaptative, Stress aigu et chronique). Ne tronque et ne fusionne aucun chapitre.
 
-2. Si la formation concerne l'**Enseignement Supérieur (Licence, PASS Santé, CPGE, BUT, Master, BTS)** :
-   - Identifie l'université ou établissement et génère les véritables Unités d'Enseignement (UE) du semestre totalisant 30 crédits ECTS.
-   - 5-8 ECTS pour les matières majeures (priorité A), 3-4 ECTS pour les matières fondamentales/complémentaires (priorité B), 1-3 ECTS pour les options/langues (priorité C).
-   - Les vrais chapitres fondamentaux clés de chaque matière.
+3. **Questions de cadrage interactives obligatoires** :
+   - Identifie systématiquement les zones d'incertitude ou de choix (ex: choix de la LV2 Espagnol/Allemand, choix d'une option facultative comme Maths Complémentaires/DGEMC, choix d'une mineure santé pour PASS, choix d'un parcours de licence).
+   - Remplis le tableau "customizationQuestions" avec des questions claires et des options réelles prêtes à être cliquées.
 
 Réponds STRICTEMENT sous format JSON valide :
 {
   "program": "Titre officiel précis (ex: Terminale Générale Spé Maths + SVT ou Licence 1 Droit Panthéon-Sorbonne)",
   "university": "Établissement ou Académie",
   "semester": "S1 ou Année du Bac",
+  "customizationQuestions": [
+    {
+      "id": "lvb",
+      "question": "Quelle est votre Langue Vivante B (LV2) ?",
+      "selectedOptionId": "espagnol",
+      "options": [
+        {
+          "id": "espagnol",
+          "label": "Espagnol",
+          "title": "Langue Vivante B : Espagnol",
+          "category": "Tronc commun (Coeff 6)",
+          "ects": 6,
+          "priority": "B",
+          "chapters": ["Identités et échanges", "Art et pouvoir", "Espace privé et public", "Innovations scientifiques"]
+        },
+        {
+          "id": "allemand",
+          "label": "Allemand",
+          "title": "Langue Vivante B : Allemand",
+          "category": "Tronc commun (Coeff 6)",
+          "ects": 6,
+          "priority": "B",
+          "chapters": ["Identités et échanges", "Espaces et frontières", "Art et pouvoir"]
+        }
+      ]
+    }
+  ],
   "subjects": [
     {
       "title": "Nom officiel de la matière",
