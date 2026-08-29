@@ -1,7 +1,6 @@
 import React from 'react';
 import { useStore } from './lib/store';
 import { TopBar } from './components/TopBar';
-import { Sidebar } from './components/Sidebar';
 import { BottomNav } from './components/BottomNav';
 import { DashboardView } from './views/DashboardView';
 import { SubjectsView } from './views/SubjectsView';
@@ -111,14 +110,11 @@ export function App() {
       {/* Top Header Navigation */}
       <TopBar />
 
-      {/* Main Layout (Sidebar + Content View) */}
+      {/* Main Layout */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left Sidebar */}
-        <Sidebar />
-
-        {/* Dynamic Center/Right Content View */}
+        {/* Dynamic Center Content View */}
         <main className="flex-1 overflow-y-auto bg-background p-4 sm:p-6 md:p-8 lg:p-10 pb-28 md:pb-10">
-          <div className="max-w-5xl mx-auto w-full">
+          <div className="max-w-6xl mx-auto w-full">
             {openCourseId ? (
               <CourseDetailView
                 courseId={openCourseId}
