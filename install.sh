@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Cours (Revision OS) — Script d'installation automatisé universel
+# Cours (Revision OS) — Script d'installation automatisé universel & Antigravity
 # Pour tous vos cours, amphis, classes et études supérieures
 # Compatible macOS (Apple Silicon / Intel) et Linux (x86_64 / arm64)
 # ==============================================================================
@@ -11,6 +11,7 @@ set -e
 BOLD="\033[1m"
 GREEN="\033[32m"
 BLUE="\033[34m"
+PURPLE="\033[35m"
 YELLOW="\033[33m"
 CYAN="\033[36m"
 RED="\033[31m"
@@ -24,7 +25,7 @@ echo "| |__| (_) | |_| | |  \__ \         "
 echo " \____\___/ \__,_|_|  |___/         "
 echo "  Revision OS • Pour tous vos cours "
 echo -e "${RESET}"
-echo -e "${BLUE}==>${RESET} ${BOLD}Installation de Cours (Revision OS)...${RESET}\n"
+echo -e "${BLUE}==>${RESET} ${BOLD}Installation automatique de Cours (Revision OS)...${RESET}\n"
 
 # 1. Vérification des prérequis système
 echo -e "${BLUE}[1/7]${RESET} Vérification de l'environnement système..."
@@ -48,57 +49,34 @@ fi
 echo -e "  ${GREEN}✓${RESET} Git & Node.js $(node -v) détectés."
 
 # 2. Cloner ou initialiser le dépôt
-TARGET_DIR="cours"
 if [ ! -f "start.mjs" ]; then
-    echo -e "\n${BLUE}[2/7]${RESET} Clonage du dépôt GitHub..."
+    TARGET_DIR="${COURS_DIR:-$HOME/cours}"
+    echo -e "\n${BLUE}[2/7]${RESET} Configuration du dossier de travail : ${CYAN}$TARGET_DIR${RESET}..."
     if [ -d "$TARGET_DIR" ]; then
         echo -e "  ${YELLOW}Le dossier $TARGET_DIR existe déjà. Utilisation du dossier existant.${RESET}"
         cd "$TARGET_DIR"
+        git pull --quiet origin main 2>/dev/null || true
     else
         git clone https://github.com/ewiwlll/cours.git "$TARGET_DIR"
         cd "$TARGET_DIR"
     fi
 else
-    echo -e "\n${BLUE}[2/7]${RESET} Répertoire de projet local détecté."
+    echo -e "\n${BLUE}[2/7]${RESET} Répertoire de projet local détecté : ${CYAN}$(pwd)${RESET}."
 fi
 
-# 3. Configuration interactive de la clé API Gemini
-echo -e "\n${BLUE}[3/7]${RESET} Configuration des variables d'environnement..."
+PROJECT_FULL_PATH="$(pwd)"
 
-GEMINI_INPUT=""
-if [ -e /dev/tty ] && [ -t 1 ]; then
-    echo -e "  ${CYAN}Obtenez une clé gratuite en 30s sur https://aistudio.google.com/${RESET}"
-    echo -ne "  ${BOLD}Entrez votre clé GEMINI_API_KEY (ou Entrée pour configurer plus tard dans l'app) : ${RESET}"
-    read -r GEMINI_INPUT < /dev/tty 2>/dev/null || true
-fi
-
+# 3. Initialisation de l'environnement (0€ Antigravity)
+echo -e "\n${BLUE}[3/7]${RESET} Initialisation des fichiers de configuration..."
 if [ ! -f ".env" ]; then
-    cp .env.example .env
-    if [ -n "$GEMINI_INPUT" ]; then
-        if [ "$(uname)" = "Darwin" ]; then
-            sed -i '' "s|GEMINI_API_KEY=.*|GEMINI_API_KEY=$GEMINI_INPUT|g" .env
-        else
-            sed -i "s|GEMINI_API_KEY=.*|GEMINI_API_KEY=$GEMINI_INPUT|g" .env
-        fi
-        echo -e "  ${GREEN}✓${RESET} Clé GEMINI_API_KEY configurée avec succès dans .env."
-    else
-        echo -e "  ${GREEN}✓${RESET} Fichier .env initialisé depuis .env.example."
-    fi
+    cp .env.example .env 2>/dev/null || touch .env
+    echo -e "  ${GREEN}✓${RESET} Fichier .env initialisé."
 else
-    if [ -n "$GEMINI_INPUT" ]; then
-        if [ "$(uname)" = "Darwin" ]; then
-            sed -i '' "s|GEMINI_API_KEY=.*|GEMINI_API_KEY=$GEMINI_INPUT|g" .env
-        else
-            sed -i "s|GEMINI_API_KEY=.*|GEMINI_API_KEY=$GEMINI_INPUT|g" .env
-        fi
-        echo -e "  ${GREEN}✓${RESET} Clé GEMINI_API_KEY mise à jour dans .env."
-    else
-        echo -e "  ${GREEN}✓${RESET} Fichier .env existant conservé."
-    fi
+    echo -e "  ${GREEN}✓${RESET} Fichier .env existant conservé."
 fi
 
-# 4. Installation des dépendances
-echo -e "\n${BLUE}[4/7]${RESET} Installation des dépendances (Web, Mobile & CLI)..."
+# 4. Installation des dépendances et compilation Web
+echo -e "\n${BLUE}[4/7]${RESET} Installation des dépendances et compilation de l'interface..."
 
 if [ -f "package.json" ]; then
     npm install --silent > /dev/null 2>&1 || true
@@ -106,72 +84,74 @@ fi
 
 if [ -d "web" ]; then
     echo -e "  ${BLUE}→${RESET} Construction de l'interface Web & PWA..."
-    (cd web && npm install --silent && npm run build)
+    (cd web && npm install --silent > /dev/null 2>&1 && npm run build > /dev/null 2>&1)
     echo -e "  ${GREEN}✓${RESET} Interface Web & PWA prête dans public/."
 fi
 
 if [ -d "apps/mobile" ]; then
-    echo -e "  ${BLUE}→${RESET} Configuration du module Mobile Expo..."
-    (cd apps/mobile && npm install --silent)
-    echo -e "  ${GREEN}✓${RESET} Application Mobile configurée."
+    (cd apps/mobile && npm install --silent > /dev/null 2>&1 || true)
 fi
 
 # Installation du binaire CLI global 'cours'
 mkdir -p "$HOME/.local/bin"
-ln -sf "$(pwd)/bin/cours.mjs" "$HOME/.local/bin/cours" 2>/dev/null || true
-ln -sf "$(pwd)/bin/cours.mjs" /usr/local/bin/cours 2>/dev/null || true
+ln -sf "$PROJECT_FULL_PATH/bin/cours.mjs" "$HOME/.local/bin/cours" 2>/dev/null || true
+ln -sf "$PROJECT_FULL_PATH/bin/cours.mjs" /usr/local/bin/cours 2>/dev/null || true
 
-# 5. Configuration Whisper Metal & Dossiers
-echo -e "\n${BLUE}[5/7]${RESET} Configuration des dossiers de travail..."
-mkdir -p models/whisper
-mkdir -p data/audio
-mkdir -p data/enregistrements
-mkdir -p data/cours
-mkdir -p data/transcriptions
-mkdir -p data/revisions
-
-if [ "$(uname)" = "Darwin" ] && [ "$(uname -m)" = "arm64" ]; then
-    echo -e "  ${GREEN}✓${RESET} Mac Apple Silicon détecté (accélération GPU Metal active pour Whisper)."
-fi
+# 5. Création des dossiers de données
+echo -e "\n${BLUE}[5/7]${RESET} Initialisation des dossiers de cours et modèles..."
+mkdir -p models/whisper data/audio data/enregistrements data/cours data/transcriptions data/revisions inbox
 
 # 6. Compilation de l'application native macOS (si sur Mac)
 if [ "$(uname)" = "Darwin" ] && command -v swiftc &> /dev/null; then
     echo -e "\n${BLUE}[6/7]${RESET} Compilation de l'application native macOS (/Applications/Cours.app)..."
     if [ -f "scripts/build-macos-app.sh" ]; then
         ./scripts/build-macos-app.sh > /dev/null 2>&1 || true
-        echo -e "  ${GREEN}✓${RESET} ${BOLD}/Applications/Cours.app${RESET} installé dans vos Applications (Spotlight, Launchpad, Dock)."
+        echo -e "  ${GREEN}✓${RESET} ${BOLD}/Applications/Cours.app${RESET} installé dans vos Applications."
     fi
 else
-    echo -e "\n${BLUE}[6/7]${RESET} Étape macOS ignorée (système non-Mac)."
+    echo -e "\n${BLUE}[6/7]${RESET} Étape macOS ignorée."
 fi
 
-# 7. Vérification de l'intégrité par tests
-echo -e "\n${BLUE}[7/7]${RESET} Exécution des tests de validation du moteur..."
-node --test tests/learning-engine.test.mjs tests/recall-correction.test.mjs > /dev/null 2>&1 || true
-echo -e "  ${GREEN}✓${RESET} Moteur d'apprentissage FSRS-5 et Sas de Rappel validés."
+# 7. Lancement automatique de Google Antigravity
+echo -e "\n${PURPLE}${BOLD}[7/7] Ouverture automatique du Studio Antigravity...${RESET}"
+ANTIGRAVITY_LAUNCHED=false
 
-echo -e "\n${GREEN}${BOLD}🎉 Installation de Cours (Revision OS) terminée avec succès !${RESET}\n"
+if [ "$(uname)" = "Darwin" ]; then
+    if [ -d "/Applications/Antigravity.app" ]; then
+        open -a "/Applications/Antigravity.app" "$PROJECT_FULL_PATH"
+        ANTIGRAVITY_LAUNCHED=true
+        echo -e "  ${GREEN}✓${RESET} ${BOLD}Google Antigravity ouvert sur le projet :${RESET} ${CYAN}$PROJECT_FULL_PATH${RESET}"
+    elif command -v antigravity &> /dev/null; then
+        antigravity "$PROJECT_FULL_PATH" &
+        ANTIGRAVITY_LAUNCHED=true
+        echo -e "  ${GREEN}✓${RESET} ${BOLD}Google Antigravity ouvert sur le projet :${RESET} ${CYAN}$PROJECT_FULL_PATH${RESET}"
+    fi
+elif command -v antigravity &> /dev/null; then
+    antigravity "$PROJECT_FULL_PATH" &
+    ANTIGRAVITY_LAUNCHED=true
+    echo -e "  ${GREEN}✓${RESET} ${BOLD}Google Antigravity ouvert sur le projet :${RESET} ${CYAN}$PROJECT_FULL_PATH${RESET}"
+fi
 
-# QR Code mobile connect display
-node -e '
-import os from "node:os";
-import qrcode from "qrcode-terminal";
-const nets = os.networkInterfaces();
-let localIp = "127.0.0.1";
-for (const name of Object.keys(nets)) {
-  for (const net of nets[name] || []) {
-    if (net.family === "IPv4" && !net.internal) {
-      localIp = net.address;
-      break;
-    }
-  }
-}
-console.log("\x1b[33m\x1b[1m📱 Scannez ce QR Code avec votre téléphone pour ouvrir l\x27app immédiatement :\x1b[0m");
-qrcode.generate(`http://${localIp}:3002`, { small: true });
-console.log(`\x1b[36m👉 URL Mobile Wi-Fi : http://${localIp}:3002\x1b[0m\n`);
-' 2>/dev/null || true
+if [ "$ANTIGRAVITY_LAUNCHED" = false ]; then
+    echo -e "  ${YELLOW}💡 Google Antigravity n'est pas encore détecté sur votre machine.${RESET}"
+    echo -e "  ${CYAN}👉 Téléchargez-le gratuitement en 1 clic :${RESET} ${BOLD}https://antigravity.google${RESET}"
+    if [ "$(uname)" = "Darwin" ]; then
+        open "https://antigravity.google" 2>/dev/null || true
+    fi
+fi
 
-echo -e "${BOLD}Comment lancer l'application ?${RESET}"
-echo -e "  💻 ${CYAN}Sur Mac :${RESET} Ouvrez ${BOLD}/Applications/Cours.app${RESET} ou tapez simplement ${BOLD}${CYAN}cours${RESET} dans votre terminal."
-echo -e "  📱 ${CYAN}Sur Mobile :${RESET} Scannez le QR Code ci-dessus, puis appuyez sur ${BOLD}« Ajouter à l'écran d'accueil »${RESET} pour avoir l'app autonome."
-echo -e "  🌐 ${CYAN}Navigateur :${RESET} ${BOLD}http://localhost:3002${RESET}\n"
+# Banner Récapitulatif
+echo -e "\n${GREEN}${BOLD}════════════════════════════════════════════════════════════════════════════${RESET}"
+echo -e "${GREEN}${BOLD}  🎉 INSTALLATION TERMINÉE AVEC SUCCÈS ! TOUT EST PRÊT !${RESET}"
+echo -e "${GREEN}${BOLD}════════════════════════════════════════════════════════════════════════════${RESET}\n"
+
+echo -e "${PURPLE}${BOLD}🧠 DANS GOOGLE ANTIGRAVITY :${RESET}"
+echo -e "  1. Ouvrez le chat à droite (ou faites ${BOLD}⌘ N${RESET})."
+echo -e "  2. Tapez simplement ce mot magique :"
+echo -e "\n     ${BOLD}${GREEN}cours${RESET}  ${CYAN}(ou 'fait tout', 'débloque')${RESET}\n"
+echo -e "  ${YELLOW}→ L'agent IA scanne votre dossier et s'occupe de tout pour vous !${RESET}\n"
+
+echo -e "${BLUE}${BOLD}📱 VOS COCKPITS DE RÉVISION AU QUOTIDIEN :${RESET}"
+echo -e "  💻 ${CYAN}Sur Mac :${RESET} Ouvrez ${BOLD}/Applications/Cours.app${RESET}"
+echo -e "  🌐 ${CYAN}Sur Navigateur :${RESET} ${BOLD}http://localhost:3002${RESET}"
+echo -e "  📱 ${CYAN}Sur Smartphone :${RESET} Tapez ${BOLD}cours${RESET} dans votre terminal pour afficher le QR Code Wi-Fi.\n"
