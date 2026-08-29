@@ -18,6 +18,7 @@ Le projet repose sur une symbiose claire et sans friction entre deux rôles :
    - **Ingestion lourde & Intelligence** : Analyse des amphis (audio brut, transcriptions Whisper Metal, photos du tableau `offsetMs`, notes).
    - **Mémoire Vivante des Questions (`data/revisions/clarifications.json`)** : Maintien d'un arbre d'évolution des incompréhensions pour contextualiser les questions récurrentes, approfondir les explications et générer des cartes FSRS de déblocage.
    - **Compétences (Skills)** :
+     - `setup-curriculum` (`.agents/skills/setup-curriculum/SKILL.md`) : Recherche sur le web la maquette officielle, syllabus et MCC de l'université pour générer et configurer automatiquement les matières, crédits ECTS, priorités FSRS-5 et chapitres clés.
      - `process-course` (`.agents/skills/process-course/SKILL.md`) : Structure la fiche Markdown avec LaTeX KaTeX, tableaux comparatifs « X vs Y », ancre les photos et repères d'incompréhension (`offsetMs`), génère les flashcards FSRS et initialise le sas de rappel actif.
      - `oral-tutor` (`.agents/skills/oral-tutor/SKILL.md`) : Tuteur socratique posé sans chrono et interrogations personnalisées selon l'arbre des questions passées.
    - **Outil d'assistance** : `node scripts/course-helper.mjs` (commandes `pending`, `transcribe`, `validate`).
@@ -86,15 +87,16 @@ Pour que l'expérience soit ultra-simple pour n'importe quel étudiant sans comp
   - **Ne jamais lui renvoyer de commandes compliquées**.
   - **1. Analyser immédiatement l'état du workspace** (ex. `node scripts/course-helper.mjs pending` ou inspection de `data/enregistrements/` et `data/cours/`).
   - **2. Afficher un bilan d'accueil chaleureux avec le statut réel** (ex. *« 4 enregistrements audio bruts détectés, 2 cours en attente de flashcards »*).
-  - **3. Proposer un menu clair à 4 options guidées** :
+  - **3. Proposer un menu clair à 5 options guidées** :
     1. 🚀 **« Mode Fait Tout »** : Traiter automatiquement tous les enregistrements audio récents avec Whisper Metal, générer les fiches KaTeX avec tableaux « X vs Y », et créer la batterie de flashcards FSRS-5.
-    2. 💡 **« Débloquer une Notion / un Cours »** :
+    2. 🎓 **« Configurer mon Cursus / Ma Fac »** : Déclencher `setup-curriculum` pour rechercher la maquette officielle de sa fac sur le web et initialiser toutes ses matières, ECTS réels et chapitres.
+    3. 💡 **« Débloquer une Notion / un Cours »** :
        - L'agent liste directement les cours existants détectés dans `data/courses.json`.
        - L'agent demande où l'étudiant bloque.
        - L'agent explique la notion avec une **analogie concrète de Feynman** et des repères mnémotechniques.
        - L'agent **génère automatiquement la flashcard FSRS de déblocage** et l'ajoute dans `data/courses.json` et `data/revisions/clarifications.json`.
-    3. 🎙️ **« Oral Blanc Bienveillant »** : Poser une question diagnostique posée sans chrono sur le chapitre de son choix, évaluer la restitution et encourager.
-    4. 🔒 **« Valider le Sas de Rappel Actif »** : Évaluer la restitution d'un cours verrouillé pour en débloquer la fiche.
+    4. 🎙️ **« Oral Blanc Bienveillant »** : Poser une question diagnostique posée sans chrono sur le chapitre de son choix, évaluer la restitution et encourager.
+    5. 🔒 **« Valider le Sas de Rappel Actif »** : Évaluer la restitution d'un cours verrouillé pour en débloquer la fiche.
   - **Conclusion claire & encourageante** : Toujours conclure chaleureusement en disant que tout est prêt et qu'il n'y a plus qu'à ouvrir `/Applications/Cours.app` ou son smartphone pour réviser à son rythme (ex: *« Tout est prêt ! 🎉 Tu n'as plus qu'à ouvrir ton application Cours.app ou ton smartphone pour démarrer tes révisions, tu vas tout déchirer ! »*).
 
 ---
