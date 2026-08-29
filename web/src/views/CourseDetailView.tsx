@@ -245,7 +245,7 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
           {/* Quick training CTA if unlocked */}
           {!isLocked && course.cards && course.cards.length > 0 && (
             <button
-              onClick={() => onStartSession?.(15, 'course', course.subjectId)}
+              onClick={() => onStartSession?.(0, 'course', course.subjectId)}
               className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-blue-500/20 hover:scale-105 transition-all flex items-center gap-2 shrink-0"
             >
               <Zap className="w-4 h-4 fill-white" />

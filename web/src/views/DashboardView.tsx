@@ -185,7 +185,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               </button>
             ) : reviews.dueCount > 0 ? (
               <button
-                onClick={() => onStartSession?.(15, 'standard')}
+                onClick={() => onStartSession?.(0, 'standard')}
                 className="px-6 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-xl shadow-blue-500/30 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
               >
                 <Zap className="w-4 h-4 fill-white" />

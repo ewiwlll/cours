@@ -116,5 +116,46 @@
     "weakCardIds": [],
     "weakConcepts": [],
     "createdAt": "2026-08-29T23:14:10.647Z"
+  },
+  {
+    "courseId": "course-1788045212874-organisation-de-la-bicouche-lipidique-et-transport-membranai",
+    "lessonId": "course-1788045212874-organisation-de-la-bicouche-lipidique-et-transport-membranai",
+    "cardId": "card-biocel-1",
+    "rating": 4,
+    "answerLength": 0,
+    "intervalDays": 19,
+    "reviewCount": 2,
+    "nextReviewAt": "2026-09-17T23:18:11.875Z",
+    "nextReview": "2026-09-17",
+    "schedule": {
+      "intervalDays": 19,
+      "legacyIntervalDays": 14,
+      "reviewCount": 2,
+      "successStreak": 1,
+      "nextReviewAt": "2026-09-17T23:18:11.875Z",
+      "nextReview": "2026-09-17",
+      "stability": 19.48866,
+      "difficulty": 1.78029,
+      "retrievability": 0.99998,
+      "lapses": 0,
+      "targetRetention": 0.9,
+      "fsrs": {
+        "intervalDays": 19,
+        "stability": 19.48866,
+        "difficulty": 1.78029,
+        "retrievability": 0.99998,
+        "reviewCount": 2,
+        "successStreak": 2,
+        "lapses": 0,
+        "nextReviewAt": "2026-09-17T23:18:11.875Z",
+        "nextReview": "2026-09-17",
+        "targetRetention": 0.9,
+        "elapsedDays": 0
+      },
+      "isExamConstrained": false
+    },
+    "weakCardIds": [],
+    "weakConcepts": [],
+    "createdAt": "2026-08-29T23:18:11.875Z"
   }
 ]

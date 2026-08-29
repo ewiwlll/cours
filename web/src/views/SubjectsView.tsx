@@ -383,7 +383,7 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
 
                     {activeSubjectCourses.some((c) => c.cards && c.cards.length > 0) && (
                       <button
-                        onClick={() => onStartSession?.(15, 'standard', activeSubject.id)}
+                        onClick={() => onStartSession?.(0, 'standard', activeSubject.id)}
                         className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5"
                       >
                         <Zap className="w-3.5 h-3.5 fill-white" />
