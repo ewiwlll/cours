@@ -212,40 +212,87 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
     }
   };
 
+  // Validation d'une carte piège (Mode 2)
+  const handleTrapAnswer = async (rating: 'again' | 'hard' | 'good' | 'easy') => {
+    const currentTrap = trapCards[trapIndex];
+    if (!currentTrap) return;
+    try {
+      await submitCardReview({
+        lessonId: currentTrap.courseId || currentTrap.lessonId,
+        cardId: currentTrap.id,
+        rating,
+      });
+      setIsTrapRevealed(false);
+      if (trapIndex < trapCards.length - 1) {
+        setTrapIndex((prev) => prev + 1);
+      } else {
+        setTrapIndex(0);
+        getExamTrapsAndErrors().then((t) => setTrapCards(t || []));
+      }
+    } catch (err) {
+      console.error('Error reviewing trap card:', err);
+    }
+  };
+
   // Raccourcis Clavier Anki (Espace pour révéler, 1/2/3/4 pour noter)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (activeMode !== 'cards' || !currentCard) return;
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
 
-      if (!isAnswerRevealed) {
-        if (e.code === 'Space' || e.key === 'Enter') {
-          e.preventDefault();
-          setIsAnswerRevealed(true);
+      if (activeMode === 'cards' && currentCard) {
+        if (!isAnswerRevealed) {
+          if (e.code === 'Space' || e.key === 'Enter') {
+            e.preventDefault();
+            setIsAnswerRevealed(true);
+          }
+        } else {
+          if (e.key === '1' || e.key === '&') {
+            e.preventDefault();
+            handleReviewAnswer('again');
+          } else if (e.key === '2' || e.key === 'é') {
+            e.preventDefault();
+            handleReviewAnswer('hard');
+          } else if (e.key === '3' || e.key === '"') {
+            e.preventDefault();
+            handleReviewAnswer('good');
+          } else if (e.key === '4' || e.key === "'") {
+            e.preventDefault();
+            handleReviewAnswer('easy');
+          } else if (e.code === 'Space' || e.key === 'Enter') {
+            e.preventDefault();
+            handleReviewAnswer('good');
+          }
         }
-      } else {
-        if (e.key === '1' || e.key === '&') {
-          e.preventDefault();
-          handleReviewAnswer('again');
-        } else if (e.key === '2' || e.key === 'é') {
-          e.preventDefault();
-          handleReviewAnswer('hard');
-        } else if (e.key === '3' || e.key === '"') {
-          e.preventDefault();
-          handleReviewAnswer('good');
-        } else if (e.key === '4' || e.key === "'") {
-          e.preventDefault();
-          handleReviewAnswer('easy');
-        } else if (e.code === 'Space' || e.key === 'Enter') {
-          e.preventDefault();
-          handleReviewAnswer('good');
+      } else if (activeMode === 'traps' && trapCards[trapIndex]) {
+        if (!isTrapRevealed) {
+          if (e.code === 'Space' || e.key === 'Enter') {
+            e.preventDefault();
+            setIsTrapRevealed(true);
+          }
+        } else {
+          if (e.key === '1' || e.key === '&') {
+            e.preventDefault();
+            handleTrapAnswer('again');
+          } else if (e.key === '2' || e.key === 'é') {
+            e.preventDefault();
+            handleTrapAnswer('hard');
+          } else if (e.key === '3' || e.key === '"') {
+            e.preventDefault();
+            handleTrapAnswer('good');
+          } else if (e.key === '4' || e.key === "'") {
+            e.preventDefault();
+            handleTrapAnswer('easy');
+          } else if (e.code === 'Space' || e.key === 'Enter') {
+            e.preventDefault();
+            handleTrapAnswer('good');
+          }
         }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeMode, currentCard, isAnswerRevealed, currentCardIndex, targetCardsList.length]);
+  }, [activeMode, currentCard, isAnswerRevealed, currentCardIndex, targetCardsList.length, trapCards, trapIndex, isTrapRevealed]);
 
   const handleCopyAntigravityPrompt = () => {
     const subTitle = subjects.find((s) => s.id === selectedSubjectId)?.title || 'mon cours';
@@ -709,52 +756,167 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
         </div>
       )}
 
-      {/* 5. CONTENU DU MODE 2 : CARNET DE PIÈGES */}
+      {/* 5. CONTENU DU MODE 2 : CARNET DE PIÈGES (SESSION ACTIVE D'HYPERCORRECTION) */}
       {activeMode === 'traps' && (
         <div className="space-y-6">
-          {trapCards.length === 0 && weaknesses.length === 0 ? (
+          {trapCards.length === 0 ? (
             <div className="p-12 text-center bg-surface rounded-2xl border border-border space-y-3 max-w-xl mx-auto">
               <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto" />
-              <h3 className="text-base font-bold text-white">Aucun piège détecté !</h3>
+              <h3 className="text-base font-bold text-white">Aucun piège actif détecté ! 🎉</h3>
               <p className="text-xs text-zinc-400 leading-relaxed">
-                Toutes vos cartes révisées ont été réussies. Vos erreurs futures apparaîtront ici automatiquement.
+                Toutes vos cartes révisées ont été réussies sans hésitation. Vos erreurs futures ou confusions d'amphi apparaîtront ici sous forme de cartes d'entraînement.
               </p>
             </div>
-          ) : (
-            <div className="max-w-2xl mx-auto space-y-4">
-              <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-xs text-rose-300 flex items-center gap-2">
-                <ShieldAlert className="w-4 h-4 shrink-0" />
-                <span>
-                  Ces cartes regroupent vos confusions récentes et les pièges signalés lors des amphis.
+          ) : trapCards[trapIndex] ? (
+            <div className="max-w-2xl mx-auto p-6 rounded-2xl bg-surface border border-rose-500/30 space-y-6 shadow-xl relative">
+              {/* Badge supérieur */}
+              <div className="flex items-center justify-between text-xs pb-3 border-b border-border">
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-bold border border-rose-500/30 flex items-center gap-1">
+                    <ShieldAlert className="w-3.5 h-3.5" />
+                    <span>Focus Piège & Erreur</span>
+                  </span>
+                  <span className="text-zinc-400 font-medium">
+                    Carte {trapIndex + 1} / {trapCards.length}
+                  </span>
+                </div>
+                <span className="text-[11px] font-bold text-rose-400">
+                  {trapCards[trapIndex].subjectTitle || 'Matière'}
                 </span>
               </div>
 
-              {trapCards.map((trap, idx) => (
-                <div key={idx} className="p-5 rounded-2xl bg-surface border border-border space-y-3">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-rose-400 font-bold uppercase tracking-wider text-[10px]">
-                      Piège d'examen n°{idx + 1}
-                    </span>
-                    <span className="text-zinc-400">{trap.subjectTitle || 'Matière'}</span>
+              {/* Barre de progression des pièges */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-[11px] text-zinc-400">
+                  <span>Désamorçage des pièges : {trapIndex + 1} sur {trapCards.length}</span>
+                  <span className="font-mono font-bold text-rose-400">
+                    {Math.round(((trapIndex + 1) / trapCards.length) * 100)}%
+                  </span>
+                </div>
+                <div className="w-full h-1.5 bg-surface-elevated rounded-full overflow-hidden border border-border-subtle">
+                  <div
+                    className="h-full bg-rose-500 rounded-full transition-all duration-300"
+                    style={{ width: `${((trapIndex + 1) / trapCards.length) * 100}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Question posée */}
+              <div className="space-y-3">
+                <div className="text-[11px] font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">
+                  <span>⚠️ Question à haut risque de piège :</span>
+                </div>
+                <h3 className="text-base md:text-lg font-bold text-white leading-relaxed">
+                  {trapCards[trapIndex].question || trapCards[trapIndex].title}
+                </h3>
+
+                {/* Options si QCM */}
+                {trapCards[trapIndex].options && trapCards[trapIndex].options.length > 0 && (
+                  <div className="space-y-2 pt-2">
+                    {trapCards[trapIndex].options.map((opt: any, i: number) => {
+                      const optText = typeof opt === 'string' ? opt : opt.text || opt.label || '';
+                      return (
+                        <div
+                          key={i}
+                          className="p-3 rounded-xl text-xs bg-surface-elevated border border-border-subtle text-zinc-300 flex items-center justify-between"
+                        >
+                          <span>
+                            <strong className="mr-2 font-mono text-zinc-500">{String.fromCharCode(65 + i)}.</strong>
+                            {optText}
+                          </span>
+                          {isTrapRevealed && i === trapCards[trapIndex].correctOption && (
+                            <Check className="w-4 h-4 text-emerald-400" />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Bouton Révéler le décodage du piège */}
+              {!isTrapRevealed ? (
+                <button
+                  onClick={() => setIsTrapRevealed(true)}
+                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2"
+                >
+                  <Eye className="w-4 h-4" />
+                  <span>Démasquer le piège et vérifier ma réponse</span>
+                  <kbd className="ml-2 px-1.5 py-0.5 rounded bg-white/20 text-[10px] font-mono">Espace</kbd>
+                </button>
+              ) : (
+                <div className="space-y-5 pt-3 border-t border-border animate-fadeIn">
+                  {/* Décryptage du piège */}
+                  {trapCards[trapIndex].trap && (
+                    <div className="p-4 rounded-xl bg-rose-500/15 border border-rose-500/30 text-xs text-rose-200 space-y-1.5">
+                      <strong className="text-rose-400 uppercase tracking-wider block font-bold flex items-center gap-1.5">
+                        <ShieldAlert className="w-4 h-4" />
+                        <span>Le Piège classique d'examen :</span>
+                      </strong>
+                      <p className="leading-relaxed">{trapCards[trapIndex].trap}</p>
+                    </div>
+                  )}
+
+                  {/* Réponse correcte */}
+                  <div className="p-4 rounded-xl bg-surface-elevated border border-border-subtle space-y-1.5 text-xs">
+                    <strong className="text-emerald-400 uppercase tracking-wider block font-bold">
+                      ✅ La Bonne Méthode / Réponse :
+                    </strong>
+                    <p className="text-zinc-100 leading-relaxed">{trapCards[trapIndex].answer}</p>
                   </div>
 
-                  <h4 className="text-sm font-bold text-white">{trap.question || trap.title}</h4>
-
-                  {trap.trap && (
-                    <div className="p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-xs text-rose-200">
-                      ⚠️ <strong>Erreur fréquente :</strong> {trap.trap}
+                  {/* Boutons d'auto-évaluation pour sortir de la liste des pièges */}
+                  <div className="space-y-2">
+                    <span className="text-[11px] text-zinc-400 font-medium block text-center">
+                      Avez-vous évité le piège cette fois-ci ?
+                    </span>
+                    <div className="grid grid-cols-4 gap-2">
+                      <button
+                        onClick={() => handleTrapAnswer('again')}
+                        className="p-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 text-xs font-bold transition-all text-center group"
+                      >
+                        <div className="flex items-center justify-center gap-1">
+                          <kbd className="px-1 py-0.2 rounded bg-rose-500/20 text-[9px] font-mono">1</kbd>
+                          <span>Piégé</span>
+                        </div>
+                        <div className="text-[10px] text-rose-400 font-mono mt-0.5">&lt; 10 min</div>
+                      </button>
+                      <button
+                        onClick={() => handleTrapAnswer('hard')}
+                        className="p-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-xs font-bold transition-all text-center group"
+                      >
+                        <div className="flex items-center justify-center gap-1">
+                          <kbd className="px-1 py-0.2 rounded bg-amber-500/20 text-[9px] font-mono">2</kbd>
+                          <span>Hésité</span>
+                        </div>
+                        <div className="text-[10px] text-amber-400 font-mono mt-0.5">1 jour</div>
+                      </button>
+                      <button
+                        onClick={() => handleTrapAnswer('good')}
+                        className="p-2.5 rounded-xl bg-blue-500/15 hover:bg-blue-500/25 border border-blue-500/30 text-blue-300 text-xs font-bold transition-all text-center group"
+                      >
+                        <div className="flex items-center justify-center gap-1">
+                          <kbd className="px-1 py-0.2 rounded bg-blue-500/20 text-[9px] font-mono">3</kbd>
+                          <span>Déjoué</span>
+                        </div>
+                        <div className="text-[10px] text-blue-400 font-mono mt-0.5">2 jours</div>
+                      </button>
+                      <button
+                        onClick={() => handleTrapAnswer('easy')}
+                        className="p-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 text-xs font-bold transition-all text-center group"
+                      >
+                        <div className="flex items-center justify-center gap-1">
+                          <kbd className="px-1 py-0.2 rounded bg-emerald-500/20 text-[9px] font-mono">4</kbd>
+                          <span>Maîtrisé</span>
+                        </div>
+                        <div className="text-[10px] text-emerald-400 font-mono mt-0.5">4 jours+</div>
+                      </button>
                     </div>
-                  )}
-
-                  {trap.answer && (
-                    <div className="p-3 rounded-xl bg-surface-elevated border border-border-subtle text-xs text-zinc-300">
-                      ✅ <strong>Correction exacte :</strong> {trap.answer}
-                    </div>
-                  )}
+                  </div>
                 </div>
-              ))}
+              )}
             </div>
-          )}
+          ) : null}
         </div>
       )}
 
