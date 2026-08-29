@@ -626,6 +626,7 @@ export type SemesterFilter = 'all' | 'S1' | 'S2';
 export interface ModalsState {
   recording: boolean;
   courseEditor: boolean;
+  subjectEditor: boolean;
   chapterManager: boolean;
   occlusionStudio: boolean;
   examPlanner: boolean;

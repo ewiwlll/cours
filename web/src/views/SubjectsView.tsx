@@ -283,9 +283,18 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
           </div>
 
           {/* Boutons d'action clairs */}
-          <div className="flex items-center gap-3 shrink-0 flex-wrap">
+          <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
             <button
-              onClick={() => onAddCourse ? onAddCourse(activeSubject.id) : openModal('courseEditor')}
+              onClick={() => openModal('subjectEditor')}
+              className="px-3.5 py-2.5 rounded-xl bg-surface-elevated hover:bg-surface-muted text-zinc-200 hover:text-white border border-border text-xs font-bold transition-all flex items-center gap-1.5"
+              title="Créer une nouvelle matière"
+            >
+              <Plus className="w-3.5 h-3.5 text-purple-400" />
+              <span>+ Matière</span>
+            </button>
+
+            <button
+              onClick={() => onAddCourse ? onAddCourse(activeSubject.id) : openModal('courseEditor', activeSubject.id)}
               className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-md flex items-center gap-2"
             >
               <Plus className="w-4 h-4" />

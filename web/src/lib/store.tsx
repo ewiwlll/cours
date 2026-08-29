@@ -92,6 +92,7 @@ const StoreContext = createContext<StoreContextValue | undefined>(undefined);
 const INITIAL_MODALS: ModalsState = {
   recording: false,
   courseEditor: false,
+  subjectEditor: false,
   chapterManager: false,
   occlusionStudio: false,
   examPlanner: false,

@@ -61,18 +61,28 @@ export function Sidebar() {
       }`}
     >
       {/* Sidebar Header & Toggle */}
-      <div className="p-3 border-b border-border flex items-center justify-between">
+      <div className="p-3 border-b border-border flex items-center justify-between gap-2">
         {!isCollapsed && (
-          <div className="flex items-center gap-2">
-            <GraduationCap className="w-4 h-4 text-blue-400" />
-            <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-300">
-              Matières ({catalog.length})
-            </h2>
+          <div className="flex items-center justify-between flex-1 pr-1">
+            <div className="flex items-center gap-2">
+              <GraduationCap className="w-4 h-4 text-blue-400" />
+              <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-300">
+                Matières ({catalog.length})
+              </h2>
+            </div>
+            <button
+              onClick={() => openModal('subjectEditor')}
+              className="p-1 rounded-lg bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 border border-blue-500/20 hover:border-blue-500/40 transition-all flex items-center gap-1 text-[11px] font-bold"
+              title="Créer une nouvelle matière"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span>Matière</span>
+            </button>
           </div>
         )}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="p-1.5 rounded-lg hover:bg-surface-elevated text-zinc-400 hover:text-zinc-200 transition-colors mx-auto"
+          className="p-1.5 rounded-lg hover:bg-surface-elevated text-zinc-400 hover:text-zinc-200 transition-colors shrink-0"
           title={isCollapsed ? 'Déplier la barre latérale' : 'Replier la barre latérale'}
         >
           {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
@@ -209,15 +219,22 @@ export function Sidebar() {
         )}
       </div>
 
-      {/* Sidebar Footer Action */}
+      {/* Sidebar Footer Actions */}
       {!isCollapsed && (
-        <div className="p-3 border-t border-border bg-surface/80">
+        <div className="p-3 border-t border-border bg-surface/80 flex items-center gap-2">
           <button
             onClick={() => openModal('courseEditor')}
-            className="w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 text-xs font-semibold text-blue-300 hover:text-white transition-all shadow-xs"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 text-xs font-semibold text-blue-300 hover:text-white transition-all shadow-xs"
           >
             <Plus className="w-3.5 h-3.5 text-blue-400" />
-            <span>Nouveau cours</span>
+            <span>+ Séance</span>
+          </button>
+          <button
+            onClick={() => openModal('subjectEditor')}
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-surface-elevated hover:bg-surface-muted border border-border hover:border-zinc-700 text-xs font-semibold text-zinc-300 hover:text-white transition-all shadow-xs"
+          >
+            <Plus className="w-3.5 h-3.5 text-purple-400" />
+            <span>+ Matière</span>
           </button>
         </div>
       )}

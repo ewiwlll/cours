@@ -13,6 +13,7 @@ import type {
   OcclusionMask,
   CoursePhoto,
   ReviewStatus,
+  PriorityLevel,
 } from './types';
 
 const API_BASE = '';
@@ -152,6 +153,7 @@ export async function createSubject(payload: {
   semester?: 'S1' | 'S2';
   category?: string;
   ects?: number;
+  priority?: PriorityLevel;
 }): Promise<Subject | null> {
   try {
     const res = await fetch(`${API_BASE}/api/courses`, {

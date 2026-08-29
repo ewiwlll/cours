@@ -13,6 +13,7 @@ import {
   ImageOcclusionStudioModal,
   CourseEditorModal,
   ChapterEditorModal,
+  SubjectEditorModal,
 } from './components/modals';
 import { HowItWorksModal } from './components/modals/HowItWorksModal';
 import { SettingsModal } from './components/modals/SettingsModal';
@@ -200,7 +201,13 @@ export function App() {
         }}
       />
 
-      {/* 3. Course Editor Modal */}
+      {/* 3. Subject Editor Modal */}
+      <SubjectEditorModal
+        isOpen={modals.subjectEditor}
+        onClose={() => closeModal('subjectEditor')}
+      />
+
+      {/* 4. Course Editor Modal */}
       <CourseEditorModal
         isOpen={modals.courseEditor}
         onClose={() => closeModal('courseEditor')}
@@ -209,7 +216,7 @@ export function App() {
         onSave={handleSaveCourse}
       />
 
-      {/* 4. Chapter Manager Modal */}
+      {/* 5. Chapter Manager Modal */}
       <ChapterEditorModal
         isOpen={modals.chapterManager}
         onClose={() => closeModal('chapterManager')}
@@ -217,7 +224,7 @@ export function App() {
         onSave={handleSaveChapter}
       />
 
-      {/* 5. How It Works Guide Modal */}
+      {/* 6. How It Works Guide Modal */}
       <HowItWorksModal
         isOpen={modals.howItWorks}
         onClose={() => closeModal('howItWorks')}
@@ -226,7 +233,7 @@ export function App() {
         }}
       />
 
-      {/* 6. Settings Modal */}
+      {/* 7. Settings Modal */}
       <SettingsModal />
     </div>
   );
