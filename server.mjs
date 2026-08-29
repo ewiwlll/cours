@@ -7,7 +7,7 @@ import { promisify } from "node:util";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { correctRecall } from "./recall-correction.mjs";
-import { aggregateWeaknesses, buildLearningPlan, calculateCardSchedule, latestReviews, normalizeWeakConcepts, generateInterleavedSession, extractExamTrapsAndErrors, evaluateFeynmanExplanation, seedCourseCardsFromRecall } from "./learning-engine.mjs";
+import { aggregateWeaknesses, buildLearningPlan, calculateCardSchedule, latestReviews, normalizeWeakConcepts, generateInterleavedSession, extractExamTrapsAndErrors, evaluateFeynmanExplanation, seedCourseCardsFromRecall, findClarificationHistory, recordOrUpdateClarification } from "./learning-engine.mjs";
 
 import {
   loadEnvFile,
@@ -29,6 +29,7 @@ const PUBLIC = path.join(ROOT, "public");
 const DATA = path.resolve(process.env.BIOMIA_DATA_DIR || path.join(ROOT, "data"));
 const TRANSCRIPTIONS = path.join(DATA, "transcriptions");
 const REVIEWS = path.join(DATA, "revisions", "reviews.json");
+const CLARIFICATIONS = path.join(DATA, "revisions", "clarifications.json");
 const LESSONS = path.join(DATA, "cours", "index.json");
 const CHAPTERS = path.join(DATA, "cours", "chapters.json");
 const CHAPTER_DEFINITIONS = path.join(DATA, "cours", "chapter-definitions.json");
@@ -2123,6 +2124,29 @@ Réponds STRICTEMENT sous format JSON valide :
       return json(res, 200, { ok: true, evaluation });
     } catch (error) {
       return json(res, 400, { error: error.message || "Évaluation Feynman impossible" });
+    }
+  }
+  if (req.method === "GET" && url.pathname === "/api/clarifications") {
+    const list = await readJsonFile(CLARIFICATIONS, []);
+    return json(res, 200, { ok: true, count: list.length, items: list });
+  }
+  if (req.method === "POST" && url.pathname === "/api/clarifications/record") {
+    try {
+      const payload = JSON.parse(await readBody(req));
+      const list = await readJsonFile(CLARIFICATIONS, []);
+      const result = recordOrUpdateClarification({
+        clarifications: list,
+        subjectId: payload.subjectId,
+        courseId: payload.courseId,
+        chapterId: payload.chapterId,
+        question: payload.question,
+        answer: payload.answer,
+        context: payload.context,
+      });
+      await saveJsonArray(CLARIFICATIONS, list);
+      return json(res, 201, { ok: true, ...result });
+    } catch (error) {
+      return json(res, 400, { error: error.message || "Enregistrement de clarification impossible" });
     }
   }
   if (req.method === "POST" && url.pathname === "/api/reviews/batch") {

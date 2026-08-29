@@ -212,6 +212,41 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
     }
   };
 
+  // Raccourcis Clavier Anki (Espace pour révéler, 1/2/3/4 pour noter)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (activeMode !== 'cards' || !currentCard) return;
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+
+      if (!isAnswerRevealed) {
+        if (e.code === 'Space' || e.key === 'Enter') {
+          e.preventDefault();
+          setIsAnswerRevealed(true);
+        }
+      } else {
+        if (e.key === '1' || e.key === '&') {
+          e.preventDefault();
+          handleReviewAnswer('again');
+        } else if (e.key === '2' || e.key === 'é') {
+          e.preventDefault();
+          handleReviewAnswer('hard');
+        } else if (e.key === '3' || e.key === '"') {
+          e.preventDefault();
+          handleReviewAnswer('good');
+        } else if (e.key === '4' || e.key === "'") {
+          e.preventDefault();
+          handleReviewAnswer('easy');
+        } else if (e.code === 'Space' || e.key === 'Enter') {
+          e.preventDefault();
+          handleReviewAnswer('good');
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeMode, currentCard, isAnswerRevealed, currentCardIndex, targetCardsList.length]);
+
   const handleCopyAntigravityPrompt = () => {
     const subTitle = subjects.find((s) => s.id === selectedSubjectId)?.title || 'mon cours';
     const promptText = `cours oral sur ${subTitle}`;
@@ -561,14 +596,31 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
                 )}
               </div>
 
+              {/* Barre de progression de la séance */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-[11px] text-zinc-400">
+                  <span>Progression : Carte {currentCardIndex + 1} sur {targetCardsList.length}</span>
+                  <span className="font-mono font-bold text-purple-300">
+                    {Math.round(((currentCardIndex + 1) / targetCardsList.length) * 100)}%
+                  </span>
+                </div>
+                <div className="w-full h-1.5 bg-surface-elevated rounded-full overflow-hidden border border-border-subtle">
+                  <div
+                    className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full transition-all duration-300"
+                    style={{ width: `${((currentCardIndex + 1) / targetCardsList.length) * 100}%` }}
+                  />
+                </div>
+              </div>
+
               {/* Bouton Révéler la Réponse */}
               {!isAnswerRevealed ? (
                 <button
                   onClick={() => setIsAnswerRevealed(true)}
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2"
                 >
                   <Eye className="w-4 h-4" />
                   <span>Afficher la réponse attendue</span>
+                  <kbd className="ml-2 px-1.5 py-0.5 rounded bg-white/20 text-[10px] font-mono">Espace</kbd>
                 </button>
               ) : (
                 <div className="space-y-5 pt-3 border-t border-border animate-fadeIn">
@@ -602,39 +654,51 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
                     )}
                   </div>
 
-                  {/* Boutons d'évaluation FSRS */}
+                  {/* Boutons d'évaluation FSRS Anki avec raccourcis et intervalles prédictifs */}
                   <div className="space-y-2">
                     <span className="text-[11px] text-zinc-400 font-medium block text-center">
-                      Auto-évaluation de votre rétention mémoire :
+                      Auto-évaluation FSRS-5 (Raccourcis clavier 1, 2, 3, 4) :
                     </span>
                     <div className="grid grid-cols-4 gap-2">
                       <button
                         onClick={() => handleReviewAnswer('again')}
-                        className="py-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 text-xs font-bold transition-all text-center"
+                        className="p-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 text-xs font-bold transition-all text-center group"
                       >
-                        <div>À revoir</div>
-                        <div className="text-[9px] text-rose-400/80 font-normal">Échec</div>
+                        <div className="flex items-center justify-center gap-1">
+                          <kbd className="px-1 py-0.2 rounded bg-rose-500/20 text-[9px] font-mono">1</kbd>
+                          <span>À revoir</span>
+                        </div>
+                        <div className="text-[10px] text-rose-400 font-mono mt-0.5">&lt; 10 min</div>
                       </button>
                       <button
                         onClick={() => handleReviewAnswer('hard')}
-                        className="py-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-xs font-bold transition-all text-center"
+                        className="p-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-xs font-bold transition-all text-center group"
                       >
-                        <div>Difficile</div>
-                        <div className="text-[9px] text-amber-400/80 font-normal">Hésité</div>
+                        <div className="flex items-center justify-center gap-1">
+                          <kbd className="px-1 py-0.2 rounded bg-amber-500/20 text-[9px] font-mono">2</kbd>
+                          <span>Difficile</span>
+                        </div>
+                        <div className="text-[10px] text-amber-400 font-mono mt-0.5">1 jour</div>
                       </button>
                       <button
                         onClick={() => handleReviewAnswer('good')}
-                        className="py-2.5 rounded-xl bg-blue-500/15 hover:bg-blue-500/25 border border-blue-500/30 text-blue-300 text-xs font-bold transition-all text-center"
+                        className="p-2.5 rounded-xl bg-blue-500/15 hover:bg-blue-500/25 border border-blue-500/30 text-blue-300 text-xs font-bold transition-all text-center group"
                       >
-                        <div>Correct</div>
-                        <div className="text-[9px] text-blue-400/80 font-normal">Rappel net</div>
+                        <div className="flex items-center justify-center gap-1">
+                          <kbd className="px-1 py-0.2 rounded bg-blue-500/20 text-[9px] font-mono">3</kbd>
+                          <span>Correct</span>
+                        </div>
+                        <div className="text-[10px] text-blue-400 font-mono mt-0.5">3 jours</div>
                       </button>
                       <button
                         onClick={() => handleReviewAnswer('easy')}
-                        className="py-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 text-xs font-bold transition-all text-center"
+                        className="p-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 text-xs font-bold transition-all text-center group"
                       >
-                        <div>Facile</div>
-                        <div className="text-[9px] text-emerald-400/80 font-normal">Parfait</div>
+                        <div className="flex items-center justify-center gap-1">
+                          <kbd className="px-1 py-0.2 rounded bg-emerald-500/20 text-[9px] font-mono">4</kbd>
+                          <span>Facile</span>
+                        </div>
+                        <div className="text-[10px] text-emerald-400 font-mono mt-0.5">7 jours+</div>
                       </button>
                     </div>
                   </div>
