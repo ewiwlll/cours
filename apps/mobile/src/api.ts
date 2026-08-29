@@ -473,3 +473,86 @@ export async function evaluateFeynman(courseId: string, cardId: string, explanat
   }
 }
 
+export async function getExams(): Promise<ExamPlan[]> {
+  try {
+    const data = await request<ExamPlan[]>("/api/exams");
+    return Array.isArray(data) ? data : [];
+  } catch (e) {
+    console.warn("Failed to load exams:", e);
+    return [];
+  }
+}
+
+export async function createExam(payload: {
+  title: string;
+  date: string;
+  subjectId?: string | null;
+  subjectTitle?: string;
+  chapterIds?: string[];
+  minutesPerDay?: number;
+}): Promise<ExamPlan | null> {
+  try {
+    const data = await request<ExamPlan>("/api/exams", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    return data || null;
+  } catch (e) {
+    console.warn("Failed to create exam:", e);
+    return null;
+  }
+}
+
+export async function deleteExam(id: string): Promise<boolean> {
+  try {
+    const data = await request<{ ok: boolean }>(`/api/exams/${encodeURIComponent(id)}`, {
+      method: "DELETE",
+    });
+    return !!(data && data.ok);
+  } catch (e) {
+    console.warn("Failed to delete exam:", e);
+    return false;
+  }
+}
+
+export async function getRevisionCalendar(days = 7): Promise<any> {
+  try {
+    const data = await request<any>(`/api/revision-calendar?days=${days}`);
+    return data || null;
+  } catch (e) {
+    console.warn("Failed to load revision calendar:", e);
+    return null;
+  }
+}
+
+export async function prepareOralSession(payload: {
+  subjectId?: string | null;
+  subjectTitle?: string | null;
+  chapter?: string | null;
+  courseId?: string | null;
+  courseTitle?: string | null;
+  prompt: string;
+}): Promise<boolean> {
+  try {
+    const data = await request<{ ok: boolean }>("/api/oral/prepare", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    return !!(data && data.ok);
+  } catch (e) {
+    console.warn("Failed to prepare oral session:", e);
+    return false;
+  }
+}
+
+export async function getWeaknesses(): Promise<any[]> {
+  try {
+    const data = await request<{ ok: boolean; weaknesses: any[] }>("/api/weaknesses");
+    return data.weaknesses || [];
+  } catch (e) {
+    console.warn("Failed to load weaknesses:", e);
+    return [];
+  }
+}
+
+

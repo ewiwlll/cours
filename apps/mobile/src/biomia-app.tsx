@@ -33,6 +33,12 @@ import {
   evaluateFeynman,
   syncPendingReviews,
   enqueueOfflineReview,
+  getExams,
+  createExam,
+  deleteExam,
+  getRevisionCalendar,
+  prepareOralSession,
+  getWeaknesses,
   type Subject,
   type StudyCourse,
   type ChapterDefinition,
@@ -108,13 +114,40 @@ export function CoursApp() {
   const [selectedQcmOption, setSelectedQcmOption] = useState<number | null>(null);
   const [reviewedTodayCount, setReviewedTodayCount] = useState(0);
 
+  // Exams & Planning State
+  const [exams, setExams] = useState<any[]>([]);
+  const [weaknesses, setWeaknesses] = useState<any[]>([]);
+  const [calendarDays, setCalendarDays] = useState<any[]>([]);
+  const [showNewExamModal, setShowNewExamModal] = useState(false);
+  const [newExamTitle, setNewExamTitle] = useState("");
+  const [newExamKind, setNewExamKind] = useState("partiel");
+  const [newExamDate, setNewExamDate] = useState("");
+  const [newExamSubjectIds, setNewExamSubjectIds] = useState<string[]>([]);
+  const [newExamChapterIds, setNewExamChapterIds] = useState<string[]>([]);
+  const [isOralPrepared, setIsOralPrepared] = useState(false);
+
   const fetchAppData = async () => {
     setLoading(true);
     try {
-      const data = await loadData();
+      const [data, examList, weakList, calData] = await Promise.all([
+        loadData(),
+        getExams().catch(() => []),
+        getWeaknesses().catch(() => []),
+        getRevisionCalendar(7).catch(() => null),
+      ]);
+
       setSubjects(data.subjects || []);
       setCourses(data.courses || []);
       setChapters(data.chapterDefinitions || []);
+      setExams(examList || []);
+      setWeaknesses(weakList || []);
+
+      if (calData && (Array.isArray(calData.calendar) || Array.isArray(calData.days))) {
+        setCalendarDays(calData.calendar || calData.days);
+      } else if (Array.isArray(calData)) {
+        setCalendarDays(calData);
+      }
+
       setIsOnline(true);
 
       if (data.subjects && data.subjects.length > 0 && data.subjects[0]) {
@@ -197,6 +230,78 @@ export function CoursApp() {
   const lockedCourses = useMemo(() => {
     return courses.filter((c) => c.recallStatus === "locked");
   }, [courses]);
+
+  // Calcul du taux de maîtrise réel par cours (FSRS-5 & Rappel Actif)
+  const courseMasteryList = useMemo(() => {
+    return courses.map((course) => {
+      let score = 70;
+      if (course.recallStatus === "locked") {
+        score = 0;
+      } else {
+        const baseRecall = Number(course.recallScore) || 75;
+        const isWeak = weaknesses.some((w) => w.courseId === course.id);
+        const cardCount = course.cards?.length || 0;
+        score = Math.min(100, Math.max(10, baseRecall - (isWeak ? 20 : 0) + (cardCount > 0 ? 10 : 0)));
+      }
+      return {
+        course,
+        masteryPercent: Math.round(score),
+      };
+    });
+  }, [courses, weaknesses]);
+
+  const masteredCourses = useMemo(() => {
+    return courseMasteryList
+      .filter((item) => item.masteryPercent >= 75 && item.course.recallStatus !== "locked")
+      .sort((a, b) => b.masteryPercent - a.masteryPercent);
+  }, [courseMasteryList]);
+
+  const coursesToConsolidate = useMemo(() => {
+    return courseMasteryList
+      .filter((item) => item.masteryPercent < 75 || item.course.recallStatus === "locked")
+      .sort((a, b) => a.masteryPercent - b.masteryPercent);
+  }, [courseMasteryList]);
+
+  const nearestExam = useMemo(() => {
+    if (!exams || exams.length === 0) return null;
+    return [...exams].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0];
+  }, [exams]);
+
+  const daysToNearestExam = useMemo(() => {
+    if (!nearestExam) return null;
+    return Math.max(
+      0,
+      Math.ceil(
+        (new Date(nearestExam.date).getTime() - new Date().setHours(0, 0, 0, 0)) /
+          (1000 * 60 * 60 * 24)
+      )
+    );
+  }, [nearestExam]);
+
+  // Oral Prompt Dynamique
+  const dynamicOralPrompt = useMemo(() => {
+    if (selectedSubjectId && selectedSubjectId !== "all") {
+      const sub = subjects.find((s) => s.id === selectedSubjectId);
+      return `cours oral sur ${sub?.title || "mon cours"}`;
+    }
+    return `cours oral sur l'ensemble de mes cours`;
+  }, [selectedSubjectId, subjects]);
+
+  const handlePrepareMobileOral = async () => {
+    const sub = subjects.find((s) => s.id === selectedSubjectId);
+    try {
+      await prepareOralSession({
+        subjectId: selectedSubjectId || null,
+        subjectTitle: sub?.title || null,
+        prompt: dynamicOralPrompt,
+      });
+      setIsOralPrepared(true);
+      setTimeout(() => setIsOralPrepared(false), 4000);
+      Alert.alert("✨ Session Prête !", "La session a été enregistrée sur ton Mac.\n\nTape 'cours' dans Antigravity pour démarrer l'interrogation !");
+    } catch (e) {
+      console.warn("Oral prep failed:", e);
+    }
+  };
 
   const allCards = useMemo(() => {
     const cards: Card[] = [];
@@ -515,7 +620,7 @@ export function CoursApp() {
                 </View>
               )}
 
-              {/* STATS RAPIDES */}
+              {/* STATS RAPIDES (4 KPIS CONNECTÉS) */}
               <View style={styles.statsGrid}>
                 <View style={styles.statCard}>
                   <Text style={styles.statNumber}>{courses.length}</Text>
@@ -524,6 +629,16 @@ export function CoursApp() {
                 <View style={styles.statCard}>
                   <Text style={[styles.statNumber, { color: "#22c55e" }]}>{allCards.length}</Text>
                   <Text style={styles.statLabel}>Flashcards FSRS-5</Text>
+                </View>
+                <View style={styles.statCard}>
+                  <Text style={[styles.statNumber, { color: "#f59e0b" }]}>
+                    {daysToNearestExam !== null ? (daysToNearestExam === 0 ? "Jour J !" : `J-${daysToNearestExam}`) : "Aucune"}
+                  </Text>
+                  <Text style={styles.statLabel}>Prochaine épreuve</Text>
+                </View>
+                <View style={styles.statCard}>
+                  <Text style={[styles.statNumber, { color: "#f43f5e" }]}>{weaknesses.length}</Text>
+                  <Text style={styles.statLabel}>Points à consolider</Text>
                 </View>
               </View>
 
@@ -535,20 +650,17 @@ export function CoursApp() {
                 <Text style={styles.quickLaunchBtnText}>⚡ Démarrer mes révisions FSRS-5</Text>
               </Pressable>
 
-              {/* DERNIERS COURS AJOUTÉS */}
-              <Text style={styles.sectionHeaderTitle}>Derniers cours ajoutés</Text>
-              {courses.length === 0 ? (
-                <View style={styles.emptyCard}>
-                  <Text style={styles.emptyText}>Aucun cours pour l instant. Enregistre ton premier cours dans l onglet Amphi !</Text>
-                </View>
-              ) : (
-                [...courses]
-                  .sort((a, b) => new Date(b.date || b.createdAt || 0).getTime() - new Date(a.date || a.createdAt || 0).getTime())
-                  .slice(0, 6)
-                  .map((c) => (
+              {/* TABLEAU DE BORD DE MAÎTRISE : COURS À CONSOLIDER */}
+              {coursesToConsolidate.length > 0 && (
+                <View style={styles.masterySection}>
+                  <View style={styles.masterySectionHeader}>
+                    <Text style={styles.masterySectionTitleRed}>🚨 Cours à Consolider & Débloquer ({coursesToConsolidate.length})</Text>
+                    <Text style={styles.masterySectionBadgeRed}>&lt; 75%</Text>
+                  </View>
+                  {coursesToConsolidate.slice(0, 4).map(({ course: c, masteryPercent }) => (
                     <Pressable
                       key={c.id}
-                      style={styles.courseItemCard}
+                      style={styles.courseMasteryCardRed}
                       onPress={() => {
                         setSelectedCourse(c);
                         setCourseTab("fiche");
@@ -559,20 +671,53 @@ export function CoursApp() {
                       <View style={{ flex: 1 }}>
                         <Text style={styles.courseItemTitle}>{c.title}</Text>
                         <Text style={styles.courseItemMeta}>
-                          {c.subjectTitle || "Matière"} • {c.date} • {c.cards?.length || 0} cartes
+                          {c.subjectTitle || "Matière"} • {c.chapter || "Général"}
                         </Text>
                       </View>
-                      {c.recallStatus === "locked" ? (
-                        <View style={styles.lockedPill}>
-                          <Text style={styles.lockedPillText}>🔒 Verrouillé</Text>
+                      <View style={styles.masteryBadgeContainer}>
+                        <Text style={styles.masteryPercentRed}>{masteryPercent}%</Text>
+                        <View style={styles.masteryBarBg}>
+                          <View style={[styles.masteryBarFillRed, { width: `${masteryPercent}%` }]} />
                         </View>
-                      ) : (
-                        <View style={styles.unlockedPill}>
-                          <Text style={styles.unlockedPillText}>✓ Prêt</Text>
-                        </View>
-                      )}
+                      </View>
                     </Pressable>
-                  ))
+                  ))}
+                </View>
+              )}
+
+              {/* TABLEAU DE BORD DE MAÎTRISE : COURS MAÎTRISÉS */}
+              {masteredCourses.length > 0 && (
+                <View style={styles.masterySection}>
+                  <View style={styles.masterySectionHeader}>
+                    <Text style={styles.masterySectionTitleGreen}>🟢 Cours Maîtrisés ({masteredCourses.length})</Text>
+                    <Text style={styles.masterySectionBadgeGreen}>≥ 75%</Text>
+                  </View>
+                  {masteredCourses.slice(0, 4).map(({ course: c, masteryPercent }) => (
+                    <Pressable
+                      key={c.id}
+                      style={styles.courseMasteryCardGreen}
+                      onPress={() => {
+                        setSelectedCourse(c);
+                        setCourseTab("fiche");
+                        setRecallText("");
+                        setRecallResult(null);
+                      }}
+                    >
+                      <View style={{ flex: 1 }}>
+                        <Text style={styles.courseItemTitle}>{c.title}</Text>
+                        <Text style={styles.courseItemMeta}>
+                          {c.subjectTitle || "Matière"} • {c.chapter || "Général"}
+                        </Text>
+                      </View>
+                      <View style={styles.masteryBadgeContainer}>
+                        <Text style={styles.masteryPercentGreen}>{masteryPercent}%</Text>
+                        <View style={styles.masteryBarBg}>
+                          <View style={[styles.masteryBarFillGreen, { width: `${masteryPercent}%` }]} />
+                        </View>
+                      </View>
+                    </Pressable>
+                  ))}
+                </View>
               )}
             </View>
           )}
@@ -993,15 +1138,7 @@ export function CoursApp() {
                   style={[styles.cognitiveModePill, trainingMode === "standard" && styles.cognitiveModePillActive]}
                 >
                   <Text style={[styles.cognitiveModeText, trainingMode === "standard" && styles.cognitiveModeTextActive]}>
-                    ⚡ Standard
-                  </Text>
-                </Pressable>
-                <Pressable
-                  onPress={() => setTrainingMode("interleaved")}
-                  style={[styles.cognitiveModePill, trainingMode === "interleaved" && { backgroundColor: "#2563eb", borderColor: "#2563eb" }]}
-                >
-                  <Text style={[styles.cognitiveModeText, trainingMode === "interleaved" && styles.cognitiveModeTextActive]}>
-                    🔀 Panachée ({interleavedCards.length || "15"})
+                    ⚡ Flashcards ({allCards.length})
                   </Text>
                 </Pressable>
                 <Pressable
@@ -1012,225 +1149,261 @@ export function CoursApp() {
                     ⚠️ Pièges ({trapCards.length})
                   </Text>
                 </Pressable>
+                <Pressable
+                  onPress={() => setTrainingMode("oral" as any)}
+                  style={[styles.cognitiveModePill, (trainingMode as any) === "oral" && { backgroundColor: "#f59e0b", borderColor: "#f59e0b" }]}
+                >
+                  <Text style={[styles.cognitiveModeText, (trainingMode as any) === "oral" && styles.cognitiveModeTextActive]}>
+                    🎙️ Oral Studio
+                  </Text>
+                </Pressable>
               </View>
 
               {/* BANDEAU EXPLICATIF DU SOUS-MODE COGNITIF */}
               <View style={styles.cognitiveExplainBanner}>
                 <Text style={styles.cognitiveExplainIcon}>
-                  {trainingMode === "standard" ? "⚡" : trainingMode === "interleaved" ? "🔀" : "⚠️"}
+                  {trainingMode === "standard" ? "⚡" : trainingMode === "traps" ? "⚠️" : "🎙️"}
                 </Text>
                 <Text style={styles.cognitiveExplainText}>
                   {trainingMode === "standard"
                     ? "Répétition espacée FSRS-5 : révise tes cartes au moment optimal avant l'oubli. Révise librement à ton rythme."
-                    : trainingMode === "interleaved"
-                    ? "Séance Panachée : entrelace les matières (Bio, Maths, Physique...) pour muscler ton agilité mentale."
-                    : "Carnet de Pièges : concentre-toi sur tes erreurs récentes et les pièges d'examen signalés par le prof."}
+                    : trainingMode === "traps"
+                    ? "Hypercorrection Active : affronte tes erreurs récentes et les pièges d'examen pour les désamorcer définitivement."
+                    : "Oral Blanc Studio Antigravity : fais-toi interroger à voix haute par l'IA sur ton Mac avec feedback de Feynman."}
                 </Text>
               </View>
 
-              {/* FILTRE PAR MATIÈRE (EN MODE STANDARD) */}
-              {trainingMode === "standard" && (
-                <View style={styles.trainingConfigCard}>
-                  <Text style={styles.fieldLabel}>Filtrer par matière :</Text>
-                  <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: "row", marginTop: 4 }}>
-                    <Pressable
-                      onPress={() => setTrainingSubjectFilter("all")}
-                      style={[styles.smallSubjectPill, trainingSubjectFilter === "all" && styles.smallSubjectPillActive]}
-                    >
-                      <Text style={[styles.smallSubjectPillText, trainingSubjectFilter === "all" && styles.smallSubjectPillTextActive]}>
-                        Toutes les matières
-                      </Text>
-                    </Pressable>
-                    {subjects.map((s) => (
-                      <Pressable
-                        key={s.id}
-                        onPress={() => setTrainingSubjectFilter(s.id)}
-                        style={[styles.smallSubjectPill, trainingSubjectFilter === s.id && styles.smallSubjectPillActive]}
-                      >
-                        <Text style={[styles.smallSubjectPillText, trainingSubjectFilter === s.id && styles.smallSubjectPillTextActive]}>
-                          {s.title}
-                        </Text>
-                      </Pressable>
-                    ))}
-                  </ScrollView>
-                </View>
-              )}
-
-              {activeTrainingCards.length === 0 ? (
-                <View style={styles.emptyCard}>
-                  <Text style={styles.emptyText}>
-                    {trainingMode === "traps"
-                      ? "Aucun piège d'examen ni carte en difficulté pour le moment. Félicitations !"
-                      : "Aucune flashcard disponible dans ce périmètre."}
-                  </Text>
-                </View>
-              ) : (
+              {/* VUE MODE ORAL BLANC ANTIGRAVITY */}
+              {(trainingMode as any) === "oral" ? (
                 <View style={styles.cardTrainingBox}>
                   <View style={styles.cardHeaderRow}>
-                    <Text style={styles.cardProgressText}>Carte {trainingIndex + 1} / {activeTrainingCards.length}</Text>
-                    <Text style={[styles.cardTag, trainingMode === "traps" && { color: "#f43f5e" }]}>
-                      {activeTrainingCards[trainingIndex]?.subjectTitle || activeTrainingCards[trainingIndex]?.kind || (trainingMode === "traps" ? "Piège exam" : "Flashcard")}
-                    </Text>
+                    <Text style={styles.cardProgressText}>Simulation d'Oral Socratique</Text>
+                    <Text style={[styles.cardTag, { color: "#f59e0b" }]}>Studio Antigravity</Text>
                   </View>
 
-                  <Text style={styles.cardQuestionText}>{activeTrainingCards[trainingIndex]?.question}</Text>
+                  <Text style={styles.cardQuestionText}>
+                    Prépare ton interrogation orale sur {activeSubject?.title || "mes cours"} :
+                  </Text>
 
-                  {/* QCM OPTIONS IF AVAILABLE */}
-                  {activeTrainingCards[trainingIndex]?.options && activeTrainingCards[trainingIndex]!.options!.length > 0 && !showAnswer && (
-                    <View style={styles.qcmContainer}>
-                      {activeTrainingCards[trainingIndex]!.options!.map((opt: any, idx: number) => {
-                        const optText = typeof opt === "string" ? opt : opt.text || opt.label || "";
-                        const isSelected = selectedQcmOption === idx;
-                        return (
+                  <View style={styles.oralPromptBox}>
+                    <Text style={styles.oralPromptText}>{dynamicOralPrompt}</Text>
+                  </View>
+
+                  <Pressable
+                    onPress={handlePrepareMobileOral}
+                    style={styles.oralPrepareBtn}
+                  >
+                    <Text style={styles.oralPrepareBtnText}>
+                      {isOralPrepared ? "✨ Session Enregistrée !" : "🚀 Préparer & Copier le Prompt Antigravity"}
+                    </Text>
+                  </Pressable>
+
+                  <View style={styles.oralInfoBox}>
+                    <Text style={styles.oralInfoTitle}>💡 Comment démarrer ?</Text>
+                    <Text style={styles.oralInfoText}>
+                      1. Clique sur le bouton ci-dessus pour enregistrer la session.{"\n"}
+                      2. Ouvre Antigravity sur ton Mac et tape simplement <Text style={{ color: "#f59e0b", fontWeight: "bold" }}>cours</Text>.{"\n"}
+                      3. L'agent lance immédiatement l'interrogation orale !
+                    </Text>
+                  </View>
+                </View>
+              ) : (
+                <>
+                  {/* FILTRE PAR MATIÈRE (EN MODE STANDARD) */}
+                  {trainingMode === "standard" && (
+                    <View style={styles.trainingConfigCard}>
+                      <Text style={styles.fieldLabel}>Filtrer par matière :</Text>
+                      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: "row", marginTop: 4 }}>
+                        <Pressable
+                          onPress={() => setTrainingSubjectFilter("all")}
+                          style={[styles.smallSubjectPill, trainingSubjectFilter === "all" && styles.smallSubjectPillActive]}
+                        >
+                          <Text style={[styles.smallSubjectPillText, trainingSubjectFilter === "all" && styles.smallSubjectPillTextActive]}>
+                            Toutes les matières
+                          </Text>
+                        </Pressable>
+                        {subjects.map((s) => (
                           <Pressable
-                            key={idx}
-                            onPress={() => setSelectedQcmOption(idx)}
-                            style={[styles.qcmOptionBtn, isSelected && styles.qcmOptionBtnSelected]}
+                            key={s.id}
+                            onPress={() => setTrainingSubjectFilter(s.id)}
+                            style={[styles.smallSubjectPill, trainingSubjectFilter === s.id && styles.smallSubjectPillActive]}
                           >
-                            <Text style={styles.qcmLetter}>{String.fromCharCode(65 + idx)}.</Text>
-                            <Text style={[styles.qcmOptionText, isSelected && styles.qcmOptionTextSelected]}>
-                              {optText}
+                            <Text style={[styles.smallSubjectPillText, trainingSubjectFilter === s.id && styles.smallSubjectPillTextActive]}>
+                              {s.title}
                             </Text>
                           </Pressable>
-                        );
-                      })}
+                        ))}
+                      </ScrollView>
                     </View>
                   )}
 
-                  {showAnswer ? (
-                    <View style={styles.answerBox}>
-                      <Text style={styles.answerLabel}>RÉPONSE MODÈLE :</Text>
-                      <Text style={styles.answerText}>{activeTrainingCards[trainingIndex]?.answer}</Text>
-                      
-                      {activeTrainingCards[trainingIndex]?.trap ? (
-                        <View style={styles.trapBox}>
-                          <Text style={styles.trapLabel}>⚠️ Piège exam :</Text>
-                          <Text style={styles.trapText}>{activeTrainingCards[trainingIndex]?.trap}</Text>
-                        </View>
-                      ) : null}
-
-                      {/* DUAL CODING : PHOTO DU TABLEAU SI DISPONIBLE */}
-                      {(() => {
-                        const card = activeTrainingCards[trainingIndex];
-                        const parent = courses.find((c) => c.id === card?.courseId || c.cards?.some((cd) => cd.id === card?.id));
-                        const photo = parent?.photos?.[0];
-                        if (!photo) return null;
-                        const photoUri = photo.url ? (photo.url.startsWith("http") ? photo.url : `${getActiveServerUrl()}${photo.url}`) : null;
-                        if (!photoUri) return null;
-                        return (
-                          <View style={styles.dualCodingBox}>
-                            <Text style={styles.dualCodingLabel}>📷 Photo du tableau (Double codage) :</Text>
-                            <Image source={{ uri: photoUri }} style={styles.dualCodingImg} resizeMode="contain" />
-                          </View>
-                        );
-                      })()}
-
-                      {/* DÉFI FEYNMAN 60S */}
-                      <View style={styles.feynmanCard}>
-                        {!isFeynmanOpen ? (
-                          <Pressable onPress={() => setIsFeynmanOpen(true)} style={styles.feynmanToggleBtn}>
-                            <Text style={styles.feynmanToggleBtnText}>🧠 Défi Feynman : Explique en 60s (IA)</Text>
-                          </Pressable>
-                        ) : (
-                          <View style={styles.feynmanExpandedBox}>
-                            <View style={styles.feynmanHeaderRow}>
-                              <Text style={styles.feynmanTitle}>🧠 Défi Feynman : Pourquoi & Comment ?</Text>
-                              <Pressable onPress={() => setIsFeynmanOpen(false)}>
-                                <Text style={styles.feynmanCloseText}>✕</Text>
-                              </Pressable>
-                            </View>
-                            <TextInput
-                              value={feynmanText}
-                              onChangeText={setFeynmanText}
-                              placeholder="Explique le mécanisme avec tes propres mots..."
-                              placeholderTextColor="#71717a"
-                              multiline
-                              numberOfLines={3}
-                              style={styles.feynmanInput}
-                            />
-                            <Pressable
-                              onPress={handleEvaluateFeynman}
-                              disabled={isEvaluatingFeynman || !feynmanText.trim()}
-                              style={[styles.feynmanSubmitBtn, (!feynmanText.trim() || isEvaluatingFeynman) && { opacity: 0.5 }]}
-                            >
-                              {isEvaluatingFeynman ? (
-                                <ActivityIndicator color="#09090b" size="small" />
-                              ) : (
-                                <Text style={styles.feynmanSubmitBtnText}>⚡ Évaluer mon explication</Text>
-                              )}
-                            </Pressable>
-
-                            {feynmanFeedback && (
-                              <View style={styles.feynmanFeedbackBox}>
-                                <View style={styles.feynmanScoreRow}>
-                                  <Text style={styles.feynmanScoreText}>Score : {feynmanFeedback.score}/100</Text>
-                                  <Text style={styles.feynmanCausalText}>Causalité : {feynmanFeedback.causalScore}%</Text>
-                                </View>
-                                <Text style={styles.feynmanFeedbackText}>{feynmanFeedback.feedback}</Text>
-                              </View>
-                            )}
-                          </View>
-                        )}
-                      </View>
-
-                      {/* 4 FSRS-5 RATING BUTTONS */}
-                      <Text style={styles.ratingPrompt}>Comment as-tu trouvé cette carte ?</Text>
-                      <View style={styles.ratingGrid}>
-                        <Pressable onPress={() => handleRateCard(1)} style={[styles.ratingBtn, { backgroundColor: "#ef4444" }]}>
-                          <Text style={styles.ratingBtnText}>À revoir</Text>
-                          <Text style={styles.ratingSubText}>1 j</Text>
-                        </Pressable>
-                        <Pressable onPress={() => handleRateCard(2)} style={[styles.ratingBtn, { backgroundColor: "#f59e0b" }]}>
-                          <Text style={styles.ratingBtnText}>Difficile</Text>
-                          <Text style={styles.ratingSubText}>3 j</Text>
-                        </Pressable>
-                        <Pressable onPress={() => handleRateCard(3)} style={[styles.ratingBtn, { backgroundColor: "#3b82f6" }]}>
-                          <Text style={styles.ratingBtnText}>Correct</Text>
-                          <Text style={styles.ratingSubText}>6 j</Text>
-                        </Pressable>
-                        <Pressable onPress={() => handleRateCard(4)} style={[styles.ratingBtn, { backgroundColor: "#22c55e" }]}>
-                          <Text style={styles.ratingBtnText}>Facile</Text>
-                          <Text style={styles.ratingSubText}>12 j</Text>
-                        </Pressable>
-                      </View>
+                  {activeTrainingCards.length === 0 ? (
+                    <View style={styles.emptyCard}>
+                      <Text style={styles.emptyText}>
+                        {trainingMode === "traps"
+                          ? "Aucun piège d'examen ni carte en difficulté pour le moment. Félicitations !"
+                          : "Aucune flashcard disponible dans ce périmètre."}
+                      </Text>
                     </View>
                   ) : (
-                    <Pressable onPress={() => setShowAnswer(true)} style={styles.showAnswerBtn}>
-                      <Text style={styles.showAnswerBtnText}>👀 Révéler la réponse</Text>
-                    </Pressable>
+                    <View style={styles.cardTrainingBox}>
+                      <View style={styles.cardHeaderRow}>
+                        <Text style={styles.cardProgressText}>Carte {trainingIndex + 1} / {activeTrainingCards.length}</Text>
+                        <Text style={[styles.cardTag, trainingMode === "traps" && { color: "#f43f5e" }]}>
+                          {activeTrainingCards[trainingIndex]?.subjectTitle || activeTrainingCards[trainingIndex]?.kind || (trainingMode === "traps" ? "Piège exam" : "Flashcard")}
+                        </Text>
+                      </View>
+
+                      <Text style={styles.cardQuestionText}>{activeTrainingCards[trainingIndex]?.question}</Text>
+
+                      {/* QCM OPTIONS IF AVAILABLE */}
+                      {activeTrainingCards[trainingIndex]?.options && activeTrainingCards[trainingIndex]!.options!.length > 0 && !showAnswer && (
+                        <View style={styles.qcmContainer}>
+                          {activeTrainingCards[trainingIndex]!.options!.map((opt: any, idx: number) => {
+                            const optText = typeof opt === "string" ? opt : opt.text || opt.label || "";
+                            const isSelected = selectedQcmOption === idx;
+                            return (
+                              <Pressable
+                                key={idx}
+                                onPress={() => setSelectedQcmOption(idx)}
+                                style={[styles.qcmOptionBtn, isSelected && styles.qcmOptionBtnSelected]}
+                              >
+                                <Text style={styles.qcmLetter}>{String.fromCharCode(65 + idx)}.</Text>
+                                <Text style={[styles.qcmOptionText, isSelected && styles.qcmOptionTextSelected]}>
+                                  {optText}
+                                </Text>
+                              </Pressable>
+                            );
+                          })}
+                        </View>
+                      )}
+
+                      {showAnswer ? (
+                        <View style={styles.answerBox}>
+                          <Text style={styles.answerLabel}>RÉPONSE MODÈLE :</Text>
+                          <Text style={styles.answerText}>{activeTrainingCards[trainingIndex]?.answer}</Text>
+                          
+                          {activeTrainingCards[trainingIndex]?.trap ? (
+                            <View style={styles.trapBox}>
+                              <Text style={styles.trapLabel}>⚠️ Piège exam :</Text>
+                              <Text style={styles.trapText}>{activeTrainingCards[trainingIndex]?.trap}</Text>
+                            </View>
+                          ) : null}
+
+                          {/* 4 FSRS-5 RATING BUTTONS */}
+                          <Text style={styles.ratingPrompt}>Comment as-tu trouvé cette carte ?</Text>
+                          <View style={styles.ratingGrid}>
+                            <Pressable onPress={() => handleRateCard(1)} style={[styles.ratingBtn, { backgroundColor: "#ef4444" }]}>
+                              <Text style={styles.ratingBtnText}>À revoir</Text>
+                              <Text style={styles.ratingSubText}>&lt; 10 min</Text>
+                            </Pressable>
+                            <Pressable onPress={() => handleRateCard(2)} style={[styles.ratingBtn, { backgroundColor: "#f59e0b" }]}>
+                              <Text style={styles.ratingBtnText}>Difficile</Text>
+                              <Text style={styles.ratingSubText}>1 j</Text>
+                            </Pressable>
+                            <Pressable onPress={() => handleRateCard(3)} style={[styles.ratingBtn, { backgroundColor: "#3b82f6" }]}>
+                              <Text style={styles.ratingBtnText}>Correct</Text>
+                              <Text style={styles.ratingSubText}>3 j</Text>
+                            </Pressable>
+                            <Pressable onPress={() => handleRateCard(4)} style={[styles.ratingBtn, { backgroundColor: "#22c55e" }]}>
+                              <Text style={styles.ratingBtnText}>Facile</Text>
+                              <Text style={styles.ratingSubText}>7 j+</Text>
+                            </Pressable>
+                          </View>
+                        </View>
+                      ) : (
+                        <Pressable onPress={() => setShowAnswer(true)} style={styles.showAnswerBtn}>
+                          <Text style={styles.showAnswerBtnText}>👀 Révéler la réponse</Text>
+                        </Pressable>
+                      )}
+                    </View>
                   )}
-                </View>
+                </>
               )}
             </View>
           )}
 
-          {/* TAB 5: PLANNING (CALENDRIER DE RÉVISION) */}
+          {/* TAB 5: PLANNING (CALENDRIER D'ÉCHÉANCES ET RÉTRO-PLANNING RÉEL) */}
           {tab === "planning" && (
             <View style={styles.tabContent}>
-              <Text style={styles.sectionHeaderTitle}>📅 Planning des révisions</Text>
-              <View style={styles.guideCard}>
-                <Text style={styles.guideTitle}>Algorithme d espacement FSRS-5</Text>
-                <Text style={styles.guideSubtitle}>
-                  Chaque carte mémoire est planifiée juste avant le moment où ta probabilité d oubli dépasse 10 %.
-                </Text>
+              <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                <Text style={styles.sectionHeaderTitle}>📅 Planificateur d'Échéances</Text>
+                <Pressable
+                  onPress={() => {
+                    setNewExamTitle("");
+                    setNewExamDate("");
+                    setNewExamSubjectIds(subjects[0] ? [subjects[0].id] : []);
+                    setShowNewExamModal(true);
+                  }}
+                  style={styles.addSubjectSmallBtn}
+                >
+                  <Text style={styles.addSubjectSmallBtnText}>+ Épreuve</Text>
+                </Pressable>
               </View>
 
+              {/* LISTE DES ÉPREUVES EN COURS */}
+              <Text style={styles.planningSubHeader}>Échéances & Épreuves en cours ({exams.length})</Text>
+              {exams.length === 0 ? (
+                <View style={styles.emptyCard}>
+                  <Text style={styles.emptyText}>
+                    Aucune épreuve programmée. Clique sur "+ Épreuve" pour planifier tes partiels, concours ou bac !
+                  </Text>
+                </View>
+              ) : (
+                exams.map((ex) => {
+                  const daysLeft = Math.max(
+                    0,
+                    Math.ceil(
+                      (new Date(ex.date).getTime() - new Date().setHours(0, 0, 0, 0)) /
+                        (1000 * 60 * 60 * 24)
+                    )
+                  );
+                  return (
+                    <View key={ex.id} style={styles.examCard}>
+                      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" }}>
+                        <View style={{ flex: 1 }}>
+                          <View style={{ flexDirection: "row", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                            <Text style={styles.examBadge}>{ex.subjectTitle || "Matière"}</Text>
+                            <Text style={styles.examDateText}>📅 {ex.date}</Text>
+                          </View>
+                          <Text style={styles.examTitleText}>{ex.title}</Text>
+                        </View>
+                        <View style={{ alignItems: "flex-end", gap: 4 }}>
+                          <Text style={[styles.examDaysLeft, daysLeft <= 3 && { color: "#f43f5e" }]}>
+                            {daysLeft === 0 ? "Jour J !" : `J-${daysLeft}`}
+                          </Text>
+                          <Pressable
+                            onPress={async () => {
+                              if (await deleteExam(ex.id)) {
+                                setExams((prev) => prev.filter((item) => item.id !== ex.id));
+                              }
+                            }}
+                          >
+                            <Text style={{ fontSize: 11, color: "#71717a" }}>Supprimer</Text>
+                          </Pressable>
+                        </View>
+                      </View>
+                    </View>
+                  );
+                })
+              )}
+
+              {/* CALENDRIER PRÉVISIONNEL (7 PROCHAINS JOURS CALCULÉ PAR LE SERVEUR) */}
+              <Text style={[styles.planningSubHeader, { marginTop: 16 }]}>Calendrier prévisionnel (7 prochains jours)</Text>
               <View style={styles.planningGrid}>
-                {Array.from({ length: 14 }).map((_, i) => {
-                  const dayDate = new Date(Date.now() + i * 86400000);
-                  const isToday = i === 0;
-                  const dayName = dayDate.toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" });
+                {(calendarDays && calendarDays.length > 0 ? calendarDays.slice(0, 7) : Array.from({ length: 7 })).map((d: any, i: number) => {
+                  const dayDate = d?.date ? new Date(d.date) : new Date(Date.now() + i * 86400000);
+                  const isToday = d?.isToday ?? (i === 0);
+                  const dayName = d?.dayName || dayDate.toLocaleDateString("fr-FR", { weekday: "short" });
+                  const dateStr = `${dayDate.getDate().toString().padStart(2, "0")}/${(dayDate.getMonth() + 1).toString().padStart(2, "0")}`;
+                  const count = Array.isArray(d?.cards) ? d.cards.length : Array.isArray(d?.items) ? d.items.length : Number(d?.dueCount || 0);
 
                   return (
                     <View key={i} style={[styles.planningDayCard, isToday && styles.planningDayToday]}>
-                      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                        <Text style={[styles.planningDayTitle, isToday && { color: "#60a5fa", fontWeight: "700" }]}>
-                          {isToday ? "Aujourd hui" : dayName}
-                        </Text>
-                        <Text style={styles.planningDayCount}>
-                          {isToday ? `${allCards.length} cartes` : `${Math.max(1, Math.round(allCards.length / (i + 1)))} cartes`}
-                        </Text>
-                      </View>
+                      <Text style={[styles.planningDayTitle, isToday && { color: "#a855f7", fontWeight: "700" }]}>
+                        {dayName.toUpperCase()} ({dateStr})
+                      </Text>
+                      <Text style={styles.planningDayCount}>{count} cartes dues</Text>
                     </View>
                   );
                 })}
@@ -1354,6 +1527,118 @@ export function CoursApp() {
                 <Text style={styles.dialogConfirmBtnText}>Créer le chapitre</Text>
               </Pressable>
             </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* MODAL: AJOUT D'ÉPREUVE / EXAMEN */}
+      <Modal visible={showNewExamModal} animationType="slide" transparent>
+        <View style={styles.modalBackdrop}>
+          <View style={[styles.dialogCard, { maxHeight: "85%" }]}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Text style={styles.dialogTitle}>+ Programmer une épreuve</Text>
+              <Text style={styles.dialogSubtitle}>Partiel, concours, bac ou contrôle continu</Text>
+
+              <Text style={styles.fieldLabel}>Type d'épreuve :</Text>
+              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6, marginBottom: 8 }}>
+                {[
+                  { id: "partiel", label: "🎓 Partiel" },
+                  { id: "concours", label: "🏆 Concours" },
+                  { id: "bac", label: "📝 Bac" },
+                  { id: "ds", label: "🔬 DS" },
+                  { id: "oral", label: "🗣️ Oral" },
+                ].map((k) => (
+                  <Pressable
+                    key={k.id}
+                    onPress={() => setNewExamKind(k.id)}
+                    style={[
+                      styles.smallSubjectPill,
+                      newExamKind === k.id && { backgroundColor: "#a855f7", borderColor: "#a855f7" },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.smallSubjectPillText,
+                        newExamKind === k.id && { color: "#ffffff", fontWeight: "700" },
+                      ]}
+                    >
+                      {k.label}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
+
+              <Text style={styles.fieldLabel}>Titre de l'épreuve :</Text>
+              <TextInput
+                style={styles.formInput}
+                placeholder="Ex: Partiel Biologie S1, Écrit Bac Physique..."
+                placeholderTextColor="#71717a"
+                value={newExamTitle}
+                onChangeText={setNewExamTitle}
+              />
+
+              <Text style={styles.fieldLabel}>Date (AAAA-MM-JJ) :</Text>
+              <TextInput
+                style={styles.formInput}
+                placeholder="2026-10-15"
+                placeholderTextColor="#71717a"
+                value={newExamDate}
+                onChangeText={setNewExamDate}
+              />
+
+              <Text style={styles.fieldLabel}>Matière au programme :</Text>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: "row", marginBottom: 12 }}>
+                {subjects.map((sub) => {
+                  const isSelected = newExamSubjectIds.includes(sub.id);
+                  return (
+                    <Pressable
+                      key={sub.id}
+                      onPress={() => {
+                        setNewExamSubjectIds([sub.id]);
+                        const subChaps = chapters.filter((ch) => ch.subjectId === sub.id).map((ch) => ch.id);
+                        setNewExamChapterIds(subChaps);
+                      }}
+                      style={[styles.smallSubjectPill, isSelected && { backgroundColor: "#a855f7", borderColor: "#a855f7" }]}
+                    >
+                      <Text style={[styles.smallSubjectPillText, isSelected && { color: "#ffffff", fontWeight: "700" }]}>
+                        {sub.title} ({sub.ects} ECTS)
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </ScrollView>
+
+              <View style={styles.dialogActionRow}>
+                <Pressable onPress={() => setShowNewExamModal(false)} style={styles.dialogCancelBtn}>
+                  <Text style={styles.dialogCancelBtnText}>Annuler</Text>
+                </Pressable>
+                <Pressable
+                  onPress={async () => {
+                    if (!newExamDate || newExamSubjectIds.length === 0) {
+                      Alert.alert("Champs requis", "Veuillez renseigner la date et choisir une matière.");
+                      return;
+                    }
+                    const targetSub = subjects.find((s) => s.id === newExamSubjectIds[0]);
+                    const created = await createExam({
+                      title: newExamTitle.trim() || `Épreuve ${targetSub?.title || ""}`,
+                      date: newExamDate.trim(),
+                      subjectId: newExamSubjectIds[0],
+                      subjectTitle: targetSub?.title || "",
+                      chapterIds: newExamChapterIds,
+                      minutesPerDay: 20,
+                    });
+                    if (created) {
+                      setExams((prev) => [...prev, created]);
+                      setShowNewExamModal(false);
+                      fetchAppData();
+                    }
+                  }}
+                  style={[styles.dialogConfirmBtn, { backgroundColor: "#a855f7" }]}
+                >
+                  <Text style={styles.dialogConfirmBtnText}>🚀 Enregistrer</Text>
+                </Pressable>
+              </View>
+            </ScrollView>
           </View>
         </View>
       </Modal>
@@ -2298,5 +2583,196 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: "#d4d4d8",
     lineHeight: 14,
+  },
+
+  // Tableau de bord de Maîtrise Réelle (Accueil Mobile)
+  masterySection: {
+    backgroundColor: "#18181b",
+    borderWidth: 1,
+    borderColor: "#27272a",
+    borderRadius: 16,
+    padding: 14,
+    gap: 10,
+    marginTop: 10,
+  },
+  masterySectionHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 2,
+  },
+  masterySectionTitleRed: {
+    color: "#ffffff",
+    fontSize: 13,
+    fontWeight: "800",
+  },
+  masterySectionBadgeRed: {
+    color: "#f43f5e",
+    fontSize: 10,
+    fontWeight: "800",
+    backgroundColor: "rgba(244,63,94,0.15)",
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 6,
+  },
+  masterySectionTitleGreen: {
+    color: "#ffffff",
+    fontSize: 13,
+    fontWeight: "800",
+  },
+  masterySectionBadgeGreen: {
+    color: "#22c55e",
+    fontSize: 10,
+    fontWeight: "800",
+    backgroundColor: "rgba(34,197,94,0.15)",
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 6,
+  },
+  courseMasteryCardRed: {
+    backgroundColor: "#09090b",
+    borderWidth: 1,
+    borderColor: "rgba(244,63,94,0.25)",
+    borderRadius: 12,
+    padding: 12,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 8,
+  },
+  courseMasteryCardGreen: {
+    backgroundColor: "#09090b",
+    borderWidth: 1,
+    borderColor: "rgba(34,197,94,0.25)",
+    borderRadius: 12,
+    padding: 12,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 8,
+  },
+  masteryBadgeContainer: {
+    alignItems: "flex-end",
+    gap: 3,
+  },
+  masteryPercentRed: {
+    color: "#f43f5e",
+    fontSize: 12,
+    fontWeight: "800",
+    fontFamily: Platform.OS === "ios" ? "Courier" : "monospace",
+  },
+  masteryPercentGreen: {
+    color: "#22c55e",
+    fontSize: 12,
+    fontWeight: "800",
+    fontFamily: Platform.OS === "ios" ? "Courier" : "monospace",
+  },
+  masteryBarBg: {
+    width: 48,
+    height: 4,
+    backgroundColor: "#27272a",
+    borderRadius: 2,
+    overflow: "hidden",
+  },
+  masteryBarFillRed: {
+    height: "100%",
+    backgroundColor: "#f43f5e",
+    borderRadius: 2,
+  },
+  masteryBarFillGreen: {
+    height: "100%",
+    backgroundColor: "#22c55e",
+    borderRadius: 2,
+  },
+
+  // Oral Blanc Studio Antigravity (Mobile)
+  oralPromptBox: {
+    backgroundColor: "#09090b",
+    borderWidth: 1,
+    borderColor: "rgba(245,158,11,0.3)",
+    borderRadius: 12,
+    padding: 12,
+    marginVertical: 10,
+  },
+  oralPromptText: {
+    color: "#f59e0b",
+    fontSize: 12,
+    fontFamily: Platform.OS === "ios" ? "Courier" : "monospace",
+    fontWeight: "700",
+  },
+  oralPrepareBtn: {
+    backgroundColor: "#f59e0b",
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: "center",
+    shadowColor: "#f59e0b",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  oralPrepareBtnText: {
+    color: "#09090b",
+    fontSize: 13,
+    fontWeight: "800",
+  },
+  oralInfoBox: {
+    backgroundColor: "rgba(24,24,27,0.8)",
+    borderWidth: 1,
+    borderColor: "#27272a",
+    borderRadius: 12,
+    padding: 12,
+    marginTop: 10,
+    gap: 4,
+  },
+  oralInfoTitle: {
+    color: "#ffffff",
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  oralInfoText: {
+    color: "#a1a1aa",
+    fontSize: 11,
+    lineHeight: 16,
+  },
+
+  // Épreuves & Planning (Mobile)
+  planningSubHeader: {
+    color: "#d4d4d8",
+    fontSize: 13,
+    fontWeight: "800",
+    marginBottom: 8,
+  },
+  examCard: {
+    backgroundColor: "#18181b",
+    borderWidth: 1,
+    borderColor: "rgba(168,85,247,0.3)",
+    borderRadius: 14,
+    padding: 14,
+    marginBottom: 8,
+  },
+  examBadge: {
+    backgroundColor: "rgba(168,85,247,0.15)",
+    color: "#c084fc",
+    fontSize: 10,
+    fontWeight: "800",
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  examDateText: {
+    color: "#a1a1aa",
+    fontSize: 11,
+  },
+  examTitleText: {
+    color: "#ffffff",
+    fontSize: 13,
+    fontWeight: "700",
+  },
+  examDaysLeft: {
+    color: "#c084fc",
+    fontSize: 13,
+    fontWeight: "900",
+    fontFamily: Platform.OS === "ios" ? "Courier" : "monospace",
   },
 });
