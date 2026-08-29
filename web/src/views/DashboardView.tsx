@@ -258,7 +258,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           className="cursor-pointer p-5 rounded-2xl bg-zinc-950/80 border border-zinc-800/80 hover:border-amber-500/40 hover:bg-zinc-900 transition-all flex flex-col justify-between group"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs text-zinc-400 font-medium">Prochain partiel</span>
+            <span className="text-xs text-zinc-400 font-medium">Prochaine épreuve</span>
             <Calendar className="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform" />
           </div>
           <div className="mt-3">

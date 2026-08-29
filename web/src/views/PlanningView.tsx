@@ -82,14 +82,15 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
 
         if (Array.isArray(calData)) {
           setCalendarDays(calData);
-        } else if (calData && Array.isArray(calData.days)) {
-          const mapped: DaySchedule[] = calData.days.map((d: PlanningDay) => ({
+        } else if (calData && (Array.isArray(calData.calendar) || Array.isArray(calData.days))) {
+          const list = calData.calendar || calData.days;
+          const mapped: DaySchedule[] = list.map((d: any) => ({
             date: d.date,
             dayName: d.dayName || 'Jour',
             isToday: !!d.isToday,
-            dueCount: d.cards?.length || d.items?.length || 0,
+            dueCount: Array.isArray(d.cards) ? d.cards.length : Array.isArray(d.items) ? d.items.length : Number(d.dueCount || 0),
             estimatedMinutes: 20,
-            items: d.items,
+            items: d.items || [],
           }));
           setCalendarDays(mapped);
         }
@@ -215,8 +216,8 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
         date: dateStr,
         dayName: dayNames[d.getDay()],
         isToday,
-        dueCount: isToday ? 10 : Math.max(0, 12 - i * 2),
-        estimatedMinutes: 20,
+        dueCount: 0,
+        estimatedMinutes: 0,
         exams: dayExams,
         items: [],
       });
