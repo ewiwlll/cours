@@ -1,1 +1,74 @@
-[]
+[
+  {
+    "id": "chap-1788042653973-chapitre-1-concepts-et-definitions-cles-q713",
+    "subjectId": "custom-1788042653973-notions-fondamentales-biomia-rennes-5jo5",
+    "title": "Chapitre 1 : Concepts et définitions clés",
+    "createdAt": "2026-08-29T22:30:53.974Z"
+  },
+  {
+    "id": "chap-1788042653974-chapitre-2-methodologie-et-cadres-d-analyse-k4z9",
+    "subjectId": "custom-1788042653973-notions-fondamentales-biomia-rennes-5jo5",
+    "title": "Chapitre 2 : Méthodologie et cadres d'analyse",
+    "createdAt": "2026-08-29T22:30:53.974Z"
+  },
+  {
+    "id": "chap-1788042653974-chapitre-3-applications-pratiques-et-cas-d-etude-4kjg",
+    "subjectId": "custom-1788042653973-notions-fondamentales-biomia-rennes-5jo5",
+    "title": "Chapitre 3 : Applications pratiques et cas d'étude",
+    "createdAt": "2026-08-29T22:30:53.974Z"
+  },
+  {
+    "id": "chap-1788042653974-chapitre-1-les-grands-auteurs-et-modeles-cv52",
+    "subjectId": "custom-1788042653974-theories-et-principes-biomia-rennes-5n64",
+    "title": "Chapitre 1 : Les grands auteurs et modèles",
+    "createdAt": "2026-08-29T22:30:53.974Z"
+  },
+  {
+    "id": "chap-1788042653974-chapitre-2-les-controverses-et-evolutions-actuelles-91zp",
+    "subjectId": "custom-1788042653974-theories-et-principes-biomia-rennes-5n64",
+    "title": "Chapitre 2 : Les controverses et évolutions actuelles",
+    "createdAt": "2026-08-29T22:30:53.974Z"
+  },
+  {
+    "id": "chap-1788042653974-chapitre-3-synthese-critique-7iyb",
+    "subjectId": "custom-1788042653974-theories-et-principes-biomia-rennes-5n64",
+    "title": "Chapitre 3 : Synthèse critique",
+    "createdAt": "2026-08-29T22:30:53.974Z"
+  },
+  {
+    "id": "chap-1788042653974-chapitre-1-recherche-documentaire-et-esprit-critique-4h6f",
+    "subjectId": "custom-1788042653974-methodologie-du-travail-universitaire-qpb9",
+    "title": "Chapitre 1 : Recherche documentaire et esprit critique",
+    "createdAt": "2026-08-29T22:30:53.974Z"
+  },
+  {
+    "id": "chap-1788042653974-chapitre-2-redaction-academique-et-argumentation-v2kf",
+    "subjectId": "custom-1788042653974-methodologie-du-travail-universitaire-qpb9",
+    "title": "Chapitre 2 : Rédaction académique et argumentation",
+    "createdAt": "2026-08-29T22:30:53.974Z"
+  },
+  {
+    "id": "chap-1788042653974-chapitre-1-statistique-descriptive-5sm9",
+    "subjectId": "custom-1788042653974-outils-quantitatifs-et-analyse-de-donnees-rxqz",
+    "title": "Chapitre 1 : Statistique descriptive",
+    "createdAt": "2026-08-29T22:30:53.974Z"
+  },
+  {
+    "id": "chap-1788042653974-chapitre-2-interpretation-des-resultats-et-graphiques-k46v",
+    "subjectId": "custom-1788042653974-outils-quantitatifs-et-analyse-de-donnees-rxqz",
+    "title": "Chapitre 2 : Interprétation des résultats et graphiques",
+    "createdAt": "2026-08-29T22:30:53.974Z"
+  },
+  {
+    "id": "chap-1788042653974-chapitre-1-academic-english-and-vocabulary-4zn3",
+    "subjectId": "custom-1788042653974-anglais-universitaire-sqi2",
+    "title": "Chapitre 1 : Academic English and Vocabulary",
+    "createdAt": "2026-08-29T22:30:53.974Z"
+  },
+  {
+    "id": "chap-1788042653974-chapitre-2-oral-presentation-skills-9azv",
+    "subjectId": "custom-1788042653974-anglais-universitaire-sqi2",
+    "title": "Chapitre 2 : Oral Presentation Skills",
+    "createdAt": "2026-08-29T22:30:53.974Z"
+  }
+]

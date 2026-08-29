@@ -415,64 +415,6 @@ export const SubjectEditorModal: React.FC<SubjectEditorModalProps> = ({
                 ))}
               </div>
 
-              {/* SÉLECTEUR INTERACTIF LYCÉE PERSONNALISÉ */}
-              <div className="p-4 rounded-2xl bg-surface-elevated/40 border border-border/80 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                    <span>🎒 Personnaliser un cursus Lycée (Baccalauréat)</span>
-                  </span>
-                </div>
-                <p className="text-[11px] text-zinc-400">
-                  Choisissez vos 2 spécialités de Terminale, votre LV2 (Espagnol, Allemand...) et vos options pour générer votre classeur exact du Bac.
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-                  <button
-                    type="button"
-                    onClick={() => handleSearchCurriculum('Terminale Maths Physique Espagnol')}
-                    className="p-2.5 rounded-xl text-left bg-background hover:bg-surface border border-border hover:border-purple-500/40 transition-all group"
-                  >
-                    <div className="text-xs font-bold text-white group-hover:text-purple-300">
-                      Terminale : Maths + Physique + Espagnol LV2
-                    </div>
-                    <p className="text-[10px] text-zinc-400 mt-0.5">Spécialités Coeff 16 + Philo + Tronc commun</p>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleSearchCurriculum('Terminale Maths SVT Espagnol')}
-                    className="p-2.5 rounded-xl text-left bg-background hover:bg-surface border border-border hover:border-purple-500/40 transition-all group"
-                  >
-                    <div className="text-xs font-bold text-white group-hover:text-purple-300">
-                      Terminale : Maths + SVT + Espagnol LV2
-                    </div>
-                    <p className="text-[10px] text-zinc-400 mt-0.5">Profil SVT / Médecine / BCPST</p>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleSearchCurriculum('Terminale SES Maths Espagnol')}
-                    className="p-2.5 rounded-xl text-left bg-background hover:bg-surface border border-border hover:border-purple-500/40 transition-all group"
-                  >
-                    <div className="text-xs font-bold text-white group-hover:text-purple-300">
-                      Terminale : SES + Maths / HGGSP
-                    </div>
-                    <p className="text-[10px] text-zinc-400 mt-0.5">Profil Économie / Sciences Po / Droit</p>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleSearchCurriculum('Première Bac Français')}
-                    className="p-2.5 rounded-xl text-left bg-background hover:bg-surface border border-border hover:border-purple-500/40 transition-all group"
-                  >
-                    <div className="text-xs font-bold text-white group-hover:text-purple-300">
-                      Première Générale : Épreuves de Français
-                    </div>
-                    <p className="text-[10px] text-zinc-400 mt-0.5">Bac de Français Coeff 10 (Écrit + Oral) + 3 Spés</p>
-                  </button>
-                </div>
-              </div>
-
               {/* Aperçu du Cursus Détecté */}
               {aiCurriculum && (
                 <div className="space-y-4 pt-2 border-t border-border/80 animate-fadeIn">

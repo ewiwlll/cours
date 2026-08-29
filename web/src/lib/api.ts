@@ -320,20 +320,8 @@ export async function generateCurriculum(query: string): Promise<CurriculumAnaly
     };
   }
 
-  // Universal Fallback for any other academic query
-  return {
-    program: cleanQuery,
-    university: 'Établissement',
-    semester: 'S1',
-    subjects: [
-      { title: `Fondements & Concepts — ${cleanQuery}`, category: 'Majeure', ects: 6, priority: 'A', semester: 'S1', chapters: ['Chapitre 1 : Notions fondamentales et définitions', 'Chapitre 2 : Cadres théoriques et modèles d\'analyse', 'Chapitre 3 : Études de cas et applications'] },
-      { title: `Théories Approfondies — ${cleanQuery}`, category: 'Majeure', ects: 6, priority: 'A', semester: 'S1', chapters: ['Chapitre 1 : Les grands auteurs et écoles de pensée', 'Chapitre 2 : Débats contemporains et enjeux actuels'] },
-      { title: 'Méthodologie du travail universitaire', category: 'Fondamentale', ects: 5, priority: 'B', semester: 'S1', chapters: ['Recherche documentaire et esprit critique', 'Rédaction académique et argumentation'] },
-      { title: 'Outils quantitatifs & Analyse de données', category: 'Complémentaire', ects: 5, priority: 'B', semester: 'S1', chapters: ['Statistiques descriptives', 'Interprétation des résultats et synthèses'] },
-      { title: 'Expression, communication et synthèse', category: 'Transversal', ects: 4, priority: 'B', semester: 'S1', chapters: ['Synthèse de documents', 'Prise de parole en public et argumentation'] },
-      { title: 'Anglais académique et professionnel', category: 'Langue', ects: 4, priority: 'C', semester: 'S1', chapters: ['Academic English Vocabulary', 'Oral Presentation and Debate'] },
-    ],
-  };
+  // Si aucune maquette officielle n'est trouvée, ne JAMAIS inventer de fausses données génériques :
+  return null;
 }
 
 /**

@@ -990,45 +990,51 @@ async function handleApi(req, res, url) {
       }
 
       const geminiKey = process.env.GEMINI_API_KEY || "";
-      const geminiModel = process.env.GEMINI_MODEL || "gemini-3.7-flash";
+      const primaryModel = "gemini-2.5-flash";
 
       console.log(`\n[CURRICULUM] 🔍 Recherche et génération de maquette pour : "${query}"`);
 
       if (geminiKey) {
-        console.log(`[CURRICULUM] 🌐 Appel Gemini API avec Google Search Grounding (${geminiModel})...`);
-        const prompt = `Tu es le doyen et responsable pédagogique des universités. Analyse la formation suivante et génère la maquette officielle des cours du semestre (totalisant 30 crédits ECTS) avec les crédits exacts et les chapitres fondamentaux clés :
-Formation / Université : "${query}"
+        console.log(`[CURRICULUM] 🌐 Appel Gemini AI (${primaryModel})...`);
+        const prompt = `Tu es un expert pédagogique national couvrant le Lycée (Baccalauréat Général et Technologique), les CPGE, les Universités et les Grandes Écoles. Analyse la formation ou le cursus suivant :
+Formation demandée : "${query}"
 
-Règles impératives :
-1. Génère entre 4 et 8 matières réelles et officielles pour cette formation.
-2. Assigne les crédits ECTS réalistes (total ~30 ECTS par semestre) : 5-8 ECTS pour les matières majeures, 3-4 ECTS pour les matières secondaires, 1-3 ECTS pour les options/langues.
-3. Assigne la priorité d'examen : 'A' pour les gros coefficients (>= 5 ECTS), 'B' pour standard (3-4 ECTS), 'C' pour mineures/langues (1-2 ECTS).
-4. Pour chaque matière, propose 2 à 4 titres de chapitres fondamentaux réels et structurés (ex: "Chapitre 1 : ...", "Chapitre 2 : ...").
+Règles de génération :
+1. Si la formation demandée concerne le **Lycée / Baccalauréat (Terminale, Première, Seconde, Bac)** :
+   - Génère les véritables matières du programme officiel du Bulletin Officiel (BO).
+   - Utilise les coefficients officiels du Baccalauréat dans le champ "ects" (ex: Spécialités Coeff 16, Philo Coeff 8, Français Première Coeff 10, Histoire-Géo Coeff 6, Enseignement Scientifique Coeff 6, LVA Coeff 6, LVB Espagnol/Allemand Coeff 6, Option Coeff 2).
+   - "priority": 'A' pour coefficients >= 8, 'B' pour tronc commun (Coeff 6), 'C' pour langues/options (<= 6).
+   - "category": "Spécialité Bac (Coeff 16)", "Épreuve Terminale (Coeff 8)", "Tronc commun (Coeff 6)", etc.
+   - Les vrais chapitres officiels du programme du Bac.
 
-Réponds STRICTEMENT sous format JSON valide avec ce schéma :
+2. Si la formation concerne l'**Enseignement Supérieur (Licence, PASS Santé, CPGE, BUT, Master, BTS)** :
+   - Identifie l'université ou établissement et génère les véritables Unités d'Enseignement (UE) du semestre totalisant 30 crédits ECTS.
+   - 5-8 ECTS pour les matières majeures (priorité A), 3-4 ECTS pour les matières fondamentales/complémentaires (priorité B), 1-3 ECTS pour les options/langues (priorité C).
+   - Les vrais chapitres fondamentaux clés de chaque matière.
+
+Réponds STRICTEMENT sous format JSON valide :
 {
-  "program": "Titre officiel de la formation",
-  "university": "Nom de l'université / établissement",
-  "semester": "S1",
+  "program": "Titre officiel précis (ex: Terminale Générale Spé Maths + SVT ou Licence 1 Droit Panthéon-Sorbonne)",
+  "university": "Établissement ou Académie",
+  "semester": "S1 ou Année du Bac",
   "subjects": [
     {
-      "title": "Nom précis de la matière",
-      "category": "Tronc commun / Majeure / Mineure",
-      "ects": 6,
+      "title": "Nom officiel de la matière",
+      "category": "Catégorie / Type d'épreuve",
+      "ects": 16,
       "priority": "A",
       "semester": "S1",
-      "chapters": ["Chapitre 1 : ...", "Chapitre 2 : ...", "Chapitre 3 : ..."]
+      "chapters": ["Chapitre 1 : ...", "Chapitre 2 : ..."]
     }
   ]
 }`;
 
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(geminiModel)}:generateContent?key=${encodeURIComponent(geminiKey)}`;
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${primaryModel}:generateContent?key=${encodeURIComponent(geminiKey)}`;
         const aiRes = await fetch(apiUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             contents: [{ parts: [{ text: prompt }] }],
-            tools: [{ googleSearch: {} }],
             generationConfig: {
               temperature: 0.1,
             },
@@ -1038,7 +1044,6 @@ Réponds STRICTEMENT sous format JSON valide avec ce schéma :
         if (aiRes.ok) {
           const aiJson = await aiRes.json();
           let candidateText = aiJson.candidates?.[0]?.content?.parts?.[0]?.text || "";
-          // Extract JSON if wrapped in markdown code fence
           if (candidateText.includes("```json")) {
             candidateText = candidateText.split("```json")[1].split("```")[0].trim();
           } else if (candidateText.includes("```")) {
@@ -1048,99 +1053,22 @@ Réponds STRICTEMENT sous format JSON valide avec ce schéma :
             try {
               const parsed = JSON.parse(candidateText);
               if (parsed && Array.isArray(parsed.subjects) && parsed.subjects.length > 0) {
-                console.log(`[CURRICULUM] ✅ Succès Gemini Search : ${parsed.subjects.length} matières extraites pour "${parsed.program || query}".`);
+                console.log(`[CURRICULUM] ✅ Succès Gemini AI : ${parsed.subjects.length} matières extraites pour "${parsed.program || query}".`);
                 return json(res, 200, parsed);
               }
             } catch (e) {
-              console.warn("[CURRICULUM] ⚠️ Échec de parsing JSON Gemini, bascule sur le template structuré.", e);
+              console.warn("[CURRICULUM] ⚠️ Échec de parsing JSON Gemini.", e);
             }
           }
         } else {
-          const errStatus = aiRes.status;
-          console.warn(`[CURRICULUM] ⚠️ Réponse API Gemini statut ${errStatus}, bascule sur le template structuré.`);
+          console.warn(`[CURRICULUM] ⚠️ Réponse API Gemini statut ${aiRes.status}`);
         }
       }
 
-      console.log(`[CURRICULUM] 📚 Utilisation de la maquette académique structurée pour "${query}".`);
-
-      // Fallback intelligent si pas de clé API ou recherche locale
-      const qLower = query.toLowerCase();
-      let fallbackData = null;
-
-      if (qLower.includes("droit") || qLower.includes("jurid")) {
-        fallbackData = {
-          program: "Licence 1 Droit",
-          university: query,
-          semester: "S1",
-          subjects: [
-            { title: "Droit constitutionnel 1", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Théorie de l'État et Souveraineté", "Chapitre 2 : La Constitution et le contrôle de constitutionnalité", "Chapitre 3 : Les régimes politiques comparés"] },
-            { title: "Droit civil : Les personnes et la famille", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : La personne physique et ses attributs", "Chapitre 2 : La filiation et l'autorité parentale", "Chapitre 3 : Le mariage et le divorce"] },
-            { title: "Histoire du droit et des institutions", category: "Fondamentale", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : L'héritage romain et chrétien", "Chapitre 2 : La monarchie capétienne et l'émergence de l'État", "Chapitre 3 : La Révolution et la codification napoléonienne"] },
-            { title: "Institutions juridictionnelles", category: "Fondamentale", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : L'organisation de la justice judiciaire", "Chapitre 2 : La justice administrative et le Conseil d'État", "Chapitre 3 : Les principes fondamentaux du procès équitable"] },
-            { title: "Relations internationales et géopolitique", category: "Complémentaire", ects: 3, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Les acteurs des relations internationales", "Chapitre 2 : L'ordre international et l'ONU", "Chapitre 3 : Les traités et conventions internationales"] },
-            { title: "Méthodologie juridique & Analyse d'arrêts", category: "Transversal", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : La fiche d'arrêt et le syllogisme", "Chapitre 2 : Le commentaire d'article", "Chapitre 3 : La dissertation juridique"] },
-            { title: "Anglais juridique", category: "Langue", ects: 3, priority: "C", semester: "S1", chapters: ["Chapitre 1 : The Common Law System", "Chapitre 2 : Court System and Legal Vocabulary"] },
-          ],
-        };
-      } else if (qLower.includes("pass") || qLower.includes("santé") || qLower.includes("medecine") || qLower.includes("médecine")) {
-        fallbackData = {
-          program: "Parcours Accès Santé Spécifique (PASS)",
-          university: query,
-          semester: "S1",
-          subjects: [
-            { title: "Biologie cellulaire et moléculaire", category: "Majeure", ects: 8, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Structure des membranes et transports", "Chapitre 2 : Cycle cellulaire, mitose et apoptose", "Chapitre 3 : Réplication, transcription et traduction de l'ADN"] },
-            { title: "Anatomie générale et morphologie", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Ostéologie et arthrologie générale", "Chapitre 2 : Le système cardiovasculaire et le cœur", "Chapitre 3 : Le système nerveux central et périphérique"] },
-            { title: "Biochimie structurale et métabolique", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Acides aminés, peptides et protéines", "Chapitre 2 : Glucides et métabolisme énergétique (glycolyse, Krebs)", "Chapitre 3 : Lipides et métabolisme des acides gras"] },
-            { title: "Biostatistiques et épidémiologie", category: "Fondamentale", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Statistiques descriptives et probabilités", "Chapitre 2 : Tests d'hypothèses et risques alpha/bêta", "Chapitre 3 : Épidémiologie et études de cohorte"] },
-            { title: "Sciences humaines et sociales (SHS) en santé", category: "Fondamentale", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Histoire de la médecine et épistémologie", "Chapitre 2 : Éthique médicale et bioéthique", "Chapitre 3 : Relation soignant-soigné et anthropologie de la santé"] },
-            { title: "Pharmacologie générale & Médicament", category: "Complémentaire", ects: 2, priority: "C", semester: "S1", chapters: ["Chapitre 1 : Pharmacocinétique (ADME)", "Chapitre 2 : Cibles des médicaments et pharmacodynamie"] },
-          ],
-        };
-      } else if (qLower.includes("info") || qLower.includes("informatique") || qLower.includes("ordinateur")) {
-        fallbackData = {
-          program: "Licence 1 Informatique",
-          university: query,
-          semester: "S1",
-          subjects: [
-            { title: "Algorithmique et Programmation 1", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Variables, types et structures de contrôle", "Chapitre 2 : Fonctions, portée et récursivité", "Chapitre 3 : Tableaux, listes et complexité algorithmique"] },
-            { title: "Mathématiques discrètes & Logique", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Logique des propositions et prédicats", "Chapitre 2 : Ensembles, relations et fonctions", "Chapitre 3 : Arithmétique modulaire et récurrence"] },
-            { title: "Architecture des ordinateurs", category: "Fondamentale", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Représentation des données (binaire, hexadécimal, flottants)", "Chapitre 2 : Circuits logiques et portes booléennes", "Chapitre 3 : Le processeur et le modèle de Von Neumann"] },
-            { title: "Introduction aux Systèmes et Réseaux", category: "Fondamentale", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Commandes Unix et Shell Linux", "Chapitre 2 : Gestion des fichiers, droits et processus", "Chapitre 3 : Les bases du modèle TCP/IP"] },
-            { title: "Analyse et Algèbre pour l'informatique", category: "Complémentaire", ects: 5, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Suites et fonctions usuelles", "Chapitre 2 : Espaces vectoriels et matrices"] },
-            { title: "Anglais pour l'informatique", category: "Langue", ects: 3, priority: "C", semester: "S1", chapters: ["Chapitre 1 : Technical Computing Terminology", "Chapitre 2 : Documentation and Code Presentation"] },
-          ],
-        };
-      } else if (qLower.includes("eco") || qLower.includes("économie") || qLower.includes("gestion")) {
-        fallbackData = {
-          program: "Licence 1 Économie & Gestion",
-          university: query,
-          semester: "S1",
-          subjects: [
-            { title: "Microéconomie 1 : Consommateur et Producteur", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : La théorie du consommateur et l'utilité", "Chapitre 2 : La demande individuelle et les élasticités", "Chapitre 3 : La fonction de production et les coûts de l'entreprise"] },
-            { title: "Macroéconomie 1 : Fondements et agrégats", category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Le circuit économique et les comptes nationaux (PIB)", "Chapitre 2 : Le modèle revenu-dépense et le multiplicateur keynésien", "Chapitre 3 : La monnaie, l'inflation et la politique monétaire"] },
-            { title: "Mathématiques pour l'économie", category: "Fondamentale", ects: 5, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Fonctions d'une et plusieurs variables", "Chapitre 2 : Dérivation, convexité et optimisation sans contrainte", "Chapitre 3 : Optimisation sous contrainte et multiplicateurs de Lagrange"] },
-            { title: "Statistiques descriptives & Probabilités", category: "Fondamentale", ects: 5, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Séries statistiques à une variable et paramètres de position/dispersion", "Chapitre 2 : Séries à deux variables et régression linéaire", "Chapitre 3 : Fondements du calcul des probabilités"] },
-            { title: "Comptabilité financière générale", category: "Fondamentale", ects: 5, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Le bilan, le compte de résultat et la partie double", "Chapitre 2 : Les opérations d'achats, ventes et TVA", "Chapitre 3 : Les écritures d'inventaire et les amortissements"] },
-            { title: "Anglais des affaires et économie", category: "Langue", ects: 3, priority: "C", semester: "S1", chapters: ["Chapitre 1 : Business Environment and Trends", "Chapitre 2 : Financial Vocabulary and Graph Analysis"] },
-          ],
-        };
-      } else {
-        // Cursus généraliste universitaire
-        fallbackData = {
-          program: query,
-          university: "Université",
-          semester: "S1",
-          subjects: [
-            { title: `Notions Fondamentales - ${query}`, category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Concepts et définitions clés", "Chapitre 2 : Méthodologie et cadres d'analyse", "Chapitre 3 : Applications pratiques et cas d'étude"] },
-            { title: `Théories et Principes - ${query}`, category: "Majeure", ects: 6, priority: "A", semester: "S1", chapters: ["Chapitre 1 : Les grands auteurs et modèles", "Chapitre 2 : Les controverses et évolutions actuelles", "Chapitre 3 : Synthèse critique"] },
-            { title: "Méthodologie du travail universitaire", category: "Fondamentale", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Recherche documentaire et esprit critique", "Chapitre 2 : Rédaction académique et argumentation"] },
-            { title: "Outils quantitatifs et analyse de données", category: "Complémentaire", ects: 4, priority: "B", semester: "S1", chapters: ["Chapitre 1 : Statistique descriptive", "Chapitre 2 : Interprétation des résultats et graphiques"] },
-            { title: "Anglais universitaire", category: "Langue", ects: 3, priority: "C", semester: "S1", chapters: ["Chapitre 1 : Academic English and Vocabulary", "Chapitre 2 : Oral Presentation Skills"] },
-          ],
-        };
-      }
-
-      return json(res, 200, fallbackData);
+      // Si aucune clé ou échec de l'IA, ne JAMAIS générer de fausses données creuses :
+      return json(res, 404, {
+        error: `Impossible de trouver automatiquement la maquette pour "${query}". Vous pouvez créer vos matières manuellement dans l'onglet Création manuelle.`,
+      });
     } catch (error) {
       return json(res, 500, { error: error.message || "Erreur lors de la génération du cursus" });
     }
