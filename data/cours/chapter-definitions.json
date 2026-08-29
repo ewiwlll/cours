@@ -1,74 +1,104 @@
 [
   {
-    "id": "chap-1788042653973-chapitre-1-concepts-et-definitions-cles-q713",
-    "subjectId": "custom-1788042653973-notions-fondamentales-biomia-rennes-5jo5",
-    "title": "Chapitre 1 : Concepts et définitions clés",
-    "createdAt": "2026-08-29T22:30:53.974Z"
+    "id": "chap-analyse-1-suites",
+    "subjectId": "s1-analyse-1",
+    "title": "Chapitre 1 : Nombres réels, suites et séries numériques",
+    "createdAt": "2026-08-30T00:38:00.000Z"
   },
   {
-    "id": "chap-1788042653974-chapitre-2-methodologie-et-cadres-d-analyse-k4z9",
-    "subjectId": "custom-1788042653973-notions-fondamentales-biomia-rennes-5jo5",
-    "title": "Chapitre 2 : Méthodologie et cadres d'analyse",
-    "createdAt": "2026-08-29T22:30:53.974Z"
+    "id": "chap-analyse-1-fonctions",
+    "subjectId": "s1-analyse-1",
+    "title": "Chapitre 2 : Fonctions d'une variable, continuité et dérivabilité",
+    "createdAt": "2026-08-30T00:38:00.000Z"
   },
   {
-    "id": "chap-1788042653974-chapitre-3-applications-pratiques-et-cas-d-etude-4kjg",
-    "subjectId": "custom-1788042653973-notions-fondamentales-biomia-rennes-5jo5",
-    "title": "Chapitre 3 : Applications pratiques et cas d'étude",
-    "createdAt": "2026-08-29T22:30:53.974Z"
+    "id": "chap-analyse-1-integration",
+    "subjectId": "s1-analyse-1",
+    "title": "Chapitre 3 : Intégration et équations différentielles",
+    "createdAt": "2026-08-30T00:38:00.000Z"
   },
   {
-    "id": "chap-1788042653974-chapitre-1-les-grands-auteurs-et-modeles-cv52",
-    "subjectId": "custom-1788042653974-theories-et-principes-biomia-rennes-5n64",
-    "title": "Chapitre 1 : Les grands auteurs et modèles",
-    "createdAt": "2026-08-29T22:30:53.974Z"
+    "id": "chap-algebre-1-espaces",
+    "subjectId": "s1-algebre-1",
+    "title": "Chapitre 1 : Espaces vectoriels et familles de vecteurs",
+    "createdAt": "2026-08-30T00:38:00.000Z"
   },
   {
-    "id": "chap-1788042653974-chapitre-2-les-controverses-et-evolutions-actuelles-91zp",
-    "subjectId": "custom-1788042653974-theories-et-principes-biomia-rennes-5n64",
-    "title": "Chapitre 2 : Les controverses et évolutions actuelles",
-    "createdAt": "2026-08-29T22:30:53.974Z"
+    "id": "chap-algebre-1-matrices",
+    "subjectId": "s1-algebre-1",
+    "title": "Chapitre 2 : Applications linéaires et calcul matriciel",
+    "createdAt": "2026-08-30T00:38:00.000Z"
   },
   {
-    "id": "chap-1788042653974-chapitre-3-synthese-critique-7iyb",
-    "subjectId": "custom-1788042653974-theories-et-principes-biomia-rennes-5n64",
-    "title": "Chapitre 3 : Synthèse critique",
-    "createdAt": "2026-08-29T22:30:53.974Z"
+    "id": "chap-algebre-1-systemes",
+    "subjectId": "s1-algebre-1",
+    "title": "Chapitre 3 : Systèmes linéaires et déterminants",
+    "createdAt": "2026-08-30T00:38:00.000Z"
   },
   {
-    "id": "chap-1788042653974-chapitre-1-recherche-documentaire-et-esprit-critique-4h6f",
-    "subjectId": "custom-1788042653974-methodologie-du-travail-universitaire-qpb9",
-    "title": "Chapitre 1 : Recherche documentaire et esprit critique",
-    "createdAt": "2026-08-29T22:30:53.974Z"
+    "id": "chap-biocel-organisation",
+    "subjectId": "s1-biocel-mol",
+    "title": "Chapitre 1 : Organisation de la cellule eucaryote",
+    "createdAt": "2026-08-30T00:38:00.000Z"
   },
   {
-    "id": "chap-1788042653974-chapitre-2-redaction-academique-et-argumentation-v2kf",
-    "subjectId": "custom-1788042653974-methodologie-du-travail-universitaire-qpb9",
-    "title": "Chapitre 2 : Rédaction académique et argumentation",
-    "createdAt": "2026-08-29T22:30:53.974Z"
+    "id": "chap-biocel-adn",
+    "subjectId": "s1-biocel-mol",
+    "title": "Chapitre 2 : Structure, réplication et réparation de l'ADN",
+    "createdAt": "2026-08-30T00:38:00.000Z"
   },
   {
-    "id": "chap-1788042653974-chapitre-1-statistique-descriptive-5sm9",
-    "subjectId": "custom-1788042653974-outils-quantitatifs-et-analyse-de-donnees-rxqz",
-    "title": "Chapitre 1 : Statistique descriptive",
-    "createdAt": "2026-08-29T22:30:53.974Z"
+    "id": "chap-biocel-expression",
+    "subjectId": "s1-biocel-mol",
+    "title": "Chapitre 3 : Expression génique : transcription et traduction",
+    "createdAt": "2026-08-30T00:38:00.000Z"
   },
   {
-    "id": "chap-1788042653974-chapitre-2-interpretation-des-resultats-et-graphiques-k46v",
-    "subjectId": "custom-1788042653974-outils-quantitatifs-et-analyse-de-donnees-rxqz",
-    "title": "Chapitre 2 : Interprétation des résultats et graphiques",
-    "createdAt": "2026-08-29T22:30:53.974Z"
+    "id": "chap-python-bases",
+    "subjectId": "s1-python-ia",
+    "title": "Chapitre 1 : Bases du langage Python et types de données",
+    "createdAt": "2026-08-30T00:38:00.000Z"
   },
   {
-    "id": "chap-1788042653974-chapitre-1-academic-english-and-vocabulary-4zn3",
-    "subjectId": "custom-1788042653974-anglais-universitaire-sqi2",
-    "title": "Chapitre 1 : Academic English and Vocabulary",
-    "createdAt": "2026-08-29T22:30:53.974Z"
+    "id": "chap-python-fonctions",
+    "subjectId": "s1-python-ia",
+    "title": "Chapitre 2 : Structures de contrôle et modularité",
+    "createdAt": "2026-08-30T00:38:00.000Z"
   },
   {
-    "id": "chap-1788042653974-chapitre-2-oral-presentation-skills-9azv",
-    "subjectId": "custom-1788042653974-anglais-universitaire-sqi2",
-    "title": "Chapitre 2 : Oral Presentation Skills",
-    "createdAt": "2026-08-29T22:30:53.974Z"
+    "id": "chap-python-structures",
+    "subjectId": "s1-python-ia",
+    "title": "Chapitre 3 : Structures de données (listes, dictionnaires, tuples)",
+    "createdAt": "2026-08-30T00:38:00.000Z"
+  },
+  {
+    "id": "chap-python-algo",
+    "subjectId": "s1-python-ia",
+    "title": "Chapitre 4 : Algorithmes fondamentaux de tri et de recherche",
+    "createdAt": "2026-08-30T00:38:00.000Z"
+  },
+  {
+    "id": "chap-anglais-articles",
+    "subjectId": "s1-anglais-sciences",
+    "title": "Chapitre 1 : Compréhension et analyse d'articles scientifiques",
+    "createdAt": "2026-08-30T00:38:00.000Z"
+  },
+  {
+    "id": "chap-anglais-oral",
+    "subjectId": "s1-anglais-sciences",
+    "title": "Chapitre 2 : Communication orale et débats scientifiques",
+    "createdAt": "2026-08-30T00:38:00.000Z"
+  },
+  {
+    "id": "chap-ppp-methodo",
+    "subjectId": "s1-ppp-methodo",
+    "title": "Chapitre 1 : Méthodologie universitaire et esprit critique",
+    "createdAt": "2026-08-30T00:38:00.000Z"
+  },
+  {
+    "id": "chap-ppp-metiers",
+    "subjectId": "s1-ppp-methodo",
+    "title": "Chapitre 2 : Métiers de la bio-informatique et de l'IA",
+    "createdAt": "2026-08-30T00:38:00.000Z"
   }
 ]

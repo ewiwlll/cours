@@ -1,44 +1,55 @@
 {
+  "program": "Double Licence Biologie-Mathématiques, Parcours Bio-Informatique & IA (BioMIA)",
+  "university": "Université de Rennes",
+  "semester": "S1",
   "courses": [
     {
-      "id": "custom-1788042653973-notions-fondamentales-biomia-rennes-5jo5",
-      "title": "Notions Fondamentales - BiomIA rennes",
+      "id": "s1-analyse-1",
+      "title": "Analyse 1 pour les Sciences",
       "semester": "S1",
-      "category": "Majeure",
+      "category": "Majeure (Mathématiques)",
       "ects": 6,
       "priority": "A"
     },
     {
-      "id": "custom-1788042653974-theories-et-principes-biomia-rennes-5n64",
-      "title": "Théories et Principes - BiomIA rennes",
+      "id": "s1-algebre-1",
+      "title": "Algèbre Linéaire 1",
       "semester": "S1",
-      "category": "Majeure",
+      "category": "Majeure (Mathématiques)",
       "ects": 6,
       "priority": "A"
     },
     {
-      "id": "custom-1788042653974-methodologie-du-travail-universitaire-qpb9",
-      "title": "Méthodologie du travail universitaire",
+      "id": "s1-biocel-mol",
+      "title": "Biologie Cellulaire et Moléculaire",
       "semester": "S1",
-      "category": "Fondamentale",
-      "ects": 4,
-      "priority": "B"
+      "category": "Majeure (Biologie)",
+      "ects": 6,
+      "priority": "A"
     },
     {
-      "id": "custom-1788042653974-outils-quantitatifs-et-analyse-de-donnees-rxqz",
-      "title": "Outils quantitatifs et analyse de données",
+      "id": "s1-python-ia",
+      "title": "Algorithmique & Programmation Python (IA)",
       "semester": "S1",
-      "category": "Complémentaire",
-      "ects": 4,
-      "priority": "B"
+      "category": "Majeure (Informatique / IA)",
+      "ects": 6,
+      "priority": "A"
     },
     {
-      "id": "custom-1788042653974-anglais-universitaire-sqi2",
-      "title": "Anglais universitaire",
+      "id": "s1-anglais-sciences",
+      "title": "Anglais Scientifique",
       "semester": "S1",
-      "category": "Langue",
+      "category": "Transversale",
       "ects": 3,
-      "priority": "C"
+      "priority": "B"
+    },
+    {
+      "id": "s1-ppp-methodo",
+      "title": "Méthodologie Universitaire & PPP",
+      "semester": "S1",
+      "category": "Transversale",
+      "ects": 3,
+      "priority": "B"
     }
   ]
 }
