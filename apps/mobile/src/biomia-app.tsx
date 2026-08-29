@@ -113,6 +113,8 @@ export function CoursApp() {
   // Flashcards training state
   const [trainingDuration, setTrainingDuration] = useState<5 | 15 | 30>(15);
   const [trainingSubjectFilter, setTrainingSubjectFilter] = useState<string>("all");
+  const [selectedChapterFilter, setSelectedChapterFilter] = useState<string>("all");
+  const [isMobileForcedWeaknessMode, setIsMobileForcedWeaknessMode] = useState<boolean>(true);
   const [trainingIndex, setTrainingIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedQcmOption, setSelectedQcmOption] = useState<number | null>(null);
@@ -318,17 +320,86 @@ export function CoursApp() {
     }
   };
 
+  // Calcul du taux de maîtrise réel (%) par chapitre sur mobile
+  const chapterMasteryMap = useMemo(() => {
+    const map: Record<string, { mastery: number; totalCards: number; weakCards: number; hasCards: boolean }> = {};
+
+    chapters.forEach((ch) => {
+      const relatedCourses = courses.filter(
+        (c) => c.subjectId === ch.subjectId && (c.chapterId === ch.id || c.chapter === ch.title || (c.chapter && ch.title && c.chapter.toLowerCase().includes(ch.title.toLowerCase())))
+      );
+
+      if (relatedCourses.length === 0) {
+        map[ch.id] = { mastery: 0, totalCards: 0, weakCards: 0, hasCards: false };
+        return;
+      }
+
+      let sumScore = 0;
+      let cardCount = 0;
+      let weakCount = 0;
+
+      relatedCourses.forEach((c) => {
+        let score = 70;
+        if (c.recallStatus === "locked") {
+          score = 0;
+        } else {
+          const base = Number(c.recallScore) || 75;
+          const isWeak = weaknesses.some((w) => w.courseId === c.id);
+          score = Math.min(100, Math.max(10, base - (isWeak ? 20 : 0)));
+        }
+        sumScore += score;
+        cardCount += c.cards?.length || 0;
+        weakCount += weaknesses.filter((w) => w.courseId === c.id).length;
+      });
+
+      map[ch.id] = {
+        mastery: Math.round(sumScore / relatedCourses.length),
+        totalCards: cardCount,
+        weakCards: weakCount,
+        hasCards: cardCount > 0,
+      };
+    });
+
+    return map;
+  }, [chapters, courses, weaknesses]);
+
   const allCards = useMemo(() => {
-    const cards: Card[] = [];
-    const sourceCourses = trainingSubjectFilter === "all"
-      ? courses
-      : courses.filter((c) => c.subjectId === trainingSubjectFilter);
+    let cards: (Card & { priorityScore?: number; isWeak?: boolean })[] = [];
+    const sourceCourses = courses.filter((c) => {
+      if (trainingSubjectFilter !== "all" && c.subjectId !== trainingSubjectFilter) return false;
+      if (selectedChapterFilter !== "all") {
+        const matchChapter =
+          c.chapterId === selectedChapterFilter ||
+          c.chapter === selectedChapterFilter ||
+          chapters.find((ch) => ch.id === selectedChapterFilter)?.title === c.chapter;
+        if (!matchChapter) return false;
+      }
+      return true;
+    });
 
     sourceCourses.forEach((c) => {
-      if (c.cards) cards.push(...c.cards);
+      if (c.cards) {
+        c.cards.forEach((card) => {
+          const isWeak = weaknesses.some((w) => w.courseId === c.id || w.label === card.question);
+          const chapInfo = c.chapterId ? chapterMasteryMap[c.chapterId] : null;
+          const chapMastery = chapInfo ? chapInfo.mastery : (c.recallScore || 70);
+          const priorityScore = (100 - chapMastery) + (isWeak ? 50 : 0) + (c.recallStatus === "locked" ? 100 : 0);
+
+          cards.push({
+            ...card,
+            isWeak,
+            priorityScore,
+          });
+        });
+      }
     });
+
+    if (isMobileForcedWeaknessMode) {
+      cards.sort((a, b) => (b.priorityScore || 0) - (a.priorityScore || 0));
+    }
+
     return cards;
-  }, [courses, trainingSubjectFilter]);
+  }, [courses, trainingSubjectFilter, selectedChapterFilter, isMobileForcedWeaknessMode, chapters, chapterMasteryMap, weaknesses]);
 
   // Handle Amphi Recorder Timer & Actions (Local-First Resilience)
   const toggleRecording = async () => {
@@ -1247,13 +1318,18 @@ export function CoursApp() {
                 </View>
               ) : (
                 <>
-                  {/* FILTRE PAR MATIÈRE (EN MODE STANDARD) */}
+                  {/* FILTRES PAR MATIÈRE ET PAR CHAPITRE (EN MODE STANDARD) */}
                   {trainingMode === "standard" && (
                     <View style={styles.trainingConfigCard}>
-                      <Text style={styles.fieldLabel}>Filtrer par matière :</Text>
+                      <Text style={styles.fieldLabel}>Matière :</Text>
                       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: "row", marginTop: 4 }}>
                         <Pressable
-                          onPress={() => setTrainingSubjectFilter("all")}
+                          onPress={() => {
+                            setTrainingSubjectFilter("all");
+                            setSelectedChapterFilter("all");
+                            setTrainingIndex(0);
+                            setShowAnswer(false);
+                          }}
                           style={[styles.smallSubjectPill, trainingSubjectFilter === "all" && styles.smallSubjectPillActive]}
                         >
                           <Text style={[styles.smallSubjectPillText, trainingSubjectFilter === "all" && styles.smallSubjectPillTextActive]}>
@@ -1263,7 +1339,12 @@ export function CoursApp() {
                         {subjects.map((s) => (
                           <Pressable
                             key={s.id}
-                            onPress={() => setTrainingSubjectFilter(s.id)}
+                            onPress={() => {
+                              setTrainingSubjectFilter(s.id);
+                              setSelectedChapterFilter("all");
+                              setTrainingIndex(0);
+                              setShowAnswer(false);
+                            }}
                             style={[styles.smallSubjectPill, trainingSubjectFilter === s.id && styles.smallSubjectPillActive]}
                           >
                             <Text style={[styles.smallSubjectPillText, trainingSubjectFilter === s.id && styles.smallSubjectPillTextActive]}>
@@ -1272,6 +1353,87 @@ export function CoursApp() {
                           </Pressable>
                         ))}
                       </ScrollView>
+
+                      {/* FILTRE PAR CHAPITRE AVEC POURCENTAGE DE MAÎTRISE */}
+                      {trainingSubjectFilter !== "all" && (
+                        <View style={{ marginTop: 8 }}>
+                          <Text style={styles.fieldLabel}>Chapitre & Maîtrise (%) :</Text>
+                          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: "row", marginTop: 4 }}>
+                            <Pressable
+                              onPress={() => {
+                                setSelectedChapterFilter("all");
+                                setTrainingIndex(0);
+                                setShowAnswer(false);
+                              }}
+                              style={[styles.smallSubjectPill, selectedChapterFilter === "all" && styles.smallSubjectPillActive]}
+                            >
+                              <Text style={[styles.smallSubjectPillText, selectedChapterFilter === "all" && styles.smallSubjectPillTextActive]}>
+                                Tous les chapitres
+                              </Text>
+                            </Pressable>
+                            {chapters
+                              .filter((ch) => ch.subjectId === trainingSubjectFilter)
+                              .map((ch) => {
+                                const info = chapterMasteryMap[ch.id];
+                                const isSelected = selectedChapterFilter === ch.id;
+                                const isWeak = info?.hasCards && info.mastery < 75;
+                                return (
+                                  <Pressable
+                                    key={ch.id}
+                                    onPress={() => {
+                                      setSelectedChapterFilter(ch.id);
+                                      setTrainingIndex(0);
+                                      setShowAnswer(false);
+                                    }}
+                                    style={[
+                                      styles.smallSubjectPill,
+                                      isSelected && styles.smallSubjectPillActive,
+                                      info?.hasCards && {
+                                        borderColor: isWeak ? "rgba(244,63,94,0.5)" : "rgba(34,197,94,0.5)",
+                                      },
+                                    ]}
+                                  >
+                                    <Text
+                                      style={[
+                                        styles.smallSubjectPillText,
+                                        isSelected && styles.smallSubjectPillTextActive,
+                                        info?.hasCards && { color: isWeak ? "#fb7185" : "#4ade80", fontWeight: "700" },
+                                      ]}
+                                    >
+                                      {info?.hasCards ? (isWeak ? "🚨" : "🟢") : "⚪"} {ch.title} {info?.hasCards ? `(${info.mastery}%)` : ""}
+                                    </Text>
+                                  </Pressable>
+                                );
+                              })}
+                          </ScrollView>
+                        </View>
+                      )}
+
+                      {/* SWITCH PRIORITÉ AUX FAIBLESSES */}
+                      <Pressable
+                        onPress={() => setIsMobileForcedWeaknessMode((prev) => !prev)}
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          backgroundColor: isMobileForcedWeaknessMode ? "rgba(245,158,11,0.15)" : "#09090b",
+                          borderColor: isMobileForcedWeaknessMode ? "#f59e0b" : "#27272a",
+                          borderWidth: 1,
+                          borderRadius: 10,
+                          padding: 10,
+                          marginTop: 10,
+                        }}
+                      >
+                        <View style={{ flex: 1, marginRight: 8 }}>
+                          <Text style={{ color: isMobileForcedWeaknessMode ? "#f59e0b" : "#ffffff", fontSize: 12, fontWeight: "700" }}>
+                            {isMobileForcedWeaknessMode ? "🎯 Mode Priorité aux Faiblesses (Actif)" : "⚪ Mode Ordre Standard"}
+                          </Text>
+                          <Text style={{ color: "#a1a1aa", fontSize: 10, marginTop: 2 }}>
+                            {isMobileForcedWeaknessMode ? "L'IA vous force à réviser les notions < 75% en premier." : "Révise les cartes dans l'ordre chronologique."}
+                          </Text>
+                        </View>
+                        <Text style={{ fontSize: 16 }}>{isMobileForcedWeaknessMode ? "⚡" : "▶️"}</Text>
+                      </Pressable>
                     </View>
                   )}
 
@@ -1282,6 +1444,34 @@ export function CoursApp() {
                           ? "Aucun piège d'examen ni carte en difficulté pour le moment. Félicitations !"
                           : "Aucune flashcard disponible dans ce périmètre."}
                       </Text>
+
+                      {/* RECOMMANDATION GUIDÉE QUAND LE PÉRIMÈTRE EST VIDE */}
+                      {(() => {
+                        const courseWithCards = courses.find((c) => c.cards && c.cards.length > 0);
+                        if (!courseWithCards) return null;
+                        const sub = subjects.find((s) => s.id === courseWithCards.subjectId);
+                        return (
+                          <Pressable
+                            onPress={() => {
+                              setTrainingSubjectFilter(courseWithCards.subjectId);
+                              setSelectedChapterFilter("all");
+                              setTrainingIndex(0);
+                            }}
+                            style={{
+                              backgroundColor: "#f59e0b",
+                              paddingVertical: 10,
+                              paddingHorizontal: 14,
+                              borderRadius: 10,
+                              marginTop: 12,
+                              alignItems: "center",
+                            }}
+                          >
+                            <Text style={{ color: "#09090b", fontSize: 12, fontWeight: "800" }}>
+                              👉 Réviser « {courseWithCards.title} » ({sub?.title || "Matière"})
+                            </Text>
+                          </Pressable>
+                        );
+                      })()}
                     </View>
                   ) : (
                     <View style={styles.cardTrainingBox}>

@@ -85,6 +85,9 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
   const [isFeynmanOpen, setIsFeynmanOpen] = useState<boolean>(false);
   const [feynmanText, setFeynmanText] = useState<string>('');
 
+  // Mode Priorité aux Faiblesses (Force les chapitres < 75% en premier)
+  const [isForcedWeaknessMode, setIsForcedWeaknessMode] = useState<boolean>(true);
+
   // Copie de commande Antigravity
   const [copiedPrompt, setCopiedPrompt] = useState<boolean>(false);
 
@@ -135,7 +138,52 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
     return subjects.filter((s) => s.semester === selectedSemester);
   }, [subjects, selectedSemester, hasMultipleSemesters]);
 
-  // Chapitres disponibles pour la matière sélectionnée
+  // Calcul du taux de maîtrise réel (%) par chapitre
+  const chapterMasteryMap = useMemo(() => {
+    const map: Record<string, { mastery: number; totalCards: number; weakCards: number; courseCount: number; hasCards: boolean }> = {};
+
+    chapterDefs.forEach((ch) => {
+      const relatedCourses = courses.filter(
+        (c) => c.subjectId === ch.subjectId && (c.chapterId === ch.id || c.chapter === ch.title || (c.chapter && ch.title && c.chapter.toLowerCase().includes(ch.title.toLowerCase())))
+      );
+
+      if (relatedCourses.length === 0) {
+        map[ch.id] = { mastery: 0, totalCards: 0, weakCards: 0, courseCount: 0, hasCards: false };
+        return;
+      }
+
+      let sumScore = 0;
+      let cardCount = 0;
+      let weakCount = 0;
+
+      relatedCourses.forEach((c) => {
+        let score = 70;
+        if (c.recallStatus === 'locked') {
+          score = 0;
+        } else {
+          const base = Number(c.recallScore) || 75;
+          const isWeak = weaknesses.some((w) => w.courseId === c.id);
+          score = Math.min(100, Math.max(10, base - (isWeak ? 20 : 0)));
+        }
+        sumScore += score;
+        cardCount += c.cards?.length || 0;
+        weakCount += weaknesses.filter((w) => w.courseId === c.id).length;
+      });
+
+      const avgMastery = Math.round(sumScore / relatedCourses.length);
+      map[ch.id] = {
+        mastery: avgMastery,
+        totalCards: cardCount,
+        weakCards: weakCount,
+        courseCount: relatedCourses.length,
+        hasCards: cardCount > 0,
+      };
+    });
+
+    return map;
+  }, [chapterDefs, courses, weaknesses]);
+
+  // Chapitres disponibles pour la matière sélectionnée avec leur maîtrise
   const availableChapters = useMemo(() => {
     if (selectedSubjectId === 'ALL') return [];
     return chapterDefs.filter((ch) => ch.subjectId === selectedSubjectId);
@@ -146,38 +194,62 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
     if (selectedSubjectId === 'ALL') return [];
     return courses.filter((c) => {
       if (c.subjectId !== selectedSubjectId) return false;
-      if (selectedChapter !== 'ALL' && c.chapter !== selectedChapter) return false;
+      if (selectedChapter !== 'ALL') {
+        const match = c.chapterId === selectedChapter || c.chapter === selectedChapter || availableChapters.find((ch) => ch.id === selectedChapter)?.title === c.chapter;
+        if (!match) return false;
+      }
       return true;
     });
-  }, [courses, selectedSubjectId, selectedChapter]);
+  }, [courses, selectedSubjectId, selectedChapter, availableChapters]);
 
-  // Pile de cartes actives selon le périmètre choisi
+  // Pile de cartes actives selon le périmètre choisi et triées par priorité cognitive
   const targetCardsList = useMemo(() => {
-    const list: ReviewCardItem[] = [];
+    const list: (ReviewCardItem & { priorityScore?: number; isWeak?: boolean; chapterMastery?: number })[] = [];
 
     courses.forEach((c) => {
       // Filtres de périmètre
       const sub = subjects.find((s) => s.id === c.subjectId);
       if (hasMultipleSemesters && selectedSemester !== 'ALL' && sub && sub.semester !== selectedSemester) return;
       if (selectedSubjectId !== 'ALL' && c.subjectId !== selectedSubjectId) return;
-      if (selectedChapter !== 'ALL' && c.chapter !== selectedChapter) return;
+      if (selectedChapter !== 'ALL') {
+        const matchChapter =
+          c.chapterId === selectedChapter ||
+          c.chapter === selectedChapter ||
+          availableChapters.find((ch) => ch.id === selectedChapter)?.title === c.chapter;
+        if (!matchChapter) return;
+      }
       if (selectedCourseId !== 'ALL' && c.id !== selectedCourseId) return;
 
       if (c.cards && c.cards.length > 0) {
         c.cards.forEach((card) => {
+          const isWeak = weaknesses.some((w) => w.courseId === c.id || w.label === card.question);
+          const chapInfo = c.chapterId ? chapterMasteryMap[c.chapterId] : null;
+          const chapMastery = chapInfo ? chapInfo.mastery : (c.recallScore || 70);
+
+          // Score de priorité cognitive (plus il est haut, plus la carte doit être révisée en premier)
+          const priorityScore = (100 - chapMastery) + (isWeak ? 50 : 0) + (c.recallStatus === 'locked' ? 100 : 0);
+
           list.push({
             ...card,
             lessonId: c.id,
             lessonTitle: c.title,
             subjectId: c.subjectId,
             subjectTitle: c.subjectTitle,
+            isWeak,
+            chapterMastery: chapMastery,
+            priorityScore,
           });
         });
       }
     });
 
+    // Si le Mode Priorité aux Faiblesses est actif (Activé par défaut), on force les cartes à réviser en priorité
+    if (isForcedWeaknessMode) {
+      list.sort((a, b) => (b.priorityScore || 0) - (a.priorityScore || 0));
+    }
+
     return list;
-  }, [courses, subjects, selectedSemester, selectedSubjectId, selectedChapter, selectedCourseId, hasMultipleSemesters]);
+  }, [courses, subjects, selectedSemester, selectedSubjectId, selectedChapter, selectedCourseId, hasMultipleSemesters, availableChapters, chapterMasteryMap, weaknesses, isForcedWeaknessMode]);
 
   // Carte active
   const currentCard = targetCardsList[currentCardIndex] || null;
@@ -462,14 +534,18 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
             className="bg-surface-elevated border border-border-subtle rounded-xl px-3 py-1.5 text-zinc-200 focus:outline-none focus:border-purple-500 font-medium"
           >
             <option value="ALL">Choisir une matière...</option>
-            {filteredSubjects.map((s) => (
-              <option key={s.id} value={s.id}>
-                {s.title} ({s.ects} ECTS)
-              </option>
-            ))}
+            {filteredSubjects.map((s) => {
+              const subCourses = courses.filter((c) => c.subjectId === s.id);
+              const cardCount = subCourses.reduce((acc, c) => acc + (c.cards?.length || 0), 0);
+              return (
+                <option key={s.id} value={s.id}>
+                  {s.title} ({s.ects} ECTS) {cardCount > 0 ? `• ${cardCount} cartes` : ''}
+                </option>
+              );
+            })}
           </select>
 
-          {/* Dropdown Chapitre */}
+          {/* Dropdown Chapitre avec Taux de Maîtrise */}
           {selectedSubjectId !== 'ALL' && availableChapters.length > 0 && (
             <select
               value={selectedChapter}
@@ -479,14 +555,22 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
                 setCurrentCardIndex(0);
                 setIsAnswerRevealed(false);
               }}
-              className="bg-surface-elevated border border-border-subtle rounded-xl px-3 py-1.5 text-zinc-200 focus:outline-none focus:border-purple-500 max-w-[220px] truncate font-medium"
+              className="bg-surface-elevated border border-border-subtle rounded-xl px-3 py-1.5 text-zinc-200 focus:outline-none focus:border-purple-500 max-w-[280px] truncate font-medium"
             >
               <option value="ALL">Tous les chapitres ({availableChapters.length})</option>
-              {availableChapters.map((ch) => (
-                <option key={ch.id} value={ch.title}>
-                  {ch.title}
-                </option>
-              ))}
+              {availableChapters.map((ch) => {
+                const info = chapterMasteryMap[ch.id];
+                const masteryStr = info?.hasCards
+                  ? info.mastery < 75
+                    ? `🚨 [${info.mastery}%]`
+                    : `🟢 [${info.mastery}%]`
+                  : `⚪ [0 carte]`;
+                return (
+                  <option key={ch.id} value={ch.id}>
+                    {masteryStr} {ch.title}
+                  </option>
+                );
+              })}
             </select>
           )}
 
@@ -509,6 +593,87 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
               ))}
             </select>
           )}
+        </div>
+
+        {/* Barre Visuelle des Chapitres avec Taux de Maîtrise (%) */}
+        {selectedSubjectId !== 'ALL' && availableChapters.length > 0 && (
+          <div className="pt-2 border-t border-border-subtle space-y-1.5">
+            <div className="flex items-center justify-between text-[11px]">
+              <span className="font-bold text-zinc-300">Maîtrise par chapitre :</span>
+              <span className="text-zinc-500">Cliquez pour cibler un chapitre</span>
+            </div>
+            <div className="flex items-center gap-2 overflow-x-auto pb-1">
+              <button
+                onClick={() => {
+                  setSelectedChapter('ALL');
+                  setCurrentCardIndex(0);
+                  setIsAnswerRevealed(false);
+                }}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border ${
+                  selectedChapter === 'ALL'
+                    ? 'bg-purple-600/30 border-purple-500 text-purple-200'
+                    : 'bg-surface-elevated border-border-subtle text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                Tous ({availableChapters.length})
+              </button>
+              {availableChapters.map((ch) => {
+                const info = chapterMasteryMap[ch.id];
+                const isSelected = selectedChapter === ch.id || selectedChapter === ch.title;
+                const badgeStyle = info?.hasCards
+                  ? info.mastery < 75
+                    ? 'border-rose-500/40 bg-rose-500/10 text-rose-300'
+                    : 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
+                  : 'border-border-subtle bg-surface-elevated text-zinc-500';
+
+                return (
+                  <button
+                    key={ch.id}
+                    onClick={() => {
+                      setSelectedChapter(ch.id);
+                      setCurrentCardIndex(0);
+                      setIsAnswerRevealed(false);
+                    }}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-medium whitespace-nowrap flex items-center gap-1.5 transition-all border ${
+                      isSelected ? 'ring-2 ring-purple-500 font-bold' : ''
+                    } ${badgeStyle}`}
+                  >
+                    <span>{info?.hasCards ? (info.mastery < 75 ? '🚨' : '🟢') : '⚪'}</span>
+                    <span className="max-w-[180px] truncate">{ch.title}</span>
+                    {info?.hasCards && (
+                      <span className="font-mono font-bold text-[10px] px-1 py-0.2 rounded bg-black/40">
+                        {info.mastery}%
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Mode Priorité aux Faiblesses Switch */}
+        <div className="pt-2 border-t border-border-subtle flex items-center justify-between flex-wrap gap-2 text-xs">
+          <button
+            onClick={() => setIsForcedWeaknessMode((prev) => !prev)}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border transition-all ${
+              isForcedWeaknessMode
+                ? 'bg-amber-500/15 border-amber-500/40 text-amber-300 shadow-sm ring-1 ring-amber-500/20'
+                : 'bg-surface-elevated border-border-subtle text-zinc-400'
+            }`}
+          >
+            <span>{isForcedWeaknessMode ? '🎯' : '⚪'}</span>
+            <span className="font-bold">Mode Priorité aux Faiblesses</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-surface font-semibold text-zinc-300">
+              {isForcedWeaknessMode ? 'Actif : force les notions < 75%' : 'Inactif'}
+            </span>
+          </button>
+
+          <span className="text-[11px] text-zinc-400 italic">
+            {isForcedWeaknessMode
+              ? '⚡ Priorité absolue aux chapitres et notions fragiles pour une rétention maximale.'
+              : 'Ordre standard par date de cours.'}
+          </span>
         </div>
       </div>
 
@@ -594,18 +759,48 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
       {activeMode === 'cards' && (
         <div className="space-y-6">
           {targetCardsList.length === 0 ? (
-            <div className="p-12 text-center bg-surface rounded-2xl border border-border space-y-4 max-w-xl mx-auto">
+            <div className="p-12 text-center bg-surface rounded-2xl border border-border space-y-5 max-w-xl mx-auto shadow-xl">
               <div className="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mx-auto text-purple-400">
                 <BookOpen className="w-7 h-7" />
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <h3 className="text-base font-bold text-white">Aucune flashcard dans ce périmètre</h3>
                 <p className="text-xs text-zinc-400 leading-relaxed">
                   {selectedSubjectId === 'ALL'
-                    ? "Vous n'avez pas encore enregistré de cours avec des flashcards. Allez dans l'onglet Matières ou Enregistrer pour créer votre première séance !"
-                    : "Cette matière ou ce chapitre ne contient pas encore de cartes. Enregistrez un cours ou importez vos matières pour générer la batterie de cartes."}
+                    ? "Vous n'avez pas encore enregistré de cours avec des flashcards. Allez dans l'onglet Amphi ou Matières pour créer votre première séance !"
+                    : `La matière "${subjects.find((s) => s.id === selectedSubjectId)?.title || ''}" n'a pas encore de cours ni de flashcards enregistrées.`}
                 </p>
               </div>
+
+              {/* RECOMMANDATION GUIDÉE : PROPOSER DIRECTEMENT LE COURS DISPONIBLE LE PLUS FRAGILE */}
+              {(() => {
+                const availableCourseWithCards = courses.find((c) => c.cards && c.cards.length > 0);
+                if (!availableCourseWithCards) return null;
+                const targetSub = subjects.find((s) => s.id === availableCourseWithCards.subjectId);
+                return (
+                  <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-left space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-amber-400">💡</span>
+                      <span className="text-xs font-bold text-amber-300">Recommandation d'Entraînement :</span>
+                    </div>
+                    <p className="text-xs text-zinc-300 leading-snug">
+                      Vous avez <strong>{availableCourseWithCards.cards?.length || 0} flashcards prêtes</strong> dans le cours{' '}
+                      <span className="text-white font-semibold">« {availableCourseWithCards.title} »</span> ({targetSub?.title || 'Matière'}).
+                    </p>
+                    <button
+                      onClick={() => {
+                        setSelectedSubjectId(availableCourseWithCards.subjectId);
+                        setSelectedChapter('ALL');
+                        setSelectedCourseId(availableCourseWithCards.id);
+                        setCurrentCardIndex(0);
+                      }}
+                      className="w-full py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-all shadow-md mt-1"
+                    >
+                      👉 Réviser en priorité « {availableCourseWithCards.title} »
+                    </button>
+                  </div>
+                );
+              })()}
 
               {selectedSubjectId !== 'ALL' && (
                 <button
@@ -614,9 +809,9 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
                     setSelectedChapter('ALL');
                     setSelectedCourseId('ALL');
                   }}
-                  className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all"
+                  className="px-4 py-2 rounded-xl bg-surface-elevated hover:bg-zinc-800 border border-border-subtle text-zinc-300 text-xs font-bold transition-all"
                 >
-                  Voir toutes les matières
+                  🌐 Voir toutes les flashcards de toutes les matières
                 </button>
               )}
             </div>
