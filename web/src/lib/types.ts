@@ -92,6 +92,8 @@ export interface Card {
   keywords?: string[];
   commonMistakes?: string[];
   trap?: string;
+  causalLink?: string;
+  conceptChain?: string;
   options?: Array<string | CardOption>;
   correctOption?: number;
   explanation?: string;

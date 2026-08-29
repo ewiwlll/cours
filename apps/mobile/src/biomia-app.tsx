@@ -1475,11 +1475,44 @@ export function CoursApp() {
                     </View>
                   ) : (
                     <View style={styles.cardTrainingBox}>
+                      {/* FIL D'ARIANE MOC SUR MOBILE */}
+                      {(() => {
+                        const curCard = activeTrainingCards[trainingIndex];
+                        const cardCourse = courses.find((c) => c.cards?.some((cd) => cd.id === curCard?.id));
+                        const sub = subjects.find((s) => s.id === cardCourse?.subjectId);
+                        const chap = chapters.find((ch) => ch.id === cardCourse?.chapterId) || cardCourse?.chapter;
+                        const chapTitle = typeof chap === "string" ? chap : chap?.title;
+                        return (
+                          <View style={{ flexDirection: "row", alignItems: "center", flexWrap: "wrap", marginBottom: 8, paddingBottom: 6, borderBottomWidth: 1, borderBottomColor: "#27272a" }}>
+                            <Text style={{ color: "#a855f7", fontSize: 10, fontWeight: "700" }}>{sub?.title || "Matière"}</Text>
+                            {chapTitle && (
+                              <>
+                                <Text style={{ color: "#71717a", fontSize: 10, marginHorizontal: 4 }}>›</Text>
+                                <Text style={{ color: "#d4d4d8", fontSize: 10, fontWeight: "600" }} numberOfLines={1}>{chapTitle}</Text>
+                              </>
+                            )}
+                            {cardCourse?.title && (
+                              <>
+                                <Text style={{ color: "#71717a", fontSize: 10, marginHorizontal: 4 }}>›</Text>
+                                <Text style={{ color: "#a1a1aa", fontSize: 10 }} numberOfLines={1}>{cardCourse.title}</Text>
+                              </>
+                            )}
+                          </View>
+                        );
+                      })()}
+
                       <View style={styles.cardHeaderRow}>
                         <Text style={styles.cardProgressText}>Carte {trainingIndex + 1} / {activeTrainingCards.length}</Text>
-                        <Text style={[styles.cardTag, trainingMode === "traps" && { color: "#f43f5e" }]}>
-                          {activeTrainingCards[trainingIndex]?.subjectTitle || activeTrainingCards[trainingIndex]?.kind || (trainingMode === "traps" ? "Piège exam" : "Flashcard")}
-                        </Text>
+                        <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+                          {activeTrainingCards[trainingIndex]?.kind === "relier" && (
+                            <View style={{ backgroundColor: "rgba(6,182,212,0.15)", borderColor: "rgba(6,182,212,0.4)", borderWidth: 1, paddingHorizontal: 6, paddingVertical: 2, borderRadius: 6 }}>
+                              <Text style={{ color: "#06b6d4", fontSize: 9, fontWeight: "800" }}>🔗 Relier</Text>
+                            </View>
+                          )}
+                          <Text style={[styles.cardTag, trainingMode === "traps" && { color: "#f43f5e" }]}>
+                            {activeTrainingCards[trainingIndex]?.subjectTitle || activeTrainingCards[trainingIndex]?.kind || (trainingMode === "traps" ? "Piège exam" : "Flashcard")}
+                          </Text>
+                        </View>
                       </View>
 
                       <Text style={styles.cardQuestionText}>{activeTrainingCards[trainingIndex]?.question}</Text>
@@ -1511,6 +1544,13 @@ export function CoursApp() {
                           <Text style={styles.answerLabel}>RÉPONSE MODÈLE :</Text>
                           <Text style={styles.answerText}>{activeTrainingCards[trainingIndex]?.answer}</Text>
                           
+                          {activeTrainingCards[trainingIndex]?.causalLink ? (
+                            <View style={{ backgroundColor: "rgba(6,182,212,0.1)", borderColor: "rgba(6,182,212,0.3)", borderWidth: 1, borderRadius: 8, padding: 8, marginTop: 8 }}>
+                              <Text style={{ color: "#06b6d4", fontSize: 10, fontWeight: "800", marginBottom: 2 }}>⛓️ Chaîne de Causalité :</Text>
+                              <Text style={{ color: "#a5f3fc", fontSize: 11, lineHeight: 15 }}>{activeTrainingCards[trainingIndex]?.causalLink}</Text>
+                            </View>
+                          ) : null}
+
                           {activeTrainingCards[trainingIndex]?.trap ? (
                             <View style={styles.trapBox}>
                               <Text style={styles.trapLabel}>⚠️ Piège exam :</Text>

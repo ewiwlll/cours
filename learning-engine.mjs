@@ -1002,3 +1002,85 @@ export function recordOrUpdateClarification({
   clarifications.push(newItem);
   return { item: newItem, isNew: true, recurrenceCount: 1 };
 }
+
+// -------------------------------------------------------------
+// SAS DE DÉBLOCAGE ANTI-FRICTION : QUIZ DIAGNOSTIQUE ÉCLAIR (30 SECONDES)
+// -------------------------------------------------------------
+
+export function generateDiagnosticQuizFromCourse(course) {
+  if (!course || !Array.isArray(course.cards) || course.cards.length === 0) {
+    return [];
+  }
+  const qcms = course.cards.filter((c) => c.kind === "qcm" && Array.isArray(c.options) && c.options.length > 0);
+  const others = course.cards.filter((c) => c.kind !== "qcm");
+
+  return [...qcms, ...others].slice(0, 3).map((card) => {
+    if (card.kind === "qcm" && Array.isArray(card.options)) {
+      return {
+        id: card.id,
+        kind: "qcm",
+        question: card.question,
+        options: card.options,
+        correctOption: typeof card.correctOption === "number" ? card.correctOption : 0,
+        concept: card.keywords?.[0] || card.question,
+        causalLink: card.causalLink || null,
+      };
+    }
+    return {
+      id: card.id,
+      kind: card.kind || "concept",
+      question: card.question,
+      expected: card.answer,
+      concept: card.keywords?.[0] || card.question,
+      options: [
+        card.answer,
+        `Contresens fréquent : ${card.trap || "Inversion de mécanisme ou rôle opposé"}`,
+        "Effet non causal ou mécanisme secondaire non pertinent",
+      ],
+      correctOption: 0,
+      causalLink: card.causalLink || null,
+    };
+  });
+}
+
+export function evaluateDiagnosticQuizAnswers(course, answers = []) {
+  const quiz = generateDiagnosticQuizFromCourse(course);
+  if (!quiz.length) {
+    return {
+      score: 75,
+      level: "good",
+      summary: "Déblocage éclair validé. Les notions du cours ont été initialisées.",
+      concepts: [],
+    };
+  }
+
+  let correctCount = 0;
+  const concepts = [];
+
+  quiz.forEach((q, idx) => {
+    const userChoice = answers[idx] !== undefined ? Number(answers[idx]) : -1;
+    const isCorrect = userChoice === q.correctOption;
+    if (isCorrect) correctCount += 1;
+
+    concepts.push({
+      id: q.id,
+      label: q.question,
+      status: isCorrect ? "mastered" : "partial",
+      feedback: isCorrect
+        ? "Notion validée lors du test éclair."
+        : `À consolider. Attendu : ${q.options[q.correctOption] || q.expected || ""}`,
+    });
+  });
+
+  const rawScore = Math.round((correctCount / quiz.length) * 100);
+  const score = Math.max(35, rawScore);
+
+  return {
+    score,
+    level: score >= 70 ? "good" : "partial",
+    summary: score >= 70
+      ? "🌱 Déblocage éclair réussi ! Tes premières bases sur ce cours sont bien ancrées."
+      : "🌱 Déblocage éclair validé ! Les notions hésitantes ont été programmées dans tes flashcards prioritaires de demain.",
+    concepts,
+  };
+}

@@ -62,6 +62,21 @@
           "symport ou antiport"
         ],
         "trap": "Penser que le transport secondaire est passif : il est actif car un soluté va contre son gradient !"
+      },
+      {
+        "id": "card-biocel-4",
+        "kind": "relier",
+        "question": "Relier les concepts : Quel est le lien de causalité direct entre l'hydrolyse d'ATP par la pompe Na+/K+ ATPase et l'absorption intestinale du glucose ?",
+        "answer": "La pompe Na+/K+ ATPase hydrolyse l'ATP pour expulser 3 Na+, créant un fort gradient électrochimique entrant de Na+. Ce gradient fournit l'énergie motrice exploitée par le symport SGLT-1 pour faire entrer le glucose contre son propre gradient dans la cellule épithéliale.",
+        "causalLink": "Hydrolyse d'ATP → Expulsion active de Na+ (Pompe primaire) → Création d'un gradient électrochimique de Na+ entrant → Force motrice couplée → Entrée du Glucose contre son gradient (Symport SGLT-1).",
+        "keywords": [
+          "pompe Na+/K+ ATPase",
+          "gradient de sodium",
+          "symport SGLT-1",
+          "transport actif secondaire",
+          "couplage énergétique"
+        ],
+        "trap": "Croire que le symport consomme de l'ATP : il n'en consomme pas directement, il dérive son énergie du travail préalable de la pompe primaire !"
       }
     ],
     "recallStatus": "locked",

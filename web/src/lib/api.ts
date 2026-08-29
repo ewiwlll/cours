@@ -127,17 +127,32 @@ export async function deleteStudyCourse(id: string): Promise<boolean> {
 }
 
 /**
- * Unlock a course with active recall evaluation
+ * Fetch 3 quick diagnostic questions to unlock a course without blank-page syndrome
+ */
+export async function getDiagnosticQuiz(courseId: string): Promise<any[]> {
+  try {
+    const res = await fetch(`${API_BASE}/api/study-courses/${encodeURIComponent(courseId)}/diagnostic-quiz`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.quiz || [];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Unlock a course with active recall evaluation (Free text OR quick 3-QCM quiz)
  */
 export async function unlockCourseRecall(
   courseId: string,
-  recallText: string
+  payload: { recallText?: string; quizAnswers?: number[] } | string
 ): Promise<{ course: Course; evaluation: any } | null> {
   try {
+    const body = typeof payload === 'string' ? { recallText: payload } : payload;
     const res = await fetch(`${API_BASE}/api/study-courses/${encodeURIComponent(courseId)}/unlock-recall`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ recallText }),
+      body: JSON.stringify(body),
     });
     if (!res.ok) return null;
     return await res.json();

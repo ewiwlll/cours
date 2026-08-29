@@ -817,18 +817,44 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
             </div>
           ) : currentCard ? (
             <div className="max-w-2xl mx-auto p-6 rounded-2xl bg-surface border border-border space-y-6 shadow-xl">
+              {/* Fil d'Ariane MOC Contextuel (Lutte contre l'émiettement des connaissances) */}
+              {(() => {
+                const cardCourse = courses.find((c) => c.id === currentCard.lessonId);
+                const chapterTitle = cardCourse?.chapter || availableChapters.find((ch) => ch.id === cardCourse?.chapterId)?.title;
+                return (
+                  <div className="flex items-center gap-2 text-[11px] text-zinc-400 font-medium pb-1 border-b border-border/40 overflow-x-auto">
+                    <span className="text-purple-400 font-bold shrink-0">{currentCard.subjectTitle || 'Matière'}</span>
+                    <span>›</span>
+                    {chapterTitle && (
+                      <>
+                        <span className="text-zinc-300 font-semibold truncate max-w-[200px]">{chapterTitle}</span>
+                        <span>›</span>
+                      </>
+                    )}
+                    <span className="text-zinc-400 truncate max-w-[200px]">{currentCard.lessonTitle || 'Cours'}</span>
+                  </div>
+                );
+              })()}
+
               {/* Header carte */}
-              <div className="flex items-center justify-between text-xs pb-3 border-b border-border">
+              <div className="flex items-center justify-between text-xs pb-1">
                 <div className="flex items-center gap-2">
                   <span className="px-2.5 py-0.5 rounded-full bg-purple-500/15 text-purple-300 font-bold">
-                    {currentCard.subjectTitle || 'Matière'}
-                  </span>
-                  <span className="text-zinc-400 font-medium">
                     Carte {currentCardIndex + 1} / {targetCardsList.length}
                   </span>
+                  {currentCard.isWeak && (
+                    <span className="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-black text-[10px] flex items-center gap-1">
+                      <span>🎯</span>
+                      <span>Priorité Faiblesse</span>
+                    </span>
+                  )}
                 </div>
-                <span className="text-[11px] uppercase font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded">
-                  {currentCard.kind || 'Flashcard FSRS'}
+                <span className={`text-[11px] uppercase font-black px-2.5 py-0.5 rounded-full border ${
+                  currentCard.kind === 'relier'
+                    ? 'text-cyan-300 bg-cyan-500/15 border-cyan-500/30'
+                    : 'text-amber-400 bg-amber-500/10 border-amber-500/20'
+                }`}>
+                  {currentCard.kind === 'relier' ? '🔗 Relier les Concepts' : currentCard.kind || 'Flashcard FSRS'}
                 </span>
               </div>
 
@@ -926,6 +952,15 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
                             {kw}
                           </span>
                         ))}
+                      </div>
+                    )}
+
+                    {currentCard.causalLink && (
+                      <div className="text-[11px] text-cyan-200 bg-cyan-500/10 p-3 rounded-xl border border-cyan-500/30 space-y-1">
+                        <strong className="block text-[10px] font-black uppercase text-cyan-300 tracking-wider">
+                          ⛓️ Chaîne de Causalité & Mécanisme Système :
+                        </strong>
+                        <p className="leading-relaxed">{currentCard.causalLink}</p>
                       </div>
                     )}
 

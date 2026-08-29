@@ -7,7 +7,7 @@ import { promisify } from "node:util";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { correctRecall } from "./recall-correction.mjs";
-import { aggregateWeaknesses, buildLearningPlan, calculateCardSchedule, latestReviews, normalizeWeakConcepts, generateInterleavedSession, extractExamTrapsAndErrors, evaluateFeynmanExplanation, seedCourseCardsFromRecall, findClarificationHistory, recordOrUpdateClarification } from "./learning-engine.mjs";
+import { aggregateWeaknesses, buildLearningPlan, calculateCardSchedule, latestReviews, normalizeWeakConcepts, generateInterleavedSession, extractExamTrapsAndErrors, evaluateFeynmanExplanation, seedCourseCardsFromRecall, findClarificationHistory, recordOrUpdateClarification, generateDiagnosticQuizFromCourse, evaluateDiagnosticQuizAnswers } from "./learning-engine.mjs";
 
 import {
   loadEnvFile,
@@ -1282,19 +1282,36 @@ Réponds STRICTEMENT sous format JSON valide :
       return json(res, 400, { error: error.message || "Cours impossible à supprimer" });
     }
   }
+  const diagnosticQuizMatch = url.pathname.match(/^\/api\/study-courses\/([^/]+)\/diagnostic-quiz$/);
+  if (req.method === "GET" && diagnosticQuizMatch) {
+    const courseId = decodeURIComponent(diagnosticQuizMatch[1]);
+    const courses = await readJsonFile(LESSONS, []);
+    const course = courses.find((item) => item.id === courseId);
+    if (!course) return json(res, 404, { error: "Cours introuvable" });
+    const quiz = generateDiagnosticQuizFromCourse(course);
+    return json(res, 200, { ok: true, courseId, quiz });
+  }
+
   const unlockRecallMatch = url.pathname.match(/^\/api\/study-courses\/([^/]+)\/unlock-recall$/);
   if (req.method === "POST" && unlockRecallMatch) {
     try {
       const courseId = decodeURIComponent(unlockRecallMatch[1]);
       const payload = JSON.parse(await readBody(req));
       const recallText = String(payload.recallText || payload.answer || "").trim();
-      if (!recallText) return json(res, 400, { error: "Une tentative de rappel est obligatoire pour déverrouiller le cours" });
+      const quizAnswers = Array.isArray(payload.quizAnswers) ? payload.quizAnswers : null;
+
+      if (!recallText && !quizAnswers) {
+        return json(res, 400, { error: "Une tentative de rappel (texte ou QCM éclair) est requise pour déverrouiller le cours" });
+      }
+
       const courses = await readJsonFile(LESSONS, []);
       const course = courses.find((item) => item.id === courseId);
       if (!course) return json(res, 404, { error: "Cours introuvable" });
 
       let evaluation = null;
-      if (recallText) {
+      if (quizAnswers) {
+        evaluation = evaluateDiagnosticQuizAnswers(course, quizAnswers);
+      } else if (recallText) {
         const correctionResult = await correctRecall({
           root: ROOT,
           configPath: AUTOMATION_CONFIG,
@@ -1309,9 +1326,9 @@ Réponds STRICTEMENT sous format JSON valide :
 
       if (!evaluation) {
         evaluation = {
-          score: recallText.length > 50 ? 80 : 60,
+          score: recallText.length > 50 ? 80 : 65,
           level: recallText.length > 50 ? "good" : "partial",
-          summary: "Rappel libre enregistré avec succès. Fiche et flashcards déverrouillées.",
+          summary: "Rappel validé. Fiche et flashcards FSRS-5 calibrées avec succès.",
           concepts: [
             {
               id: "c1",
@@ -1336,12 +1353,12 @@ Réponds STRICTEMENT sous format JSON valide :
       const sessions = await readJsonFile(REVISION_SESSIONS, []);
       sessions.push({
         id: `sess-${Date.now()}`,
-        type: "course-recall",
+        type: quizAnswers ? "diagnostic-quiz" : "course-recall",
         courseId: course.id,
         subjectId: course.subjectId,
         score: evaluation.score,
-        answerText: recallText,
-        weakConcepts: evaluation.concepts?.filter((c) => c.status === "missing" || c.status === "wrong") || [],
+        answerText: recallText || `QCM Éclair (${quizAnswers.length} réponses)`,
+        weakConcepts: evaluation.concepts?.filter((c) => c.status === "missing" || c.status === "wrong" || c.status === "partial") || [],
         createdAt: new Date().toISOString(),
       });
       await writeFile(REVISION_SESSIONS, JSON.stringify(sessions, null, 2) + "\n", "utf8");
