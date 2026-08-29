@@ -11,9 +11,18 @@
       "ects": 6,
       "priority": "A",
       "questions": [
-        { "prompt": "Sans regarder, reformule la définition ou le théorème central du dernier cours.", "criteria": "Définition exacte, hypothèses et conséquence." },
-        { "prompt": "Refais un exercice-type sans regarder la méthode, puis explique pourquoi chaque étape est légitime.", "criteria": "Choix de la méthode, étapes, vérification du résultat." },
-        { "prompt": "Quelle erreur de raisonnement serait la plus probable sur cette notion ?", "criteria": "Erreur concrète et correction argumentée." }
+        {
+          "prompt": "Sans regarder, reformule la définition ou le théorème central du dernier cours.",
+          "criteria": "Définition exacte, hypothèses et conséquence."
+        },
+        {
+          "prompt": "Refais un exercice-type sans regarder la méthode, puis explique pourquoi chaque étape est légitime.",
+          "criteria": "Choix de la méthode, étapes, vérification du résultat."
+        },
+        {
+          "prompt": "Quelle erreur de raisonnement serait la plus probable sur cette notion ?",
+          "criteria": "Erreur concrète et correction argumentée."
+        }
       ]
     },
     {
@@ -24,9 +33,18 @@
       "ects": 3,
       "priority": "A",
       "questions": [
-        { "prompt": "Quel modèle physique est utilisé et quelles sont ses hypothèses ?", "criteria": "Modèle, hypothèses, grandeur observée." },
-        { "prompt": "Explique le phénomène étudié à quelqu'un qui connaît les maths mais pas la biologie.", "criteria": "Lien entre équation, grandeur et phénomène vivant." },
-        { "prompt": "Que changerait une modification de la condition principale ?", "criteria": "Prédiction justifiée, pas seulement intuitive." }
+        {
+          "prompt": "Quel modèle physique est utilisé et quelles sont ses hypothèses ?",
+          "criteria": "Modèle, hypothèses, grandeur observée."
+        },
+        {
+          "prompt": "Explique le phénomène étudié à quelqu'un qui connaît les maths mais pas la biologie.",
+          "criteria": "Lien entre équation, grandeur et phénomène vivant."
+        },
+        {
+          "prompt": "Que changerait une modification de la condition principale ?",
+          "criteria": "Prédiction justifiée, pas seulement intuitive."
+        }
       ]
     },
     {
@@ -37,9 +55,18 @@
       "ects": 6,
       "priority": "A",
       "questions": [
-        { "prompt": "Définis la notion centrale du cours et distingue-la d'une notion proche.", "criteria": "Définition, critère de distinction, exemple." },
-        { "prompt": "Explique le mécanisme ou l'équilibre étape par étape.", "criteria": "Étapes, espèces ou grandeurs impliquées, sens de variation." },
-        { "prompt": "Résous un cas simple puis vérifie unités, ordre de grandeur et hypothèses.", "criteria": "Méthode, calcul, contrôle de cohérence." }
+        {
+          "prompt": "Définis la notion centrale du cours et distingue-la d'une notion proche.",
+          "criteria": "Définition, critère de distinction, exemple."
+        },
+        {
+          "prompt": "Explique le mécanisme ou l'équilibre étape par étape.",
+          "criteria": "Étapes, espèces ou grandeurs impliquées, sens de variation."
+        },
+        {
+          "prompt": "Résous un cas simple puis vérifie unités, ordre de grandeur et hypothèses.",
+          "criteria": "Méthode, calcul, contrôle de cohérence."
+        }
       ]
     },
     {
@@ -50,9 +77,18 @@
       "ects": 3,
       "priority": "A",
       "questions": [
-        { "prompt": "Classe les biomolécules étudiées et relie structure et fonction.", "criteria": "Catégories, caractéristique structurale, fonction." },
-        { "prompt": "Compare deux familles de molécules sans réciter une liste.", "criteria": "Critères de comparaison et conséquences biologiques." },
-        { "prompt": "À partir d'une structure ou d'un exemple, quelle fonction prédis-tu et pourquoi ?", "criteria": "Indices observés, raisonnement, limite de la prédiction." }
+        {
+          "prompt": "Classe les biomolécules étudiées et relie structure et fonction.",
+          "criteria": "Catégories, caractéristique structurale, fonction."
+        },
+        {
+          "prompt": "Compare deux familles de molécules sans réciter une liste.",
+          "criteria": "Critères de comparaison et conséquences biologiques."
+        },
+        {
+          "prompt": "À partir d'une structure ou d'un exemple, quelle fonction prédis-tu et pourquoi ?",
+          "criteria": "Indices observés, raisonnement, limite de la prédiction."
+        }
       ]
     },
     {
@@ -63,9 +99,18 @@
       "ects": 6,
       "priority": "A",
       "questions": [
-        { "prompt": "Quels critères permettent de distinguer les groupes ou niveaux d'organisation vus en cours ?", "criteria": "Critères explicites et limites." },
-        { "prompt": "Construis une comparaison structurée entre deux groupes du vivant.", "criteria": "Structure, fonctionnement, relation évolutive ou écologique." },
-        { "prompt": "Corrige une classification fausse en justifiant chaque déplacement.", "criteria": "Erreur identifiée et argument biologique." }
+        {
+          "prompt": "Quels critères permettent de distinguer les groupes ou niveaux d'organisation vus en cours ?",
+          "criteria": "Critères explicites et limites."
+        },
+        {
+          "prompt": "Construis une comparaison structurée entre deux groupes du vivant.",
+          "criteria": "Structure, fonctionnement, relation évolutive ou écologique."
+        },
+        {
+          "prompt": "Corrige une classification fausse en justifiant chaque déplacement.",
+          "criteria": "Erreur identifiée et argument biologique."
+        }
       ]
     },
     {
@@ -76,9 +121,18 @@
       "ects": 3,
       "priority": "B",
       "questions": [
-        { "prompt": "Quelle méthode ou compétence le cours veut-il te faire pratiquer ?", "criteria": "Objectif, étapes, critère de réussite." },
-        { "prompt": "Montre comment tu l'appliquerais à un travail universitaire réel.", "criteria": "Plan d'action concret et vérifiable." },
-        { "prompt": "Quel piège ferait perdre du temps ou de la qualité ?", "criteria": "Piège et prévention." }
+        {
+          "prompt": "Quelle méthode ou compétence le cours veut-il te faire pratiquer ?",
+          "criteria": "Objectif, étapes, critère de réussite."
+        },
+        {
+          "prompt": "Montre comment tu l'appliquerais à un travail universitaire réel.",
+          "criteria": "Plan d'action concret et vérifiable."
+        },
+        {
+          "prompt": "Quel piège ferait perdre du temps ou de la qualité ?",
+          "criteria": "Piège et prévention."
+        }
       ]
     },
     {
@@ -89,9 +143,18 @@
       "ects": 3,
       "priority": "B",
       "questions": [
-        { "prompt": "Quel est le concept essentiel de la dernière séance ?", "criteria": "Définition et exemple." },
-        { "prompt": "Quelle relation entre deux idées faut-il pouvoir expliquer ?", "criteria": "Relation causale, logique ou comparative." },
-        { "prompt": "Quelle question d'examen pourrait vérifier ce cours ?", "criteria": "Question précise et corrigible." }
+        {
+          "prompt": "Quel est le concept essentiel de la dernière séance ?",
+          "criteria": "Définition et exemple."
+        },
+        {
+          "prompt": "Quelle relation entre deux idées faut-il pouvoir expliquer ?",
+          "criteria": "Relation causale, logique ou comparative."
+        },
+        {
+          "prompt": "Quelle question d'examen pourrait vérifier ce cours ?",
+          "criteria": "Question précise et corrigible."
+        }
       ]
     },
     {
@@ -102,9 +165,18 @@
       "ects": 5,
       "priority": "A",
       "questions": [
-        { "prompt": "Définis l'IA et distingue le concept étudié d'un simple programme à règles.", "criteria": "Définition, distinction, exemple." },
-        { "prompt": "Quel problème biologique peut-on formuler avec cette notion et quelles données faudrait-il ?", "criteria": "Problème, données, sortie attendue, limite." },
-        { "prompt": "Quels biais ou erreurs peuvent rendre une application d'IA trompeuse ?", "criteria": "Source du biais, effet et moyen de contrôle." }
+        {
+          "prompt": "Définis l'IA et distingue le concept étudié d'un simple programme à règles.",
+          "criteria": "Définition, distinction, exemple."
+        },
+        {
+          "prompt": "Quel problème biologique peut-on formuler avec cette notion et quelles données faudrait-il ?",
+          "criteria": "Problème, données, sortie attendue, limite."
+        },
+        {
+          "prompt": "Quels biais ou erreurs peuvent rendre une application d'IA trompeuse ?",
+          "criteria": "Source du biais, effet et moyen de contrôle."
+        }
       ]
     },
     {
@@ -115,9 +187,18 @@
       "ects": 6,
       "priority": "A",
       "questions": [
-        { "prompt": "Reformule le résultat principal, ses hypothèses et son utilisation.", "criteria": "Énoncé, conditions, conséquence." },
-        { "prompt": "Résous un exercice nouveau en expliquant le choix de l'outil.", "criteria": "Choix, étapes, vérification." },
-        { "prompt": "Que devient le raisonnement si une hypothèse est supprimée ?", "criteria": "Conséquence et justification." }
+        {
+          "prompt": "Reformule le résultat principal, ses hypothèses et son utilisation.",
+          "criteria": "Énoncé, conditions, conséquence."
+        },
+        {
+          "prompt": "Résous un exercice nouveau en expliquant le choix de l'outil.",
+          "criteria": "Choix, étapes, vérification."
+        },
+        {
+          "prompt": "Que devient le raisonnement si une hypothèse est supprimée ?",
+          "criteria": "Conséquence et justification."
+        }
       ]
     },
     {
@@ -128,9 +209,18 @@
       "ects": 6,
       "priority": "A",
       "questions": [
-        { "prompt": "Explique la transformation ou l'équilibre sans utiliser seulement une formule.", "criteria": "Espèces, mécanisme, sens et conditions." },
-        { "prompt": "Compare deux situations chimiques proches et prédis leur différence.", "criteria": "Variable modifiée et conséquence justifiée." },
-        { "prompt": "Repère l'erreur dans une résolution et propose le contrôle adapté.", "criteria": "Erreur, correction, unité ou ordre de grandeur." }
+        {
+          "prompt": "Explique la transformation ou l'équilibre sans utiliser seulement une formule.",
+          "criteria": "Espèces, mécanisme, sens et conditions."
+        },
+        {
+          "prompt": "Compare deux situations chimiques proches et prédis leur différence.",
+          "criteria": "Variable modifiée et conséquence justifiée."
+        },
+        {
+          "prompt": "Repère l'erreur dans une résolution et propose le contrôle adapté.",
+          "criteria": "Erreur, correction, unité ou ordre de grandeur."
+        }
       ]
     },
     {
@@ -141,9 +231,18 @@
       "ects": 6,
       "priority": "A",
       "questions": [
-        { "prompt": "Décris le processus étudié dans l'ordre, avec les acteurs et les résultats.", "criteria": "Étapes, acteurs, localisation, résultat." },
-        { "prompt": "Relie une modification cellulaire ou génétique à sa conséquence.", "criteria": "Chaîne causale complète et conditions." },
-        { "prompt": "Compare deux mécanismes et indique dans quel cas chacun intervient.", "criteria": "Critères, contexte, conséquence." }
+        {
+          "prompt": "Décris le processus étudié dans l'ordre, avec les acteurs et les résultats.",
+          "criteria": "Étapes, acteurs, localisation, résultat."
+        },
+        {
+          "prompt": "Relie une modification cellulaire ou génétique à sa conséquence.",
+          "criteria": "Chaîne causale complète et conditions."
+        },
+        {
+          "prompt": "Compare deux mécanismes et indique dans quel cas chacun intervient.",
+          "criteria": "Critères, contexte, conséquence."
+        }
       ]
     },
     {
@@ -154,9 +253,18 @@
       "ects": 6,
       "priority": "A",
       "questions": [
-        { "prompt": "À quelle échelle se situe le phénomène étudié et pourquoi ?", "criteria": "Échelle, acteurs, variables." },
-        { "prompt": "Explique une relation entre facteur environnemental et vivant.", "criteria": "Mécanisme, effet direct ou indirect, limite." },
-        { "prompt": "Interprète un graphique ou un scénario sans confondre corrélation et causalité.", "criteria": "Tendance, hypothèse, preuve manquante." }
+        {
+          "prompt": "À quelle échelle se situe le phénomène étudié et pourquoi ?",
+          "criteria": "Échelle, acteurs, variables."
+        },
+        {
+          "prompt": "Explique une relation entre facteur environnemental et vivant.",
+          "criteria": "Mécanisme, effet direct ou indirect, limite."
+        },
+        {
+          "prompt": "Interprète un graphique ou un scénario sans confondre corrélation et causalité.",
+          "criteria": "Tendance, hypothèse, preuve manquante."
+        }
       ]
     },
     {
@@ -167,9 +275,18 @@
       "ects": 3,
       "priority": "B",
       "questions": [
-        { "prompt": "Explique en anglais le concept scientifique de la dernière séance en cinq phrases.", "criteria": "Vocabulaire, structure, exactitude scientifique." },
-        { "prompt": "Résume l'idée principale d'un document et cite un détail précis.", "criteria": "Résumé fidèle et preuve dans le document." },
-        { "prompt": "Corrige une formulation scientifique ambiguë.", "criteria": "Correction grammaticale et précision." }
+        {
+          "prompt": "Explique en anglais le concept scientifique de la dernière séance en cinq phrases.",
+          "criteria": "Vocabulaire, structure, exactitude scientifique."
+        },
+        {
+          "prompt": "Résume l'idée principale d'un document et cite un détail précis.",
+          "criteria": "Résumé fidèle et preuve dans le document."
+        },
+        {
+          "prompt": "Corrige une formulation scientifique ambiguë.",
+          "criteria": "Correction grammaticale et précision."
+        }
       ]
     },
     {
@@ -180,22 +297,18 @@
       "ects": 3,
       "priority": "B",
       "questions": [
-        { "prompt": "Quelle est la notion que tu dois pouvoir expliquer sans support ?", "criteria": "Définition et exemple." },
-        { "prompt": "Quelle comparaison permet de distinguer les deux idées principales ?", "criteria": "Critères et conséquence." },
-        { "prompt": "Propose un cas d'application ou une question de transfert.", "criteria": "Cas nouveau mais lié au cours." }
-      ]
-    },
-    {
-      "id": "s2-donnees",
-      "title": "Manipuler et visualiser des données",
-      "semester": "S2",
-      "category": "BioMIA / données",
-      "ects": 5,
-      "priority": "A",
-      "questions": [
-        { "prompt": "Décris le pipeline de données du fichier brut au graphique interprétable.", "criteria": "Import, nettoyage, transformation, visualisation, interprétation." },
-        { "prompt": "Quel choix de représentation ou de nettoyage pourrait tromper l'analyse ?", "criteria": "Choix, biais possible, contrôle." },
-        { "prompt": "Reproduis une manipulation sans copier la solution puis explique chaque étape.", "criteria": "Code ou procédure, résultat, vérification." }
+        {
+          "prompt": "Quelle est la notion que tu dois pouvoir expliquer sans support ?",
+          "criteria": "Définition et exemple."
+        },
+        {
+          "prompt": "Quelle comparaison permet de distinguer les deux idées principales ?",
+          "criteria": "Critères et conséquence."
+        },
+        {
+          "prompt": "Propose un cas d'application ou une question de transfert.",
+          "criteria": "Cas nouveau mais lié au cours."
+        }
       ]
     }
   ]

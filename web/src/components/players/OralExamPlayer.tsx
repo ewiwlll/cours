@@ -241,7 +241,7 @@ export const OralExamPlayer: React.FC<OralExamPlayerProps> = ({
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-base font-bold text-zinc-100">Simulateur d'Examen Oral BioMIA</h2>
+              <h2 className="text-base font-bold text-zinc-100">Simulateur d'Examen Oral</h2>
               <span className="text-xs px-2 py-0.5 rounded-full bg-accent-blue/10 text-accent-blue border border-accent-blue/20 font-medium">
                 IA Examiner v4.0
               </span>
@@ -376,7 +376,7 @@ export const OralExamPlayer: React.FC<OralExamPlayerProps> = ({
             <div className="w-20 h-20 rounded-full bg-accent-blue/10 border-2 border-accent-blue/30 flex items-center justify-center text-accent-blue animate-spin">
               <Sparkles className="w-10 h-10" />
             </div>
-            <h3 className="text-xl font-bold text-white">Évaluation IA BioMIA en cours...</h3>
+            <h3 className="text-xl font-bold text-white">Évaluation IA en cours...</h3>
             <p className="text-xs text-zinc-400 max-w-sm">
               Analyse de la précision terminologique, couverture des concepts clés et rigueur de
               l'argumentation.

@@ -49,7 +49,7 @@ export const CourseEditorModal: React.FC<CourseEditorModalProps> = ({
   const [kind, setKind] = useState<string>(course?.kind || 'CM');
   const [courseNumber, setCourseNumber] = useState<number>(course?.courseNumber || 1);
   const [notes, setNotes] = useState(course?.notes || '');
-  const [tags, setTags] = useState<string[]>(course?.tags || ['UE1', 'BioMIA']);
+  const [tags, setTags] = useState<string[]>(course?.tags || ['CM', 'Amphi']);
   const [tagInput, setTagInput] = useState('');
 
   // Uploaded files via drag & drop

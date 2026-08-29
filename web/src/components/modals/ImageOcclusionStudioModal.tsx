@@ -225,7 +225,7 @@ export const ImageOcclusionStudioModal: React.FC<ImageOcclusionStudioModalProps>
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-base font-bold text-zinc-100">Studio Image Occlusion BioMIA</h1>
+              <h1 className="text-base font-bold text-zinc-100">Studio Image Occlusion</h1>
               <span className="text-xs px-2 py-0.5 rounded-full bg-accent-purple/10 text-accent-purple border border-accent-purple/20 font-medium">
                 Anki v5.0 Ready
               </span>

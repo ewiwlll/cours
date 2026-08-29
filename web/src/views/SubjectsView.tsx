@@ -205,6 +205,50 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
     );
   }
 
+  if (subjects.length === 0) {
+    return (
+      <div className="max-w-2xl mx-auto text-center p-8 sm:p-12 rounded-3xl bg-surface border border-border shadow-xl space-y-6 animate-fadeIn my-6">
+        <div className="w-16 h-16 rounded-3xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mx-auto">
+          <BookOpen className="w-8 h-8" />
+        </div>
+
+        <div className="space-y-2">
+          <h2 className="text-2xl sm:text-3xl font-black text-white">
+            Bienvenue dans votre classeur !
+          </h2>
+          <p className="text-xs sm:text-sm text-zinc-400 max-w-md mx-auto leading-relaxed">
+            Créez votre première matière pour y ranger vos chapitres et enregistrer vos cours par phase d'apprentissage.
+          </p>
+        </div>
+
+        <div className="pt-2">
+          <button
+            onClick={() => openModal('subjectEditor')}
+            className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-sm font-bold shadow-xl shadow-blue-500/20 hover:scale-105 transition-all inline-flex items-center gap-2"
+          >
+            <Plus className="w-4 h-4" />
+            <span>+ Créer ma première matière</span>
+          </button>
+        </div>
+
+        <div className="pt-6 border-t border-border/80 text-left grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-zinc-400">
+          <div className="p-3.5 rounded-xl bg-surface-elevated/40 border border-border space-y-1">
+            <span className="font-bold text-white block">1. Matière</span>
+            <span>Définissez la matière (ex: Droit, Mathématiques, Anatomie...)</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-surface-elevated/40 border border-border space-y-1">
+            <span className="font-bold text-white block">2. Chapitres</span>
+            <span>Créez les grands thèmes au sein de votre matière.</span>
+          </div>
+          <div className="p-3.5 rounded-xl bg-surface-elevated/40 border border-border space-y-1">
+            <span className="font-bold text-white block">3. Séances par Phase</span>
+            <span>Enregistrez vos cours (Phase 1, Phase 2...) avec l'IA.</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6 animate-fadeIn pb-16">
       {/* 1. EN-TÊTE PRINCIPAL SIMPLE */}

@@ -18,15 +18,5 @@
     "status": "manual",
     "createdAt": "2026-08-24T21:02:30.145Z",
     "updatedAt": "2026-08-24T21:02:30.145Z"
-  },
-  {
-    "id": "chapter-1788040522988-biomolecules",
-    "subjectId": "s1-maths-avancees",
-    "subjectTitle": "Mathématiques avancées 1",
-    "title": "Biomolécules",
-    "order": 2,
-    "status": "manual",
-    "createdAt": "2026-08-29T21:55:22.988Z",
-    "updatedAt": "2026-08-29T21:55:22.988Z"
   }
 ]
