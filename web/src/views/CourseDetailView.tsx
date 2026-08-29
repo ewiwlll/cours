@@ -61,8 +61,48 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
   // Recall Sas State
   const [recallInput, setRecallInput] = useState<string>('');
   const [isEvaluatingRecall, setIsEvaluatingRecall] = useState<boolean>(false);
+  const [isDictating, setIsDictating] = useState<boolean>(false);
   const [recallError, setRecallError] = useState<string | null>(null);
   const [evaluationResult, setEvaluationResult] = useState<any>(null);
+
+  const toggleDictation = () => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("La reconnaissance vocale n'est pas supportée par votre navigateur. Vous pouvez écrire directement ou dicter avec Antigravity sur votre Mac !");
+      return;
+    }
+
+    if (isDictating) {
+      setIsDictating(false);
+      return;
+    }
+
+    try {
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'fr-FR';
+      recognition.continuous = false;
+      recognition.interimResults = true;
+
+      recognition.onstart = () => setIsDictating(true);
+      recognition.onend = () => setIsDictating(false);
+      recognition.onerror = () => setIsDictating(false);
+
+      recognition.onresult = (event: any) => {
+        let text = '';
+        for (let i = 0; i < event.results.length; i++) {
+          text += event.results[i][0].transcript;
+        }
+        if (text.trim()) {
+          setRecallInput((prev) => (prev.trim() ? prev.trim() + ' ' + text.trim() : text.trim()));
+        }
+      };
+
+      recognition.start();
+    } catch (e) {
+      console.warn("Speech recognition error:", e);
+      setIsDictating(false);
+    }
+  };
 
   // Load course details
   const loadCourse = async () => {
@@ -276,9 +316,23 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
           {/* Formulaire de rappel libre */}
           <form onSubmit={handleUnlockRecall} className="space-y-4">
             <div className="space-y-2">
-              <label className="text-xs font-bold text-zinc-300 block">
-                ✍️ Ce dont je me rappelle de ce cours :
-              </label>
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-bold text-zinc-300 block">
+                  ✍️ Ce dont je me rappelle de ce cours :
+                </label>
+                <button
+                  type="button"
+                  onClick={toggleDictation}
+                  className={`px-3 py-1 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all border ${
+                    isDictating
+                      ? 'bg-rose-500/20 border-rose-500 text-rose-300 animate-pulse'
+                      : 'bg-surface-elevated border-border-subtle text-zinc-300 hover:text-white'
+                  }`}
+                >
+                  <Mic className={`w-3.5 h-3.5 ${isDictating ? 'text-rose-400' : 'text-amber-400'}`} />
+                  <span>{isDictating ? 'Écoute en cours (parlez)...' : 'Dicter à la voix'}</span>
+                </button>
+              </div>
               <textarea
                 value={recallInput}
                 onChange={(e) => setRecallInput(e.target.value)}
