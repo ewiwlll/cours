@@ -43,23 +43,24 @@ import type {
 } from '../lib/types';
 
 interface TrainingViewProps {
-  initialTab?: 'due' | 'interleaved' | 'traps' | 'chapters' | 'schemas' | 'oral' | 'weaknesses';
+  initialTab?: 'hub' | 'due' | 'interleaved' | 'traps' | 'chapters' | 'schemas' | 'oral' | 'weaknesses';
   initialSubjectId?: string;
   onOpenCourse?: (courseId: string) => void;
 }
 
 export const TrainingView: React.FC<TrainingViewProps> = ({
-  initialTab = 'due',
+  initialTab = 'hub',
   initialSubjectId,
 }) => {
   const [activeTab, setActiveTab] = useState<
-    'due' | 'interleaved' | 'traps' | 'chapters' | 'schemas' | 'oral' | 'weaknesses'
+    'hub' | 'due' | 'interleaved' | 'traps' | 'chapters' | 'schemas' | 'oral' | 'weaknesses'
   >(initialTab);
 
   // Filters
   const [selectedSemester, setSelectedSemester] = useState<'ALL' | 'S1' | 'S2'>('ALL');
   const [selectedSubjectId, setSelectedSubjectId] = useState<string>(initialSubjectId || 'ALL');
   const [selectedChapter, setSelectedChapter] = useState<string>('ALL');
+  const [selectedCourseId, setSelectedCourseId] = useState<string>('ALL');
 
   // Data
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -165,28 +166,46 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
     return () => clearInterval(interval);
   }, [oralStarted, isOralTimerRunning, oralTimerSeconds]);
 
+  // Detection si la formation a plusieurs semestres S1 et S2 distincts
+  const hasMultipleSemesters = useMemo(() => {
+    const hasS1 = subjects.some((s) => s.semester === 'S1');
+    const hasS2 = subjects.some((s) => s.semester === 'S2');
+    return hasS1 && hasS2;
+  }, [subjects]);
+
   // Filtered Subjects
   const filteredSubjects = useMemo(() => {
-    if (selectedSemester === 'ALL') return subjects;
+    if (!hasMultipleSemesters || selectedSemester === 'ALL') return subjects;
     return subjects.filter((s) => s.semester === selectedSemester);
-  }, [subjects, selectedSemester]);
+  }, [subjects, selectedSemester, hasMultipleSemesters]);
 
   // Filtered Courses
   const filteredCourses = useMemo(() => {
     return courses.filter((c) => {
       const sub = subjects.find((s) => s.id === c.subjectId);
-      if (selectedSemester !== 'ALL' && sub && sub.semester !== selectedSemester) return false;
+      if (hasMultipleSemesters && selectedSemester !== 'ALL' && sub && sub.semester !== selectedSemester) return false;
       if (selectedSubjectId !== 'ALL' && c.subjectId !== selectedSubjectId) return false;
       if (selectedChapter !== 'ALL' && c.chapter !== selectedChapter) return false;
+      if (selectedCourseId !== 'ALL' && c.id !== selectedCourseId) return false;
       return true;
     });
-  }, [courses, subjects, selectedSemester, selectedSubjectId, selectedChapter]);
+  }, [courses, subjects, selectedSemester, selectedSubjectId, selectedChapter, selectedCourseId, hasMultipleSemesters]);
 
   // Available chapters for the selected subject
   const availableChapters = useMemo(() => {
     if (selectedSubjectId === 'ALL') return [];
     return chapterDefs.filter((ch) => ch.subjectId === selectedSubjectId);
   }, [chapterDefs, selectedSubjectId]);
+
+  // Available individual courses/séances for the selected subject / chapter
+  const availableCoursesForFilter = useMemo(() => {
+    if (selectedSubjectId === 'ALL') return [];
+    return courses.filter((c) => {
+      if (c.subjectId !== selectedSubjectId) return false;
+      if (selectedChapter !== 'ALL' && c.chapter !== selectedChapter) return false;
+      return true;
+    });
+  }, [courses, selectedSubjectId, selectedChapter]);
 
   // Filtered Due Cards
   const dueCardsList = useMemo(() => {
@@ -211,11 +230,12 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
 
     return list.filter((item) => {
       const sub = subjects.find((s) => s.id === item.subjectId);
-      if (selectedSemester !== 'ALL' && sub && sub.semester !== selectedSemester) return false;
+      if (hasMultipleSemesters && selectedSemester !== 'ALL' && sub && sub.semester !== selectedSemester) return false;
       if (selectedSubjectId !== 'ALL' && item.subjectId !== selectedSubjectId) return false;
+      if (selectedCourseId !== 'ALL' && item.lessonId !== selectedCourseId) return false;
       return true;
     });
-  }, [reviews, courses, subjects, selectedSemester, selectedSubjectId]);
+  }, [reviews, courses, subjects, selectedSemester, selectedSubjectId, selectedCourseId, hasMultipleSemesters]);
 
   // Chapter Test cards
   const chapterTestCards = useMemo(() => {
@@ -336,48 +356,53 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
             <span>Filtres :</span>
           </div>
 
-          {/* Semestre */}
-          <div className="flex items-center bg-surface-elevated rounded-lg p-0.5 border border-border-subtle">
-            <button
-              onClick={() => {
-                setSelectedSemester('ALL');
-                setSelectedSubjectId('ALL');
-              }}
-              className={`px-2.5 py-1 rounded-md transition-all ${
-                selectedSemester === 'ALL'
-                  ? 'bg-accent-blue text-white font-medium shadow-xs'
-                  : 'text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              Tous
-            </button>
-            <button
-              onClick={() => {
-                setSelectedSemester('S1');
-                setSelectedSubjectId('ALL');
-              }}
-              className={`px-2.5 py-1 rounded-md transition-all ${
-                selectedSemester === 'S1'
-                  ? 'bg-accent-blue text-white font-medium shadow-xs'
-                  : 'text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              S1
-            </button>
-            <button
-              onClick={() => {
-                setSelectedSemester('S2');
-                setSelectedSubjectId('ALL');
-              }}
-              className={`px-2.5 py-1 rounded-md transition-all ${
-                selectedSemester === 'S2'
-                  ? 'bg-accent-blue text-white font-medium shadow-xs'
-                  : 'text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              S2
-            </button>
-          </div>
+          {/* Semestre (Affiché UNIQUEMENT si le cursus a plusieurs semestres distincts S1/S2) */}
+          {hasMultipleSemesters && (
+            <div className="flex items-center bg-surface-elevated rounded-lg p-0.5 border border-border-subtle">
+              <button
+                onClick={() => {
+                  setSelectedSemester('ALL');
+                  setSelectedSubjectId('ALL');
+                  setSelectedCourseId('ALL');
+                }}
+                className={`px-2.5 py-1 rounded-md transition-all ${
+                  selectedSemester === 'ALL'
+                    ? 'bg-accent-blue text-white font-medium shadow-xs'
+                    : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                Tous
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedSemester('S1');
+                  setSelectedSubjectId('ALL');
+                  setSelectedCourseId('ALL');
+                }}
+                className={`px-2.5 py-1 rounded-md transition-all ${
+                  selectedSemester === 'S1'
+                    ? 'bg-accent-blue text-white font-medium shadow-xs'
+                    : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                S1
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedSemester('S2');
+                  setSelectedSubjectId('ALL');
+                  setSelectedCourseId('ALL');
+                }}
+                className={`px-2.5 py-1 rounded-md transition-all ${
+                  selectedSemester === 'S2'
+                    ? 'bg-accent-blue text-white font-medium shadow-xs'
+                    : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                S2
+              </button>
+            </div>
+          )}
 
           {/* Dropdown Matière */}
           <select
@@ -385,6 +410,7 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
             onChange={(e) => {
               setSelectedSubjectId(e.target.value);
               setSelectedChapter('ALL');
+              setSelectedCourseId('ALL');
             }}
             className="bg-surface-elevated border border-border-subtle rounded-lg px-3 py-1.5 text-zinc-200 focus:outline-none focus:border-accent-blue"
           >
@@ -400,13 +426,32 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
           {selectedSubjectId !== 'ALL' && availableChapters.length > 0 && (
             <select
               value={selectedChapter}
-              onChange={(e) => setSelectedChapter(e.target.value)}
-              className="bg-surface-elevated border border-border-subtle rounded-lg px-3 py-1.5 text-zinc-200 focus:outline-none focus:border-accent-blue max-w-[220px] truncate"
+              onChange={(e) => {
+                setSelectedChapter(e.target.value);
+                setSelectedCourseId('ALL');
+              }}
+              className="bg-surface-elevated border border-border-subtle rounded-lg px-3 py-1.5 text-zinc-200 focus:outline-none focus:border-accent-blue max-w-[200px] truncate"
             >
               <option value="ALL">Tous les chapitres</option>
               {availableChapters.map((ch) => (
                 <option key={ch.id} value={ch.title}>
                   {ch.title}
+                </option>
+              ))}
+            </select>
+          )}
+
+          {/* Dropdown Cours / Séance spécifique (Micro-Ancrage) */}
+          {selectedSubjectId !== 'ALL' && availableCoursesForFilter.length > 0 && (
+            <select
+              value={selectedCourseId}
+              onChange={(e) => setSelectedCourseId(e.target.value)}
+              className="bg-surface-elevated border border-border-subtle rounded-lg px-3 py-1.5 text-zinc-200 focus:outline-none focus:border-accent-blue max-w-[190px] truncate"
+            >
+              <option value="ALL">Toutes les séances ({availableCoursesForFilter.length})</option>
+              {availableCoursesForFilter.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.title}
                 </option>
               ))}
             </select>
@@ -418,9 +463,22 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
         </span>
       </div>
 
-      {/* 3. Les 7 Sous-Onglets Cognitifs */}
+      {/* 3. Les Sous-Onglets Cognitifs avec Hub de Priorités en 1er */}
       <div className="border-b border-border">
-        <nav className="flex items-center gap-6 overflow-x-auto scrollbar-none">
+        <nav className="flex items-center gap-5 overflow-x-auto scrollbar-none">
+          <button
+            onClick={() => setActiveTab('hub')}
+            className={`pb-3 text-sm font-semibold transition-all relative flex items-center gap-2 whitespace-nowrap ${
+              activeTab === 'hub' ? 'text-amber-400' : 'text-zinc-400 hover:text-zinc-200'
+            }`}
+          >
+            <Sparkles className="w-4 h-4" />
+            <span>Mes Priorités du Jour</span>
+            {activeTab === 'hub' && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-400 rounded-full" />
+            )}
+          </button>
+
           <button
             onClick={() => setActiveTab('due')}
             className={`pb-3 text-sm font-semibold transition-all relative flex items-center gap-2 whitespace-nowrap ${
@@ -519,14 +577,17 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
       {/* Explication Pédagogique du Mode Actif */}
       <div className="p-3.5 rounded-xl bg-surface-elevated/70 border border-border-subtle flex items-center gap-2.5 text-xs text-zinc-300">
         <span className="text-base">
-          {activeTab === 'due' ? '⚡' : activeTab === 'interleaved' ? '🔀' : activeTab === 'traps' ? '⚠️' : activeTab === 'chapters' ? '📖' : activeTab === 'schemas' ? '🖼️' : activeTab === 'oral' ? '🎙️' : '🎯'}
+          {activeTab === 'hub' ? '🎯' : activeTab === 'due' ? '⚡' : activeTab === 'interleaved' ? '🔀' : activeTab === 'traps' ? '⚠️' : activeTab === 'chapters' ? '📖' : activeTab === 'schemas' ? '🖼️' : activeTab === 'oral' ? '🎙️' : '🚨'}
         </span>
         <div>
+          {activeTab === 'hub' && (
+            <p><strong>Cockpit des Priorités :</strong> L'algorithme FSRS-5 analyse tes forces, tes cartes arrivées à échéance et tes pièges d'examen pour te guider sans surcharge cognitive.</p>
+          )}
           {activeTab === 'due' && (
             <p><strong>Répétition Espacée FSRS-5 :</strong> Révise tes cartes au moment optimal calculé par la courbe de rétention mémoire. Travaille à ton rythme, sans chrono imposé.</p>
           )}
           {activeTab === 'interleaved' && (
-            <p><strong>Séance Panachée (Entrelacement) :</strong> Alterne les questions de différentes matières (Biologie, Mathématiques, Physique) pour stimuler la plasticité et l'agilité mentale.</p>
+            <p><strong>Séance Panachée (Entrelacement) :</strong> Alterne les questions de différentes matières pour stimuler la plasticité et l'agilité mentale.</p>
           )}
           {activeTab === 'traps' && (
             <p><strong>Carnet de Pièges (Hypercorrection) :</strong> Rebalaye de manière ciblée tes erreurs récentes et les pièges d'examen signalés en cours d'amphi.</p>
@@ -545,6 +606,154 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
           )}
         </div>
       </div>
+
+      {/* ONGLET 0 : HUB DES PRIORITÉS DU JOUR */}
+      {activeTab === 'hub' && (
+        <div className="space-y-6 animate-fadeIn">
+          {/* Bannière de lancement rapide */}
+          <div className="p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 via-purple-500/10 to-blue-500/10 border border-amber-500/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold uppercase tracking-wider">
+                  Recommandation IA
+                </span>
+                <span className="text-xs text-zinc-400 font-medium">Programme d'aujourd'hui</span>
+              </div>
+              <h2 className="text-lg font-bold text-white">
+                {dueCardsList.length > 0
+                  ? `Tu as ${dueCardsList.length} carte${dueCardsList.length > 1 ? 's' : ''} FSRS à réviser aujourd'hui`
+                  : 'Toutes tes cartes espacées sont à jour !'}
+              </h2>
+              <p className="text-xs text-zinc-400 max-w-xl leading-relaxed">
+                Priorise l'ancrage à l'échelle de chaque cours d'amphi, puis consolide au niveau du chapitre complet et de la séance panachée.
+              </p>
+            </div>
+
+            <button
+              onClick={() => {
+                if (dueCardsList.length > 0) setActiveTab('due');
+                else if (trapCards.length > 0) setActiveTab('traps');
+                else setActiveTab('interleaved');
+              }}
+              className="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-zinc-950 text-xs font-bold transition-all shadow-lg flex items-center gap-2 shrink-0"
+            >
+              <Play className="w-4 h-4 fill-current" />
+              <span>Démarrer ma séance prioritaire (15 min)</span>
+            </button>
+          </div>
+
+          {/* Grille des 4 Paliers de Priorité */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Priorité 1 : Pièges & Erreurs */}
+            <div className="p-5 rounded-2xl bg-surface border border-rose-500/20 space-y-4 hover:border-rose-500/40 transition-all flex flex-col justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase text-rose-400 flex items-center gap-1.5">
+                    <ShieldAlert className="w-4 h-4 text-rose-400" />
+                    1. Urgences & Pièges d'Examen
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/15 text-rose-300 border border-rose-500/20">
+                    {trapCards.length + weaknesses.length} points d'attention
+                  </span>
+                </div>
+                <h3 className="text-sm font-bold text-white">Carnet de Pièges & Notions Fragiles</h3>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  Revois immédiatement les cartes où tu as hésité ou échoué avant qu'elles ne s'effacent de ta mémoire.
+                </p>
+              </div>
+
+              <button
+                onClick={() => setActiveTab('traps')}
+                className="w-full py-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+              >
+                <span>Réviser les pièges ({trapCards.length})</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Priorité 2 : Micro-Ancrage par Cours */}
+            <div className="p-5 rounded-2xl bg-surface border border-amber-500/20 space-y-4 hover:border-amber-500/40 transition-all flex flex-col justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase text-amber-400 flex items-center gap-1.5">
+                    <BookOpen className="w-4 h-4 text-amber-400" />
+                    2. Séances & Amphis Récents
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/20">
+                    {courses.length} cours créés
+                  </span>
+                </div>
+                <h3 className="text-sm font-bold text-white">Micro-Ancrage par Séance de Cours</h3>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  Révise un cours d'amphi spécifique juste après l'avoir suivi pour ancrer ses 3 à 5 notions fondamentales.
+                </p>
+              </div>
+
+              <button
+                onClick={() => setActiveTab('chapters')}
+                className="w-full py-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+              >
+                <span>Choisir un cours ou chapitre</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Priorité 3 : Pile FSRS-5 Due */}
+            <div className="p-5 rounded-2xl bg-surface border border-emerald-500/20 space-y-4 hover:border-emerald-500/40 transition-all flex flex-col justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase text-emerald-400 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    3. Répétition Espacée FSRS-5
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/20">
+                    {dueCardsList.length} cartes prêtes
+                  </span>
+                </div>
+                <h3 className="text-sm font-bold text-white">Pile de Cartes Dues Aujourd'hui</h3>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  Calculé scientifiquement par l'algorithme FSRS-5 pour réviser juste au moment où la rétention commence à baisser.
+                </p>
+              </div>
+
+              <button
+                onClick={() => setActiveTab('due')}
+                className="w-full py-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+              >
+                <span>Lancer la pile FSRS ({dueCardsList.length})</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Priorité 4 : Séance Panachée */}
+            <div className="p-5 rounded-2xl bg-surface border border-cyan-500/20 space-y-4 hover:border-cyan-500/40 transition-all flex flex-col justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase text-cyan-400 flex items-center gap-1.5">
+                    <Shuffle className="w-4 h-4 text-cyan-400" />
+                    4. Séance Panachée (Interleaving)
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/20">
+                    {interleavedCards.length} questions croisées
+                  </span>
+                </div>
+                <h3 className="text-sm font-bold text-white">Entraînement Multi-Matières</h3>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  Alterne les matières et les chapitres pour stimuler l'agilité mentale et éviter les faux automatismes de récence.
+                </p>
+              </div>
+
+              <button
+                onClick={() => setActiveTab('interleaved')}
+                className="w-full py-2.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/30 text-cyan-300 text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+              >
+                <span>Démarrer le panachage</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* SOUS-ONGLET 1 : QUESTIONS DUES (Hub Anki) */}
       {activeTab === 'due' && (

@@ -50,6 +50,102 @@
       "category": "Transversale",
       "ects": 3,
       "priority": "B"
+    },
+    {
+      "id": "custom-1788044134269-ue1-biologie-cellulaire-et-moleculaire-bpaf",
+      "title": "UE1 : Biologie cellulaire et moléculaire",
+      "semester": "S1",
+      "category": "Unité d'Enseignement Fondamentale",
+      "ects": 6,
+      "priority": "A"
+    },
+    {
+      "id": "custom-1788044134270-ue2-chimie-generale-pn7c",
+      "title": "UE2 : Chimie générale",
+      "semester": "S1",
+      "category": "Unité d'Enseignement Fondamentale",
+      "ects": 6,
+      "priority": "A"
+    },
+    {
+      "id": "custom-1788044134271-ue3-mathematiques-pour-les-sciences-du-vivant-jyiy",
+      "title": "UE3 : Mathématiques pour les sciences du vivant",
+      "semester": "S1",
+      "category": "Unité d'Enseignement Fondamentale",
+      "ects": 6,
+      "priority": "A"
+    },
+    {
+      "id": "custom-1788044134271-ue4-informatique-pour-les-sciences-du-vivant-v0xz",
+      "title": "UE4 : Informatique pour les sciences du vivant",
+      "semester": "S1",
+      "category": "Unité d'Enseignement Fondamentale",
+      "ects": 6,
+      "priority": "A"
+    },
+    {
+      "id": "custom-1788044134271-ue5-anglais-a97w",
+      "title": "UE5 : Anglais",
+      "semester": "S1",
+      "category": "Unité d'Enseignement Transversale",
+      "ects": 3,
+      "priority": "B"
+    },
+    {
+      "id": "custom-1788044134271-ue6-projet-personnel-et-professionnel-ppp-uuky",
+      "title": "UE6 : Projet Personnel et Professionnel (PPP)",
+      "semester": "S1",
+      "category": "Unité d'Enseignement Transversale",
+      "ects": 3,
+      "priority": "C"
+    },
+    {
+      "id": "custom-1788044134271-ue7-biologie-des-organismes-et-des-populations-ioc3",
+      "title": "UE7 : Biologie des organismes et des populations",
+      "semester": "S2",
+      "category": "Unité d'Enseignement Fondamentale",
+      "ects": 6,
+      "priority": "A"
+    },
+    {
+      "id": "custom-1788044134271-ue8-biochimie-et-biologie-moleculaire-018a",
+      "title": "UE8 : Biochimie et Biologie moléculaire",
+      "semester": "S2",
+      "category": "Unité d'Enseignement Fondamentale",
+      "ects": 6,
+      "priority": "A"
+    },
+    {
+      "id": "custom-1788044134271-ue9-physique-pour-les-sciences-du-vivant-0jxd",
+      "title": "UE9 : Physique pour les sciences du vivant",
+      "semester": "S2",
+      "category": "Unité d'Enseignement Fondamentale",
+      "ects": 6,
+      "priority": "A"
+    },
+    {
+      "id": "custom-1788044134271-ue10-algorithmique-et-programmation-7599",
+      "title": "UE10 : Algorithmique et programmation",
+      "semester": "S2",
+      "category": "Unité d'Enseignement Fondamentale",
+      "ects": 6,
+      "priority": "A"
+    },
+    {
+      "id": "custom-1788044134271-ue11-anglais-nxy2",
+      "title": "UE11 : Anglais",
+      "semester": "S2",
+      "category": "Unité d'Enseignement Transversale",
+      "ects": 3,
+      "priority": "B"
+    },
+    {
+      "id": "custom-1788044134271-ue12-competences-numeriques-et-outils-bureautiques-psx3",
+      "title": "UE12 : Compétences numériques et outils bureautiques",
+      "semester": "S2",
+      "category": "Unité d'Enseignement Transversale",
+      "ects": 3,
+      "priority": "C"
     }
   ]
 }

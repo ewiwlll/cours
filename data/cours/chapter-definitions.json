@@ -100,5 +100,383 @@
     "subjectId": "s1-ppp-methodo",
     "title": "Chapitre 2 : Métiers de la bio-informatique et de l'IA",
     "createdAt": "2026-08-30T00:38:00.000Z"
+  },
+  {
+    "id": "chap-1788044134270-structure-et-fonction-des-cellules-procaryotes-et-eucaryotes-zpl2",
+    "subjectId": "custom-1788044134269-ue1-biologie-cellulaire-et-moleculaire-bpaf",
+    "title": "Structure et fonction des cellules procaryotes et eucaryotes",
+    "createdAt": "2026-08-29T22:55:34.270Z"
+  },
+  {
+    "id": "chap-1788044134270-organisation-des-genomes-44mb",
+    "subjectId": "custom-1788044134269-ue1-biologie-cellulaire-et-moleculaire-bpaf",
+    "title": "Organisation des génomes",
+    "createdAt": "2026-08-29T22:55:34.270Z"
+  },
+  {
+    "id": "chap-1788044134270-replication-de-l-adn-nujj",
+    "subjectId": "custom-1788044134269-ue1-biologie-cellulaire-et-moleculaire-bpaf",
+    "title": "Réplication de l'ADN",
+    "createdAt": "2026-08-29T22:55:34.270Z"
+  },
+  {
+    "id": "chap-1788044134270-transcription-et-traduction-r3p2",
+    "subjectId": "custom-1788044134269-ue1-biologie-cellulaire-et-moleculaire-bpaf",
+    "title": "Transcription et traduction",
+    "createdAt": "2026-08-29T22:55:34.270Z"
+  },
+  {
+    "id": "chap-1788044134270-regulation-de-l-expression-genique-nmbt",
+    "subjectId": "custom-1788044134269-ue1-biologie-cellulaire-et-moleculaire-bpaf",
+    "title": "Régulation de l'expression génique",
+    "createdAt": "2026-08-29T22:55:34.270Z"
+  },
+  {
+    "id": "chap-1788044134270-cycle-cellulaire-et-division-cellulaire-mitose-meiose-137e",
+    "subjectId": "custom-1788044134269-ue1-biologie-cellulaire-et-moleculaire-bpaf",
+    "title": "Cycle cellulaire et division cellulaire (mitose, méiose)",
+    "createdAt": "2026-08-29T22:55:34.270Z"
+  },
+  {
+    "id": "chap-1788044134270-introduction-a-la-genetique-mendelienne-9efi",
+    "subjectId": "custom-1788044134269-ue1-biologie-cellulaire-et-moleculaire-bpaf",
+    "title": "Introduction à la génétique mendélienne",
+    "createdAt": "2026-08-29T22:55:34.270Z"
+  },
+  {
+    "id": "chap-1788044134271-structure-de-l-atome-et-classification-periodique-tiy8",
+    "subjectId": "custom-1788044134270-ue2-chimie-generale-pn7c",
+    "title": "Structure de l'atome et classification périodique",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-liaisons-chimiques-et-geometrie-des-molecules-arnl",
+    "subjectId": "custom-1788044134270-ue2-chimie-generale-pn7c",
+    "title": "Liaisons chimiques et géométrie des molécules",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-reactions-acido-basiques-nkrh",
+    "subjectId": "custom-1788044134270-ue2-chimie-generale-pn7c",
+    "title": "Réactions acido-basiques",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-reactions-d-oxydo-reduction-w608",
+    "subjectId": "custom-1788044134270-ue2-chimie-generale-pn7c",
+    "title": "Réactions d'oxydo-réduction",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-thermodynamique-chimique-nkav",
+    "subjectId": "custom-1788044134270-ue2-chimie-generale-pn7c",
+    "title": "Thermodynamique chimique",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-cinetique-chimique-f44x",
+    "subjectId": "custom-1788044134270-ue2-chimie-generale-pn7c",
+    "title": "Cinétique chimique",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-introduction-a-la-chimie-organique-groupes-fonctionnels-zkp0",
+    "subjectId": "custom-1788044134270-ue2-chimie-generale-pn7c",
+    "title": "Introduction à la chimie organique (groupes fonctionnels)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-fonctions-d-une-variable-reelle-derivation-integration-xq3x",
+    "subjectId": "custom-1788044134271-ue3-mathematiques-pour-les-sciences-du-vivant-jyiy",
+    "title": "Fonctions d'une variable réelle (dérivation, intégration)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-equations-differentielles-simples-n5z8",
+    "subjectId": "custom-1788044134271-ue3-mathematiques-pour-les-sciences-du-vivant-jyiy",
+    "title": "Équations différentielles simples",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-algebre-lineaire-vecteurs-matrices-53n8",
+    "subjectId": "custom-1788044134271-ue3-mathematiques-pour-les-sciences-du-vivant-jyiy",
+    "title": "Algèbre linéaire (vecteurs, matrices)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-statistiques-descriptives-3x6v",
+    "subjectId": "custom-1788044134271-ue3-mathematiques-pour-les-sciences-du-vivant-jyiy",
+    "title": "Statistiques descriptives",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-probabilites-variables-aleatoires-discretes-et-continues-w1cr",
+    "subjectId": "custom-1788044134271-ue3-mathematiques-pour-les-sciences-du-vivant-jyiy",
+    "title": "Probabilités (variables aléatoires discrètes et continues)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-modelisation-mathematique-simple-en-biologie-1tco",
+    "subjectId": "custom-1788044134271-ue3-mathematiques-pour-les-sciences-du-vivant-jyiy",
+    "title": "Modélisation mathématique simple en biologie",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-introduction-a-l-algorithmique-ompb",
+    "subjectId": "custom-1788044134271-ue4-informatique-pour-les-sciences-du-vivant-v0xz",
+    "title": "Introduction à l'algorithmique",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-bases-de-la-programmation-ex-python-ou-r-7ggt",
+    "subjectId": "custom-1788044134271-ue4-informatique-pour-les-sciences-du-vivant-v0xz",
+    "title": "Bases de la programmation (ex: Python ou R)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-structures-de-donnees-simples-o5q4",
+    "subjectId": "custom-1788044134271-ue4-informatique-pour-les-sciences-du-vivant-v0xz",
+    "title": "Structures de données simples",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-manipulation-de-fichiers-6obq",
+    "subjectId": "custom-1788044134271-ue4-informatique-pour-les-sciences-du-vivant-v0xz",
+    "title": "Manipulation de fichiers",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-introduction-aux-bases-de-donnees-uruo",
+    "subjectId": "custom-1788044134271-ue4-informatique-pour-les-sciences-du-vivant-v0xz",
+    "title": "Introduction aux bases de données",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-applications-bioinformatiques-de-base-sequences-alignements-9k79",
+    "subjectId": "custom-1788044134271-ue4-informatique-pour-les-sciences-du-vivant-v0xz",
+    "title": "Applications bioinformatiques de base (séquences, alignements)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-comprehension-et-expression-ecrite-et-orale-7z0g",
+    "subjectId": "custom-1788044134271-ue5-anglais-a97w",
+    "title": "Compréhension et expression écrite et orale",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-vocabulaire-scientifique-et-general-wu7d",
+    "subjectId": "custom-1788044134271-ue5-anglais-a97w",
+    "title": "Vocabulaire scientifique et général",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-presentations-orales-m5nj",
+    "subjectId": "custom-1788044134271-ue5-anglais-a97w",
+    "title": "Présentations orales",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-lecture-d-articles-scientifiques-simplifies-tcqq",
+    "subjectId": "custom-1788044134271-ue5-anglais-a97w",
+    "title": "Lecture d'articles scientifiques simplifiés",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-connaissance-de-soi-et-de-ses-competences-e691",
+    "subjectId": "custom-1788044134271-ue6-projet-personnel-et-professionnel-ppp-uuky",
+    "title": "Connaissance de soi et de ses compétences",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-exploration-des-metiers-de-la-biologie-et-de-l-informatique-4eaf",
+    "subjectId": "custom-1788044134271-ue6-projet-personnel-et-professionnel-ppp-uuky",
+    "title": "Exploration des métiers de la biologie et de l'informatique",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-methodologie-de-recherche-d-information-aa2p",
+    "subjectId": "custom-1788044134271-ue6-projet-personnel-et-professionnel-ppp-uuky",
+    "title": "Méthodologie de recherche d'information",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-redaction-de-cv-et-lettre-de-motivation-2gp1",
+    "subjectId": "custom-1788044134271-ue6-projet-personnel-et-professionnel-ppp-uuky",
+    "title": "Rédaction de CV et lettre de motivation",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-preparation-a-l-orientation-post-l1-5ixp",
+    "subjectId": "custom-1788044134271-ue6-projet-personnel-et-professionnel-ppp-uuky",
+    "title": "Préparation à l'orientation post-L1",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-diversite-du-vivant-classification-phylogenie-7y34",
+    "subjectId": "custom-1788044134271-ue7-biologie-des-organismes-et-des-populations-ioc3",
+    "title": "Diversité du vivant (classification, phylogénie)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-anatomie-et-physiologie-comparee-animale-et-vegetale-ju6j",
+    "subjectId": "custom-1788044134271-ue7-biologie-des-organismes-et-des-populations-ioc3",
+    "title": "Anatomie et physiologie comparée (animale et végétale)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-ecologie-des-populations-et-des-communautes-upds",
+    "subjectId": "custom-1788044134271-ue7-biologie-des-organismes-et-des-populations-ioc3",
+    "title": "Écologie des populations et des communautés",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-interactions-biotiques-et-abiotiques-00v6",
+    "subjectId": "custom-1788044134271-ue7-biologie-des-organismes-et-des-populations-ioc3",
+    "title": "Interactions biotiques et abiotiques",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-evolution-et-adaptation-uu85",
+    "subjectId": "custom-1788044134271-ue7-biologie-des-organismes-et-des-populations-ioc3",
+    "title": "Évolution et adaptation",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-structure-et-fonction-des-biomolecules-glucides-lipides-prot-1pov",
+    "subjectId": "custom-1788044134271-ue8-biochimie-et-biologie-moleculaire-018a",
+    "title": "Structure et fonction des biomolécules (glucides, lipides, protéines, acides nucléiques)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-enzymologie-uvmb",
+    "subjectId": "custom-1788044134271-ue8-biochimie-et-biologie-moleculaire-018a",
+    "title": "Enzymologie",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-metabolisme-energetique-glycolyse-cycle-de-krebs-phosphoryla-5g5s",
+    "subjectId": "custom-1788044134271-ue8-biochimie-et-biologie-moleculaire-018a",
+    "title": "Métabolisme énergétique (glycolyse, cycle de Krebs, phosphorylation oxydative)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-voies-de-signalisation-cellulaire-fusn",
+    "subjectId": "custom-1788044134271-ue8-biochimie-et-biologie-moleculaire-018a",
+    "title": "Voies de signalisation cellulaire",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-techniques-de-biologie-moleculaire-pcr-electrophorese-clonag-qwl3",
+    "subjectId": "custom-1788044134271-ue8-biochimie-et-biologie-moleculaire-018a",
+    "title": "Techniques de biologie moléculaire (PCR, électrophorèse, clonage)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-mecanique-des-fluides-circulation-sanguine-transport-ow29",
+    "subjectId": "custom-1788044134271-ue9-physique-pour-les-sciences-du-vivant-0jxd",
+    "title": "Mécanique des fluides (circulation sanguine, transport)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-optique-microscopie-vision-0nhf",
+    "subjectId": "custom-1788044134271-ue9-physique-pour-les-sciences-du-vivant-0jxd",
+    "title": "Optique (microscopie, vision)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-electricite-et-magnetisme-potentiel-membranaire-ecg-nund",
+    "subjectId": "custom-1788044134271-ue9-physique-pour-les-sciences-du-vivant-0jxd",
+    "title": "Électricité et magnétisme (potentiel membranaire, ECG)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-radioactivite-et-applications-medicales-11vv",
+    "subjectId": "custom-1788044134271-ue9-physique-pour-les-sciences-du-vivant-0jxd",
+    "title": "Radioactivité et applications médicales",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-thermodynamique-biologique-8hxt",
+    "subjectId": "custom-1788044134271-ue9-physique-pour-les-sciences-du-vivant-0jxd",
+    "title": "Thermodynamique biologique",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-structures-de-donnees-avancees-listes-dictionnaires-arbres-p1an",
+    "subjectId": "custom-1788044134271-ue10-algorithmique-et-programmation-7599",
+    "title": "Structures de données avancées (listes, dictionnaires, arbres)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-algorithmes-de-tri-et-de-recherche-bkct",
+    "subjectId": "custom-1788044134271-ue10-algorithmique-et-programmation-7599",
+    "title": "Algorithmes de tri et de recherche",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-programmation-orientee-objet-concepts-de-base-xxit",
+    "subjectId": "custom-1788044134271-ue10-algorithmique-et-programmation-7599",
+    "title": "Programmation orientée objet (concepts de base)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-developpement-d-applications-simples-en-bioinformatique-1b46",
+    "subjectId": "custom-1788044134271-ue10-algorithmique-et-programmation-7599",
+    "title": "Développement d'applications simples en bioinformatique",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-introduction-aux-librairies-scientifiques-ex-numpy-pandas-ma-jken",
+    "subjectId": "custom-1788044134271-ue10-algorithmique-et-programmation-7599",
+    "title": "Introduction aux librairies scientifiques (ex: NumPy, Pandas, Matplotlib)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-approfondissement-des-competences-linguistiques-qaod",
+    "subjectId": "custom-1788044134271-ue11-anglais-nxy2",
+    "title": "Approfondissement des compétences linguistiques",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-redaction-de-resumes-scientifiques-0gct",
+    "subjectId": "custom-1788044134271-ue11-anglais-nxy2",
+    "title": "Rédaction de résumés scientifiques",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-preparation-a-des-entretiens-en-anglais-buil",
+    "subjectId": "custom-1788044134271-ue11-anglais-nxy2",
+    "title": "Préparation à des entretiens en anglais",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-analyse-de-documents-scientifiques-plus-complexes-drg2",
+    "subjectId": "custom-1788044134271-ue11-anglais-nxy2",
+    "title": "Analyse de documents scientifiques plus complexes",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-maitrise-des-outils-bureautiques-tableurs-traitement-de-text-ib39",
+    "subjectId": "custom-1788044134271-ue12-competences-numeriques-et-outils-bureautiques-psx3",
+    "title": "Maîtrise des outils bureautiques (tableurs, traitement de texte, présentation)",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-recherche-d-information-scientifique-et-veille-technologique-tc2x",
+    "subjectId": "custom-1788044134271-ue12-competences-numeriques-et-outils-bureautiques-psx3",
+    "title": "Recherche d'information scientifique et veille technologique",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-ethique-du-numerique-et-securite-informatique-wjj1",
+    "subjectId": "custom-1788044134271-ue12-competences-numeriques-et-outils-bureautiques-psx3",
+    "title": "Éthique du numérique et sécurité informatique",
+    "createdAt": "2026-08-29T22:55:34.271Z"
+  },
+  {
+    "id": "chap-1788044134271-gestion-de-donnees-et-visualisation-60b9",
+    "subjectId": "custom-1788044134271-ue12-competences-numeriques-et-outils-bureautiques-psx3",
+    "title": "Gestion de données et visualisation",
+    "createdAt": "2026-08-29T22:55:34.271Z"
   }
 ]
