@@ -1025,16 +1025,22 @@ Réponds STRICTEMENT sous format JSON valide avec ce schéma :
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             contents: [{ parts: [{ text: prompt }] }],
+            tools: [{ googleSearch: {} }],
             generationConfig: {
-              responseMimeType: "application/json",
-              temperature: 0.2,
+              temperature: 0.1,
             },
           }),
         });
 
         if (aiRes.ok) {
           const aiJson = await aiRes.json();
-          const candidateText = aiJson.candidates?.[0]?.content?.parts?.[0]?.text;
+          let candidateText = aiJson.candidates?.[0]?.content?.parts?.[0]?.text || "";
+          // Extract JSON if wrapped in markdown code fence
+          if (candidateText.includes("```json")) {
+            candidateText = candidateText.split("```json")[1].split("```")[0].trim();
+          } else if (candidateText.includes("```")) {
+            candidateText = candidateText.split("```")[1].split("```")[0].trim();
+          }
           if (candidateText) {
             try {
               const parsed = JSON.parse(candidateText);
