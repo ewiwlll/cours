@@ -19,12 +19,12 @@ export function DevicePairingModal() {
 
   const getUniversalUrl = () => {
     if (typeof window !== 'undefined' && window.location.origin && !window.location.origin.includes('127.0.0.1') && !window.location.origin.includes('localhost')) {
-      return `${window.location.origin}/app`;
+      return `${window.location.origin}/app?paired=1`;
     }
     if (localIp && localIp !== '127.0.0.1' && localIp !== 'localhost') {
-      return `http://${localIp}:${port}/app`;
+      return `http://${localIp}:${port}/app?paired=1`;
     }
-    return 'https://cours-awc.pages.dev/app';
+    return 'https://cours-awc.pages.dev/app?paired=1';
   };
 
   const universalUrl = getUniversalUrl();

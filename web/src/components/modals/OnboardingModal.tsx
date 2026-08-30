@@ -38,6 +38,14 @@ export function OnboardingModal() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isPaired = params.get('paired') === '1' || params.has('token');
+    if (isPaired) {
+      localStorage.setItem('cours_onboarding_completed', 'true');
+      setIsOpen(false);
+      return;
+    }
+
     const completed = localStorage.getItem('cours_onboarding_completed');
     if (!completed || modals.onboarding) {
       setIsOpen(true);
