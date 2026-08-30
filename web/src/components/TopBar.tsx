@@ -32,6 +32,13 @@ export function TopBar() {
   const [isIos, setIsIos] = useState<boolean>(false);
   const [showIosGuide, setShowIosGuide] = useState<boolean>(false);
 
+  const isLocalOrNative =
+    typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' ||
+     window.location.hostname === '127.0.0.1' ||
+     window.location.protocol === 'file:' ||
+     window.navigator.userAgent.includes('Cours'));
+
   useEffect(() => {
     // 1. Détection mode autonome (déjà installé ou PWA active)
     const isAppStandalone =
@@ -134,8 +141,8 @@ export function TopBar() {
 
         {/* Right Actions: PWA Install + Record Mic + Method + Language + Settings */}
         <div className="flex items-center gap-1.5 sm:gap-2">
-          {/* PWA Install Button (visible on Desktop only if not standalone) */}
-          {!isStandalone && (
+          {/* PWA Install Button (visible UNIQUEMENT sur la version Web en ligne hébergée, masqué en local et dans l'app Mac) */}
+          {!isStandalone && !isLocalOrNative && (
             <button
               onClick={handleInstallClick}
               className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-300 text-xs font-bold transition-all shadow-sm active:scale-95"
