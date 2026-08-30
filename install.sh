@@ -103,6 +103,23 @@ ln -sf "$PROJECT_FULL_PATH/bin/cours.mjs" /usr/local/bin/cours 2>/dev/null || tr
 echo -e "\n${BLUE}[5/7]${RESET} Initialisation des dossiers de cours et modèles..."
 mkdir -p models/whisper data/audio data/enregistrements data/cours data/transcriptions data/revisions inbox
 
+# 5. Raccourci d'application bureau Linux
+if [ "$(uname)" = "Linux" ]; then
+    mkdir -p "$HOME/.local/share/applications"
+    cat << EOF > "$HOME/.local/share/applications/cours.desktop"
+[Desktop Entry]
+Name=Cours
+Comment=Revision OS - Plateforme d'apprentissage et enregistrement d'amphi
+Exec=bash -c "cd $PROJECT_FULL_PATH && node start.mjs"
+Icon=$PROJECT_FULL_PATH/public/icon.png
+Terminal=false
+Type=Application
+Categories=Education;Development;
+EOF
+    chmod +x "$HOME/.local/share/applications/cours.desktop" 2>/dev/null || true
+    echo -e "  ${GREEN}✓${RESET} Raccourci bureau Linux installé (~/.local/share/applications/cours.desktop)."
+fi
+
 # 6. Compilation de l'application native macOS (si sur Mac)
 if [ "$(uname)" = "Darwin" ] && command -v swiftc &> /dev/null; then
     echo -e "\n${BLUE}[6/7]${RESET} Compilation de l'application native macOS (/Applications/Cours.app)..."
