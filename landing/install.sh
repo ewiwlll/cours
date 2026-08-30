@@ -28,7 +28,7 @@ echo -e "${RESET}"
 echo -e "${BLUE}==>${RESET} ${BOLD}Installation automatique de Cours (Revision OS)...${RESET}\n"
 
 # 1. Vérification des prérequis système
-echo -e "${BLUE}[1/7]${RESET} Vérification de l'environnement système..."
+echo -e "${BLUE}[1/8]${RESET} Vérification de l'environnement système..."
 
 if ! command -v git &> /dev/null; then
     echo -e "${RED}Erreur : git n'est pas installé.${RESET} Veuillez installer git avant de continuer."
@@ -51,7 +51,7 @@ echo -e "  ${GREEN}✓${RESET} Git & Node.js $(node -v) détectés."
 # 2. Cloner ou initialiser le dépôt
 if [ ! -f "start.mjs" ]; then
     TARGET_DIR="${COURS_DIR:-$HOME/cours}"
-    echo -e "\n${BLUE}[2/7]${RESET} Configuration du dossier de travail : ${CYAN}$TARGET_DIR${RESET}..."
+    echo -e "\n${BLUE}[2/8]${RESET} Configuration du dossier de travail : ${CYAN}$TARGET_DIR${RESET}..."
     if [ -d "$TARGET_DIR" ]; then
         echo -e "  ${YELLOW}Le dossier $TARGET_DIR existe déjà. Utilisation du dossier existant.${RESET}"
         cd "$TARGET_DIR"
@@ -61,13 +61,13 @@ if [ ! -f "start.mjs" ]; then
         cd "$TARGET_DIR"
     fi
 else
-    echo -e "\n${BLUE}[2/7]${RESET} Répertoire de projet local détecté : ${CYAN}$(pwd)${RESET}."
+    echo -e "\n${BLUE}[2/8]${RESET} Répertoire de projet local détecté : ${CYAN}$(pwd)${RESET}."
 fi
 
 PROJECT_FULL_PATH="$(pwd)"
 
-# 3. Initialisation de l'environnement (0€ Antigravity)
-echo -e "\n${BLUE}[3/7]${RESET} Initialisation des fichiers de configuration..."
+# 3. Initialisation de l'environnement
+echo -e "\n${BLUE}[3/8]${RESET} Initialisation des fichiers de configuration..."
 if [ ! -f ".env" ]; then
     cp .env.example .env 2>/dev/null || touch .env
     echo -e "  ${GREEN}✓${RESET} Fichier .env initialisé."
@@ -76,7 +76,7 @@ else
 fi
 
 # 4. Installation des dépendances et compilation Web
-echo -e "\n${BLUE}[4/7]${RESET} Installation des dépendances et compilation de l'interface..."
+echo -e "\n${BLUE}[4/8]${RESET} Installation des dépendances et compilation de l'interface..."
 
 if [ -f "package.json" ]; then
     npm install --silent > /dev/null 2>&1 || true
@@ -98,22 +98,41 @@ ln -sf "$PROJECT_FULL_PATH/bin/cours.mjs" "$HOME/.local/bin/cours" 2>/dev/null |
 ln -sf "$PROJECT_FULL_PATH/bin/cours.mjs" /usr/local/bin/cours 2>/dev/null || true
 
 # 5. Création des dossiers de données
-echo -e "\n${BLUE}[5/7]${RESET} Initialisation des dossiers de cours et modèles..."
+echo -e "\n${BLUE}[5/8]${RESET} Initialisation des dossiers de cours et modèles..."
 mkdir -p models/whisper data/audio data/enregistrements data/cours data/transcriptions data/revisions inbox
 
 # 6. Compilation de l'application native macOS (si sur Mac)
 if [ "$(uname)" = "Darwin" ] && command -v swiftc &> /dev/null; then
-    echo -e "\n${BLUE}[6/7]${RESET} Compilation de l'application native macOS (/Applications/Cours.app)..."
+    echo -e "\n${BLUE}[6/8]${RESET} Compilation de l'application native macOS (/Applications/Cours.app)..."
     if [ -f "scripts/build-macos-app.sh" ]; then
         ./scripts/build-macos-app.sh > /dev/null 2>&1 || true
         echo -e "  ${GREEN}✓${RESET} ${BOLD}/Applications/Cours.app${RESET} installé dans vos Applications."
     fi
 else
-    echo -e "\n${BLUE}[6/7]${RESET} Étape macOS ignorée."
+    echo -e "\n${BLUE}[6/8]${RESET} Étape macOS native ignorée."
 fi
 
-# 7. Lancement automatique de Google Antigravity
-echo -e "\n${PURPLE}${BOLD}[7/7] Ouverture automatique du Studio Antigravity...${RESET}"
+# 7. Détection & Installation automatique sur Téléphone Android (ADB)
+echo -e "\n${BLUE}[7/8]${RESET} Détection des téléphones connectés..."
+if command -v adb &> /dev/null; then
+    ADB_DEVICES=$(adb devices 2>/dev/null | grep -w "device" | grep -v "List" || true)
+    if [ -n "$ADB_DEVICES" ]; then
+        echo -e "  ${GREEN}✓${RESET} ${BOLD}Téléphone Android détecté via ADB !${RESET}"
+        if [ -f "apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk" ]; then
+            echo -e "  ${BLUE}→${RESET} Installation directe de Cours sur votre téléphone..."
+            adb install -r -d "apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk" > /dev/null 2>&1 || true
+            adb reverse tcp:3002 tcp:3002 > /dev/null 2>&1 || true
+            echo -e "  ${GREEN}✓${RESET} Application mobile installée et configurée avec succès !"
+        fi
+    else
+        echo -e "  ${YELLOW}ℹ Aucun téléphone Android ADB branché. Utilisez le QR Code pour vous connecter.${RESET}"
+    fi
+else
+    echo -e "  ${YELLOW}ℹ ADB non configuré. Vous pouvez flasher le QR Code sur iPhone ou Android.${RESET}"
+fi
+
+# 8. Lancement automatique de Google Antigravity
+echo -e "\n${PURPLE}${BOLD}[8/8] Ouverture automatique du Studio Antigravity...${RESET}"
 ANTIGRAVITY_LAUNCHED=false
 
 if [ "$(uname)" = "Darwin" ]; then
@@ -133,16 +152,20 @@ elif command -v antigravity &> /dev/null; then
 fi
 
 if [ "$ANTIGRAVITY_LAUNCHED" = false ]; then
-    echo -e "  ${YELLOW}💡 Google Antigravity n'est pas encore détecté sur votre machine.${RESET}"
-    echo -e "  ${CYAN}👉 Téléchargez-le gratuitement en 1 clic :${RESET} ${BOLD}https://antigravity.google${RESET}"
-    if [ "$(uname)" = "Darwin" ]; then
-        open "https://antigravity.google" 2>/dev/null || true
-    fi
+    echo -e "  ${YELLOW}💡 Google Antigravity n'est pas encore installé.${RESET}"
+    echo -e "  ${CYAN}👉 Téléchargez-le gratuitement :${RESET} ${BOLD}https://antigravity.google${RESET}"
+fi
+
+# Ouvrir l'application ou le navigateur
+if [ "$(uname)" = "Darwin" ] && [ -d "/Applications/Cours.app" ]; then
+    open "/Applications/Cours.app" 2>/dev/null || true
+elif command -v xdg-open &> /dev/null; then
+    xdg-open "http://localhost:3002" 2>/dev/null || true
 fi
 
 # Banner Récapitulatif
 echo -e "\n${GREEN}${BOLD}════════════════════════════════════════════════════════════════════════════${RESET}"
-echo -e "${GREEN}${BOLD}  🎉 INSTALLATION TERMINÉE AVEC SUCCÈS ! TOUT EST PRÊT !${RESET}"
+echo -e "${GREEN}${BOLD}  🎉 INSTALLATION TERMINÉE ! TOUT EST CONFIGURÉ ET PRÊT !${RESET}"
 echo -e "${GREEN}${BOLD}════════════════════════════════════════════════════════════════════════════${RESET}\n"
 
 echo -e "${PURPLE}${BOLD}🧠 DANS GOOGLE ANTIGRAVITY :${RESET}"
@@ -154,4 +177,4 @@ echo -e "  ${YELLOW}→ L'agent IA scanne votre dossier et s'occupe de tout pour
 echo -e "${BLUE}${BOLD}📱 VOS COCKPITS DE RÉVISION AU QUOTIDIEN :${RESET}"
 echo -e "  💻 ${CYAN}Sur Mac :${RESET} Ouvrez ${BOLD}/Applications/Cours.app${RESET}"
 echo -e "  🌐 ${CYAN}Sur Navigateur :${RESET} ${BOLD}http://localhost:3002${RESET}"
-echo -e "  📱 ${CYAN}Sur Smartphone :${RESET} Tapez ${BOLD}cours${RESET} dans votre terminal pour afficher le QR Code Wi-Fi.\n"
+echo -e "  📱 ${CYAN}Sur Smartphone :${RESET} Scannez le QR Code affiché dans l'application ou tapez ${BOLD}cours${RESET} !\n"

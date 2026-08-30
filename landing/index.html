@@ -158,12 +158,15 @@
     </h1>
 
     <!-- SUBTITLE -->
-    <p class="text-base sm:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed mb-10 text-balance">
+    <p class="text-base sm:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed mb-8 text-balance">
       Fini le stress d'oublier de noter une phrase : la transcription automatique locale s'occupe de tout capturer. Votre unique mission pendant le cours : <strong class="text-white font-semibold">visualiser les concepts dans votre tête</strong> et être constant.
     </p>
 
+    <!-- DETECTED OS BADGE -->
+    <div id="platformDetectedBadge" class="mb-4"></div>
+
     <!-- DIRECT VISUAL ACTION BUTTONS (NO TERMINAL REQUIRED) -->
-    <div class="flex flex-wrap items-center justify-center gap-3.5 max-w-2xl mx-auto mb-8">
+    <div id="heroCtaContainer" class="flex flex-wrap items-center justify-center gap-3.5 max-w-2xl mx-auto mb-8">
       <a href="https://cours-awc.pages.dev" target="_blank" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-blue-500/25 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95">
         <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
         <span>Lancer l'Application Web / PWA</span>
@@ -1230,8 +1233,31 @@
       if (ctaSub) ctaSub.innerText = t.ctaSub;
     }
 
-    // Apply auto-detected language on load
+    function detectUserPlatform() {
+      const ua = navigator.userAgent || '';
+      const badgeEl = document.getElementById('platformDetectedBadge');
+      if (!badgeEl) return;
+
+      const isMac = /Macintosh|Mac OS X/i.test(ua) && !/iPhone|iPad/i.test(ua);
+      const isWindows = /Windows/i.test(ua);
+      const isIos = /iPhone|iPad|iPod/i.test(ua);
+      const isAndroid = /Android/i.test(ua);
+      const isLinux = /Linux/i.test(ua) && !isAndroid;
+
+      if (isMac) {
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🍏 <strong>macOS Détecté</strong> (Apple Silicon & Intel) • Prêt pour Whisper Metal 0€</span>';
+      } else if (isWindows) {
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🪟 <strong>Windows Détecté</strong> • Prêt pour le Cockpit PWA & PowerShell</span>';
+      } else if (isIos) {
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/30 font-semibold backdrop-blur-md">🍏 <strong>iPhone / iPad Détecté</strong> • Prêt pour installation Safari PWA</span>';
+      } else if (isAndroid) {
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-semibold backdrop-blur-md">🤖 <strong>Android Détecté</strong> • Prêt pour installation 1-Clic</span>';
+      }
+    }
+
+    // Apply auto-detected language and platform on load
     applyLandingLanguage();
+    detectUserPlatform();
   </script>
 </body>
 </html>
