@@ -1361,6 +1361,26 @@
       }
     }
 
+    // Support installation PWA 1-Clic automatique
+    let deferredPwaPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPwaPrompt = e;
+      const pwaBanner = document.getElementById('pwaAutoBanner');
+      if (pwaBanner) pwaBanner.classList.remove('hidden');
+    });
+
+    function triggerPwaInstall() {
+      if (deferredPwaPrompt) {
+        deferredPwaPrompt.prompt();
+        deferredPwaPrompt.userChoice.then(() => {
+          deferredPwaPrompt = null;
+        });
+      } else {
+        window.location.href = '/app';
+      }
+    }
+
     // Apply auto-detected language and platform on load
     applyLandingLanguage();
     detectUserPlatform();
