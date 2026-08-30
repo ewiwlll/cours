@@ -110,13 +110,30 @@ rm -f "$ROOT/Cours-macOS.zip" "$ROOT/landing/Cours-macOS.zip" "$ROOT/public/Cour
 cp "$ROOT/Cours-macOS.zip" "$ROOT/landing/Cours-macOS.zip"
 cp "$ROOT/Cours-macOS.zip" "$ROOT/public/Cours-macOS.zip"
 
-# 8. Génération du paquet PKG
-echo "==> Génération de Cours-macOS.pkg..."
+# 8. Génération du paquet PKG avec script postinstall anti-quarantaine
+echo "==> Génération de Cours-macOS.pkg avec postinstall..."
 rm -f "$ROOT/Cours-macOS.pkg" "$ROOT/landing/Cours-macOS.pkg" "$ROOT/public/Cours-macOS.pkg"
-pkgbuild --component "$APP_DIR" --install-location "/Applications" "$ROOT/Cours-macOS.pkg"
+PKG_SCRIPTS="/tmp/cours-pkg-scripts"
+mkdir -p "$PKG_SCRIPTS"
+cat << 'EOF' > "$PKG_SCRIPTS/postinstall"
+#!/usr/bin/env bash
+xattr -cr "/Applications/Cours.app" 2>/dev/null || true
+xattr -dr com.apple.quarantine "/Applications/Cours.app" 2>/dev/null || true
+touch "/Applications/Cours.app"
+LOGGED_IN_USER=$(stat -f "%Su" /dev/console 2>/dev/null || echo "$USER")
+if [ -n "$LOGGED_IN_USER" ] && [ "$LOGGED_IN_USER" != "root" ]; then
+    sudo -u "$LOGGED_IN_USER" open "/Applications/Cours.app" 2>/dev/null || true
+else
+    open "/Applications/Cours.app" 2>/dev/null || true
+fi
+exit 0
+EOF
+chmod +x "$PKG_SCRIPTS/postinstall"
+
+pkgbuild --component "$APP_DIR" --scripts "$PKG_SCRIPTS" --install-location "/Applications" "$ROOT/Cours-macOS.pkg"
 cp "$ROOT/Cours-macOS.pkg" "$ROOT/landing/Cours-macOS.pkg"
 cp "$ROOT/Cours-macOS.pkg" "$ROOT/public/Cours-macOS.pkg"
 
-rm -rf "$TMP_BUILD" "$STAGE_DIR"
+rm -rf "$TMP_BUILD" "$STAGE_DIR" "$PKG_SCRIPTS"
 echo "✓ Tous les paquets de distribution macOS (DMG, ZIP, PKG) sont prêts !"
 

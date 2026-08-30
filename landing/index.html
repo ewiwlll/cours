@@ -1280,10 +1280,10 @@
         ctaContainer.innerHTML = `
           <div class="flex flex-col items-center justify-center gap-3.5 w-full">
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-lg">
-              <!-- BOUTON 1 : TÉLÉCHARGER L'APPLICATION NATIVE MAC -->
-              <a href="/Cours-macOS.dmg" download="Cours-macOS.dmg" class="w-full sm:w-auto flex-1 px-8 py-4.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-blue-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 text-center">
+              <!-- BOUTON 1 : INSTALLATEUR 1-CLIC MAC (.PKG) -->
+              <a href="/Cours-macOS.pkg" download="Cours-macOS.pkg" class="w-full sm:w-auto flex-1 px-8 py-4.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-blue-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 text-center">
                 <span class="text-2xl">🍏</span>
-                <span>${isEn ? 'Download for macOS (.dmg)' : 'Télécharger pour Mac (.dmg)'}</span>
+                <span>${isEn ? 'Download for Mac (1-Click .pkg)' : 'Télécharger pour Mac (1-Clic .pkg)'}</span>
               </a>
 
               <!-- BOUTON 2 : LANCER EN LIGNE (WEB / PWA) -->
@@ -1296,7 +1296,7 @@
             <!-- OPTIONS NATIVES COMPACTES POUR DÉVELOPPEURS -->
             <div class="text-[11px] text-zinc-400 flex flex-wrap items-center justify-center gap-2 pt-2">
               <span>Autres formats :</span>
-              <a href="/Cours-macOS.pkg" download="Cours-macOS.pkg" class="text-blue-400 hover:text-blue-300 underline font-medium">macOS .pkg</a>
+              <a href="/Cours-macOS.dmg" download="Cours-macOS.dmg" class="text-blue-400 hover:text-blue-300 underline font-medium">macOS .dmg</a>
               <span>•</span>
               <a href="/Installer-Windows.bat" download="Installer-Cours.bat" class="text-blue-400 hover:text-blue-300 underline font-medium">Windows .bat</a>
               <span>•</span>
