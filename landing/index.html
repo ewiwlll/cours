@@ -128,8 +128,8 @@
       </nav>
 
       <div class="flex items-center gap-2 sm:gap-3">
-        <a href="/app" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-md shadow-blue-500/20 transition-all hover:scale-105">
-          <span>🚀 Ouvrir l'App</span>
+        <a href="/Cours-macOS.dmg" download="Cours-macOS.dmg" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-md shadow-blue-500/20 transition-all hover:scale-105">
+          <span>🍏 Télécharger pour Mac</span>
         </a>
 
         <button id="langToggleBtn" onclick="toggleLandingLanguage()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-bold text-zinc-300 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:text-white transition-all">
@@ -1278,75 +1278,85 @@
       if (isMac) {
         badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🍏 <strong>' + (isEn ? 'macOS Detected' : 'macOS Détecté') + '</strong> • ' + (isEn ? 'Apple Silicon & Intel Ready' : 'Apple Silicon & Intel Prêt') + '</span>';
         ctaContainer.innerHTML = `
-          <div class="flex flex-wrap items-center justify-center gap-3 w-full">
-            <a href="/Cours-macOS.dmg" download="Cours-macOS.dmg" class="px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-blue-500/25 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95">
-              <span class="text-lg">🍏</span>
-              <span>${isEn ? 'Download Cours.dmg for Mac' : 'Télécharger Cours.dmg (Image Disque)'}</span>
+          <div class="flex flex-col items-center justify-center gap-4 w-full">
+            <!-- 1 GROS BOUTON UNIQUE DE TÉLÉCHARGEMENT MAC -->
+            <a href="/Cours-macOS.dmg" download="Cours-macOS.dmg" class="px-8 py-4.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-blue-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95">
+              <span class="text-2xl">🍏</span>
+              <span>${isEn ? 'Download Cours for Mac (.dmg)' : 'Télécharger Cours pour Mac (.dmg)'}</span>
             </a>
-            <a href="/Cours-macOS.zip" download="Cours-macOS.zip" class="px-4 py-4 rounded-2xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white font-semibold text-xs flex items-center gap-2 transition-all">
-              <span class="text-base">📦</span>
-              <span>${isEn ? 'ZIP Archive' : 'Archive ZIP'}</span>
-            </a>
-            <a href="/cours.apk" download="cours.apk" class="px-4 py-4 rounded-2xl bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 font-semibold text-xs flex items-center gap-2 transition-all hover:border-emerald-500/80 active:scale-95">
-              <span class="text-base">🤖</span>
-              <span>${isEn ? 'Android Standalone App (.apk)' : 'App Android (.apk)'}</span>
-            </a>
-            <a href="/app" class="px-4 py-4 rounded-2xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white font-semibold text-xs flex items-center gap-1.5 transition-all">
-              <span>${isEn ? 'Launch Web App' : 'Ouvrir l\'App Web'} →</span>
-            </a>
-          </div>
-          <div class="w-full max-w-2xl mt-3 p-3 rounded-2xl bg-zinc-900/70 border border-zinc-800/80 text-left text-xs text-zinc-300 space-y-2">
-            <div class="flex items-center justify-between gap-2 border-b border-zinc-800/60 pb-2">
-              <div class="flex items-center gap-2 text-blue-400 font-semibold">
-                <span>⚡</span>
-                <span>${isEn ? '1-Click Terminal Install (0 Apple Warning):' : 'Installation 1-Clic Terminal (0 Alerte Apple) :'}</span>
+
+            <!-- PARCOURS CLAIR EN 2 ÉTAPES : MAC PUIS TÉLÉPHONE -->
+            <div class="w-full max-w-lg mt-2 p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-left text-xs text-zinc-300 space-y-3 shadow-xl">
+              <div class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
+                <div>
+                  <strong class="text-white block text-sm font-semibold">${isEn ? '1. Install on your Mac' : '1. Installez sur votre Mac'}</strong>
+                  <p class="text-zinc-400 text-xs mt-0.5 leading-relaxed">${isEn ? 'Open Cours-macOS.dmg, drag Cours into Applications and launch it.' : 'Ouvrez le fichier <code>Cours-macOS.dmg</code>, glissez <strong>Cours</strong> dans vos Applications et lancez l\'app.'}</p>
+                </div>
               </div>
-              <button onclick="navigator.clipboard.writeText('curl -fsSL https://cours-awc.pages.dev/install.sh | bash'); this.innerText='✓ ${isEn ? 'Copied' : 'Copié'}!'; setTimeout(() => this.innerText='${isEn ? 'Copy' : 'Copier'}', 2000);" class="px-2.5 py-1 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 text-[11px] font-bold transition-all">
-                ${isEn ? 'Copy' : 'Copier'}
-              </button>
+              <div class="flex items-start gap-3 pt-3 border-t border-zinc-800/80">
+                <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
+                <div>
+                  <strong class="text-emerald-400 block text-sm font-semibold">${isEn ? '2. Connect your Phone (iPhone & Android)' : '2. Connectez votre Téléphone (iPhone & Android)'}</strong>
+                  <p class="text-zinc-400 text-xs mt-0.5 leading-relaxed">${isEn ? 'Scan the QR Code shown in Cours on your Mac with your phone camera to start revising anywhere.' : 'Scannez le <strong>QR Code</strong> qui apparaît dans l\'application sur votre Mac avec l\'appareil photo de votre téléphone pour synchroniser vos cours.'}</p>
+                </div>
+              </div>
             </div>
-            <code class="block font-mono text-[11px] bg-black/40 text-emerald-300 p-2 rounded-xl border border-zinc-800 overflow-x-auto select-all">curl -fsSL https://cours-awc.pages.dev/install.sh | bash</code>
-            <div class="text-[11px] text-zinc-400 leading-relaxed pt-1">
-              💡 <strong>${isEn ? 'macOS First Launch Tip:' : 'Astuce 1er Lancement macOS :'}</strong> ${isEn ? 'If macOS displays "Apple cannot verify...", double-click "Ouvrir-Cours.command" in the DMG/ZIP, or go to System Settings > Privacy & Security > click "Open Anyway".' : 'Si macOS affiche <em>« Apple ne peut pas vérifier... »</em>, double-cliquez sur <strong>Ouvrir-Cours.command</strong> dans le DMG/ZIP, ou allez dans <strong>Réglages Système &gt; Confidentialité et sécurité &gt; Ouvrir quand même</strong>.'}
+
+            <!-- ALTERNATIVE TERMINAL & ASTUCE GATEKEEPER -->
+            <div class="w-full max-w-lg p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-left text-xs text-zinc-400 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-zinc-400 text-[11px] font-semibold">${isEn ? '⚡ 1-Click Terminal Install (0 Apple Warning):' : '⚡ Option 1-Clic Terminal (0 Alerte Apple) :'}</span>
+                <button onclick="navigator.clipboard.writeText('curl -fsSL https://cours-awc.pages.dev/install.sh | bash'); this.innerText='✓ ${isEn ? 'Copied' : 'Copié'}!'; setTimeout(() => this.innerText='${isEn ? 'Copy' : 'Copier'}', 2000);" class="px-2 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-[11px] font-medium">
+                  ${isEn ? 'Copy' : 'Copier'}
+                </button>
+              </div>
+              <code class="block font-mono text-[11px] bg-black/50 text-emerald-300 p-2 rounded-lg border border-zinc-800/80 overflow-x-auto select-all">curl -fsSL https://cours-awc.pages.dev/install.sh | bash</code>
+              <p class="text-[10px] text-zinc-500 leading-relaxed">💡 ${isEn ? 'If macOS displays "Apple cannot verify...", double-click "Ouvrir-Cours.command" in the DMG or go to System Settings > Privacy & Security > "Open Anyway".' : 'Si macOS affiche <em>« Apple ne peut pas vérifier... »</em> : double-cliquez sur <strong>Ouvrir-Cours.command</strong> dans le DMG, ou allez dans <strong>Réglages Système &gt; Confidentialité et sécurité &gt; Ouvrir quand même</strong>.'}</p>
             </div>
           </div>
         `;
       } else if (isWindows) {
         badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🪟 <strong>' + (isEn ? 'Windows Detected' : 'Windows Détecté') + '</strong> • ' + (isEn ? '1-Click Installer Ready' : 'Installateur 1-Clic Prêt') + '</span>';
         ctaContainer.innerHTML = `
-          <a href="/Installer-Windows.bat" download="Installer-Cours.bat" class="px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-blue-500/25 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95">
-            <span class="text-lg">🪟</span>
-            <span>${isEn ? 'Download Cours for Windows (1-Click)' : 'Télécharger Cours pour Windows (1-Clic)'}</span>
-          </a>
-          <a href="/cours.apk" download="cours.apk" class="px-5 py-4 rounded-2xl bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 font-semibold text-xs flex items-center gap-2 transition-all hover:border-emerald-500/80 active:scale-95">
-            <span class="text-base">🤖</span>
-            <span>${isEn ? 'Android Standalone App (.apk)' : 'App Android Native (.apk)'}</span>
-          </a>
-          <a href="/app" class="px-4 py-4 rounded-2xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white font-semibold text-xs flex items-center gap-1.5 transition-all">
-            <span>${isEn ? 'Launch Web App' : 'Ouvrir l\'App Web'} →</span>
-          </a>
+          <div class="flex flex-col items-center justify-center gap-4 w-full">
+            <a href="/Installer-Windows.bat" download="Installer-Cours.bat" class="px-8 py-4.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-blue-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95">
+              <span class="text-2xl">🪟</span>
+              <span>${isEn ? 'Download Cours for Windows (1-Click)' : 'Télécharger Cours pour Windows (1-Clic)'}</span>
+            </a>
+            <div class="w-full max-w-lg mt-2 p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-left text-xs text-zinc-300 space-y-2 shadow-xl">
+              <p><strong>Étape 1 :</strong> Lancez <code>Installer-Cours.bat</code> pour installer l'application sur Windows.</p>
+              <p><strong>Étape 2 :</strong> Scannez le QR Code depuis votre téléphone pour connecter vos révisions.</p>
+            </div>
+          </div>
         `;
       } else if (isAndroid) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-semibold backdrop-blur-md">🤖 <strong>' + (isEn ? 'Android Phone Detected' : 'Smartphone Android Détecté') + '</strong> • ' + (isEn ? 'Native Standalone App Ready' : 'App Native Standalone Prête') + '</span>';
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-semibold backdrop-blur-md">🤖 <strong>' + (isEn ? 'Android Phone Detected' : 'Smartphone Android Détecté') + '</strong> • ' + (isEn ? 'Native App Ready' : 'Application Mobile Prête') + '</span>';
         ctaContainer.innerHTML = `
-          <a href="/cours.apk" download="cours.apk" class="px-6 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-xl shadow-emerald-500/25 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95">
-            <span class="text-lg">🤖</span>
-            <span>${isEn ? 'Install Native Android App (.apk)' : 'Installer l\'Application Native (.apk)'}</span>
-          </a>
-          <a href="/app" class="px-5 py-4 rounded-2xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 text-zinc-200 font-semibold text-xs flex items-center gap-2 transition-all">
-            <span>${isEn ? 'Open Web Version' : 'Ouvrir la Version Web'}</span>
-          </a>
+          <div class="flex flex-col items-center justify-center gap-4 w-full">
+            <a href="/cours.apk" download="cours.apk" class="px-8 py-4.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-base shadow-2xl shadow-emerald-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95">
+              <span class="text-2xl">🤖</span>
+              <span>${isEn ? 'Install Native Android App (.apk)' : 'Installer l\'Application Android (.apk)'}</span>
+            </a>
+            <div class="w-full max-w-lg mt-2 p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-left text-xs text-zinc-300 space-y-2 shadow-xl">
+              <p><strong>Étape 1 :</strong> Installez l'APK sur votre smartphone Android.</p>
+              <p><strong>Étape 2 :</strong> Scannez le QR Code de votre ordinateur pour synchroniser en direct.</p>
+            </div>
+          </div>
         `;
       } else if (isIos) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/30 font-semibold backdrop-blur-md">🍏 <strong>' + (isEn ? 'iPhone / iPad Detected' : 'iPhone / iPad Détecté') + '</strong> • ' + (isEn ? 'Native Expo Go & PWA Ready' : 'Expo Go & Safari Prêt') + '</span>';
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/30 font-semibold backdrop-blur-md">🍏 <strong>' + (isEn ? 'iPhone / iPad Detected' : 'iPhone / iPad Détecté') + '</strong> • ' + (isEn ? 'PWA Ready' : 'Application PWA Prête') + '</span>';
         ctaContainer.innerHTML = `
-          <a href="/app" class="px-6 py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-purple-500/25 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95">
-            <span class="text-lg">🚀</span>
-            <span>${isEn ? 'Launch Cours on iPhone (Safari / PWA)' : 'Lancer Cours sur iPhone (Safari / PWA)'}</span>
-          </a>
-          <a href="#qr-connect" class="px-4 py-4 rounded-2xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 font-semibold text-xs flex items-center gap-1.5 transition-all">
-            <span>${isEn ? 'Connect to Mac' : 'Se Connecter au Mac'} →</span>
-          </a>
+          <div class="flex flex-col items-center justify-center gap-4 w-full">
+            <a href="/app" class="px-8 py-4.5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-purple-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95">
+              <span class="text-2xl">🚀</span>
+              <span>${isEn ? 'Launch Cours on iPhone' : 'Lancer Cours sur iPhone'}</span>
+            </a>
+            <div class="w-full max-w-lg mt-2 p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-left text-xs text-zinc-300 space-y-2 shadow-xl">
+              <p><strong>Étape 1 :</strong> Dans Safari, touchez Partager &gt; <em>« Sur l'écran d'accueil »</em> pour l'utiliser comme une vraie app native.</p>
+              <p><strong>Étape 2 :</strong> Scannez le QR Code de votre Mac pour lier vos fiches et enregistrements.</p>
+            </div>
+          </div>
         `;
       }
     }

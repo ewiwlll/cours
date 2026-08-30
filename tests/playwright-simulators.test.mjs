@@ -39,16 +39,14 @@ test('Simulateurs Réels: Test E2E de A à Z (macOS Desktop, Android Pixel 8, iP
     const badgeText = await macPage.innerText('#platformDetectedBadge');
     assert.match(badgeText, /macOS/i, 'La landing page doit détecter macOS');
 
-    // Vérifier les boutons de téléchargement DMG et ZIP
+    // Vérifier le bouton de téléchargement DMG unique
     const dmgLink = await macPage.getAttribute('a[href="/Cours-macOS.dmg"]', 'href');
     assert.equal(dmgLink, '/Cours-macOS.dmg');
-
-    const zipLink = await macPage.getAttribute('a[href="/Cours-macOS.zip"]', 'href');
-    assert.equal(zipLink, '/Cours-macOS.zip');
 
     // Vérifier la présence de la commande 1-clic Terminal
     const terminalCode = await macPage.innerText('code');
     assert.match(terminalCode, /curl -fsSL https:\/\/cours-awc\.pages\.dev\/install\.sh \| bash/);
+    await macPage.screenshot({ path: path.join(ROOT, 'scratch', 'test_landing_macos.png') });
 
     // Tester l'application Web /app sur Desktop
     await macPage.goto(`http://127.0.0.1:${TEST_PORT}/app`);
