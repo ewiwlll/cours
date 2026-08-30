@@ -8,12 +8,12 @@ KEYSTORE="$ROOT/apps/mobile/android/app/debug.keystore"
 SRC_APK="$ROOT/apps/mobile/android/app/build/outputs/apk/release/app-release.apk"
 WORK_DIR="/tmp/cours-apk-rebuild"
 
-echo "==> [1/5] Export du bundle React Native / Expo..."
+echo "==> [1/5] Export du bundle React Native avec index.js..."
 cd "$ROOT/apps/mobile"
 npx expo export:embed \
   --platform android \
   --dev false \
-  --entry-file app/index.tsx \
+  --entry-file index.js \
   --bundle-output "$WORK_DIR/raw.bundle.js" \
   --assets-dest "$WORK_DIR/res"
 
@@ -51,4 +51,4 @@ cp "$ROOT/public/cours.apk" "$ROOT/apps/mobile/android/app/build/outputs/apk/deb
 cp "$ROOT/public/cours.apk" "$ROOT/apps/mobile/android/app/build/outputs/apk/release/app-release.apk" 2>/dev/null || true
 
 rm -rf "$WORK_DIR"
-echo "✓ APK Cours recompilé avec Hermes Bytecode et signé avec succès -> $ROOT/public/cours.apk"
+echo "✓ APK Cours recompilé avec index.js + registerRootComponent -> $ROOT/public/cours.apk"

@@ -192,6 +192,7 @@ export async function discoverAndSelectBestHost(): Promise<string> {
     "http://localhost:3002",
     "http://10.0.2.2:3002", // Android Emulator -> Mac Host
     "http://10.0.3.2:3002", // Genymotion Emulator -> Mac Host
+    "http://172.27.241.122:3002",
     apiUrl ? apiUrl.replace(/\/$/, "") : null,
     "http://100.123.88.110:3002",
     "http://192.168.1.54:3002",
