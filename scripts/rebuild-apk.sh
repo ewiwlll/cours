@@ -3,35 +3,41 @@ set -e
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BUILD_TOOLS="/Users/ewilien/Library/Android/sdk/build-tools/35.0.0"
+HERMESC="$ROOT/apps/mobile/node_modules/react-native/sdks/hermesc/osx-bin/hermesc"
 KEYSTORE="$ROOT/apps/mobile/android/app/debug.keystore"
 SRC_APK="$ROOT/apps/mobile/android/app/build/outputs/apk/release/app-release.apk"
 WORK_DIR="/tmp/cours-apk-rebuild"
 
-echo "==> [1/4] Export du bundle React Native / Expo..."
+echo "==> [1/5] Export du bundle React Native / Expo..."
 cd "$ROOT/apps/mobile"
 npx expo export:embed \
   --platform android \
   --dev false \
   --entry-file app/index.tsx \
-  --bundle-output android/app/build/generated/assets/createBundleReleaseJsAndAssets/index.android.bundle \
-  --assets-dest android/app/build/generated/res/createBundleReleaseJsAndAssets/
+  --bundle-output "$WORK_DIR/raw.bundle.js" \
+  --assets-dest "$WORK_DIR/res"
 
-echo "==> [2/4] Extraction et injection des assets..."
-rm -rf "$WORK_DIR"
-mkdir -p "$WORK_DIR"
+echo "==> [2/5] Compilation Hermes Bytecode (HBC)..."
+mkdir -p "$WORK_DIR/assets"
+"$HERMESC" -emit-binary -O -out "$WORK_DIR/assets/index.android.bundle" "$WORK_DIR/raw.bundle.js"
+
+echo "==> [3/5] Extraction de l'APK source et injection du bundle Hermes..."
 cd "$WORK_DIR"
+mkdir -p apk_root
+cd apk_root
 unzip -q -o "$SRC_APK"
 rm -rf META-INF
 
-mkdir -p "$WORK_DIR/assets"
-cp "$ROOT/apps/mobile/android/app/build/generated/assets/createBundleReleaseJsAndAssets/index.android.bundle" "$WORK_DIR/assets/index.android.bundle"
-cp -rf "$ROOT/apps/mobile/android/app/build/generated/res/createBundleReleaseJsAndAssets/"* "$WORK_DIR/res/" 2>/dev/null || true
+mkdir -p assets
+cp "$WORK_DIR/assets/index.android.bundle" assets/index.android.bundle
+cp -rf "$WORK_DIR/res/"* res/ 2>/dev/null || true
 
-echo "==> [3/4] Compression et alignement (zipalign)..."
-zip -q -r -0 unaligned.apk .
+echo "==> [4/5] Alignement (zipalign)..."
+zip -q -r -0 ../unaligned.apk .
+cd "$WORK_DIR"
 "$BUILD_TOOLS/zipalign" -f -v -p 4 unaligned.apk aligned.apk >/dev/null
 
-echo "==> [4/4] Signature de l'APK avec debug.keystore..."
+echo "==> [5/5] Signature de l'APK avec debug.keystore..."
 "$BUILD_TOOLS/apksigner" sign \
   --ks "$KEYSTORE" \
   --ks-pass pass:android \
@@ -45,4 +51,4 @@ cp "$ROOT/public/cours.apk" "$ROOT/apps/mobile/android/app/build/outputs/apk/deb
 cp "$ROOT/public/cours.apk" "$ROOT/apps/mobile/android/app/build/outputs/apk/release/app-release.apk" 2>/dev/null || true
 
 rm -rf "$WORK_DIR"
-echo "✓ APK Cours recompilé et signé avec succès -> $ROOT/public/cours.apk"
+echo "✓ APK Cours recompilé avec Hermes Bytecode et signé avec succès -> $ROOT/public/cours.apk"
