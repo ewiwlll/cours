@@ -1081,14 +1081,41 @@ async function handleApi(req, res, url) {
       if (ip) tailscaleUrl = `http://${ip}:${PORT}`;
     } catch {}
 
+    let adbDevice = null;
+    try {
+      const { execSync } = await import("node:child_process");
+      const out = execSync("adb devices -l 2>/dev/null || true", { stdio: ["pipe", "pipe", "ignore"], encoding: "utf8" }).trim();
+      const lines = out.split("\n").filter((l) => l.trim() && !l.startsWith("List of"));
+      if (lines.length > 0) {
+        const first = lines[0];
+        const parts = first.split(/\s+/);
+        const id = parts[0];
+        const modelMatch = first.match(/model:(\S+)/);
+        const model = modelMatch ? modelMatch[1].replace(/_/g, " ") : "Android USB";
+        adbDevice = { id, model, connected: true };
+      }
+    } catch {}
+
     return json(res, 200, {
       ok: true,
       devices,
+      adbDevice,
       localIp,
       port: PORT,
-      pairingUrl: `http://${localIp}:${PORT}/mobile`,
+      pairingUrl: `http://${localIp}:${PORT}/?paired=1`,
       tailscaleUrl: tailscaleUrl || process.env.TAILSCALE_URL || null,
     });
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/devices/adb-install") {
+    try {
+      const { execSync } = await import("node:child_process");
+      execSync("adb install -r -d public/cours.apk 2>/dev/null || true", { stdio: ["pipe", "pipe", "ignore"], encoding: "utf8" });
+      execSync(`adb reverse tcp:${PORT} tcp:${PORT} 2>/dev/null || true`, { stdio: ["pipe", "pipe", "ignore"], encoding: "utf8" });
+      return json(res, 200, { ok: true, message: "Application installée sur le Pixel avec succès !" });
+    } catch (e) {
+      return json(res, 500, { ok: false, error: e.message || "Échec de l'installation ADB" });
+    }
   }
 
   if (req.method === "POST" && url.pathname === "/api/devices/pair") {

@@ -41,6 +41,44 @@ export function App() {
     refreshData,
   } = useStore();
 
+  React.useEffect(() => {
+    const registerDevice = async () => {
+      const ua = navigator.userAgent || '';
+      const isIos = /iPhone|iPad|iPod/i.test(ua);
+      const isAndroid = /Android/i.test(ua);
+      const isMobile = isIos || isAndroid || window.innerWidth < 768;
+      if (!isMobile) return;
+
+      let deviceId = localStorage.getItem('cours_device_id');
+      if (!deviceId) {
+        deviceId = `dev-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+        localStorage.setItem('cours_device_id', deviceId);
+      }
+
+      let deviceName = isIos ? 'iPhone' : isAndroid ? 'Google Pixel / Android' : 'Smartphone';
+      if (/Pixel/i.test(ua)) deviceName = 'Google Pixel';
+      else if (/Samsung|SM-/i.test(ua)) deviceName = 'Samsung Galaxy';
+      else if (/iPhone/i.test(ua)) deviceName = 'iPhone';
+      else if (/iPad/i.test(ua)) deviceName = 'iPad';
+
+      try {
+        await fetch('/api/devices/pair', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            deviceId,
+            deviceName,
+            platform: isIos ? 'ios' : isAndroid ? 'android' : 'mobile',
+          }),
+        });
+      } catch {}
+    };
+
+    registerDevice();
+    const interval = setInterval(registerDevice, 25000);
+    return () => clearInterval(interval);
+  }, []);
+
   const handleSaveRecording = async (data: {
     title: string;
     subjectId: string;
