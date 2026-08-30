@@ -18,6 +18,7 @@ import {
   DevicePairingModal,
   OnboardingModal,
 } from './components/modals';
+import { MobileInstallBanner } from './components/MobileInstallBanner';
 import {
   createStudyCourse,
   createChapterDefinition,
@@ -239,6 +240,9 @@ export function App() {
 
       {/* 9. First-Run Visual Onboarding Modal */}
       <OnboardingModal />
+
+      {/* 10. Floating Mobile Install & Home Screen Banner */}
+      <MobileInstallBanner />
     </div>
   );
 }
