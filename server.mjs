@@ -2845,6 +2845,10 @@ async function serveStatic(res, pathname) {
 
 const server = http.createServer(async (req, res) => {
   try {
+    if (req.method === "HEAD") {
+      res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+      return res.end();
+    }
     const url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
     if (url.pathname.startsWith("/api/")) await handleApi(req, res, url);
     else await serveStatic(res, url.pathname);

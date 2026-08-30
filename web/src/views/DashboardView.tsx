@@ -33,45 +33,30 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   onStartSession,
   onOpenCourse,
 }) => {
-  const { openModal, setView } = useStore();
-  const [subjects, setSubjects] = useState<Subject[]>([]);
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [reviews, setReviews] = useState<ReviewStatus>({
-    dueCount: 0,
-    totalCards: 0,
-    todayReviewed: 0,
-    dueCards: [],
-  });
-  const [weaknesses, setWeaknesses] = useState<Weakness[]>([]);
-  const [exams, setExams] = useState<Exam[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const {
+    catalog: subjects,
+    studyCourses: courses,
+    weaknesses,
+    exams,
+    totalDueCards,
+    openModal,
+    setView,
+  } = useStore();
 
-  useEffect(() => {
-    async function loadDashboardData() {
-      setLoading(true);
-      try {
-        const [subList, courseList, reviewData, weakList, examList] = await Promise.all([
-          getSubjects(),
-          getStudyCourses(),
-          getReviews(),
-          getWeaknesses(),
-          getExams(),
-        ]);
-        setSubjects(subList || []);
-        setCourses(courseList || []);
-        setReviews(
-          reviewData || { dueCount: 0, totalCards: 0, todayReviewed: 0, dueCards: [] }
-        );
-        setWeaknesses(weakList || []);
-        setExams(examList || []);
-      } catch (err) {
-        console.error('Error loading dashboard:', err);
-      } finally {
-        setLoading(false);
+  const reviews = useMemo<ReviewStatus>(() => {
+    let totalCardsCount = 0;
+    for (const c of courses) {
+      if (c.cards && Array.isArray(c.cards)) {
+        totalCardsCount += c.cards.length;
       }
     }
-    loadDashboardData();
-  }, []);
+    return {
+      dueCount: totalDueCards,
+      totalCards: totalCardsCount,
+      todayReviewed: 0,
+      dueCards: [],
+    };
+  }, [totalDueCards, courses]);
 
   const nearestExam = [...exams].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()

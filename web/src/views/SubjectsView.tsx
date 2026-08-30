@@ -39,42 +39,27 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
   onStartSession,
   onAddCourse,
 }) => {
-  const { selectedSubjectId, setSelectedSubjectId, openModal } = useStore();
-  const [subjects, setSubjects] = useState<Subject[]>([]);
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [chapterDefs, setChapterDefs] = useState<ChapterDefinition[]>([]);
+  const {
+    catalog: subjects,
+    studyCourses: courses,
+    chapterDefinitions: chapterDefs,
+    selectedSubjectId,
+    setSelectedSubjectId,
+    openModal,
+    refreshData,
+  } = useStore();
+
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [collapsedChapters, setCollapsedChapters] = useState<Record<string, boolean>>({});
   const [newChapterTitle, setNewChapterTitle] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(true);
-
-  // Load initial data
-  const loadData = async () => {
-    setLoading(true);
-    try {
-      const [subList, courseList, chDefs] = await Promise.all([
-        getSubjects(),
-        getStudyCourses(),
-        getChapterDefinitions(),
-      ]);
-      setSubjects(subList || []);
-      setCourses(courseList || []);
-      setChapterDefs(chDefs || []);
-
-      // Auto select first subject if none selected
-      if (!selectedSubjectId && subList && subList.length > 0) {
-        setSelectedSubjectId(initialSubjectId || subList[0].id);
-      }
-    } catch (err) {
-      console.error('Error loading subjects:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
-    loadData();
-  }, [initialSubjectId]);
+    if (initialSubjectId && subjects.some((s) => s.id === initialSubjectId)) {
+      setSelectedSubjectId(initialSubjectId);
+    } else if (!selectedSubjectId && subjects.length > 0) {
+      setSelectedSubjectId(subjects[0].id);
+    }
+  }, [initialSubjectId, subjects, selectedSubjectId, setSelectedSubjectId]);
 
   // Filtered subjects by search
   const filteredSubjects = useMemo(() => {
@@ -144,8 +129,8 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
         title: newChapterTitle.trim(),
       });
       if (created) {
-        setChapterDefs((prev) => [...prev, created]);
         setNewChapterTitle('');
+        await refreshData();
       }
     } catch (err) {
       console.error('Error creating chapter:', err);
@@ -161,13 +146,7 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
 
     const ok = await deleteSubject(subjectId);
     if (ok) {
-      const remaining = subjects.filter((s) => s.id !== subjectId);
-      setSubjects(remaining);
-      if (remaining.length > 0) {
-        setSelectedSubjectId(remaining[0].id);
-      } else {
-        setSelectedSubjectId(null);
-      }
+      await refreshData();
     }
   };
 
@@ -180,7 +159,7 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
 
     const ok = await deleteChapterDefinition(chapterId);
     if (ok) {
-      setChapterDefs((prev) => prev.filter((ch) => ch.id !== chapterId));
+      await refreshData();
     }
   };
 
@@ -193,17 +172,9 @@ export const SubjectsView: React.FC<SubjectsViewProps> = ({
 
     const ok = await deleteStudyCourse(courseId);
     if (ok) {
-      setCourses((prev) => prev.filter((c) => c.id !== courseId));
+      await refreshData();
     }
   };
-
-  if (loading) {
-    return (
-      <div className="p-16 text-center text-zinc-500 text-sm animate-pulse">
-        Chargement de vos matières et chapitres...
-      </div>
-    );
-  }
 
   if (subjects.length === 0) {
     return (

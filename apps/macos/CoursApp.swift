@@ -203,8 +203,8 @@ class CoursAppDelegate: NSObject, NSApplicationDelegate, WKUIDelegate, WKNavigat
             return
         }
         var request = URLRequest(url: url)
-        request.timeoutInterval = 1.0
-        request.httpMethod = "HEAD"
+        request.timeoutInterval = 2.0
+        request.httpMethod = "GET"
 
         let task = URLSession.shared.dataTask(with: request) { _, response, error in
             if let http = response as? HTTPURLResponse, (200...399).contains(http.statusCode) {

@@ -32,6 +32,7 @@ import {
 } from '../lib/api';
 import type { Course, CoursePhoto, Card, AtomicConcept, ProgressiveExample } from '../lib/types';
 import { formatDate, renderMarkdown } from '../lib/utils';
+import { useStore } from '../lib/store';
 
 interface CourseDetailViewProps {
   courseId: string;
@@ -46,7 +47,8 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
   onStartSession,
   onSelectSubject,
 }) => {
-  const [course, setCourse] = useState<Course | null>(null);
+  const { studyCourses, refreshData } = useStore();
+  const [course, setCourse] = useState<Course | null>(() => studyCourses.find((c) => c.id === courseId) || null);
   const [activeTab, setActiveTab] = useState<'fiche' | 'concepts' | 'boite' | 'flashcards' | 'schemas' | 'notes' | 'retest'>('fiche');
   const [summaryMarkdown, setSummaryMarkdown] = useState<string>('');
   const [transcriptionText, setTranscriptionText] = useState<string>('');
@@ -57,7 +59,7 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
   const [expandedConcepts, setExpandedConcepts] = useState<Record<string, boolean>>({});
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number>(0);
   const [occlusionRevealed, setOcclusionRevealed] = useState<Record<string, boolean>>({});
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(() => !studyCourses.some((c) => c.id === courseId));
 
   // Sas de Rappel State (Multi-Mode Anti-Friction)
   const [unlockMode, setUnlockMode] = useState<'free' | 'quiz'>('free');
@@ -110,22 +112,22 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
   // Load course details & diagnostic quiz
   const loadCourse = async () => {
-    setLoading(true);
     try {
-      const courses = await getStudyCourses();
-      const found = courses.find((c) => c.id === courseId);
+      let found = studyCourses.find((c) => c.id === courseId);
+      if (!found) {
+        const fetchedCourses = await getStudyCourses();
+        found = fetchedCourses.find((c) => c.id === courseId);
+      }
       if (found) {
         setCourse(found);
         setUserNotes(found.notes || '');
 
         if (found.summaryFilename) {
-          const sumText = await getCourseSummaryContent(found.summaryFilename);
-          setSummaryMarkdown(sumText);
+          getCourseSummaryContent(found.summaryFilename).then((sumText) => setSummaryMarkdown(sumText || '')).catch(() => {});
         }
 
         if (found.transcriptionFilename) {
-          const transText = await getTranscriptionContent(found.transcriptionFilename);
-          setTranscriptionText(transText);
+          getTranscriptionContent(found.transcriptionFilename).then((transText) => setTranscriptionText(transText || '')).catch(() => {});
         }
 
         if (found.recallDiagnostic) {
@@ -133,11 +135,12 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
         }
 
         if (found.recallStatus === 'locked') {
-          const quiz = await getDiagnosticQuiz(found.id);
-          setDiagnosticQuiz(quiz);
-          if (quiz.length > 0) {
-            setUnlockMode('quiz'); // Favoriser le mode éclair anti-friction par défaut s'il y a des QCMs
-          }
+          getDiagnosticQuiz(found.id).then((quiz) => {
+            if (quiz && quiz.length > 0) {
+              setDiagnosticQuiz(quiz);
+              setUnlockMode('quiz');
+            }
+          }).catch(() => {});
         }
       }
     } catch (err) {
@@ -149,7 +152,7 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
   useEffect(() => {
     loadCourse();
-  }, [courseId]);
+  }, [courseId, studyCourses]);
 
   const handleUnlockRecall = async (e: React.FormEvent) => {
     e.preventDefault();
