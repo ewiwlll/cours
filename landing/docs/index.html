@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Documentation — Cours (Revision OS)</title>
-  <meta name="description" content="Documentation complète et guide d'architecture de Cours (Revision OS) : Active Recall, FSRS-5, Whisper Metal local, Antigravity Studio et clients multi-plateformes.">
+  <title>Documentation & Guide Officiel — Cours (Revision OS)</title>
+  <meta name="description" content="Documentation complète et guide d'apprentissage de Cours (Revision OS) : PWA multi-plateformes, Sas de Rappel Actif, Moteur FSRS-5, Fil d'Ariane MOC et synchronisation amphi.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -87,6 +87,10 @@
 
     <div class="flex items-center gap-4 text-sm font-medium">
       <a href="/" class="text-zinc-400 hover:text-white transition-colors">Accueil</a>
+      <a href="https://cours-awc.pages.dev" target="_blank" class="text-purple-400 hover:text-purple-300 font-semibold transition-colors flex items-center gap-1">
+        <span>Ouvrir l'App Web</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+      </a>
       <a href="https://github.com/ewiwlll/cours" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:bg-zinc-800 transition-colors text-xs font-semibold">
         <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
         <span>GitHub</span>
@@ -104,9 +108,9 @@
           <h4 class="font-bold text-zinc-300 uppercase tracking-wider text-[11px] mb-3">Pour Commencer</h4>
           <ul class="space-y-1.5 text-zinc-400">
             <li><a href="#quickstart" class="nav-link block py-1 px-1.5 rounded hover:text-white">1. Démarrage Rapide</a></li>
-            <li><a href="#architecture" class="nav-link block py-1 px-1.5 rounded hover:text-white">2. Vue d'Ensemble & CLI</a></li>
-            <li><a href="#gemini-setup" class="nav-link block py-1 px-1.5 rounded hover:text-white">3. Configuration & Modale</a></li>
-            <li><a href="#antigravity-guide" class="nav-link block py-1 px-1.5 rounded hover:text-white text-purple-400 font-semibold">4. Studio Antigravity (0€)</a></li>
+            <li><a href="#universal-pwa" class="nav-link block py-1 px-1.5 rounded hover:text-white text-purple-400 font-semibold">2. PWA Universelle (iOS/Android/PC)</a></li>
+            <li><a href="#architecture" class="nav-link block py-1 px-1.5 rounded hover:text-white">3. Vue d'Ensemble & Commande cours</a></li>
+            <li><a href="#antigravity-guide" class="nav-link block py-1 px-1.5 rounded hover:text-white text-blue-400 font-semibold">4. Studio Antigravity (0€)</a></li>
           </ul>
         </div>
 
@@ -114,27 +118,28 @@
           <h4 class="font-bold text-zinc-300 uppercase tracking-wider text-[11px] mb-3">En Amphi & En Cours</h4>
           <ul class="space-y-1.5 text-zinc-400">
             <li><a href="#recording" class="nav-link block py-1 px-1.5 rounded hover:text-white">5. Enregistrement & Balises</a></li>
-            <li><a href="#photos-sync" class="nav-link block py-1 px-1.5 rounded hover:text-white">6. Photos Synchronisées (offsetMs)</a></li>
-            <li><a href="#whisper-metal" class="nav-link block py-1 px-1.5 rounded hover:text-white">7. Transcription Whisper Metal</a></li>
+            <li><a href="#wakelock" class="nav-link block py-1 px-1.5 rounded hover:text-white">6. Anti-Veille WakeLock</a></li>
+            <li><a href="#photos-sync" class="nav-link block py-1 px-1.5 rounded hover:text-white">7. Photos Synchronisées (offsetMs)</a></li>
+            <li><a href="#whisper-metal" class="nav-link block py-1 px-1.5 rounded hover:text-white">8. Transcription Whisper Locale</a></li>
           </ul>
         </div>
 
         <div>
           <h4 class="font-bold text-zinc-300 uppercase tracking-wider text-[11px] mb-3">Méthode Cognitive</h4>
           <ul class="space-y-1.5 text-zinc-400">
-            <li><a href="#active-recall" class="nav-link block py-1 px-1.5 rounded hover:text-white">8. Le Sas de Rappel Actif</a></li>
-            <li><a href="#fsrs5-engine" class="nav-link block py-1 px-1.5 rounded hover:text-white">9. Moteur FSRS-5 Sans Chrono</a></li>
-            <li><a href="#atomic-concepts" class="nav-link block py-1 px-1.5 rounded hover:text-white">10. Concepts Atomiques « X vs Y »</a></li>
-            <li><a href="#memory-tree" class="nav-link block py-1 px-1.5 rounded hover:text-white">11. Mémoire Vivante des Questions</a></li>
+            <li><a href="#active-recall" class="nav-link block py-1 px-1.5 rounded hover:text-white text-amber-400 font-semibold">9. Sas de Rappel Actif Initial</a></li>
+            <li><a href="#fsrs5-engine" class="nav-link block py-1 px-1.5 rounded hover:text-white">10. Standard Mathématique FSRS-5</a></li>
+            <li><a href="#moc-breadcrumbs" class="nav-link block py-1 px-1.5 rounded hover:text-white">11. MOC & Cartes « Relier les Concepts »</a></li>
+            <li><a href="#weakness-priority" class="nav-link block py-1 px-1.5 rounded hover:text-white">12. Mode Priorité aux Faiblesses</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="font-bold text-zinc-300 uppercase tracking-wider text-[11px] mb-3">Clients & Déploiement</h4>
+          <h4 class="font-bold text-zinc-300 uppercase tracking-wider text-[11px] mb-3">Planification & Synchronisation</h4>
           <ul class="space-y-1.5 text-zinc-400">
-            <li><a href="#mobile-sync" class="nav-link block py-1 px-1.5 rounded hover:text-white">12. Synchro QR Code & 4G Tailscale</a></li>
-            <li><a href="#api-reference" class="nav-link block py-1 px-1.5 rounded hover:text-white">13. Référence API REST Backend</a></li>
-            <li><a href="#faq" class="nav-link block py-1 px-1.5 rounded hover:text-white">14. FAQ & Dépannage</a></li>
+            <li><a href="#planning-calendar" class="nav-link block py-1 px-1.5 rounded hover:text-white">13. Calendrier & Rétro-Planning</a></li>
+            <li><a href="#offline-sync" class="nav-link block py-1 px-1.5 rounded hover:text-white">14. Mode Hors-Ligne & Local-First</a></li>
+            <li><a href="#faq" class="nav-link block py-1 px-1.5 rounded hover:text-white">15. FAQ & Dépannage</a></li>
           </ul>
         </div>
       </div>
@@ -145,16 +150,19 @@
       
       <!-- CHAPTER 1: QUICK START -->
       <section id="quickstart" class="doc-section mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-xs font-bold text-blue-300 mb-3">
+          🚀 Bienvenue sur Cours
+        </div>
         <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
           Guide de Démarrage Rapide
         </h1>
-        <p class="text-base text-zinc-400 leading-relaxed mb-6">
-          Installez et configurez l'ensemble de l'environnement <strong>Cours (Revision OS)</strong> sur macOS ou Linux en une seule ligne de commande dans votre terminal.
+        <p class="text-base text-zinc-300 leading-relaxed mb-6">
+          <strong>Cours (Revision OS)</strong> est votre compagnon d'études complet conçu pour éliminer le stress des notes et des révisions. En amphi, il capture le cours pour vous. Le soir, il vous guide pas à pas avec la méthode scientifique du <strong>rappel actif</strong> et de la <strong>répétition espacée</strong> pour que vous réussissiez vos examens en toute sérénité.
         </p>
 
         <div class="code-block p-4 mb-6">
           <div class="flex items-center justify-between text-xs text-zinc-400 mb-2 font-mono">
-            <span>Terminal</span>
+            <span>Terminal macOS / Linux</span>
             <button onclick="copyCode(this)" class="text-zinc-400 hover:text-white">Copier</button>
           </div>
           <pre class="font-mono text-sm text-blue-300 overflow-x-auto">curl -fsSL https://cours-awc.pages.dev/install.sh | bash</pre>
@@ -162,21 +170,89 @@
 
         <div class="callout-tip p-4 rounded-xl mb-6 text-xs sm:text-sm">
           <strong class="text-emerald-400 block mb-1">⚡ Ce que fait la commande magique en 1 clic :</strong>
-          1. Clone et configure automatiquement le projet dans <code class="text-zinc-200">~/cours</code>.<br>
+          1. Configure l'ensemble du projet dans votre dossier personnel.<br>
           2. Compile l'application macOS native <code class="text-zinc-200 font-bold">/Applications/Cours.app</code>.<br>
-          3. 🧠 <strong>Ouvre automatiquement Google Antigravity</strong> directement sur le bon dossier de travail !<br>
+          3. 🧠 <strong>Ouvre automatiquement Google Antigravity</strong> (votre Super-Tuteur de travail).<br>
           4. Installe la commande universelle <code class="text-blue-400 font-bold font-mono">cours</code> et compile l'interface Web.<br>
-          5. Dès qu'Antigravity s'ouvre, vous n'avez qu'à taper <code class="text-emerald-400 font-mono font-bold">cours</code> dans le chat pour que l'agent prenne le relais !
+          5. Dès qu'Antigravity s'ouvre, vous n'avez qu'à taper <code class="text-emerald-400 font-mono font-bold">cours</code> dans le chat pour qu'il s'occupe de tout !
         </div>
       </section>
 
-      <!-- CHAPTER 2: ARCHITECTURE & CLI -->
+      <!-- CHAPTER 2: UNIVERSAL PWA -->
+      <section id="universal-pwa" class="doc-section mb-16 border-t border-border/60 pt-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-xs font-bold text-purple-300 mb-3">
+          📲 Zéro Magasin Payant · 100% Autonome
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-4">
+          La PWA Universelle : Installer Cours sur iPhone, Android, Windows & Mac
+        </h2>
+        <p class="text-sm text-zinc-300 leading-relaxed mb-6">
+          <strong>Qu'est-ce qu'une PWA (Progressive Web App) ?</strong><br>
+          C'est une application moderne qui s'installe directement sur votre téléphone ou ordinateur depuis votre navigateur internet. Elle fonctionne exactement comme une application téléchargée sur un Store, en plein écran, avec accès au micro et sauvegarde <strong>100% hors-ligne</strong>, sans abonnement ni publicité.
+        </p>
+
+        <!-- Grille des 4 OS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-xs">
+          <!-- iOS Safari -->
+          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-2xl space-y-2.5">
+            <div class="flex items-center gap-2 font-bold text-white text-sm">
+              <span class="text-base">🍏</span> Sur iPhone & iPad (iOS Safari)
+            </div>
+            <ol class="space-y-2 text-zinc-400 list-decimal list-inside leading-relaxed">
+              <li>Ouvrez Safari et allez sur <a href="https://cours-awc.pages.dev" target="_blank" class="text-purple-400 underline font-mono">cours-awc.pages.dev</a>.</li>
+              <li>Appuyez sur le bouton <strong>Partager</strong> (<svg class="w-3.5 h-3.5 inline text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>) en bas de votre écran.</li>
+              <li>Faites défiler vers le bas et sélectionnez <strong>Sur l'écran d'accueil</strong>.</li>
+              <li>Appuyez sur <strong>Ajouter</strong> en haut à droite : l'icône Cours apparaît sur votre téléphone !</li>
+            </ol>
+          </div>
+
+          <!-- Android Chrome -->
+          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-2xl space-y-2.5">
+            <div class="flex items-center gap-2 font-bold text-white text-sm">
+              <span class="text-base">🤖</span> Sur Android (Pixel, Samsung, Xiaomi)
+            </div>
+            <ol class="space-y-2 text-zinc-400 list-decimal list-inside leading-relaxed">
+              <li>Ouvrez Google Chrome et allez sur <a href="https://cours-awc.pages.dev" target="_blank" class="text-purple-400 underline font-mono">cours-awc.pages.dev</a>.</li>
+              <li>Un bandeau <strong>« Installer l'application »</strong> apparaît en bas. Cliquez dessus.</li>
+              <li>Si le bandeau n'apparaît pas, appuyez sur le menu (<strong>⋮</strong> en haut à droite) puis sur <strong>« Installer l'application »</strong>.</li>
+              <li>L'application s'installe instantanément dans votre tiroir d'applications.</li>
+            </ol>
+          </div>
+
+          <!-- Windows PC -->
+          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-2xl space-y-2.5">
+            <div class="flex items-center gap-2 font-bold text-white text-sm">
+              <span class="text-base">🪟</span> Sur PC Windows (Edge / Chrome)
+            </div>
+            <ol class="space-y-2 text-zinc-400 list-decimal list-inside leading-relaxed">
+              <li>Ouvrez Microsoft Edge ou Google Chrome.</li>
+              <li>Cliquez sur la petite icône d'installation dans la barre d'adresse à droite (<svg class="w-3.5 h-3.5 inline text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>).</li>
+              <li>Confirmez en cliquant sur <strong>Installer</strong>.</li>
+              <li>Cours se lance dans sa propre fenêtre de bureau dédiée avec raccourcis clavier.</li>
+            </ol>
+          </div>
+
+          <!-- Mac macOS -->
+          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-2xl space-y-2.5">
+            <div class="flex items-center gap-2 font-bold text-white text-sm">
+              <span class="text-base">💻</span> Sur Mac (macOS App & Safari)
+            </div>
+            <ol class="space-y-2 text-zinc-400 list-decimal list-inside leading-relaxed">
+              <li>Utilisez l'application native dans <strong>/Applications/Cours.app</strong> (fournie par l'installateur).</li>
+              <li>Ou dans Safari : Menu <em>Fichier</em> $ightarrow$ <em>Ajouter au Dock</em>.</li>
+              <li>Profitez de la transcription locale Metal ultra-rapide sans surcoût.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHAPTER 3: ARCHITECTURE & CLI -->
       <section id="architecture" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
           Vue d'Ensemble & Commande CLI Globale (<code class="text-blue-400 font-mono">cours</code>)
         </h2>
         <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          Plus besoin de naviguer dans les dossiers ni de taper des commandes compliquées. Où que vous soyez dans votre terminal, tapez simplement :
+          Où que vous soyez dans votre terminal, tapez simplement :
         </p>
 
         <div class="code-block p-4 mb-6">
@@ -184,336 +260,55 @@
         </div>
 
         <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          Cette commande démarre immédiatement le serveur backend, l'écouteur d'amphi, l'interface Web et affiche votre QR Code de synchronisation mobile.
+          Cette commande démarre immédiatement le serveur backend local, prépare l'interface Web et affiche votre QR Code pour connecter votre téléphone en un éclair.
         </p>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
           <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">
             <span class="text-blue-400 font-bold block mb-1">cours</span>
-            <span class="text-zinc-400">Lance le serveur + interface</span>
+            <span class="text-zinc-400">Lance le serveur + cockpit</span>
           </div>
           <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">
             <span class="text-emerald-400 font-bold block mb-1">cours update</span>
-            <span class="text-zinc-400">Met à jour Git & Web</span>
+            <span class="text-zinc-400">Met à jour les nouveautés</span>
           </div>
           <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">
             <span class="text-purple-400 font-bold block mb-1">cours tailscale</span>
-            <span class="text-zinc-400">Configure l'accès 4G</span>
+            <span class="text-zinc-400">Accès 4G à distance</span>
           </div>
         </div>
       </section>
 
-      <!-- CHAPTER 3: CONFIGURATION & MODALE DEDIEE -->
-      <section id="gemini-setup" class="doc-section mb-16 border-t border-border/60 pt-12">
-        <h2 class="text-2xl font-bold text-white mb-4">
-          Configuration Directe & Modale Paramètres (UI)
-        </h2>
-        <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          Vous n'avez plus besoin d'ouvrir des fichiers texte ou de manipuler des variables cachées. Cliquez sur l'icône <strong>⚙️ Paramètres</strong> en haut à droite de l'application pour :
-        </p>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs space-y-2">
-            <span class="font-bold text-blue-400">🔑 Clé Gemini API & Test 1-Clic</span>
-            <p class="text-zinc-400">Modifiez votre clé API et cliquez sur <em>« Tester »</em> pour valider instantanément la connexion avec Google AI Studio.</p>
-          </div>
-          <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs space-y-2">
-            <span class="font-bold text-emerald-400">🔌 Port Serveur & Connexion</span>
-            <p class="text-zinc-400">Changez le port (3002 par défaut) et visualisez vos adresses Wi-Fi et 4G Tailscale en direct.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================================================== -->
-      <!-- ============================================================================== -->
-      <!-- CHAPTER 4: LE STUDIO ANTIGRAVITY (GUIDE D'INSTALLATION, WORKFLOW & 0€)         -->
-      <!-- ============================================================================== -->
+      <!-- CHAPTER 4: LE STUDIO ANTIGRAVITY -->
       <section id="antigravity-guide" class="doc-section mb-16 border-t border-border/60 pt-12">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-xs font-bold text-purple-300 mb-3">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-xs font-bold text-blue-300 mb-3">
           ✦ Super-Tuteur & Studio de Production IA Autonome
         </div>
         <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-4">
-          Le Studio Antigravity : Guide d'Installation & Prise en Main
+          Le Studio Antigravity : Votre Tuteur Pédagogique Intelligent
         </h2>
         
         <p class="text-sm text-zinc-300 leading-relaxed mb-6">
-          Pour comprendre la puissance de <strong>Cours</strong>, il est crucial de comprendre la symbiose entre votre <strong>application quotidienne</strong> et votre <strong>Studio Antigravity</strong> :
+          L'écosystème repose sur deux outils complémentaires qui fonctionnent main dans la main :
         </p>
 
-        <!-- Deux Rôles Clairs -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
           <div class="p-5 rounded-2xl bg-blue-950/20 border border-blue-500/30 space-y-2.5 text-xs">
             <div class="font-bold text-blue-300 flex items-center gap-2 text-sm">
               <span class="text-base">📱</span> L'Application Cours (Mac, Web, Mobile)
             </div>
             <p class="text-zinc-400 leading-relaxed">
-              C'est votre <strong>Cockpit d'apprentissage quotidien</strong> : enregistrement 1-clic en amphi avec photos horodatées (<code class="text-blue-300">offsetMs</code>), révision des cartes FSRS-5 dues du jour sans chrono, QCM diagnostiques et sas de rappel actif.
+              C'est votre <strong>Cockpit quotidien</strong> : enregistrez en 1 clic en amphi, révisez vos cartes du jour avec FSRS-5, passez vos QCMs sans stress et suivez votre calendrier d'examens.
             </p>
           </div>
 
           <div class="p-5 rounded-2xl bg-purple-950/20 border border-purple-500/30 space-y-2.5 text-xs">
             <div class="font-bold text-purple-300 flex items-center gap-2 text-sm">
-              <span class="text-base">🧠</span> Le Studio Antigravity (Sur votre Mac / PC)
+              <span class="text-base">🧠</span> Le Studio Antigravity (Sur votre Mac/PC)
             </div>
             <p class="text-zinc-400 leading-relaxed">
-              C'est votre <strong>Studio de fabrication lourde & Super-Tuteur IA</strong> : il orchestre la transcription locale Whisper Metal (0€), découpe vos amphis en fiches KaTeX atomiques, fabrique automatiquement vos flashcards FSRS et maintient l'arbre de mémoire vivante de vos incompréhensions.
+              C'est l'<strong>Usine d'Intelligence & Super-Tuteur</strong> : il transcrit l'audio brut, structure les fiches KaTeX avec des tableaux comparatifs, génère les flashcards et vous réexplique toute notion difficile avec des analogies simples de Feynman.
             </p>
-          </div>
-        </div>
-
-        <!-- Qu'est-ce qu'Antigravity & Pourquoi c'est 10x supérieur à une simple API -->
-        <div class="p-6 rounded-2xl bg-zinc-900/90 border border-zinc-800 space-y-4 mb-8">
-          <h3 class="text-base font-bold text-white flex items-center gap-2">
-            <span>✨</span> Qu'est-ce que Google Antigravity ?
-          </h3>
-          <p class="text-xs sm:text-sm text-zinc-300 leading-relaxed">
-            <strong>Google Antigravity</strong> est la plateforme de développement et d'agents IA nouvelle génération créée par Google. Contrairement à un simple « bouton d'API web » qui envoie un texte aveugle sur le cloud avec des risques d'erreurs, de timeouts ou de surcoûts, Antigravity exécute un <strong>agent intelligent qui a la vision 360° sur l'intégralité de vos cours, de vos audios et de votre historique d'apprentissage</strong>.
-          </p>
-
-          <!-- Tableau Comparatif Studio vs API -->
-          <div class="overflow-x-auto pt-2">
-            <table class="w-full text-left text-xs border-collapse">
-              <thead>
-                <tr class="border-b border-zinc-800 text-zinc-400">
-                  <th class="pb-2 font-semibold">Fonctionnalité</th>
-                  <th class="pb-2 font-semibold text-rose-400">Simple Bouton API Cloud</th>
-                  <th class="pb-2 font-semibold text-emerald-400">Studio Antigravity (Local)</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-zinc-800/60 text-zinc-300">
-                <tr>
-                  <td class="py-2.5 font-medium text-white">Mémoire & Contexte</td>
-                  <td class="py-2.5 text-zinc-400">Fichier isolé, aucune vue d'ensemble</td>
-                  <td class="py-2.5 text-emerald-300 font-semibold">Vision 360° (tous les cours, fiches, photos & arbre mémoire)</td>
-                </tr>
-                <tr>
-                  <td class="py-2.5 font-medium text-white">Coût d'utilisation</td>
-                  <td class="py-2.5 text-rose-400 font-mono">Clés payantes / Facturation par token</td>
-                  <td class="py-2.5 text-emerald-400 font-bold">0€ à vie (Quotas Google Gemini gratuits inclus)</td>
-                </tr>
-                <tr>
-                  <td class="py-2.5 font-medium text-white">Transcription Audio</td>
-                  <td class="py-2.5 text-zinc-400">Envoi de gros fichiers sur le cloud (lent & payant)</td>
-                  <td class="py-2.5 text-emerald-300 font-semibold">Whisper.cpp Metal local (0€, rapide & confidentiel)</td>
-                </tr>
-                <tr>
-                  <td class="py-2.5 font-medium text-white">Qualité Pédagogique</td>
-                  <td class="py-2.5 text-zinc-400">Résumés basiques et cartes génériques</td>
-                  <td class="py-2.5 text-emerald-300">Hiérarchie en 9 étages (Feynman, KaTeX, FSRS-5, Tableaux X vs Y)</td>
-                </tr>
-                <tr>
-                  <td class="py-2.5 font-medium text-white">Interactivité</td>
-                  <td class="py-2.5 text-zinc-400">Réponse figée en un bloc bloquant</td>
-                  <td class="py-2.5 text-emerald-300 font-semibold">Dialogue socratique, déblocage pas-à-pas & oral blanc</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- ========================================================================= -->
-        <!-- GUIDE D'INSTALLATION PAS-À-PAS ILLUSTRE POUR DÉBUTANTS                    -->
-        <!-- ========================================================================= -->
-        <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
-          <span>📦</span> Comment Installer et Démarrer Antigravity (Pas-à-Pas)
-        </h3>
-        <p class="text-xs text-zinc-400 mb-6">
-          Suivez ces 4 étapes simples pour installer le studio et commencer à générer vos cours en moins de 3 minutes :
-        </p>
-
-        <div class="space-y-6 mb-8">
-          
-          <!-- ÉTAPE 1 -->
-          <div class="p-5 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-4">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <span class="w-7 h-7 rounded-xl bg-blue-500/20 border border-blue-500/30 text-blue-400 font-black text-xs flex items-center justify-center">
-                  1
-                </span>
-                <h4 class="text-sm font-bold text-white">Télécharger Google Antigravity depuis la source officielle</h4>
-              </div>
-              <a href="https://antigravity.google" target="_blank" rel="noopener noreferrer" class="text-xs px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold transition-all shadow-md shadow-blue-500/20 flex items-center gap-1.5">
-                <span>Aller sur antigravity.google</span>
-                <span class="text-xs">↗</span>
-              </a>
-            </div>
-            <p class="text-xs text-zinc-300 leading-relaxed">
-              Rendez-vous sur le site officiel <strong><a href="https://antigravity.google" class="text-blue-400 underline hover:text-blue-300" target="_blank">antigravity.google</a></strong> et téléchargez la version correspondant à votre ordinateur :
-            </p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-xs">
-              <div class="p-3 bg-zinc-900/80 rounded-xl border border-zinc-800 space-y-1">
-                <span class="font-bold text-zinc-200 flex items-center gap-1.5">🍎 macOS Apple Silicon</span>
-                <p class="text-[11px] text-zinc-400">Pour Mac M1, M2, M3, M4 (recommandé pour Whisper Metal)</p>
-              </div>
-              <div class="p-3 bg-zinc-900/80 rounded-xl border border-zinc-800 space-y-1">
-                <span class="font-bold text-zinc-200 flex items-center gap-1.5">🍏 macOS Intel</span>
-                <p class="text-[11px] text-zinc-400">Pour les Mac équipés de processeurs Intel</p>
-              </div>
-              <div class="p-3 bg-zinc-900/80 rounded-xl border border-zinc-800 space-y-1">
-                <span class="font-bold text-zinc-200 flex items-center gap-1.5">🪟 Windows & Linux</span>
-                <p class="text-[11px] text-zinc-400">Installateur direct <code class="text-zinc-300">.exe</code> ou <code class="text-zinc-300">.deb / .AppImage</code></p>
-              </div>
-            </div>
-          </div>
-
-          <!-- ÉTAPE 2 -->
-          <div class="p-5 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-3">
-            <div class="flex items-center gap-3">
-              <span class="w-7 h-7 rounded-xl bg-purple-500/20 border border-purple-500/30 text-purple-400 font-black text-xs flex items-center justify-center">
-                2
-              </span>
-              <h4 class="text-sm font-bold text-white">Installer l'application & Se connecter avec son compte Google</h4>
-            </div>
-            <p class="text-xs text-zinc-300 leading-relaxed">
-              Sur Mac, glissez simplement l'icône <strong>Google Antigravity</strong> dans votre dossier <strong>Applications</strong>. Lancez l'application, puis connectez-vous avec votre <strong>compte Google habituel</strong>.
-            </p>
-            <div class="p-3.5 rounded-xl bg-emerald-950/20 border border-emerald-500/30 text-xs text-emerald-300 space-y-1">
-              <strong class="font-bold flex items-center gap-1.5">🎁 Zéro carte bancaire, 0€ à vie :</strong>
-              <p class="text-[11px] text-zinc-300">
-                La connexion à votre compte Google vous accorde immédiatement des quotas généreux gratuits sur le modèle <code class="text-emerald-400 font-mono font-bold">gemini-3.7-flash</code>. Vous n'avez aucune clé API payante à configurer.
-              </p>
-            </div>
-          </div>
-
-          <!-- ÉTAPE 3 -->
-          <div class="p-5 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-3">
-            <div class="flex items-center gap-3">
-              <span class="w-7 h-7 rounded-xl bg-amber-500/20 border border-amber-500/30 text-amber-400 font-black text-xs flex items-center justify-center">
-                3
-              </span>
-              <h4 class="text-sm font-bold text-white">Ouvrir le dossier du projet dans Antigravity (<code class="text-amber-300 font-mono">File ➔ Open Folder</code>)</h4>
-            </div>
-            <p class="text-xs text-zinc-300 leading-relaxed">
-              Dans Antigravity, cliquez sur le menu <strong>File</strong> en haut à gauche, puis sur <strong>Open Folder...</strong> (ou le raccourci <kbd class="px-1.5 py-0.5 bg-zinc-800 rounded border border-zinc-700 font-mono text-zinc-300">⌘ O</kbd> sur Mac / <kbd class="px-1.5 py-0.5 bg-zinc-800 rounded border border-zinc-700 font-mono text-zinc-300">Ctrl O</kbd> sur Windows).
-            </p>
-            <div class="p-4 rounded-xl bg-black/60 border border-zinc-800 space-y-2 font-mono text-xs">
-              <div class="text-zinc-400 flex items-center gap-2">
-                <span class="text-blue-400">📁</span> Sélectionnez le dossier où se trouve votre projet :
-              </div>
-              <div class="text-emerald-400 font-bold bg-zinc-900/90 px-3 py-2 rounded-lg border border-zinc-800">
-                BioMIA Revision OS <span class="text-zinc-500 font-normal">(ou le dossier "cours" cloné depuis GitHub)</span>
-              </div>
-              <p class="text-[11px] text-zinc-400 font-sans pt-1">
-                Dès l'ouverture du dossier, Antigravity charge automatiquement les règles pédagogiques (<code class="text-zinc-300 font-mono">AGENTS.md</code>), les compétences (<code class="text-zinc-300 font-mono">.agents/skills/</code>) et toute votre base de données de cours !
-              </p>
-            </div>
-          </div>
-
-          <!-- ÉTAPE 4 -->
-          <div class="p-5 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-3">
-            <div class="flex items-center gap-3">
-              <span class="w-7 h-7 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 font-black text-xs flex items-center justify-center">
-                4
-              </span>
-              <h4 class="text-sm font-bold text-white">Ouvrir le Chat et taper le mot magique</h4>
-            </div>
-            <p class="text-xs text-zinc-300 leading-relaxed">
-              Ouvrez le panneau de conversation à droite (ou appuyez sur <kbd class="px-1.5 py-0.5 bg-zinc-800 rounded border border-zinc-700 font-mono text-zinc-300">⌘ N</kbd> pour créer un nouveau chat), puis tapez simplement :
-            </p>
-            
-            <!-- Magic Word Box -->
-            <div class="p-4 rounded-xl bg-zinc-900 border border-blue-500/30 space-y-3">
-              <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
-                <span class="font-bold text-blue-400">Le Prompt Magique & Universel :</span>
-                <button onclick="copyPrompt('magicWord', this)" class="hover:text-white text-blue-400">Copier</button>
-              </div>
-              <div class="flex items-center gap-3">
-                <span id="magicWord" class="font-mono text-xl sm:text-2xl font-black text-emerald-400 bg-black/60 px-4 py-2 rounded-xl border border-zinc-800">
-                  cours
-                </span>
-                <span class="text-xs text-zinc-400 font-sans">ou simplement <code class="text-blue-300 font-mono">fait tout</code></span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- ========================================================================= -->
-        <!-- LE FLUX CONVERSATIONNEL INTERACTIF (QUE FAIT L'AGENT EN DIRECT)           -->
-        <!-- ========================================================================= -->
-        <h3 class="text-xl font-bold text-white mb-3 flex items-center gap-2">
-          <span>🤖</span> Ce qui se passe quand vous tapez <code class="text-emerald-400 font-mono">cours</code> :
-        </h3>
-        <p class="text-xs text-zinc-400 mb-4 leading-relaxed">
-          L'agent Antigravity analyse immédiatement l'état réel de votre dossier (<code class="text-zinc-300 font-mono">data/enregistrements/</code>, <code class="text-zinc-300 font-mono">inbox/</code>, <code class="text-zinc-300 font-mono">data/cours/</code>) et vous guide pas-à-pas avec bienveillance :
-        </p>
-
-        <!-- Simulation Visuelle Chat Interactive -->
-        <div class="p-5 rounded-2xl bg-zinc-900/90 border border-zinc-800 space-y-4 mb-8">
-          
-          <div class="flex items-start gap-3">
-            <div class="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white text-sm shrink-0">
-              C
-            </div>
-            <div class="space-y-2 flex-1">
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-bold text-white">Super-Tuteur Antigravity</span>
-                <span class="text-[10px] text-zinc-500 font-mono">À l'instant</span>
-              </div>
-              <div class="p-4 rounded-xl bg-black/50 border border-zinc-800 text-xs space-y-3 text-zinc-200">
-                <p>👋 <strong>Salut !</strong> J'ai scanné ton espace de cours. Voici où nous en sommes :</p>
-                <div class="p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 space-y-1 font-mono text-[11px]">
-                  <div class="text-amber-400">🎙️ 4 enregistrements audio bruts en attente de transcription</div>
-                  <div class="text-blue-400">📚 2 fiches de cours en attente de flashcards / rappel actif</div>
-                </div>
-                <p class="font-semibold text-white">Que souhaites-tu faire aujourd'hui ?</p>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-xs">
-                  <div class="p-3 bg-zinc-900/90 rounded-xl border border-emerald-500/30 space-y-1">
-                    <span class="font-bold text-emerald-400 flex items-center gap-1">🚀 1. Mode « Fait Tout »</span>
-                    <p class="text-[11px] text-zinc-400">Transcrit avec Whisper Metal, génère les fiches KaTeX et les flashcards FSRS en 1 clic.</p>
-                  </div>
-                  <div class="p-3 bg-zinc-900/90 rounded-xl border border-purple-500/30 space-y-1">
-                    <span class="font-bold text-purple-400 flex items-center gap-1">💡 2. Débloquer une Notion</span>
-                    <p class="text-[11px] text-zinc-400">Pose une question ou choisis un cours difficile : l'agent t'explique avec une analogie Feynman et crée ta carte FSRS de déblocage.</p>
-                  </div>
-                  <div class="p-3 bg-zinc-900/90 rounded-xl border border-blue-500/30 space-y-1">
-                    <span class="font-bold text-blue-400 flex items-center gap-1">🎙️ 3. Oral Blanc</span>
-                    <p class="text-[11px] text-zinc-400">T'interroge sans chrono sur le chapitre de ton choix avec une correction diagnostique bienveillante.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-3.5 rounded-xl bg-blue-950/20 border border-blue-500/30 text-xs text-blue-300">
-            <strong>💡 Exemple de Déblocage Magique :</strong> Si vous choisissez <em>« 2. Débloquer une notion »</em>, l'agent vous liste directement vos matières existantes, répond à vos doutes avec des exemples concrets, et insère <strong>automatiquement la flashcard de révision</strong> dans vos fiches sans que vous ayez à copier-coller quoi que ce soit !
-          </div>
-
-        </div>
-
-        <!-- ========================================================================= -->
-        <!-- LA HIÉRARCHIE COGNITIVE EN 9 ÉTAGES D'UN COURS STRUCTURÉ                  -->
-        <!-- ========================================================================= -->
-        <h3 class="text-xl font-bold text-white mb-3 flex items-center gap-2">
-          <span>🏗️</span> L'Arborescence & Hiérarchie Cognitive en 9 Étages
-        </h3>
-        <p class="text-xs text-zinc-400 mb-4 leading-relaxed">
-          Antigravity ne fait pas un banal résumé superficiel. Il applique rigoureusement les sciences cognitives de la mémoire pour décomposer chaque amphi en <strong>9 couches d'apprentissage</strong> :
-        </p>
-
-        <div class="p-5 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-3 font-mono text-xs mb-6 text-zinc-300">
-          <div class="text-rose-400 font-bold">🎙️ 0. Audio brut & Photos horodatées (offsetMs)</div>
-          <div class="pl-4 text-zinc-400 border-l border-zinc-800">└── 📝 1. Transcription Whisper Metal Locale (0€ coût API, confidentiel)</div>
-          <div class="pl-8 text-blue-400 font-semibold border-l border-zinc-800">└── 🗺️ 2. MOC (Map of Content / Vue d'ensemble architecturale du chapitre)</div>
-          <div class="pl-12 text-amber-400 border-l border-zinc-800">└── 💡 3. Concepts Atomiques & Analogies Feynman concrètes</div>
-          <div class="pl-16 text-purple-400 border-l border-zinc-800">└── ⚖️ 4. Tableaux Comparatifs « X vs Y » (anti-confusion mentale)</div>
-          <div class="pl-20 text-emerald-400 border-l border-zinc-800">└── 📐 5. Formules, équations & bilans formalisés en LaTeX KaTeX</div>
-          <div class="pl-24 text-rose-400 border-l border-zinc-800">└── ⚠️ 6. Callouts Pièges Fréquents d'Examen</div>
-          <div class="pl-28 text-amber-300 border-l border-zinc-800">└── 🔒 7. Sas de Rappel Actif (Grille diagnostique 3-5 notions clés)</div>
-          <div class="pl-32 text-cyan-400 border-l border-zinc-800">└── 🗂️ 8. Piles de Flashcards FSRS-5 & QCM diagnostiques</div>
-          <div class="pl-36 text-emerald-300 font-bold border-l border-zinc-800">└── 🌳 9. Arbre de Mémoire Vivante (clarifications.json)</div>
-        </div>
-
-        <div class="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/40 to-blue-950/40 border border-emerald-500/30 text-xs flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div class="flex items-center gap-2.5">
-            <span class="text-xl">🎉</span>
-            <span class="text-zinc-200">Une fois le traitement terminé par Antigravity, tout est prêt ! Il ne vous reste plus qu'à ouvrir votre cockpit :</span>
-          </div>
-          <div class="flex items-center gap-2 shrink-0">
-            <span class="font-mono text-emerald-300 font-bold bg-black/50 px-3 py-1.5 rounded-xl border border-zinc-800">
-              /Applications/Cours.app
-            </span>
           </div>
         </div>
       </section>
@@ -523,168 +318,255 @@
         <h2 class="text-2xl font-bold text-white mb-4">
           Capture en Amphi & Balises Instantanées
         </h2>
-        <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          Pendant un cours magistral ou une classe, votre seul objectif est d'écouter activement et de <strong>visualiser les mécanismes dans votre tête</strong>.
+        <p class="text-sm text-zinc-300 leading-relaxed mb-4">
+          Pendant un cours magistral ou un TD, votre seul objectif est d'écouter et de <strong>visualiser les mécanismes dans votre tête</strong>. Laissez l'application enregistrer.
         </p>
 
         <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs space-y-2 mb-4">
           <span class="font-bold text-amber-400">🔥 Raccourci R & Balises 1 Clic :</span>
-          <p class="text-zinc-400">Appuyez sur la touche <kbd class="px-1.5 py-0.5 bg-zinc-800 rounded border border-zinc-700 font-mono text-zinc-300">R</kbd> pour démarrer l'enregistrement. Posez des balises en direct (<em>Important</em>, <em>Piège exam</em>, <em>Pas compris</em>, <em>Définition</em>) pour ancrer les moments clés dans la bande audio.</p>
+          <p class="text-zinc-400 leading-relaxed">
+            Appuyez sur <kbd class="px-1.5 py-0.5 bg-zinc-800 rounded border border-zinc-700 font-mono text-zinc-300">R</kbd> (ou le gros bouton micro rouge sur mobile). Posez des balises en direct :
+          </p>
+          <ul class="grid grid-cols-2 gap-2 pt-1 font-semibold">
+            <li class="text-amber-400">🔥 Important : Notion clé d'examen</li>
+            <li class="text-rose-400">❓ Pas compris : À réexpliquer</li>
+            <li class="text-emerald-400">💡 Exemple : Illustration concrète</li>
+            <li class="text-purple-400">⚠️ Piège exam : Erreur classique</li>
+          </ul>
         </div>
       </section>
 
-      <!-- CHAPTER 6: PHOTOS SYNCHRONISÉES -->
+      <!-- CHAPTER 6: WAKELOCK -->
+      <section id="wakelock" class="doc-section mb-16 border-t border-border/60 pt-12">
+        <h2 class="text-2xl font-bold text-white mb-4">
+          Technologie Anti-Veille WakeLock API
+        </h2>
+        <p class="text-sm text-zinc-300 leading-relaxed mb-4">
+          <strong>Pourquoi cette technologie est essentielle ?</strong><br>
+          Sur un smartphone (surtout sur iPhone ou Android avec les modes économie d'énergie), l'écran s'éteint au bout de 30 secondes d'inactivité, ce qui peut couper le microphone du navigateur.
+        </p>
+        <div class="callout-tip p-4 rounded-xl text-xs sm:text-sm">
+          <strong class="text-emerald-400 block mb-1">🛡️ Protection Automatique Anti-Coupure :</strong>
+          Dès que vous démarrez un enregistrement d'amphi, Cours active le verrouillage de veille <code class="text-zinc-200 font-mono">navigator.wakeLock</code>. Votre écran reste allumé avec une luminosité tamisée, garantissant que l'intégralité du cours de 2 heures est capturée sans aucune coupure. Dès que vous cliquez sur <em>Arrêter</em>, le verrouillage est libéré immédiatement.
+        </div>
+      </section>
+
+      <!-- CHAPTER 7: PHOTOS SYNCHRONISÉES -->
       <section id="photos-sync" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
           Photos du Tableau Synchronisées (<code class="text-purple-400 font-mono text-xl">offsetMs</code>)
         </h2>
-        <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          Prenez une photo du tableau avec votre smartphone ou webcam : l'application enregistre le décalage temporel exact (<code class="text-purple-300 font-mono">offsetMs</code>) par rapport au début du cours.
+        <p class="text-sm text-zinc-300 leading-relaxed mb-4">
+          Quand le professeur dessine un schéma au tableau ou projette une slide complexe, prenez une photo avec le bouton appareil photo de l'application.
         </p>
         <div class="callout-warning p-4 rounded-xl text-xs sm:text-sm">
-          <strong class="text-amber-400 block mb-1">📋 Écran de Fin d'Amphi :</strong>
-          À la fin du cours, un écran récapitulatif vous permet de vérifier vos repères et de supprimer les photos floues avant la transcription.
+          <strong class="text-amber-400 block mb-1">📸 Ancrage Temporel au Millimètre :</strong>
+          L'application enregistre le nombre exact de millisecondes (<code class="text-purple-300 font-mono">offsetMs</code>) écoulées depuis le début de l'audio. Lors de vos révisions, en cliquant sur la photo du tableau, l'audio saute directement au moment exact où le professeur expliquait ce schéma !
         </div>
       </section>
 
-      <!-- CHAPTER 7: WHISPER METAL LOCAL -->
+      <!-- CHAPTER 8: WHISPER METAL LOCAL -->
       <section id="whisper-metal" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
-          Transcription Whisper Metal Locale (0€ API Vocale)
+          Transcription Whisper Locale (100% Privée & 0€ de Frais)
         </h2>
         <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          Sur Mac Apple Silicon, Whisper.cpp exploite l'accélération matérielle Metal GPU avec le modèle quantifié <code class="text-zinc-200 font-mono">ggml-large-v3-turbo-q5_0.bin</code>. Vos audios restent 100% privés sur votre machine avec 0€ de coût serveur.
+          Sur Mac, le moteur utilise <strong>Whisper.cpp</strong> avec accélération matérielle Metal GPU (<code class="text-zinc-200 font-mono">ggml-large-v3-turbo-q5_0.bin</code>). Vos cours ne sont jamais envoyés sur des serveurs tiers payants : tout est transcrit directement et gratuitement sur votre ordinateur.
         </p>
       </section>
 
-      <!-- CHAPTER 8: SAS DE RAPPEL ACTIF -->
+      <!-- CHAPTER 9: SAS DE RAPPEL ACTIF -->
       <section id="active-recall" class="doc-section mb-16 border-t border-border/60 pt-12">
-        <h2 class="text-2xl font-bold text-white mb-4">
-          Le Sas de Rappel Actif Obligatoire (Active Recall Testing)
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs font-bold text-amber-400 mb-3">
+          🔒 Le Cœur de la Méthode Scientifique
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-4">
+          Le Sas de Rappel Actif Initial (Active Recall Gating)
         </h2>
-        <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          Dès qu'un cours est transcrit et structuré par Antigravity, <strong>la fiche brute reste initialement verrouillée</strong>.
+        <p class="text-sm text-zinc-300 leading-relaxed mb-4">
+          Dès qu'un nouveau cours est créé dans l'application, <strong>sa fiche de cours détaillée reste volontairement verrouillée</strong>.
         </p>
-        <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs space-y-2 mb-4">
-          <span class="font-bold text-emerald-400">🎯 Pourquoi ce sas obligatoire ?</span>
+
+        <div class="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 text-xs space-y-3 mb-6">
+          <span class="font-bold text-amber-400 text-sm flex items-center gap-2">
+            <span>🧠</span> Pourquoi ce verrouillage est la clé de votre réussite ?
+          </span>
+          <p class="text-zinc-300 leading-relaxed">
+            La recherche en sciences cognitives a démontré que <strong>relire passivement un cours donne l'illusion de le savoir</strong> (*l'illusion de compétence*), mais entraîne un oubli de 80% des notions au bout de 48 heures.
+          </p>
           <p class="text-zinc-400 leading-relaxed">
-            La science cognitive démontre que la relecture passive procure une illusion de maîtrise immédiate mais un oubli massif à 48h. En obligeant l'étudiant à restituer le cours pendant 1 à 2 minutes sans aide, l'effort synaptique ancre les notions en mémoire à long terme.
+            Le seul moyen d'ancrer durablement un souvenir dans la mémoire à long terme est de <strong>forcer le cerveau à chercher dans ses souvenirs</strong> sans regarder la réponse. C'est l'effort de restitution qui crée les connexions synaptiques solides.
+          </p>
+        </div>
+
+        <div class="space-y-4 text-xs">
+          <h4 class="font-bold text-white text-sm">Comment déverrouiller un cours ?</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-4 bg-zinc-900/80 border border-zinc-800 rounded-xl space-y-2">
+              <span class="font-bold text-amber-400">🎙️ Option 1 : Rappel Vocal (Recommandé)</span>
+              <p class="text-zinc-400 leading-relaxed">
+                Appuyez sur <em>« Démarrer mon rappel oral »</em> et parlez librement pendant 1 à 2 minutes en expliquant ce que vous avez retenu du cours.
+              </p>
+            </div>
+            <div class="p-4 bg-zinc-900/80 border border-zinc-800 rounded-xl space-y-2">
+              <span class="font-bold text-blue-400">✍️ Option 2 : Restitution Écrite</span>
+              <p class="text-zinc-400 leading-relaxed">
+                Tapez les grandes idées et mots-clés du cours dans le champ de texte avant de valider.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout-info p-4 rounded-xl mt-6 text-xs sm:text-sm">
+          <strong class="text-blue-400 block mb-1">🎯 Correction Diagnostique Grounded & Note Transparente :</strong>
+          L'IA compare votre restitution aux notions réelles de la source du cours. Elle vous attribue une note sur 100% et détaille exactement :
+          <ul class="list-disc list-inside mt-2 space-y-1 text-zinc-300">
+            <li><span class="text-emerald-400 font-bold">🟢 Notions Maîtrisées</span> : Concepts parfaitement restitués.</li>
+            <li><span class="text-amber-400 font-bold">🟡 Notions Partielles</span> : Concepts incomplets nécessitant un approfondissement.</li>
+            <li><span class="text-rose-400 font-bold">🔴 Notions Oubliées / Confusions</span> : Points passés sous silence ou mélangés.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- CHAPTER 10: FSRS-5 ENGINE -->
+      <section id="fsrs5-engine" class="doc-section mb-16 border-t border-border/60 pt-12">
+        <h2 class="text-2xl font-bold text-white mb-4">
+          Le Standard Mathématique FSRS-5 (Répétition Espacée)
+        </h2>
+        <p class="text-sm text-zinc-300 leading-relaxed mb-4">
+          Cours utilise le moteur <strong>FSRS-5 (Free Spaced Repetition Scheduler v5)</strong>, le modèle scientifique le plus précis au monde pour calculer l'intervalle idéal avant l'oubli.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs mb-6">
+          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-1">
+            <span class="font-mono font-bold text-blue-400 block text-sm">Stabilité (S)</span>
+            <p class="text-zinc-400 leading-relaxed">Durée en jours pendant laquelle votre souvenir reste accessible avant d'atteindre le seuil critique d'oubli.</p>
+          </div>
+          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-1">
+            <span class="font-mono font-bold text-amber-400 block text-sm">Difficulté (D)</span>
+            <p class="text-zinc-400 leading-relaxed">Note intrinsèque de la carte (de 1 à 10), réajustée selon la facilité avec laquelle vous répondez.</p>
+          </div>
+          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-1">
+            <span class="font-mono font-bold text-emerald-400 block text-sm">Probabilité de Rétention (R)</span>
+            <p class="text-zinc-400 leading-relaxed">Chance calculée que vous vous rappeliez de la carte aujourd'hui : ( R(t) = (1 + F cdot rac{t}{S})^P ).</p>
+          </div>
+        </div>
+
+        <div class="callout-tip p-4 rounded-xl text-xs sm:text-sm">
+          <strong class="text-emerald-400 block mb-1">🌱 Calage Initial Automatique (Cold Recall Seeding) :</strong>
+          Votre note obtenue lors du Sas de Rappel Actif calibre immédiatement la première stabilité des flashcards. Si vous avez obtenu 85%, vos cartes seront espacées plus loin ; si vous avez obtenu 40%, elles reviendront plus rapidement pour vous consolider !
+        </div>
+      </section>
+
+      <!-- CHAPTER 11: MOC & RELIER LES CONCEPTS -->
+      <section id="moc-breadcrumbs" class="doc-section mb-16 border-t border-border/60 pt-12">
+        <h2 class="text-2xl font-bold text-white mb-4">
+          Ancrage MOC & Cartes « 🔗 Relier les Concepts »
+        </h2>
+        <p class="text-sm text-zinc-300 leading-relaxed mb-4">
+          <strong>Le Risque de l'Émiettement des Connaissances :</strong><br>
+          Réviser 50 flashcards isolées peut donner l'illusion de tout savoir, mais en partiel, les professeurs demandent des synthèses, des démonstrations et des liens de cause à effet.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-xs">
+          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
+            <span class="font-bold text-cyan-400 text-sm">🗺️ Le Fil d'Ariane MOC sur chaque carte</span>
+            <p class="text-zinc-400 leading-relaxed">
+              Chaque flashcard affiche son emplacement exact dans le cours : <code class="text-zinc-200">Biologie › Structure Membranaire › Transport Actif</code>. Votre cerveau sait toujours où ranger l'information.
+            </p>
+          </div>
+          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
+            <span class="font-bold text-purple-400 text-sm">🔗 Cartes de Causalité « Relier »</span>
+            <p class="text-zinc-400 leading-relaxed">
+              Des cartes dédiées testent les mécanismes de cause à effet : <em>« Quel est le lien causal entre l'inhibition de la pompe Na+/K+ et la contractilité cardiaque ? »</em>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHAPTER 12: WEAKNESS PRIORITY -->
+      <section id="weakness-priority" class="doc-section mb-16 border-t border-border/60 pt-12">
+        <h2 class="text-2xl font-bold text-white mb-4">
+          Mode Priorité aux Faiblesses (Score de Maîtrise &lt; 75%)
+        </h2>
+        <p class="text-sm text-zinc-300 leading-relaxed mb-4">
+          Pour éviter de réviser en boucle ce que vous maîtrisez déjà au détriment de vos points faibles, le système calcule votre maîtrise en temps réel par chapitre.
+        </p>
+        <div class="p-4 rounded-xl bg-gradient-to-r from-amber-950/30 to-rose-950/30 border border-amber-500/30 text-xs sm:text-sm space-y-2">
+          <strong class="text-amber-300 block font-bold">🎯 L'Algorithme de Tri Intelligent :</strong>
+          <p class="text-zinc-300 leading-relaxed">
+            Les cours non débloqués et les chapitres avec une maîtrise inférieure à 75% sont automatiquement propulsés en haut de votre pile d'entraînement. Vous révisez en priorité ce qui compte vraiment pour sécuriser vos points d'examen.
           </p>
         </div>
       </section>
 
-      <!-- CHAPTER 9: FSRS-5 SANS CHRONO -->
-      <section id="fsrs5-engine" class="doc-section mb-16 border-t border-border/60 pt-12">
+      <!-- CHAPTER 13: PLANNING & HORIZON -->
+      <section id="planning-calendar" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
-          Moteur FSRS-5 (Free Spaced Repetition Scheduler v5)
+          Planificateur d'Échéances & Rétro-Planning Adaptatif
         </h2>
-        <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          L'application abandonne les anciens algorithmes type SM-2 au profit de <strong>FSRS-5</strong>, le standard mathématique le plus précis de la répétition espacée.
+        <p class="text-sm text-zinc-300 leading-relaxed mb-4">
+          Renseignez la date de vos partiels ou concours. L'application calcule automatiquement la montée en charge quotidienne.
         </p>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs mb-4">
-          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">
-            <span class="font-mono font-bold text-blue-400 block mb-1">Stabilité S</span>
-            <span class="text-zinc-400">Nombre de jours avant que la probabilité d'oubli n'atteigne 10%.</span>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs mb-6">
+          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl text-center">
+            <span class="font-bold text-blue-400 block mb-1">7 Jours</span>
+            <span class="text-zinc-500">Vue hebdo immédiate</span>
           </div>
-          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">
-            <span class="font-mono font-bold text-amber-400 block mb-1">Difficulté D</span>
-            <span class="text-zinc-400">Complexité intrinsèque de la notion (de 1 à 10).</span>
+          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl text-center">
+            <span class="font-bold text-purple-400 block mb-1">15 Jours</span>
+            <span class="text-zinc-500">Montée en charge</span>
           </div>
-          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">
-            <span class="font-mono font-bold text-emerald-400 block mb-1">Rétention R</span>
-            <span class="text-zinc-400">Probabilité calculée de rappel immédiat : \( R(t) = (1 + 0.19 \cdot t / S)^{-0.5} \)</span>
+          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl text-center">
+            <span class="font-bold text-emerald-400 block mb-1">1 Mois (30j)</span>
+            <span class="text-zinc-500">Vision globale</span>
+          </div>
+          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl text-center">
+            <span class="font-bold text-amber-400 block mb-1">📅 Date Libre</span>
+            <span class="text-zinc-500">Jusqu'au partiel</span>
           </div>
         </div>
-      </section>
 
-      <!-- CHAPTER 10: CONCEPTS ATOMIQUES -->
-      <section id="atomic-concepts" class="doc-section mb-16 border-t border-border/60 pt-12">
-        <h2 class="text-2xl font-bold text-white mb-4">
-          Concepts Atomiques Feynman & Tableaux « X vs Y »
-        </h2>
-        <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          Chaque fiche est rédigée selon la <strong>technique Feynman</strong> :
-        </p>
-        <ul class="space-y-2 text-xs text-zinc-400 list-disc list-inside mb-4">
-          <li><strong>Analogie concrète</strong> en tête de chapitre pour matérialiser les mécanismes abstraits.</li>
-          <li><strong>Tableaux comparatifs « X vs Y »</strong> pour éviter les confusions classiques (ex: Phase lumineuse vs Cycle de Calvin).</li>
-          <li><strong>Callouts de pièges d'examen</strong> en rose pour identifier les distracteurs fréquents.</li>
-        </ul>
-      </section>
-
-      <!-- CHAPTER 11: MÉMOIRE VIVANTE -->
-      <section id="memory-tree" class="doc-section mb-16 border-t border-border/60 pt-12">
-        <h2 class="text-2xl font-bold text-white mb-4">
-          Mémoire Vivante des Questions (<code class="text-purple-400 font-mono text-xl">clarifications.json</code>)
-        </h2>
-        <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          Quand vous posez une question ou butez sur une explication, le système enregistre l'incompréhension dans un arbre évolutif (<code class="text-zinc-200 font-mono">data/revisions/clarifications.json</code>).
-        </p>
         <div class="callout-info p-4 rounded-xl text-xs sm:text-sm">
-          <strong class="text-blue-400 block mb-1">🧠 Pourquoi c'est révolutionnaire ?</strong>
-          Antigravity se souvient de vos difficultés passées. Il n'explique plus la même chose en boucle : il approfondit le raisonnement, propose un nouvel angle et crée une carte de déblocage automatique.
+          <strong class="text-blue-400 block mb-1">📉 Compression d'Horizon d'Examen :</strong>
+          À mesure que la date de l'épreuve approche, FSRS-5 compresse intelligemment les intervalles pour s'assurer que toutes les notions clés soient revues à J-3 du partiel.
         </div>
       </section>
 
-      <!-- CHAPTER 12: MOBILE & TAILSCALE -->
-      <section id="mobile-sync" class="doc-section mb-16 border-t border-border/60 pt-12">
+      <!-- CHAPTER 14: OFFLINE SYNC -->
+      <section id="offline-sync" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
-          Synchronisation Mobile & 4G Tailscale
+          Mode Hors-Ligne & Architecture Local-First
         </h2>
-        <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-          Vous pouvez réviser et enregistrer vos cours depuis votre smartphone (Pixel 8 ou iPhone) :
+        <p class="text-sm text-zinc-300 leading-relaxed mb-4">
+          Vous révisez dans le métro, dans le train ou en amphi sans Wi-Fi ?
         </p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
-            <span class="font-bold text-emerald-400">📶 À la maison (Wi-Fi Local)</span>
-            <p class="text-zinc-400">Scannez simplement le QR Code de votre terminal ou de votre barre d'application. Votre téléphone se connecte directement à l'IP locale.</p>
-          </div>
-          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
-            <span class="font-bold text-blue-400">🌍 En amphi / transport (4G Tailscale)</span>
-            <p class="text-zinc-400">Grâce à Tailscale, votre Mac et votre smartphone communiquent via un VPN privé chiffré sans ouvrir aucun port sur votre box.</p>
-          </div>
+        <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl text-xs space-y-2">
+          <span class="font-bold text-emerald-400 text-sm">✈️ Zéro Coupure Réseau</span>
+          <p class="text-zinc-400 leading-relaxed">
+            Vos révisions de flashcards et vos notes sont enregistrées localement sur votre appareil. Dès que vous retrouvez une connexion Wi-Fi ou 4G, le système synchronise vos données en arrière-plan sans aucun conflit.
+          </p>
         </div>
       </section>
 
-      <!-- CHAPTER 13: REST API REFERENCE -->
-      <section id="api-reference" class="doc-section mb-16 border-t border-border/60 pt-12">
-        <h2 class="text-2xl font-bold text-white mb-4">
-          Référence de l'API REST Backend
-        </h2>
-        <div class="space-y-3 text-xs font-mono">
-          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-between">
-            <div><span class="text-emerald-400 font-bold">GET</span> <span class="text-zinc-200">/api/courses</span></div>
-            <span class="text-zinc-500">Liste exhaustive des cours</span>
-          </div>
-          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-between">
-            <div><span class="text-blue-400 font-bold">POST</span> <span class="text-zinc-200">/api/recall/evaluate</span></div>
-            <span class="text-zinc-500">Évaluation diagnostique du rappel</span>
-          </div>
-          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-between">
-            <div><span class="text-emerald-400 font-bold">GET</span> <span class="text-zinc-200">/api/fsrs/queue</span></div>
-            <span class="text-zinc-500">Cartes dues du jour</span>
-          </div>
-          <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-between">
-            <div><span class="text-blue-400 font-bold">POST</span> <span class="text-zinc-200">/api/settings</span></div>
-            <span class="text-zinc-500">Configuration de l'API Key et du port</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- CHAPTER 14: FAQ -->
+      <!-- CHAPTER 15: FAQ -->
       <section id="faq" class="doc-section mb-16 border-t border-border/60 pt-12">
         <h2 class="text-2xl font-bold text-white mb-4">
-          FAQ & Dépannage
+          Foire Aux Questions (FAQ)
         </h2>
         <div class="space-y-4 text-xs sm:text-sm">
           <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
-            <span class="font-bold text-white">Comment mettre à jour Cours ?</span>
-            <p class="text-zinc-400">Tapez simplement <code class="text-blue-300 font-mono">cours update</code> dans votre terminal. Le script tire les dernières modifications de GitHub et recompile le client Web.</p>
+            <span class="font-bold text-white">Dois-je payer un abonnement pour utiliser Cours ?</span>
+            <p class="text-zinc-400">Non. Cours est 100% open-source et gratuit sous licence MIT. Vos données restent sur votre ordinateur et votre téléphone.</p>
           </div>
           <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
-            <span class="font-bold text-white">Mes données restent-elles privées ?</span>
-            <p class="text-zinc-400">Oui. Tous vos audios, fiches de cours, photos et historiques FSRS-5 sont stockés localement sur votre disque dur dans le dossier <code class="text-zinc-200 font-mono">data/</code>.</p>
+            <span class="font-bold text-white">L'application fonctionne-t-elle sur iPhone si je n'ai pas de Mac ?</span>
+            <p class="text-zinc-400">Oui ! Grâce à la version PWA, vous pouvez l'installer en 2 clics sur votre iPhone depuis Safari, que votre ordinateur soit sous Windows, Linux ou Mac.</p>
+          </div>
+          <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
+            <span class="font-bold text-white">Comment mettre à jour mon application ?</span>
+            <p class="text-zinc-400">Tapez simplement <code class="text-blue-300 font-mono">cours update</code> dans votre terminal pour récupérer instantanément les dernières améliorations.</p>
           </div>
         </div>
       </section>
@@ -724,14 +606,6 @@
       navigator.clipboard.writeText(pre.innerText).then(() => {
         btn.innerText = 'Copié !';
         setTimeout(() => { btn.innerText = 'Copier'; }, 2000);
-      });
-    }
-
-    function copyPrompt(id, btn) {
-      const text = document.getElementById(id).innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        btn.innerText = 'Copié !';
-        setTimeout(() => { btn.innerText = 'Copier le prompt'; }, 2000);
       });
     }
   </script>

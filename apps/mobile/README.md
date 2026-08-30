@@ -1,44 +1,39 @@
-# BioMIA mobile
+# Cours Mobile (Application & PWA)
 
-Application Expo personnelle de BioMIA. Elle utilise le même serveur et les
-mêmes données que l’application web du Mac, mais elle possède son propre écran
-mobile, son enregistrement audio natif et sa file locale.
+Application mobile compagnon de **Cours (Revision OS)** pour Android et iOS. Elle partage 100% du design system sombre zinc et des fonctionnalités d'apprentissage du Mac.
 
-## Lancer sur le téléphone
+---
 
-Depuis ce dossier :
+## 1. Deux Modes d'Utilisation Mobile
 
+### Mode A : PWA Universelle (Recommandé pour tous, 0 configuration)
+Ouvrez simplement **[https://cours-awc.pages.dev](https://cours-awc.pages.dev)** sur Safari (iOS) ou Chrome (Android) :
+- **iPhone / iPad** : Bouton *Partager* $\rightarrow$ *« Sur l'écran d'accueil »*.
+- **Android** : Cliquez sur *« Installer l'application »*.
+- Fonctionne en plein écran, avec WakeLock anti-veille en amphi et révisions 100% hors-ligne.
+
+### Mode B : Application Native Expo / Android (Pixel 8)
+Pour installer ou tester l'application native :
 ```sh
+cd apps/mobile
 npm install
-EXPO_PUBLIC_BIOMIA_API_URL=https://adresse-https-de-biomia.example npm run dev
+EXPO_PUBLIC_BIOMIA_API_URL=http://192.168.1.54:3002 npm run dev
 ```
 
-Pour un premier essai avec Expo Go, le téléphone et le Mac peuvent être sur le
-même réseau. Pour l’utilisation quotidienne en 4G, `EXPO_PUBLIC_BIOMIA_API_URL`
-doit être une URL HTTPS joignable depuis Internet et qui pointe vers le serveur
-BioMIA du Mac ou vers un serveur distant.
-
-## Installer une vraie app personnelle
-
-Le profil `preview` est une distribution interne EAS : il produit une app
-installable, sans serveur de développement. Il faut d’abord lier ce projet à un
-compte Expo/EAS, puis définir l’URL publique de l’API dans l’environnement EAS.
-
+Installation directe sur votre téléphone Android via ADB sans fil :
 ```sh
-npx eas-cli login
-npx eas-cli build:configure
-npx eas-cli build --platform ios --profile preview
+adb connect 192.168.1.12:44155
+adb install -r -d android/app/build/outputs/apk/debug/app-debug.apk
 ```
 
-Sur iOS, la distribution interne demande l’enregistrement de l’iPhone et les
-signatures Apple ; Android reçoit un APK installable. Une fois installée, l’app
-reste la même que tu sois en Wi-Fi ou en 4G : seule l’URL HTTPS de l’API change
-par rapport au test local.
+---
 
-## Audio
+## 2. Fonctionnalités Clés Embarquées
 
-BioMIA utilise `expo-audio` et un enregistrement haute qualité local dans le
-dossier de documents du téléphone. La file conserve l’URI tant que le serveur
-n’a pas confirmé la synchronisation. La transcription n’est pas faite par un
-faux moteur local : le Mac peut envoyer l’audio au modèle de transcription
-configuré côté serveur, sans exposer de clé API dans l’application.
+- **Studio Amphi Micro** : Capture audio locale avec balises en direct (*Important, Pas compris, Piège, Définition*) et photos du tableau avec timestamp exact (`offsetMs`).
+- **Sas de Rappel Actif** : Restitution vocale ou écrite pour débloquer les fiches verrouillées avec note diagnostique sur 100%.
+- **Entraînement FSRS-5 & Fil d'Ariane MOC** : Navigation fluide dans la pile du jour, visualisant toujours `Matière › Chapitre › Cours`.
+- **Mode Priorité aux Faiblesses** : Tri automatique des notions et chapitres avec une maîtrise $< 75\%$.
+- **Planificateur & Calendrier** : Filtres 7j, 15j, 1 mois et projection de charge jusqu'à l'examen.
+- **Mode Hors-Ligne Résilient** : Sauvegarde locale dans le stockage sécurisé et synchronisation automatique au retour du réseau Wi-Fi/4G.
+
