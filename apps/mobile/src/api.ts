@@ -200,7 +200,7 @@ export async function discoverAndSelectBestHost(): Promise<string> {
   const uniqueCandidates = [...new Set(rawCandidates.map((h) => h.replace(/\/$/, "")))];
 
   const pingHost = async (host: string): Promise<string> => {
-    const res = await fetchWithTimeout(`${host}/api/devices`, { headers: { accept: "application/json" } }, 900);
+    const res = await fetchWithTimeout(`${host}/api/devices`, { headers: { accept: "application/json" } }, 500);
     if (res.ok) return host;
     throw new Error(`Inaccessible: ${host}`);
   };
@@ -221,7 +221,7 @@ export async function discoverAndSelectBestHost(): Promise<string> {
   return activeBaseUrl;
 }
 
-async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 3000): Promise<Response> {
+async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 2500): Promise<Response> {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -234,7 +234,7 @@ async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutM
   }
 }
 
-async function request<T>(path: string, options?: RequestInit, timeoutMs = 12000): Promise<T> {
+async function request<T>(path: string, options?: RequestInit, timeoutMs = 3500): Promise<T> {
   if (!hasDiscovered) {
     await discoverAndSelectBestHost().catch(() => {});
   }
@@ -336,7 +336,7 @@ function asArray<T>(value: unknown, key: string): T[] {
   return [];
 }
 
-async function readLocalDataCache(): Promise<any | null> {
+export async function readLocalDataCache(): Promise<any | null> {
   if (!localDataCacheFile) return null;
   try {
     const raw = await FileSystem.readAsStringAsync(localDataCacheFile, { encoding: FileSystem.EncodingType.UTF8 });

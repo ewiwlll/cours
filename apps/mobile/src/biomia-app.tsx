@@ -43,6 +43,7 @@ import {
   getRevisionCalendar,
   prepareOralSession,
   getWeaknesses,
+  readLocalDataCache,
   type Subject,
   type StudyCourse,
   type ChapterDefinition,
@@ -149,8 +150,10 @@ export function CoursApp() {
   const [showTrashModal, setShowTrashModal] = useState(false);
   const [showNetworkModal, setShowNetworkModal] = useState(false);
 
-  const fetchAppData = async () => {
-    setLoading(true);
+  const fetchAppData = async (showSpinner = false) => {
+    if (showSpinner) {
+      setLoading(true);
+    }
     try {
       // 1. Sync pending offline reviews & recordings in background
       syncPendingReviews().catch(() => 0);
@@ -164,12 +167,12 @@ export function CoursApp() {
         readTrashCourses().catch(() => []),
       ]);
 
-      setSubjects(data.subjects || []);
-      setCourses(data.courses || []);
-      setChapters(data.chapterDefinitions || []);
-      setExams(examList || []);
-      setWeaknesses(weakList || []);
-      setTrashList(trashed || []);
+      if (data.subjects && data.subjects.length > 0) setSubjects(data.subjects);
+      if (data.courses) setCourses(data.courses);
+      if (data.chapterDefinitions) setChapters(data.chapterDefinitions);
+      if (examList) setExams(examList);
+      if (weakList) setWeaknesses(weakList);
+      if (trashed) setTrashList(trashed);
 
       if (calData && (Array.isArray(calData.calendar) || Array.isArray(calData.days))) {
         setCalendarDays(calData.calendar || calData.days);
@@ -181,12 +184,8 @@ export function CoursApp() {
 
       if (data.subjects && data.subjects.length > 0 && data.subjects[0]) {
         const firstId = data.subjects[0].id;
-        if (!selectedSubjectId || !data.subjects.some((s) => s.id === selectedSubjectId)) {
-          setSelectedSubjectId(firstId);
-        }
-        if (!recordingSubjectId || !data.subjects.some((s) => s.id === recordingSubjectId)) {
-          setRecordingSubjectId(firstId);
-        }
+        setSelectedSubjectId((prev) => (prev && data.subjects.some((s) => s.id === prev) ? prev : firstId));
+        setRecordingSubjectId((prev) => (prev && data.subjects.some((s) => s.id === prev) ? prev : firstId));
       }
     } catch (e) {
       console.warn("Failed to load data:", e);
@@ -197,9 +196,28 @@ export function CoursApp() {
   };
 
   useEffect(() => {
-    fetchAppData();
+    // 1. Instant local cache hydration
+    readLocalDataCache()
+      .then((cached) => {
+        if (cached && (cached.subjects?.length > 0 || cached.courses?.length > 0)) {
+          if (cached.subjects) setSubjects(cached.subjects);
+          if (cached.courses) setCourses(cached.courses);
+          if (cached.chapterDefinitions) setChapters(cached.chapterDefinitions);
+          setLoading(false);
+          if (cached.subjects?.[0]) {
+            setSelectedSubjectId(cached.subjects[0].id);
+            setRecordingSubjectId(cached.subjects[0].id);
+          }
+        }
+      })
+      .catch(() => {});
+
+    // 2. Fetch fresh data in background
+    fetchAppData(false);
+
+    // 3. Periodic smooth background sync without spinner
     const interval = setInterval(() => {
-      fetchAppData();
+      fetchAppData(false);
     }, 20000);
     return () => clearInterval(interval);
   }, []);
@@ -680,7 +698,7 @@ export function CoursApp() {
       </View>
 
       {/* MAIN VIEW CONTENT */}
-      {loading ? (
+      {loading && subjects.length === 0 && courses.length === 0 ? (
         <View style={styles.centerBox}>
           <ActivityIndicator size="large" color="#3b82f6" />
           <Text style={styles.loadingText}>Chargement de vos cours...</Text>
