@@ -128,8 +128,8 @@
       </nav>
 
       <div class="flex items-center gap-2 sm:gap-3">
-        <a href="/Cours-macOS.dmg" download="Cours-macOS.dmg" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-md shadow-blue-500/20 transition-all hover:scale-105">
-          <span>🍏 Télécharger pour Mac</span>
+        <a href="/app" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-md shadow-blue-500/20 transition-all hover:scale-105">
+          <span>🚀 Ouvrir Cours (Web)</span>
         </a>
 
         <button id="langToggleBtn" onclick="toggleLandingLanguage()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-bold text-zinc-300 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:text-white transition-all">
@@ -1275,63 +1275,63 @@
       const isAndroid = /Android/i.test(ua);
       const isEn = currentLandingLang === 'en';
 
-      if (isMac) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🍏 <strong>' + (isEn ? 'macOS Detected' : 'macOS Détecté') + '</strong> • ' + (isEn ? 'Apple Silicon & Intel Ready' : 'Apple Silicon & Intel Prêt') + '</span>';
+      if (isMac || isWindows || (!isAndroid && !isIos)) {
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">💻 <strong>' + (isEn ? 'Computer Detected' : 'Ordinateur Détecté') + '</strong> • ' + (isEn ? 'Instant PWA & Web Access' : 'PWA & Accès Immédiat Sans Installation') + '</span>';
         ctaContainer.innerHTML = `
           <div class="flex flex-col items-center justify-center gap-4 w-full">
-            <!-- 1 GROS BOUTON UNIQUE DE TÉLÉCHARGEMENT MAC -->
-            <a href="/Cours-macOS.dmg" download="Cours-macOS.dmg" class="px-8 py-4.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-blue-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95">
-              <span class="text-2xl">🍏</span>
-              <span>${isEn ? 'Download Cours for Mac (.dmg)' : 'Télécharger Cours pour Mac (.dmg)'}</span>
+            <!-- 1 GROS BOUTON UNIQUE PWA ORDINATEUR -->
+            <a href="/app" class="px-8 py-4.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-blue-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95">
+              <span class="text-2xl">🚀</span>
+              <span>${isEn ? 'Launch Cours on PC / Mac (Web & PWA)' : 'Ouvrir Cours sur mon Ordinateur (Web & PWA)'}</span>
             </a>
 
-            <!-- PARCOURS CLAIR EN 2 ÉTAPES : MAC PUIS TÉLÉPHONE -->
-            <div class="w-full max-w-lg mt-2 p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-left text-xs text-zinc-300 space-y-3 shadow-xl">
-              <div class="flex items-start gap-3">
-                <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
-                <div>
-                  <strong class="text-white block text-sm font-semibold">${isEn ? '1. Install on your Mac' : '1. Installez sur votre Mac'}</strong>
-                  <p class="text-zinc-400 text-xs mt-0.5 leading-relaxed">${isEn ? 'Open Cours-macOS.dmg, drag Cours into Applications and launch it.' : 'Ouvrez le fichier <code>Cours-macOS.dmg</code>, glissez <strong>Cours</strong> dans vos Applications et lancez l\'app.'}</p>
+            <!-- ENCART TÉLÉPHONE HORS-LIGNE & QR CODE -->
+            <div class="w-full max-w-xl mt-2 p-5 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-left text-xs text-zinc-300 shadow-xl space-y-3">
+              <div class="flex items-center justify-between border-b border-zinc-800/80 pb-2.5">
+                <div class="flex items-center gap-2">
+                  <span class="text-lg">📱</span>
+                  <strong class="text-white text-sm font-bold">${isEn ? 'Install on your Phone (100% Offline)' : 'Emportez sur votre Téléphone (100% Hors-Ligne)'}</strong>
                 </div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">${isEn ? 'Lectures & Commute' : 'Amphis & Transports'}</span>
               </div>
-              <div class="flex items-start gap-3 pt-3 border-t border-zinc-800/80">
-                <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
-                <div>
-                  <strong class="text-emerald-400 block text-sm font-semibold">${isEn ? '2. Connect your Phone (iPhone & Android)' : '2. Connectez votre Téléphone (iPhone & Android)'}</strong>
-                  <p class="text-zinc-400 text-xs mt-0.5 leading-relaxed">${isEn ? 'Scan the QR Code shown in Cours on your Mac with your phone camera to start revising anywhere.' : 'Scannez le <strong>QR Code</strong> qui apparaît dans l\'application sur votre Mac avec l\'appareil photo de votre téléphone pour synchroniser vos cours.'}</p>
+
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+                <div class="sm:col-span-8 space-y-2">
+                  <p class="text-zinc-300 leading-relaxed text-xs">
+                    ${isEn ? 'Scan this QR Code with your <strong>iPhone</strong> or <strong>Android</strong> to record lectures in background and revise <strong>100% offline</strong> anywhere.' : 'Scannez ce QR Code avec votre <strong>iPhone</strong> ou <strong>Android</strong> pour enregistrer en amphi et réviser vos fiches et cartes <strong>100% hors-ligne sans connexion</strong>.'}
+                  </p>
+                  <div class="flex flex-wrap items-center gap-2 pt-1">
+                    <a href="/cours.apk" download="cours.apk" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 font-semibold text-[11px] transition-all">
+                      <span>🤖 ${isEn ? 'Download Android App (.apk)' : 'Télécharger App Android (.apk)'}</span>
+                    </a>
+                    <a href="#qr-connect" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-[11px] transition-all">
+                      <span>📲 ${isEn ? 'iPhone & Mobile Guide' : 'Guide Mobile & iPhone'}</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="sm:col-span-4 flex justify-center">
+                  <div class="w-28 h-28 bg-white rounded-xl p-2 flex items-center justify-center shadow-lg border border-zinc-700">
+                    <svg viewBox="0 0 100 100" class="w-full h-full text-zinc-950 fill-current">
+                      <path d="M0 0h30v30H0zm5 5v20h20V5zm5 5h10v10H10zm60-15h30v30H70zm5 5v20h20V5zm5 5h10v10H80zM0 70h30v30H0zm5 5v20h20V75zm5 5h10v10H10zm35-70h5v15h-5zm10 0h5v10h-5zm-10 20h15v5h-15zm35 50h5v15h-5zm10 0h5v10h-5zm-10 20h15v5h-15zm-45-20h10v5H35zm0 10h5v15h-5zm10 5h5v10h-5zm10-15h5v5h-5zm0 10h10v5H55zm15-5h10v5H70z"/>
+                    </svg>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <!-- ALTERNATIVE TERMINAL & ASTUCE GATEKEEPER -->
-            <div class="w-full max-w-lg p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-left text-xs text-zinc-400 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-zinc-400 text-[11px] font-semibold">${isEn ? '⚡ 1-Click Terminal Install (0 Apple Warning):' : '⚡ Option 1-Clic Terminal (0 Alerte Apple) :'}</span>
-                <button onclick="navigator.clipboard.writeText('curl -fsSL https://cours-awc.pages.dev/install.sh | bash'); this.innerText='✓ ${isEn ? 'Copied' : 'Copié'}!'; setTimeout(() => this.innerText='${isEn ? 'Copy' : 'Copier'}', 2000);" class="px-2 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-[11px] font-medium">
-                  ${isEn ? 'Copy' : 'Copier'}
-                </button>
-              </div>
-              <code class="block font-mono text-[11px] bg-black/50 text-emerald-300 p-2 rounded-lg border border-zinc-800/80 overflow-x-auto select-all">curl -fsSL https://cours-awc.pages.dev/install.sh | bash</code>
-              <p class="text-[11px] text-zinc-400 leading-relaxed">💡 ${isEn ? '<strong>First launch tip:</strong> If macOS shows a security alert, double-click <strong>Ouvrir-Cours.command</strong> in the DMG to unblock and launch automatically!' : '<strong>Astuce 1er lancement (0 manip) :</strong> Si macOS affiche un message de sécurité, double-cliquez simplement sur <strong>Ouvrir-Cours.command</strong> dans le DMG. Il installe et débloque l\'application automatiquement !'}</p>
-            </div>
-          </div>
-        `;
-      } else if (isWindows) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🪟 <strong>' + (isEn ? 'Windows Detected' : 'Windows Détecté') + '</strong> • ' + (isEn ? '1-Click Installer Ready' : 'Installateur 1-Clic Prêt') + '</span>';
-        ctaContainer.innerHTML = `
-          <div class="flex flex-col items-center justify-center gap-4 w-full">
-            <a href="/Installer-Windows.bat" download="Installer-Cours.bat" class="px-8 py-4.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-blue-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95">
-              <span class="text-2xl">🪟</span>
-              <span>${isEn ? 'Download Cours for Windows (1-Click)' : 'Télécharger Cours pour Windows (1-Clic)'}</span>
-            </a>
-            <div class="w-full max-w-lg mt-2 p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-left text-xs text-zinc-300 space-y-2 shadow-xl">
-              <p><strong>Étape 1 :</strong> Lancez <code>Installer-Cours.bat</code> pour installer l'application sur Windows.</p>
-              <p><strong>Étape 2 :</strong> Scannez le QR Code depuis votre téléphone pour connecter vos révisions.</p>
+            <!-- OPTIONS NATIVES COMPACTES POUR DÉVELOPPEURS / WHISPER LOCAL -->
+            <div class="text-[11px] text-zinc-500 flex flex-wrap items-center justify-center gap-2 pt-1">
+              <span>💻 ${isEn ? 'Optional local standalone:' : 'Applications locales autonomes :'}</span>
+              <a href="/Cours-macOS.dmg" download="Cours-macOS.dmg" class="text-zinc-400 hover:text-white underline">macOS .dmg</a>
+              <span>•</span>
+              <a href="/Installer-Windows.bat" download="Installer-Cours.bat" class="text-zinc-400 hover:text-white underline">Windows .bat</a>
+              <span>•</span>
+              <code class="font-mono text-[10px] bg-zinc-900 px-1.5 py-0.5 rounded text-emerald-400 border border-zinc-800">curl -fsSL https://cours-awc.pages.dev/install.sh | bash</code>
             </div>
           </div>
         `;
       } else if (isAndroid) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-semibold backdrop-blur-md">🤖 <strong>' + (isEn ? 'Android Phone Detected' : 'Smartphone Android Détecté') + '</strong> • ' + (isEn ? 'Native App Ready' : 'Application Mobile Prête') + '</span>';
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-semibold backdrop-blur-md">🤖 <strong>' + (isEn ? 'Android Phone Detected' : 'Smartphone Android Détecté') + '</strong> • ' + (isEn ? 'Native App Ready' : 'Application Mobile 100% Hors-Ligne') + '</span>';
         ctaContainer.innerHTML = `
           <div class="flex flex-col items-center justify-center gap-4 w-full">
             <a href="/cours.apk" download="cours.apk" class="px-8 py-4.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-base shadow-2xl shadow-emerald-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95">
@@ -1339,13 +1339,13 @@
               <span>${isEn ? 'Install Native Android App (.apk)' : 'Installer l\'Application Android (.apk)'}</span>
             </a>
             <div class="w-full max-w-lg mt-2 p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-left text-xs text-zinc-300 space-y-2 shadow-xl">
-              <p><strong>Étape 1 :</strong> Installez l'APK sur votre smartphone Android.</p>
-              <p><strong>Étape 2 :</strong> Scannez le QR Code de votre ordinateur pour synchroniser en direct.</p>
+              <p><strong>100% Hors-Ligne :</strong> Enregistrez vos amphis sans coupure et révisez vos cartes dans les transports sans internet.</p>
+              <p><strong>Synchronisation :</strong> Scannez le QR Code de votre ordinateur pour lier vos fiches.</p>
             </div>
           </div>
         `;
       } else if (isIos) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/30 font-semibold backdrop-blur-md">🍏 <strong>' + (isEn ? 'iPhone / iPad Detected' : 'iPhone / iPad Détecté') + '</strong> • ' + (isEn ? 'PWA Ready' : 'Application PWA Prête') + '</span>';
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/30 font-semibold backdrop-blur-md">🍏 <strong>' + (isEn ? 'iPhone / iPad Detected' : 'iPhone / iPad Détecté') + '</strong> • ' + (isEn ? 'PWA Ready' : 'Application PWA 100% Hors-Ligne') + '</span>';
         ctaContainer.innerHTML = `
           <div class="flex flex-col items-center justify-center gap-4 w-full">
             <a href="/app" class="px-8 py-4.5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-purple-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95">
@@ -1353,8 +1353,8 @@
               <span>${isEn ? 'Launch Cours on iPhone' : 'Lancer Cours sur iPhone'}</span>
             </a>
             <div class="w-full max-w-lg mt-2 p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-left text-xs text-zinc-300 space-y-2 shadow-xl">
-              <p><strong>Étape 1 :</strong> Dans Safari, touchez Partager &gt; <em>« Sur l'écran d'accueil »</em> pour l'utiliser comme une vraie app native.</p>
-              <p><strong>Étape 2 :</strong> Scannez le QR Code de votre Mac pour lier vos fiches et enregistrements.</p>
+              <p><strong>Étape 1 :</strong> Dans Safari, touchez Partager &gt; <em>« Sur l'écran d'accueil »</em> pour l'utiliser comme une vraie app native hors-ligne.</p>
+              <p><strong>Étape 2 :</strong> Scannez le QR Code de votre Mac pour synchroniser vos enregistrements.</p>
             </div>
           </div>
         `;

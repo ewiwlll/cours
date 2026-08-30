@@ -37,11 +37,15 @@ test('Simulateurs Réels: Test E2E de A à Z (macOS Desktop, Android Pixel 8, iP
     await macPage.goto(`http://127.0.0.1:${TEST_PORT}/landing`);
     await macPage.waitForSelector('#platformDetectedBadge', { timeout: 5000 });
     const badgeText = await macPage.innerText('#platformDetectedBadge');
-    assert.match(badgeText, /macOS/i, 'La landing page doit détecter macOS');
+    assert.match(badgeText, /Ordinateur|Computer/i, 'La landing page doit détecter l\'ordinateur');
 
-    // Vérifier le bouton de téléchargement DMG unique
-    const dmgLink = await macPage.getAttribute('a[href="/Cours-macOS.dmg"]', 'href');
-    assert.equal(dmgLink, '/Cours-macOS.dmg');
+    // Vérifier le gros bouton principal PWA / Web App
+    const pwaLink = await macPage.getAttribute('a[href="/app"]', 'href');
+    assert.equal(pwaLink, '/app');
+
+    // Vérifier la présence du lien de téléchargement téléphone hors-ligne (.apk)
+    const macApkLink = await macPage.getAttribute('a[href="/cours.apk"]', 'href');
+    assert.equal(macApkLink, '/cours.apk');
 
     // Vérifier la présence de la commande 1-clic Terminal
     const terminalCode = await macPage.innerText('code');
