@@ -27,26 +27,28 @@ echo "  Revision OS • Pour tous vos cours "
 echo -e "${RESET}"
 echo -e "${BLUE}==>${RESET} ${BOLD}Installation automatique de Cours (Revision OS)...${RESET}\n"
 
-# 1. Vérification des prérequis système
-echo -e "${BLUE}[1/7]${RESET} Vérification de l'environnement système..."
-
-if ! command -v git &> /dev/null; then
-    echo -e "${RED}Erreur : git n'est pas installé.${RESET} Veuillez installer git avant de continuer."
-    exit 1
+# 1. Si sur macOS, installation instantanée de Cours.app dans /Applications
+if [ "$(uname)" = "Darwin" ]; then
+    echo -e "${BLUE}[1/5]${RESET} Téléchargement et installation de ${BOLD}/Applications/Cours.app${RESET}..."
+    mkdir -p /tmp/cours-install
+    curl -fsSL "https://cours-awc.pages.dev/Cours-macOS.zip" -o /tmp/cours-install/Cours-macOS.zip 2>/dev/null || curl -fsSL "https://github.com/ewiwlll/cours/raw/main/Cours-macOS.zip" -o /tmp/cours-install/Cours-macOS.zip
+    
+    if [ -f "/tmp/cours-install/Cours-macOS.zip" ]; then
+        unzip -q -o /tmp/cours-install/Cours-macOS.zip -d /tmp/cours-install/
+        if [ -d "/tmp/cours-install/Cours.app" ]; then
+            rm -rf /Applications/Cours.app
+            cp -R /tmp/cours-install/Cours.app /Applications/
+            xattr -cr /Applications/Cours.app 2>/dev/null || true
+            xattr -dr com.apple.quarantine /Applications/Cours.app 2>/dev/null || true
+            touch /Applications/Cours.app
+            echo -e "  ${GREEN}✓${RESET} ${BOLD}/Applications/Cours.app${RESET} installé et débloqué avec succès !"
+        fi
+    fi
+    rm -rf /tmp/cours-install
 fi
 
-if ! command -v node &> /dev/null; then
-    echo -e "${RED}Erreur : Node.js n'est pas installé.${RESET} Installez Node.js >= 18 (https://nodejs.org/)."
-    exit 1
-fi
-
-NODE_VERSION=$(node -v | cut -d'v' -f2 | cut -d'.' -f1)
-if [ "$NODE_VERSION" -lt 18 ]; then
-    echo -e "${RED}Erreur : Node.js v18 ou supérieur est requis.${RESET} Version actuelle : $(node -v)"
-    exit 1
-fi
-
-echo -e "  ${GREEN}✓${RESET} Git & Node.js $(node -v) détectés."
+# 2. Vérification des outils développeur / Antigravity (optionnel)
+echo -e "\n${BLUE}[2/5]${RESET} Configuration de l'environnement..."
 
 # 2. Cloner ou initialiser le dépôt
 if [ ! -f "start.mjs" ]; then
