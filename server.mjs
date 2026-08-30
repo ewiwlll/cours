@@ -985,16 +985,97 @@ async function handleApi(req, res, url) {
     }
   }
 
+  if (req.method === "GET" && url.pathname === "/api/system/status") {
+    let antigravityInstalled = false;
+    let antigravityRunning = false;
+    try {
+      const { execSync } = await import("node:child_process");
+      if (process.platform === "darwin") {
+        antigravityInstalled = existsSync("/Applications/Antigravity.app") || Boolean(execSync("which antigravity 2>/dev/null || true", { encoding: "utf8" }).trim());
+        const psOut = execSync("pgrep -fi 'antigravity' 2>/dev/null || true", { encoding: "utf8" }).trim();
+        antigravityRunning = Boolean(psOut);
+      } else {
+        antigravityInstalled = Boolean(execSync("which antigravity 2>/dev/null || true", { encoding: "utf8" }).trim());
+      }
+    } catch {}
+
+    let tailscaleIp = null;
+    let tailscaleUrl = null;
+    let tailscaleRunning = false;
+    try {
+      const { execSync } = await import("node:child_process");
+      const ip = execSync("tailscale ip -4 2>/dev/null || true", { stdio: ["pipe", "pipe", "ignore"], encoding: "utf8" }).trim();
+      if (ip) {
+        tailscaleIp = ip;
+        tailscaleUrl = `http://${ip}:${PORT}`;
+        tailscaleRunning = true;
+      }
+    } catch {}
+
+    const key = process.env.GEMINI_API_KEY || "";
+    const maskedKey = key.length > 8 ? `${key.slice(0, 4)}...${key.slice(-4)}` : (key ? "****" : "");
+    const localIp = getLocalIp();
+
+    const whisperModelExists = existsSync(path.join(ROOT, "models", "whisper", "ggml-large-v3-turbo-q5_0.bin")) || existsSync(path.join(ROOT, "models", "whisper"));
+
+    return json(res, 200, {
+      ok: true,
+      antigravity: {
+        installed: antigravityInstalled,
+        running: antigravityRunning,
+        appPath: existsSync("/Applications/Antigravity.app") ? "/Applications/Antigravity.app" : null,
+      },
+      tailscale: {
+        running: tailscaleRunning,
+        ip: tailscaleIp,
+        url: tailscaleUrl,
+      },
+      gemini: {
+        configured: Boolean(key && key !== "your_gemini_api_key_here"),
+        apiKeyMasked: maskedKey,
+        model: process.env.GEMINI_MODEL || "gemini-3.7-flash",
+      },
+      whisperMetal: whisperModelExists,
+      localIp,
+      port: PORT,
+      mobileConnectUrl: `http://${localIp}:${PORT}/mobile`,
+      pairingUrl: `http://${localIp}:${PORT}/mobile`,
+    });
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/antigravity/open") {
+    try {
+      const { exec } = await import("node:child_process");
+      if (process.platform === "darwin") {
+        if (existsSync("/Applications/Antigravity.app")) {
+          exec(`open -a "/Applications/Antigravity.app" "${ROOT}"`);
+          return json(res, 200, { ok: true, message: "Google Antigravity ouvert sur le projet" });
+        }
+      }
+      exec(`antigravity "${ROOT}"`);
+      return json(res, 200, { ok: true, message: "Google Antigravity lancé" });
+    } catch (err) {
+      return json(res, 500, { ok: false, error: err.message || "Impossible de lancer Antigravity" });
+    }
+  }
+
   if (req.method === "GET" && url.pathname === "/api/devices") {
     const devices = await readJsonFile(DEVICES, []);
     const localIp = getLocalIp();
+    let tailscaleUrl = null;
+    try {
+      const { execSync } = await import("node:child_process");
+      const ip = execSync("tailscale ip -4 2>/dev/null || true", { stdio: ["pipe", "pipe", "ignore"], encoding: "utf8" }).trim();
+      if (ip) tailscaleUrl = `http://${ip}:${PORT}`;
+    } catch {}
+
     return json(res, 200, {
       ok: true,
       devices,
       localIp,
       port: PORT,
-      pairingUrl: `http://${localIp}:${PORT}`,
-      tailscaleUrl: process.env.TAILSCALE_URL || null,
+      pairingUrl: `http://${localIp}:${PORT}/mobile`,
+      tailscaleUrl: tailscaleUrl || process.env.TAILSCALE_URL || null,
     });
   }
 
@@ -2343,7 +2424,225 @@ Réponds STRICTEMENT sous format JSON valide :
   return json(res, 404, { error: "Route inconnue" });
 }
 
+function renderMobilePortalHtml({ localIp, port, tailscaleUrl, expoPort = 8081 }) {
+  const expoUrl = `exp://${localIp}:${expoPort}`;
+  const apkDownloadUrl = `/cours.apk`;
+  const pwaUrl = `/`;
+
+  return `<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cours Mobile — Installation & Connexion</title>
+  <link rel="icon" type="image/png" href="/icon-192.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            background: '#09090b',
+            surface: '#121216',
+            surfaceMuted: '#18181f',
+            border: '#27272a',
+            accent: '#3b82f6',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #09090b; color: #f4f4f5; font-family: system-ui, -apple-system, sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen p-4 flex flex-col items-center justify-between antialiased">
+  <div class="w-full max-w-md space-y-6 pt-4">
+    <!-- Header -->
+    <div class="text-center space-y-2">
+      <div class="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center font-black text-white text-2xl mx-auto shadow-xl shadow-blue-500/25">
+        C
+      </div>
+      <h1 class="text-2xl font-black tracking-tight text-white">Cours Mobile</h1>
+      <p class="text-xs text-zinc-400">Votre Cockpit de Révision & d'Amphi</p>
+      <div id="connStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>PC Connecté : ${localIp}:${port}</span>
+      </div>
+    </div>
+
+    <!-- Platform Detection Banner -->
+    <div id="platformNotice" class="p-3.5 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-xs text-zinc-300 flex items-center gap-3">
+      <span class="text-2xl" id="osIcon">📱</span>
+      <div>
+        <strong class="block text-white" id="osTitle">Téléphone Détecté</strong>
+        <span class="text-[11px] text-zinc-400" id="osSub">Choisissez le mode d'installation pour votre smartphone</span>
+      </div>
+    </div>
+
+    <!-- Primary Action: Standalone Native APK (Android) -->
+    <div id="androidCard" class="p-5 rounded-3xl bg-gradient-to-b from-surfaceMuted to-surface border border-emerald-500/30 space-y-3 shadow-xl">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Option 1 • Recommandée Android</span>
+        <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold">App Native Standalone</span>
+      </div>
+      <h3 class="text-base font-bold text-white">Installer l'Application Cours (.apk)</h3>
+      <p class="text-xs text-zinc-400 leading-relaxed">
+        Installe l'application complète directement sur votre écran d'accueil avec icône native et micro amphi haute fidélité.
+      </p>
+      <a href="${apkDownloadUrl}" download="cours.apk" class="w-full py-3.5 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/25 transition-all text-center">
+        <span>📲 Télécharger Cours (.apk)</span>
+      </a>
+      <div class="text-[11px] text-zinc-500 space-y-1 pt-1">
+        <p>1. Cliquez sur Télécharger ci-dessus</p>
+        <p>2. Ouvrez le fichier téléchargé et appuyez sur « Installer »</p>
+        <p>3. L'application Cours apparaît sur votre accueil !</p>
+      </div>
+    </div>
+
+    <!-- Alternative Action: Native Expo Go (iOS & Android) -->
+    <div class="p-5 rounded-3xl bg-surface border border-border space-y-3">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-bold uppercase tracking-wider text-blue-400">Option 2 • Instantanée (iOS & Android)</span>
+        <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-bold">Expo Go</span>
+      </div>
+      <h3 class="text-base font-bold text-white">Lancer dans Expo Go</h3>
+      <p class="text-xs text-zinc-400 leading-relaxed">
+        Ouvre directement l'application native dans Expo Go sans aucun téléchargement d'APK.
+      </p>
+      <a href="${expoUrl}" class="w-full py-3 px-4 rounded-2xl bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 transition-all text-center">
+        <span>⚡ Ouvrir dans Expo Go</span>
+      </a>
+    </div>
+
+    <!-- Web App Fallback -->
+    <div class="p-4 rounded-2xl bg-zinc-950/60 border border-zinc-800/80 flex items-center justify-between">
+      <div>
+        <h4 class="text-xs font-bold text-zinc-300">Version Web / PWA</h4>
+        <p class="text-[10px] text-zinc-500">Utiliser dans Safari / Chrome</p>
+      </div>
+      <a href="${pwaUrl}" class="px-3.5 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-bold text-xs">
+        Ouvrir Web →
+      </a>
+    </div>
+  </div>
+
+  <footer class="text-center text-[10px] text-zinc-600 py-4">
+    Cours (Revision OS) • Parité Totale Mac, Web & Mobile
+  </footer>
+
+  <script>
+    // Auto register device
+    try {
+      const ua = navigator.userAgent;
+      const isAndroid = /Android/i.test(ua);
+      const isIOS = /iPhone|iPad|iPod/i.test(ua);
+      const platform = isAndroid ? 'android' : (isIOS ? 'ios' : 'web');
+      const deviceName = isAndroid ? 'Android Smartphone' : (isIOS ? 'iPhone' : 'Navigateur Mobile');
+
+      fetch('/api/devices/pair', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          deviceId: 'mob-' + Math.random().toString(36).slice(2, 9),
+          deviceName,
+          platform,
+        })
+      }).catch(() => {});
+
+      const osIcon = document.getElementById('osIcon');
+      const osTitle = document.getElementById('osTitle');
+      const osSub = document.getElementById('osSub');
+      const androidCard = document.getElementById('androidCard');
+
+      if (isAndroid) {
+        if (osIcon) osIcon.innerText = '🤖';
+        if (osTitle) osTitle.innerText = 'Smartphone Android Détecté';
+        if (osSub) osSub.innerText = 'Téléchargez l\\\'APK native ci-dessous pour une installation 1-clic sur votre écran d\\\'accueil';
+      } else if (isIOS) {
+        if (osIcon) osIcon.innerText = '🍏';
+        if (osTitle) osTitle.innerText = 'iPhone Détecté';
+        if (osSub) osSub.innerText = 'Lancez dans Expo Go ou ajoutez à l\\\'écran d\\\'accueil Safari';
+        if (androidCard) androidCard.classList.add('opacity-60');
+      }
+    } catch {}
+  </script>
+</body>
+</html>`;
+}
+
 async function serveStatic(res, pathname) {
+  // Mobile / Pair Portal Route
+  if (pathname === "/mobile" || pathname === "/pair") {
+    const localIp = getLocalIp();
+    let tailscaleUrl = null;
+    try {
+      const { execSync } = await import("node:child_process");
+      const ip = execSync("tailscale ip -4 2>/dev/null || true", { stdio: ["pipe", "pipe", "ignore"], encoding: "utf8" }).trim();
+      if (ip) tailscaleUrl = `http://${ip}:${PORT}`;
+    } catch {}
+
+    const html = renderMobilePortalHtml({ localIp, port: PORT, tailscaleUrl });
+    res.writeHead(200, {
+      "Content-Type": "text/html; charset=utf-8",
+      "Content-Length": Buffer.byteLength(html),
+      "Cache-Control": "no-cache",
+    });
+    return res.end(html);
+  }
+
+  // Direct APK Downloads
+  if (pathname === "/cours.apk" || pathname === "/download/cours.apk" || pathname === "/api/mobile/apk") {
+    const candidatePaths = [
+      path.resolve(ROOT, "public", "cours.apk"),
+      path.resolve(ROOT, "landing", "cours.apk"),
+      path.resolve(ROOT, "apps", "mobile", "android", "app", "build", "outputs", "apk", "release", "app-release.apk"),
+      path.resolve(ROOT, "apps", "mobile", "android", "app", "build", "outputs", "apk", "debug", "app-debug.apk"),
+    ];
+    for (const p of candidatePaths) {
+      if (existsSync(p)) {
+        const data = await readFile(p);
+        res.writeHead(200, {
+          "Content-Type": "application/vnd.android.package-archive",
+          "Content-Disposition": 'attachment; filename="cours.apk"',
+          "Content-Length": data.length,
+          "Cache-Control": "public, max-age=3600",
+        });
+        return res.end(data);
+      }
+    }
+    return text(res, 404, "Fichier APK introuvable. Veuillez compiler l'application mobile.");
+  }
+
+  // Direct macOS 1-Click Installer Download
+  if (pathname === "/download/mac" || pathname === "/Installer-macOS.command") {
+    const p = path.resolve(ROOT, "landing", "Installer-macOS.command");
+    if (existsSync(p)) {
+      const data = await readFile(p);
+      res.writeHead(200, {
+        "Content-Type": "application/x-sh",
+        "Content-Disposition": 'attachment; filename="Installer-Cours.command"',
+        "Content-Length": data.length,
+      });
+      return res.end(data);
+    }
+  }
+
+  // Direct Windows 1-Click Installer Download
+  if (pathname === "/download/windows" || pathname === "/Installer-Windows.bat") {
+    const p = path.resolve(ROOT, "landing", "Installer-Windows.bat");
+    if (existsSync(p)) {
+      const data = await readFile(p);
+      res.writeHead(200, {
+        "Content-Type": "application/x-bat",
+        "Content-Disposition": 'attachment; filename="Installer-Cours.bat"',
+        "Content-Length": data.length,
+      });
+      return res.end(data);
+    }
+  }
+
   let requested = pathname === "/" ? "index.html" : pathname.slice(1);
   let file = path.resolve(PUBLIC, requested);
   if (!file.startsWith(path.resolve(PUBLIC) + path.sep) || !existsSync(file)) {
@@ -2367,16 +2666,22 @@ async function serveStatic(res, pathname) {
     ".webp": "image/webp",
     ".ico": "image/x-icon",
     ".woff": "font/woff",
-    ".woff2": "font/woff2"
+    ".woff2": "font/woff2",
+    ".apk": "application/vnd.android.package-archive",
+    ".command": "application/x-sh",
+    ".bat": "application/x-bat",
   };
-  const isBinary = [".png", ".jpg", ".jpeg", ".webp", ".ico", ".woff", ".woff2"].includes(ext);
   const data = await readFile(file);
   const contentType = contentTypes[ext] || "application/octet-stream";
-  res.writeHead(200, {
+  const headers = {
     "Content-Type": contentType,
     "Content-Length": data.length,
-    "Cache-Control": "no-cache, no-store, must-revalidate",
-  });
+    "Cache-Control": ext === ".apk" ? "public, max-age=3600" : "no-cache, no-store, must-revalidate",
+  };
+  if (ext === ".apk") {
+    headers["Content-Disposition"] = 'attachment; filename="cours.apk"';
+  }
+  res.writeHead(200, headers);
   res.end(data);
 }
 

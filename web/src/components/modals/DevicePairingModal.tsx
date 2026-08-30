@@ -13,6 +13,7 @@ import {
   HelpCircle,
   ShieldCheck,
   Zap,
+  Download,
 } from 'lucide-react';
 import QRCode from 'qrcode';
 import { useStore } from '../../lib/store';
@@ -33,16 +34,29 @@ export function DevicePairingModal() {
   const [localIp, setLocalIp] = useState<string>('127.0.0.1');
   const [port, setPort] = useState<number>(3002);
   const [expoPort, setExpoPort] = useState<number>(8081);
-  const [targetType, setTargetType] = useState<'expo' | 'pwa'>('expo');
+  const [targetType, setTargetType] = useState<'portal' | 'expo' | 'apk' | 'pwa'>('portal');
   const [tailscaleUrl, setTailscaleUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<'qr' | 'devices' | 'guide'>('qr');
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const currentUrl = targetType === 'expo'
-    ? `exp://${localIp}:${expoPort}`
-    : `http://${localIp}:${port}`;
+  const getTargetUrl = () => {
+    switch (targetType) {
+      case 'portal':
+        return `http://${localIp}:${port}/mobile`;
+      case 'expo':
+        return `exp://${localIp}:${expoPort}`;
+      case 'apk':
+        return `http://${localIp}:${port}/cours.apk`;
+      case 'pwa':
+        return `http://${localIp}:${port}`;
+      default:
+        return `http://${localIp}:${port}/mobile`;
+    }
+  };
+
+  const currentUrl = getTargetUrl();
 
   const fetchDevices = async () => {
     try {
@@ -73,7 +87,7 @@ export function DevicePairingModal() {
       canvasRef.current,
       currentUrl,
       {
-        width: 240,
+        width: 230,
         margin: 1.5,
         color: {
           dark: '#000000',
@@ -122,8 +136,8 @@ export function DevicePairingModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-fade-in select-none">
-      <div className="relative w-full max-w-xl bg-surface border border-border rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in select-none">
+      <div className="relative w-full max-w-xl bg-surface border border-border rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
         
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-surface-elevated/60">
@@ -133,7 +147,7 @@ export function DevicePairingModal() {
             </div>
             <div>
               <h3 className="font-bold text-sm text-white">Appareils & Application Mobile Native</h3>
-              <p className="text-[11px] text-zinc-400">Scannez pour ouvrir l'application mobile native sur votre téléphone</p>
+              <p className="text-[11px] text-zinc-400">Scannez pour installer ou connecter votre smartphone au PC</p>
             </div>
           </div>
 
@@ -185,7 +199,7 @@ export function DevicePairingModal() {
             }`}
           >
             <HelpCircle className="w-3.5 h-3.5" />
-            <span>Comment ça marche ?</span>
+            <span>Guide d'Installation</span>
           </button>
         </div>
 
@@ -196,56 +210,87 @@ export function DevicePairingModal() {
           {activeTab === 'qr' && (
             <div className="flex flex-col items-center text-center space-y-4">
               
-              {/* Type Switcher: Expo Native vs Web */}
-              <div className="inline-flex p-1 rounded-xl bg-zinc-900 border border-zinc-800">
+              {/* Type Switcher: Portal vs APK vs Expo vs PWA */}
+              <div className="flex flex-wrap items-center justify-center p-1 rounded-2xl bg-zinc-900 border border-zinc-800 gap-1 max-w-full">
+                <button
+                  type="button"
+                  onClick={() => setTargetType('portal')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    targetType === 'portal'
+                      ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                      : 'text-zinc-400 hover:text-zinc-200'
+                  }`}
+                >
+                  <Smartphone className="w-3.5 h-3.5" />
+                  <span>Portail Universel</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setTargetType('apk')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    targetType === 'apk'
+                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/20'
+                      : 'text-zinc-400 hover:text-zinc-200'
+                  }`}
+                >
+                  <Download className="w-3.5 h-3.5 text-emerald-300" />
+                  <span>APK Standalone (Android)</span>
+                </button>
+
                 <button
                   type="button"
                   onClick={() => setTargetType('expo')}
-                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                     targetType === 'expo'
-                      ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                      ? 'bg-purple-600 text-white shadow-md shadow-purple-500/20'
                       : 'text-zinc-400 hover:text-zinc-200'
                   }`}
                 >
                   <Zap className="w-3.5 h-3.5 text-amber-300" />
-                  <span>App Mobile Native (Expo Go)</span>
+                  <span>Expo Go</span>
                 </button>
+
                 <button
                   type="button"
                   onClick={() => setTargetType('pwa')}
-                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                     targetType === 'pwa'
-                      ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                      ? 'bg-zinc-700 text-white'
                       : 'text-zinc-400 hover:text-zinc-200'
                   }`}
                 >
                   <Globe className="w-3.5 h-3.5" />
-                  <span>Version Web PWA</span>
+                  <span>Web</span>
                 </button>
               </div>
 
               <div className="max-w-md space-y-1">
                 <h4 className="text-sm font-bold text-white">
-                  {targetType === 'expo' ? 'Scannez avec l’App Expo Go sur votre Téléphone' : 'Scannez pour ouvrir dans le Navigateur'}
+                  {targetType === 'portal' && 'Scannez avec votre Appareil Photo Mobile'}
+                  {targetType === 'apk' && 'Scannez pour Télécharger l’APK Android'}
+                  {targetType === 'expo' && 'Scannez avec l’App Expo Go sur votre Téléphone'}
+                  {targetType === 'pwa' && 'Scannez pour ouvrir dans le Navigateur'}
                 </h4>
                 <p className="text-zinc-400 text-[11px]">
-                  {targetType === 'expo'
-                    ? 'Ouvrez l’application gratuite Expo Go sur votre iPhone ou Android et scannez ce code :'
-                    : 'Ouvrez votre appareil photo pour ouvrir la version Web.'}
+                  {targetType === 'portal' && 'Ouvre automatiquement la page d’installation adaptée à votre smartphone.'}
+                  {targetType === 'apk' && 'Télécharge et installe directement Cours sur votre écran d’accueil Android.'}
+                  {targetType === 'expo' && 'Lance instantanément l’application native via Expo Go sur iPhone ou Android.'}
+                  {targetType === 'pwa' && 'Accède au cockpit directement depuis Safari ou Google Chrome.'}
                 </p>
               </div>
 
               {/* High Contrast QR Code Canvas */}
-              <div className="p-3 bg-white rounded-2xl shadow-xl shadow-blue-500/10 border-4 border-zinc-800 flex items-center justify-center">
-                <canvas ref={canvasRef} className="rounded-lg" />
+              <div className="p-3 bg-white rounded-3xl shadow-xl shadow-blue-500/10 border-4 border-zinc-800 flex items-center justify-center">
+                <canvas ref={canvasRef} className="rounded-xl" />
               </div>
 
               {/* Connection URL Pill */}
-              <div className="w-full max-w-md p-3 rounded-xl bg-surface-elevated/40 border border-border space-y-2">
+              <div className="w-full max-w-md p-3 rounded-2xl bg-surface-elevated/40 border border-border space-y-2">
                 <div className="flex items-center justify-between text-[11px] text-zinc-400">
                   <span className="flex items-center gap-1.5 font-semibold text-zinc-300">
                     <Wifi className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>{targetType === 'expo' ? 'URL Expo Metro :' : 'URL Web Locale :'}</span>
+                    <span>Lien Direct :</span>
                   </span>
                   <button
                     onClick={handleCopyUrl}
@@ -255,17 +300,18 @@ export function DevicePairingModal() {
                     <span>{copied ? 'Copié !' : 'Copier'}</span>
                   </button>
                 </div>
-                <div className="p-2 rounded-lg bg-surface border border-border font-mono text-emerald-400 font-bold text-center select-all text-xs">
+                <div className="p-2 rounded-xl bg-surface border border-border font-mono text-emerald-400 font-bold text-center select-all text-xs truncate">
                   {currentUrl}
                 </div>
               </div>
 
-              {targetType === 'expo' && (
-                <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-300 text-[11px] text-left space-y-1 max-w-md">
-                  <strong className="block text-purple-200">💡 Comment lancer l'application native en 10 secondes :</strong>
+              {targetType === 'apk' && (
+                <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-[11px] text-left space-y-1 max-w-md">
+                  <strong className="block text-emerald-200">🤖 Installation Standalone Android :</strong>
                   <p className="text-zinc-400 leading-relaxed">
-                    1. Installez l'application gratuite <strong>Expo Go</strong> sur l'App Store ou le Google Play Store.<br/>
-                    2. Scannez ce QR Code depuis Expo Go : l'application <strong>Cours Mobile native</strong> se lance avec micro natif et onglets mobiles !
+                    1. Scannez le code ou téléchargez le fichier <a href="/cours.apk" download="cours.apk" className="text-emerald-400 underline font-bold">cours.apk</a>.<br/>
+                    2. Ouvrez le fichier téléchargé et validez l'installation.<br/>
+                    3. L'icône <strong>Cours</strong> s'affiche sur votre écran d'accueil avec micro natif et mode hors-ligne !
                   </p>
                 </div>
               )}
@@ -278,7 +324,7 @@ export function DevicePairingModal() {
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="font-bold text-sm text-white">Appareils Appairés ({devices.length})</h4>
-                  <p className="text-zinc-400 text-[11px]">Tous les téléphones et tablettes synchronisés avec ce classeur</p>
+                  <p className="text-zinc-400 text-[11px]">Tous les téléphones synchronisés avec ce classeur</p>
                 </div>
                 <button
                   onClick={fetchDevices}
@@ -357,27 +403,28 @@ export function DevicePairingModal() {
           {/* TAB 3: GUIDE */}
           {activeTab === 'guide' && (
             <div className="space-y-4">
-              <h4 className="font-bold text-sm text-white">Guide Pas-à-Pas d'Appairage Mobile</h4>
+              <h4 className="font-bold text-sm text-white">Guide d'Installation & Synchronisation</h4>
               
               <div className="space-y-3">
-                <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-2">
-                  <span className="font-bold text-blue-400 text-xs flex items-center gap-2">
-                    <span>⚡</span> Option 1 : Application Native via Expo Go (Recommandé)
+                <div className="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-2">
+                  <span className="font-bold text-emerald-400 text-xs flex items-center gap-2">
+                    <span>🤖</span> Option 1 : Application Native Android Standalone (.apk)
                   </span>
                   <ol className="space-y-1.5 text-zinc-400 text-[11px] list-decimal list-inside leading-relaxed">
-                    <li>Téléchargez l'application gratuite <strong>Expo Go</strong> sur l'App Store ou Google Play.</li>
-                    <li>Ouvrez Expo Go et scannez le <strong>QR Code Mobile Native</strong>.</li>
-                    <li>L'application native se charge avec son design mobile, ses boutons tactiles et l'enregistrement amphi !</li>
+                    <li>Scannez le QR Code Universel ou téléchargez <a href="/cours.apk" download="cours.apk" className="text-emerald-400 underline font-semibold">cours.apk</a>.</li>
+                    <li>Ouvrez le fichier sur votre smartphone Android et confirmez l'installation.</li>
+                    <li>L'application s'installe directement sur votre écran d'accueil avec toutes les fonctionnalités natives !</li>
                   </ol>
                 </div>
 
-                <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-2">
-                  <span className="font-bold text-emerald-400 text-xs flex items-center gap-2">
-                    <span>🤖</span> Option 2 : Application Android APK Standalone
+                <div className="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-2">
+                  <span className="font-bold text-purple-400 text-xs flex items-center gap-2">
+                    <span>⚡</span> Option 2 : Application Native via Expo Go (iOS & Android)
                   </span>
-                  <p className="text-zinc-400 text-[11px] leading-relaxed">
-                    Si votre téléphone Android est connecté à votre ordinateur, tapez simplement <code className="text-zinc-200 font-mono">adb install -r -d apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk</code> pour installer directement l'APK autonome !
-                  </p>
+                  <ol className="space-y-1.5 text-zinc-400 text-[11px] list-decimal list-inside leading-relaxed">
+                    <li>Installez l'application gratuite <strong>Expo Go</strong> sur l'App Store ou Google Play.</li>
+                    <li>Scannez le QR Code depuis Expo Go : l'application Cours se lance immédiatement.</li>
+                  </ol>
                 </div>
               </div>
             </div>
@@ -387,7 +434,7 @@ export function DevicePairingModal() {
 
         {/* Footer */}
         <div className="px-6 py-4 border-t border-border bg-surface-elevated/40 flex items-center justify-between text-xs">
-          <span className="text-zinc-500 font-mono text-[11px]">Metro Expo : {expoPort} • API : {port}</span>
+          <span className="text-zinc-500 font-mono text-[11px]">API : {localIp}:{port}</span>
           <button
             onClick={() => closeModal('devicePairing')}
             className="px-4 py-2 rounded-xl bg-surface-muted hover:bg-zinc-700 text-zinc-200 font-bold transition-colors"

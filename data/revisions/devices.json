@@ -1,0 +1,12 @@
+[
+  {
+    "id": "test-pixel-8",
+    "deviceName": "Google Pixel 8 Pro (Simulé)",
+    "platform": "android",
+    "userAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.88 Mobile Safari/537.36",
+    "ip": "1",
+    "firstSeenAt": "2026-08-30T09:54:58.134Z",
+    "lastSeenAt": "2026-08-30T09:54:58.134Z",
+    "syncCount": 1
+  }
+]

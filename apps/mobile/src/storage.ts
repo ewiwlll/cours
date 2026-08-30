@@ -147,3 +147,36 @@ export async function restoreFromTrash(courseId: string): Promise<any | null> {
   await writeTrash(remaining);
   return found.course;
 }
+
+const SERVER_HOST_KEY = "biomia.mobile.server_host.v1";
+
+export async function readSavedServerHost(): Promise<string | null> {
+  try {
+    if (typeof window !== "undefined" && window.localStorage) {
+      const stored = window.localStorage.getItem(SERVER_HOST_KEY);
+      if (stored) return stored;
+    }
+  } catch {}
+
+  try {
+    const stored = await SecureStore.getItemAsync(SERVER_HOST_KEY);
+    if (stored) return stored;
+  } catch {}
+
+  return null;
+}
+
+export async function saveServerHost(host: string): Promise<void> {
+  if (!host || typeof host !== "string") return;
+  const clean = host.replace(/\/$/, "");
+  try {
+    if (typeof window !== "undefined" && window.localStorage) {
+      window.localStorage.setItem(SERVER_HOST_KEY, clean);
+    }
+  } catch {}
+
+  try {
+    await SecureStore.setItemAsync(SERVER_HOST_KEY, clean);
+  } catch {}
+}
+

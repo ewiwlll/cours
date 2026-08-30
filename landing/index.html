@@ -636,14 +636,31 @@
           <p class="text-sm text-zinc-400 leading-relaxed">
             Connectez votre iPhone ou votre téléphone Android en un instant à votre ordinateur pour enregistrer vos cours au micro avec WakeLock anti-veille, synchroniser vos photos du tableau et réviser vos flashcards FSRS-5 100% hors-ligne.
           </p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
-            <div class="p-3 rounded-xl bg-zinc-900/80 border border-zinc-800 space-y-1">
-              <strong class="text-blue-400 block">⚡ App Native (Expo Go)</strong>
-              <p class="text-zinc-400 text-[11px]">Scannez depuis l'app Expo Go pour lancer l'application React Native complète.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
+            <div class="p-3.5 rounded-2xl bg-zinc-900/80 border border-emerald-500/30 space-y-1.5 flex flex-col justify-between">
+              <div>
+                <strong class="text-emerald-400 block font-bold">🤖 App Android (.apk)</strong>
+                <p class="text-zinc-400 text-[11px]">Installation 1-clic autonome sur votre écran d'accueil.</p>
+              </div>
+              <a href="/cours.apk" download="cours.apk" class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-400 hover:text-emerald-300 underline">
+                <span>Télécharger APK (67 Mo) →</span>
+              </a>
             </div>
-            <div class="p-3 rounded-xl bg-zinc-900/80 border border-zinc-800 space-y-1">
-              <strong class="text-emerald-400 block">📱 PWA Autonome (1 Clic)</strong>
-              <p class="text-zinc-400 text-[11px]">Ajoutez directement sur l'écran d'accueil Safari / Chrome.</p>
+            <div class="p-3.5 rounded-2xl bg-zinc-900/80 border border-purple-500/30 space-y-1.5 flex flex-col justify-between">
+              <div>
+                <strong class="text-purple-300 block font-bold">⚡ Expo Go (iOS & Android)</strong>
+                <p class="text-zinc-400 text-[11px]">Lancez l'application native immédiatement sans compilation.</p>
+              </div>
+              <span class="text-[10px] text-zinc-500 font-mono">App Store / Play Store</span>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-zinc-900/80 border border-zinc-800 space-y-1.5 flex flex-col justify-between">
+              <div>
+                <strong class="text-blue-400 block font-bold">🌐 Version Web PWA</strong>
+                <p class="text-zinc-400 text-[11px]">Accessible directement depuis Safari ou Chrome.</p>
+              </div>
+              <a href="/app" class="inline-flex items-center gap-1 text-[11px] font-bold text-blue-400 hover:text-blue-300 underline">
+                <span>Lancer Web →</span>
+              </a>
             </div>
           </div>
         </div>
@@ -1249,22 +1266,67 @@
     function detectUserPlatform() {
       const ua = navigator.userAgent || '';
       const badgeEl = document.getElementById('platformDetectedBadge');
-      if (!badgeEl) return;
+      const ctaContainer = document.getElementById('heroCtaContainer');
+      if (!badgeEl || !ctaContainer) return;
 
       const isMac = /Macintosh|Mac OS X/i.test(ua) && !/iPhone|iPad/i.test(ua);
       const isWindows = /Windows/i.test(ua);
       const isIos = /iPhone|iPad|iPod/i.test(ua);
       const isAndroid = /Android/i.test(ua);
-      const isLinux = /Linux/i.test(ua) && !isAndroid;
+      const isEn = currentLandingLang === 'en';
 
       if (isMac) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🍏 <strong>macOS Détecté</strong> (Apple Silicon & Intel) • Prêt pour Whisper Metal 0€</span>';
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🍏 <strong>' + (isEn ? 'macOS Detected' : 'macOS Détecté') + '</strong> • ' + (isEn ? '1-Click Installer Ready' : 'Installateur 1-Clic Prêt') + '</span>';
+        ctaContainer.innerHTML = `
+          <a href="/Installer-macOS.command" download="Installer-Cours.command" class="px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-blue-500/25 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95">
+            <span class="text-lg">🍏</span>
+            <span>${isEn ? 'Download Cours for Mac (1-Click)' : 'Télécharger Cours pour Mac (1-Clic)'}</span>
+          </a>
+          <a href="/cours.apk" download="cours.apk" class="px-5 py-4 rounded-2xl bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 font-semibold text-xs flex items-center gap-2 transition-all hover:border-emerald-500/80 active:scale-95">
+            <span class="text-base">🤖</span>
+            <span>${isEn ? 'Android Standalone App (.apk)' : 'App Android Native (.apk)'}</span>
+          </a>
+          <a href="/app" class="px-4 py-4 rounded-2xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white font-semibold text-xs flex items-center gap-1.5 transition-all">
+            <span>${isEn ? 'Launch Web App' : 'Ouvrir l\'App Web'} →</span>
+          </a>
+        `;
       } else if (isWindows) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🪟 <strong>Windows Détecté</strong> • Prêt pour le Cockpit PWA & PowerShell</span>';
-      } else if (isIos) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/30 font-semibold backdrop-blur-md">🍏 <strong>iPhone / iPad Détecté</strong> • Prêt pour installation Safari PWA</span>';
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🪟 <strong>' + (isEn ? 'Windows Detected' : 'Windows Détecté') + '</strong> • ' + (isEn ? '1-Click Installer Ready' : 'Installateur 1-Clic Prêt') + '</span>';
+        ctaContainer.innerHTML = `
+          <a href="/Installer-Windows.bat" download="Installer-Cours.bat" class="px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-blue-500/25 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95">
+            <span class="text-lg">🪟</span>
+            <span>${isEn ? 'Download Cours for Windows (1-Click)' : 'Télécharger Cours pour Windows (1-Clic)'}</span>
+          </a>
+          <a href="/cours.apk" download="cours.apk" class="px-5 py-4 rounded-2xl bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 font-semibold text-xs flex items-center gap-2 transition-all hover:border-emerald-500/80 active:scale-95">
+            <span class="text-base">🤖</span>
+            <span>${isEn ? 'Android Standalone App (.apk)' : 'App Android Native (.apk)'}</span>
+          </a>
+          <a href="/app" class="px-4 py-4 rounded-2xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white font-semibold text-xs flex items-center gap-1.5 transition-all">
+            <span>${isEn ? 'Launch Web App' : 'Ouvrir l\'App Web'} →</span>
+          </a>
+        `;
       } else if (isAndroid) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-semibold backdrop-blur-md">🤖 <strong>Android Détecté</strong> • Prêt pour installation 1-Clic</span>';
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-semibold backdrop-blur-md">🤖 <strong>' + (isEn ? 'Android Phone Detected' : 'Smartphone Android Détecté') + '</strong> • ' + (isEn ? 'Native Standalone App Ready' : 'App Native Standalone Prête') + '</span>';
+        ctaContainer.innerHTML = `
+          <a href="/cours.apk" download="cours.apk" class="px-6 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-xl shadow-emerald-500/25 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95">
+            <span class="text-lg">🤖</span>
+            <span>${isEn ? 'Install Native Android App (.apk)' : 'Installer l\'Application Native (.apk)'}</span>
+          </a>
+          <a href="/app" class="px-5 py-4 rounded-2xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 text-zinc-200 font-semibold text-xs flex items-center gap-2 transition-all">
+            <span>${isEn ? 'Open Web Version' : 'Ouvrir la Version Web'}</span>
+          </a>
+        `;
+      } else if (isIos) {
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/30 font-semibold backdrop-blur-md">🍏 <strong>' + (isEn ? 'iPhone / iPad Detected' : 'iPhone / iPad Détecté') + '</strong> • ' + (isEn ? 'Native Expo Go & PWA Ready' : 'Expo Go & Safari Prêt') + '</span>';
+        ctaContainer.innerHTML = `
+          <a href="/app" class="px-6 py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-purple-500/25 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95">
+            <span class="text-lg">🚀</span>
+            <span>${isEn ? 'Launch Cours on iPhone (Safari / PWA)' : 'Lancer Cours sur iPhone (Safari / PWA)'}</span>
+          </a>
+          <a href="#qr-connect" class="px-4 py-4 rounded-2xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 font-semibold text-xs flex items-center gap-1.5 transition-all">
+            <span>${isEn ? 'Connect to Mac' : 'Se Connecter au Mac'} →</span>
+          </a>
+        `;
       }
     }
 

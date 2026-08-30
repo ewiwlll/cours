@@ -35,6 +35,7 @@ dist/
 
 # Mobile / Android / iOS Builds
 .expo/
+*.apk
 apps/mobile/android/.gradle/
 apps/mobile/android/app/build/
 apps/mobile/android/build/

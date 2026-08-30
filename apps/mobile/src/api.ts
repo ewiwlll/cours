@@ -11,6 +11,8 @@ import {
   moveToTrash,
   readTrash,
   restoreFromTrash,
+  readSavedServerHost,
+  saveServerHost,
 } from "./storage";
 
 export type Subject = { id: string; title: string; semester: string; category: string; ects: number; priority?: string };
@@ -164,17 +166,56 @@ export type AdaptiveSession = { title?: string; minutes?: number; requestedMinut
 
 const localDataCacheFile = FileSystem.documentDirectory ? `${FileSystem.documentDirectory}cours-data-cache.v1.json` : null;
 
-const CANDIDATE_HOSTS = [
-  "http://127.0.0.1:3002",
-  "http://192.168.1.54:3002",
-  "http://localhost:3002",
-  apiUrl ? apiUrl.replace(/\/$/, "") : "",
-  "http://100.123.88.110:3002",
-].filter(Boolean);
-
-let activeBaseUrl = CANDIDATE_HOSTS[0] || "http://127.0.0.1:3002";
+let activeBaseUrl = "http://127.0.0.1:3002";
+let hasDiscovered = false;
 
 export function getActiveServerUrl(): string {
+  return activeBaseUrl;
+}
+
+export async function discoverAndSelectBestHost(): Promise<string> {
+  const saved = await readSavedServerHost();
+  const params = typeof window !== "undefined" && window.location?.search ? new URLSearchParams(window.location.search) : null;
+  const urlHost = params?.get("host");
+  const urlPort = params?.get("port") || "3002";
+  const urlTailscale = params?.get("tailscale");
+  const urlServer = params?.get("server");
+  const winOrigin = typeof window !== "undefined" && window.location?.origin ? window.location.origin : null;
+
+  const rawCandidates = [
+    urlServer,
+    urlHost ? `http://${urlHost}:${urlPort}` : null,
+    urlTailscale ? (urlTailscale.startsWith("http") ? urlTailscale : `http://${urlTailscale}:${urlPort}`) : null,
+    saved,
+    winOrigin && !winOrigin.includes("pages.dev") && !winOrigin.includes("8081") ? winOrigin : null,
+    "http://127.0.0.1:3002",
+    "http://localhost:3002",
+    apiUrl ? apiUrl.replace(/\/$/, "") : null,
+    "http://100.123.88.110:3002",
+    "http://192.168.1.54:3002",
+  ].filter(Boolean) as string[];
+
+  const uniqueCandidates = [...new Set(rawCandidates.map((h) => h.replace(/\/$/, "")))];
+
+  const pingHost = async (host: string): Promise<string> => {
+    const res = await fetchWithTimeout(`${host}/api/devices`, { headers: { accept: "application/json" } }, 900);
+    if (res.ok) return host;
+    throw new Error(`Inaccessible: ${host}`);
+  };
+
+  try {
+    const winner = await Promise.any(uniqueCandidates.map(pingHost));
+    if (winner) {
+      activeBaseUrl = winner;
+      hasDiscovered = true;
+      saveServerHost(winner).catch(() => {});
+      return winner;
+    }
+  } catch {}
+
+  if (saved) activeBaseUrl = saved;
+  else if (uniqueCandidates.length > 0 && uniqueCandidates[0]) activeBaseUrl = uniqueCandidates[0];
+  hasDiscovered = true;
   return activeBaseUrl;
 }
 
@@ -192,7 +233,11 @@ async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutM
 }
 
 async function request<T>(path: string, options?: RequestInit, timeoutMs = 12000): Promise<T> {
-  const hostsToTry = [activeBaseUrl, ...CANDIDATE_HOSTS.filter((h) => h !== activeBaseUrl)];
+  if (!hasDiscovered) {
+    await discoverAndSelectBestHost().catch(() => {});
+  }
+
+  const hostsToTry = [activeBaseUrl];
   let lastError: any = null;
 
   for (const host of hostsToTry) {
@@ -213,6 +258,7 @@ async function request<T>(path: string, options?: RequestInit, timeoutMs = 12000
 
       if (response.ok) {
         activeBaseUrl = host;
+        saveServerHost(host).catch(() => {});
         const payload: unknown = await response.json().catch(() => undefined);
         return payload as T;
       } else {
@@ -227,16 +273,46 @@ async function request<T>(path: string, options?: RequestInit, timeoutMs = 12000
     }
   }
 
+  // If activeBaseUrl failed, try rediscovering once
+  try {
+    const fallbackHost = await discoverAndSelectBestHost();
+    if (fallbackHost && fallbackHost !== activeBaseUrl) {
+      const fullUrl = `${fallbackHost}${path}`;
+      const response = await fetchWithTimeout(
+        fullUrl,
+        {
+          ...options,
+          headers: {
+            accept: "application/json",
+            ...(options?.body ? { "content-type": "application/json" } : {}),
+            ...options?.headers,
+          },
+        },
+        timeoutMs
+      );
+      if (response.ok) {
+        activeBaseUrl = fallbackHost;
+        saveServerHost(fallbackHost).catch(() => {});
+        const payload: unknown = await response.json().catch(() => undefined);
+        return payload as T;
+      }
+    }
+  } catch {}
+
   throw new Error(lastError?.message || "Cours est hors connexion. L application utilise le cache local.");
 }
 
 export async function requestText(path: string, timeoutMs = 12000): Promise<string> {
-  const hostsToTry = [activeBaseUrl, ...CANDIDATE_HOSTS.filter((h) => h !== activeBaseUrl)];
+  if (!hasDiscovered) {
+    await discoverAndSelectBestHost().catch(() => {});
+  }
+  const hostsToTry = [activeBaseUrl];
   for (const host of hostsToTry) {
     try {
       const response = await fetchWithTimeout(`${host}${path}`, { headers: { accept: "text/plain" } }, timeoutMs);
       if (response.ok) {
         activeBaseUrl = host;
+        saveServerHost(host).catch(() => {});
         return await response.text();
       }
     } catch {}
