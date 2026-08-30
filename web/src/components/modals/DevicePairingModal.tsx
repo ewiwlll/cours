@@ -12,6 +12,7 @@ import {
   Tablet,
   HelpCircle,
   ShieldCheck,
+  Zap,
 } from 'lucide-react';
 import QRCode from 'qrcode';
 import { useStore } from '../../lib/store';
@@ -31,12 +32,17 @@ export function DevicePairingModal() {
   const [devices, setDevices] = useState<ConnectedDevice[]>([]);
   const [localIp, setLocalIp] = useState<string>('127.0.0.1');
   const [port, setPort] = useState<number>(3002);
-  const [pairingUrl, setPairingUrl] = useState<string>('');
+  const [expoPort, setExpoPort] = useState<number>(8081);
+  const [targetType, setTargetType] = useState<'expo' | 'pwa'>('expo');
   const [tailscaleUrl, setTailscaleUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<'qr' | 'devices' | 'guide'>('qr');
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const currentUrl = targetType === 'expo'
+    ? `exp://${localIp}:${expoPort}`
+    : `http://${localIp}:${port}`;
 
   const fetchDevices = async () => {
     try {
@@ -47,7 +53,6 @@ export function DevicePairingModal() {
         setDevices(data.devices || []);
         setLocalIp(data.localIp || '127.0.0.1');
         setPort(data.port || 3002);
-        setPairingUrl(data.pairingUrl || `http://${data.localIp || '127.0.0.1'}:${data.port || 3002}`);
         setTailscaleUrl(data.tailscaleUrl || null);
       }
     } catch {
@@ -63,10 +68,10 @@ export function DevicePairingModal() {
   }, [modals.devicePairing]);
 
   useEffect(() => {
-    if (!modals.devicePairing || !pairingUrl || !canvasRef.current) return;
+    if (!modals.devicePairing || !currentUrl || !canvasRef.current) return;
     QRCode.toCanvas(
       canvasRef.current,
-      pairingUrl,
+      currentUrl,
       {
         width: 240,
         margin: 1.5,
@@ -79,12 +84,12 @@ export function DevicePairingModal() {
         if (error) console.error('Erreur QR Code:', error);
       }
     );
-  }, [modals.devicePairing, pairingUrl, activeTab]);
+  }, [modals.devicePairing, currentUrl, targetType, activeTab]);
 
   if (!modals.devicePairing) return null;
 
   const handleCopyUrl = () => {
-    navigator.clipboard.writeText(pairingUrl);
+    navigator.clipboard.writeText(currentUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
@@ -127,8 +132,8 @@ export function DevicePairingModal() {
               <Smartphone className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-sm text-white">Appareils & Synchronisation Mobile</h3>
-              <p className="text-[11px] text-zinc-400">Connectez vos smartphones et tablettes en 1 scan</p>
+              <h3 className="font-bold text-sm text-white">Appareils & Application Mobile Native</h3>
+              <p className="text-[11px] text-zinc-400">Scannez pour ouvrir l'application mobile native sur votre téléphone</p>
             </div>
           </div>
 
@@ -151,7 +156,7 @@ export function DevicePairingModal() {
             }`}
           >
             <QrCode className="w-3.5 h-3.5" />
-            <span>QR Code Magique</span>
+            <span>QR Code Mobile</span>
           </button>
 
           <button
@@ -185,15 +190,48 @@ export function DevicePairingModal() {
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1 text-xs">
+        <div className="p-6 overflow-y-auto space-y-5 flex-1 text-xs">
 
           {/* TAB 1: QR CODE */}
           {activeTab === 'qr' && (
-            <div className="flex flex-col items-center text-center space-y-5">
+            <div className="flex flex-col items-center text-center space-y-4">
+              
+              {/* Type Switcher: Expo Native vs Web */}
+              <div className="inline-flex p-1 rounded-xl bg-zinc-900 border border-zinc-800">
+                <button
+                  type="button"
+                  onClick={() => setTargetType('expo')}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    targetType === 'expo'
+                      ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                      : 'text-zinc-400 hover:text-zinc-200'
+                  }`}
+                >
+                  <Zap className="w-3.5 h-3.5 text-amber-300" />
+                  <span>App Mobile Native (Expo Go)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTargetType('pwa')}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    targetType === 'pwa'
+                      ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                      : 'text-zinc-400 hover:text-zinc-200'
+                  }`}
+                >
+                  <Globe className="w-3.5 h-3.5" />
+                  <span>Version Web PWA</span>
+                </button>
+              </div>
+
               <div className="max-w-md space-y-1">
-                <h4 className="text-base font-bold text-white">Scannez pour ouvrir Cours sur votre Téléphone</h4>
-                <p className="text-zinc-400 text-xs">
-                  Ouvrez l'appareil photo de votre iPhone ou Android et visez ce code :
+                <h4 className="text-sm font-bold text-white">
+                  {targetType === 'expo' ? 'Scannez avec l’App Expo Go sur votre Téléphone' : 'Scannez pour ouvrir dans le Navigateur'}
+                </h4>
+                <p className="text-zinc-400 text-[11px]">
+                  {targetType === 'expo'
+                    ? 'Ouvrez l’application gratuite Expo Go sur votre iPhone ou Android et scannez ce code :'
+                    : 'Ouvrez votre appareil photo pour ouvrir la version Web.'}
                 </p>
               </div>
 
@@ -205,29 +243,32 @@ export function DevicePairingModal() {
               {/* Connection URL Pill */}
               <div className="w-full max-w-md p-3 rounded-xl bg-surface-elevated/40 border border-border space-y-2">
                 <div className="flex items-center justify-between text-[11px] text-zinc-400">
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-1.5 font-semibold text-zinc-300">
                     <Wifi className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Adresse Wi-Fi locale :</span>
+                    <span>{targetType === 'expo' ? 'URL Expo Metro :' : 'URL Web Locale :'}</span>
                   </span>
                   <button
                     onClick={handleCopyUrl}
                     className="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1 transition-colors"
                   >
                     {copied ? <CheckCircle2 className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                    <span>{copied ? 'Copié !' : 'Copier le lien'}</span>
+                    <span>{copied ? 'Copié !' : 'Copier'}</span>
                   </button>
                 </div>
-                <div className="p-2 rounded-lg bg-surface border border-border font-mono text-zinc-200 font-bold text-center select-all">
-                  {pairingUrl}
+                <div className="p-2 rounded-lg bg-surface border border-border font-mono text-emerald-400 font-bold text-center select-all text-xs">
+                  {currentUrl}
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-300 text-[11px] flex items-center gap-2 max-w-md text-left">
-                <ShieldCheck className="w-4 h-4 shrink-0 text-blue-400" />
-                <span>
-                  <strong>Connexion 100% privée et directe :</strong> Vos cours restent sur votre ordinateur sans transiter par aucun serveur tiers.
-                </span>
-              </div>
+              {targetType === 'expo' && (
+                <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-300 text-[11px] text-left space-y-1 max-w-md">
+                  <strong className="block text-purple-200">💡 Comment lancer l'application native en 10 secondes :</strong>
+                  <p className="text-zinc-400 leading-relaxed">
+                    1. Installez l'application gratuite <strong>Expo Go</strong> sur l'App Store ou le Google Play Store.<br/>
+                    2. Scannez ce QR Code depuis Expo Go : l'application <strong>Cours Mobile native</strong> se lance avec micro natif et onglets mobiles !
+                  </p>
+                </div>
+              )}
             </div>
           )}
 
@@ -316,38 +357,26 @@ export function DevicePairingModal() {
           {/* TAB 3: GUIDE */}
           {activeTab === 'guide' && (
             <div className="space-y-4">
-              <h4 className="font-bold text-sm text-white">Guide Pas-à-Pas d'Appairage</h4>
+              <h4 className="font-bold text-sm text-white">Guide Pas-à-Pas d'Appairage Mobile</h4>
               
               <div className="space-y-3">
                 <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-2">
-                  <span className="font-bold text-purple-400 text-xs flex items-center gap-2">
-                    <span>🍏</span> Sur iPhone / iPad (iOS Safari)
+                  <span className="font-bold text-blue-400 text-xs flex items-center gap-2">
+                    <span>⚡</span> Option 1 : Application Native via Expo Go (Recommandé)
                   </span>
                   <ol className="space-y-1.5 text-zinc-400 text-[11px] list-decimal list-inside leading-relaxed">
-                    <li>Scannez le QR Code avec l'application <strong>Appareil Photo</strong> d'iOS.</li>
-                    <li>Cliquez sur le lien jaune qui s'affiche pour ouvrir Safari.</li>
-                    <li>Appuyez sur le bouton <strong>Partager</strong> en bas, puis <strong>« Sur l'écran d'accueil »</strong>.</li>
-                    <li>L'icône Cours s'installe comme une vraie application autonome !</li>
+                    <li>Téléchargez l'application gratuite <strong>Expo Go</strong> sur l'App Store ou Google Play.</li>
+                    <li>Ouvrez Expo Go et scannez le <strong>QR Code Mobile Native</strong>.</li>
+                    <li>L'application native se charge avec son design mobile, ses boutons tactiles et l'enregistrement amphi !</li>
                   </ol>
                 </div>
 
                 <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-2">
                   <span className="font-bold text-emerald-400 text-xs flex items-center gap-2">
-                    <span>🤖</span> Sur Google Pixel / Android (Chrome)
-                  </span>
-                  <ol className="space-y-1.5 text-zinc-400 text-[11px] list-decimal list-inside leading-relaxed">
-                    <li>Scannez le QR Code avec l'appareil photo ou Google Lens.</li>
-                    <li>Chrome s'ouvre : cliquez sur <strong>« Installer l'application »</strong> en bas.</li>
-                    <li>Votre téléphone est connecté à votre ordinateur en temps réel !</li>
-                  </ol>
-                </div>
-
-                <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-2">
-                  <span className="font-bold text-blue-400 text-xs flex items-center gap-2">
-                    <span>🌍</span> En 4G à l'extérieur (Amphi, Transports)
+                    <span>🤖</span> Option 2 : Application Android APK Standalone
                   </span>
                   <p className="text-zinc-400 text-[11px] leading-relaxed">
-                    Installez gratuitement <strong>Tailscale</strong> sur votre Mac/PC et votre téléphone. Vous pourrez réviser et synchroniser vos cours même à 500 km de chez vous via un tunnel privé chiffré !
+                    Si votre téléphone Android est connecté à votre ordinateur, tapez simplement <code className="text-zinc-200 font-mono">adb install -r -d apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk</code> pour installer directement l'APK autonome !
                   </p>
                 </div>
               </div>
@@ -358,7 +387,7 @@ export function DevicePairingModal() {
 
         {/* Footer */}
         <div className="px-6 py-4 border-t border-border bg-surface-elevated/40 flex items-center justify-between text-xs">
-          <span className="text-zinc-500 font-mono text-[11px]">Port {port} • Mode Local-First</span>
+          <span className="text-zinc-500 font-mono text-[11px]">Metro Expo : {expoPort} • API : {port}</span>
           <button
             onClick={() => closeModal('devicePairing')}
             className="px-4 py-2 rounded-xl bg-surface-muted hover:bg-zinc-700 text-zinc-200 font-bold transition-colors"
