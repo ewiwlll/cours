@@ -1276,68 +1276,73 @@
       const isEn = currentLandingLang === 'en';
 
       if (isMac) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🍏 <strong>' + (isEn ? 'macOS Detected' : 'macOS Détecté') + '</strong> • ' + (isEn ? 'Native App with Whisper Metal' : 'Application Native avec Whisper Metal') + '</span>';
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🍏 <strong>' + (isEn ? 'macOS Detected' : 'macOS Détecté') + '</strong> • ' + (isEn ? 'Instant 1-Click Terminal Install' : 'Installation 1-Clic Recommandée') + '</span>';
         ctaContainer.innerHTML = `
           <div class="flex flex-col items-center justify-center gap-4 w-full max-w-xl">
-            <!-- 1. LA COMMANDE 1-LIGNE TERMINAL ULTRA-SIMPLE & RAPIDE (0 BLOCAGE) -->
-            <div class="w-full p-4 rounded-2xl bg-zinc-900/95 border border-blue-500/40 shadow-2xl shadow-blue-500/10 text-left space-y-2">
+            <!-- CARTE COMMANDE UNIQUE 1-CLIC CURL -->
+            <div class="w-full p-5 rounded-2xl bg-zinc-900/95 border border-blue-500/40 shadow-2xl shadow-blue-500/10 text-left space-y-3">
               <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
-                  <span>⚡</span> ${isEn ? '1-Click Instant Install (Terminal)' : 'Installation 1-Clic Recommandée (Terminal)'}
+                  <span>⚡</span> ${isEn ? 'Copy & paste into Terminal:' : 'Copiez-collez dans votre Terminal :'}
                 </span>
-                <span class="text-[10px] text-zinc-500 font-mono">0 Alerte • Prêt en 3s</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">0 Alerte • 100% Automatique</span>
               </div>
-              <div class="flex items-center gap-2 bg-black/60 p-2.5 rounded-xl border border-zinc-800">
-                <code id="macCurlCmd" class="font-mono text-xs text-emerald-400 select-all flex-1 truncate">curl -fsSL https://cours-awc.pages.dev/install.sh | bash</code>
-                <button onclick="navigator.clipboard.writeText('curl -fsSL https://cours-awc.pages.dev/install.sh | bash'); this.innerText='✓ Copié !'; setTimeout(() => this.innerText='Copier', 2000)" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition-all shrink-0 cursor-pointer shadow-md">
+              <div class="flex items-center gap-2 bg-black/70 p-3 rounded-xl border border-zinc-800">
+                <code id="macCurlCmd" class="font-mono text-xs sm:text-sm text-emerald-400 select-all flex-1 truncate">curl -fsSL https://cours-awc.pages.dev/install.sh | bash</code>
+                <button onclick="navigator.clipboard.writeText('curl -fsSL https://cours-awc.pages.dev/install.sh | bash'); this.innerText='✓ Copié !'; setTimeout(() => this.innerText='Copier', 2000)" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition-all shrink-0 cursor-pointer shadow-md">
                   Copier
                 </button>
               </div>
-              <p class="text-[11px] text-zinc-400 leading-tight">
-                ${isEn ? 'Open Terminal (Cmd + Space > Terminal), paste and hit Enter. Cours will launch automatically.' : 'Ouvrez votre <strong>Terminal</strong> (⌘ + Espace > tapez Terminal), collez la ligne et appuyez sur <strong>Entrée</strong>.'}
-              </p>
-            </div>
 
-            <!-- 2. BOUTONS SECONDAIRES : WEB IMMÉDIAT ET TÉLÉCHARGEMENT DIRECT -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
-              <a href="/app" class="w-full sm:w-auto flex-1 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 transition-all hover:scale-105 active:scale-95 text-center">
-                <span class="text-lg">🌐</span>
-                <span>${isEn ? 'Launch Web / PWA directly' : 'Lancer en Ligne (Web / PWA)'}</span>
-              </a>
-
-              <a href="/Cours-macOS.pkg" download="Cours-macOS.pkg" class="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 font-semibold text-xs flex items-center justify-center gap-2 transition-all text-center">
-                <span>🍏</span>
-                <span>${isEn ? 'Download .pkg' : 'Télécharger .pkg'}</span>
-              </a>
-
-              <a href="/Cours-macOS.dmg" download="Cours-macOS.dmg" class="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 font-semibold text-xs flex items-center justify-center gap-2 transition-all text-center">
-                <span>📦</span>
-                <span>${isEn ? 'Download .dmg' : 'Télécharger .dmg'}</span>
-              </a>
+              <!-- GUIDE ÉTAPE PAR ÉTAPE ULTRA CLAIR -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 border-t border-zinc-800 text-[11px] text-zinc-300">
+                <div class="flex items-center gap-2 bg-zinc-950/50 p-2 rounded-lg border border-zinc-800/60">
+                  <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-[10px] shrink-0">1</span>
+                  <span>Ouvrez <strong>Terminal</strong> (⌘ + Espace)</span>
+                </div>
+                <div class="flex items-center gap-2 bg-zinc-950/50 p-2 rounded-lg border border-zinc-800/60">
+                  <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-[10px] shrink-0">2</span>
+                  <span>Collez et faites <strong>Entrée</strong></span>
+                </div>
+                <div class="flex items-center gap-2 bg-zinc-950/50 p-2 rounded-lg border border-zinc-800/60">
+                  <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-[10px] shrink-0">3</span>
+                  <span><strong>L'app s'ouvre</strong> sur votre Mac</span>
+                </div>
+              </div>
             </div>
           </div>
         `;
       } else if (isWindows) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🪟 <strong>' + (isEn ? 'Windows Detected' : 'Windows Détecté') + '</strong> • ' + (isEn ? 'Standalone Installer' : 'Installateur Autonome') + '</span>';
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🪟 <strong>' + (isEn ? 'Windows Detected' : 'Windows Détecté') + '</strong> • ' + (isEn ? 'PowerShell 1-Click Install' : 'Installation PowerShell 1-Clic') + '</span>';
         ctaContainer.innerHTML = `
-          <div class="flex flex-col items-center justify-center gap-3.5 w-full">
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-lg">
-              <!-- BOUTON 1 : TÉLÉCHARGER WINDOWS -->
-              <a href="/Installer-Windows.bat" download="Installer-Cours.bat" class="w-full sm:w-auto flex-1 px-8 py-4.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-blue-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 text-center">
-                <span class="text-2xl">🪟</span>
-                <span>${isEn ? 'Download for Windows' : 'Télécharger pour Windows'}</span>
-              </a>
-
-              <!-- BOUTON 2 : LANCER EN LIGNE (WEB / PWA) -->
-              <a href="/app" class="w-full sm:w-auto px-6 py-4.5 rounded-2xl bg-zinc-900/90 border border-zinc-700 hover:bg-zinc-800 text-zinc-200 font-bold text-sm flex items-center justify-center gap-2.5 transition-all hover:scale-105 active:scale-95 text-center">
-                <span class="text-xl">🌐</span>
-                <span>${isEn ? 'Launch Web Version' : 'Lancer en Ligne (Web)'}</span>
-              </a>
-            </div>
-
-            <div class="text-[11px] text-zinc-400 flex flex-wrap items-center justify-center gap-2 pt-2">
-              <span>Terminal PowerShell :</span>
-              <code class="font-mono text-[10px] bg-zinc-900 px-2 py-0.5 rounded text-emerald-400 border border-zinc-800 select-all">irm https://cours-awc.pages.dev/install.ps1 | iex</code>
+          <div class="flex flex-col items-center justify-center gap-4 w-full max-w-xl">
+            <div class="w-full p-5 rounded-2xl bg-zinc-900/95 border border-blue-500/40 shadow-2xl shadow-blue-500/10 text-left space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
+                  <span>⚡</span> ${isEn ? 'Copy & paste into PowerShell:' : 'Copiez-collez dans PowerShell :'}
+                </span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">100% Automatique</span>
+              </div>
+              <div class="flex items-center gap-2 bg-black/70 p-3 rounded-xl border border-zinc-800">
+                <code id="winPowerShellCmd" class="font-mono text-xs sm:text-sm text-emerald-400 select-all flex-1 truncate">irm https://cours-awc.pages.dev/install.ps1 | iex</code>
+                <button onclick="navigator.clipboard.writeText('irm https://cours-awc.pages.dev/install.ps1 | iex'); this.innerText='✓ Copié !'; setTimeout(() => this.innerText='Copier', 2000)" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition-all shrink-0 cursor-pointer shadow-md">
+                  Copier
+                </button>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 border-t border-zinc-800 text-[11px] text-zinc-300">
+                <div class="flex items-center gap-2 bg-zinc-950/50 p-2 rounded-lg border border-zinc-800/60">
+                  <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-[10px] shrink-0">1</span>
+                  <span>Ouvrez <strong>PowerShell</strong></span>
+                </div>
+                <div class="flex items-center gap-2 bg-zinc-950/50 p-2 rounded-lg border border-zinc-800/60">
+                  <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-[10px] shrink-0">2</span>
+                  <span>Collez et faites <strong>Entrée</strong></span>
+                </div>
+                <div class="flex items-center gap-2 bg-zinc-950/50 p-2 rounded-lg border border-zinc-800/60">
+                  <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-[10px] shrink-0">3</span>
+                  <span><strong>L'app est installée</strong></span>
+                </div>
+              </div>
             </div>
           </div>
         `;
