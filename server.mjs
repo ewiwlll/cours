@@ -141,6 +141,18 @@ async function saveJsonArray(file, items) {
 function getLocalIp() {
   try {
     const nets = os.networkInterfaces();
+    // Priorité aux interfaces Wi-Fi / Ethernet classiques
+    const preferredInterfaces = ["en0", "en1", "wlan0", "eth0"];
+    for (const ifaceName of preferredInterfaces) {
+      if (nets[ifaceName]) {
+        for (const net of nets[ifaceName]) {
+          if (net.family === "IPv4" && !net.internal) {
+            return net.address;
+          }
+        }
+      }
+    }
+    // Fallback sur n'importe quelle interface IPv4 non interne
     for (const name of Object.keys(nets)) {
       for (const net of nets[name] || []) {
         if (net.family === "IPv4" && !net.internal) {
@@ -2592,6 +2604,116 @@ async function serveStatic(res, pathname) {
     return res.end(html);
   }
 
+  // Landing Page & Docs Routes
+  if (pathname === "/landing" || pathname === "/landing/" || pathname === "/landing/index.html") {
+    const p = path.resolve(ROOT, "landing", "index.html");
+    if (existsSync(p)) {
+      const data = await readFile(p);
+      res.writeHead(200, {
+        "Content-Type": "text/html; charset=utf-8",
+        "Content-Length": data.length,
+        "Cache-Control": "no-cache",
+      });
+      return res.end(data);
+    }
+  }
+
+  if (pathname === "/docs" || pathname === "/docs/" || pathname === "/docs.html") {
+    const p = path.resolve(ROOT, "landing", "docs.html");
+    if (existsSync(p)) {
+      const data = await readFile(p);
+      res.writeHead(200, {
+        "Content-Type": "text/html; charset=utf-8",
+        "Content-Length": data.length,
+        "Cache-Control": "no-cache",
+      });
+      return res.end(data);
+    }
+  }
+
+  // Direct install.sh script
+  if (pathname === "/install.sh" || pathname === "/install") {
+    const candidatePaths = [
+      path.resolve(ROOT, "install.sh"),
+      path.resolve(ROOT, "landing", "install.sh"),
+      path.resolve(ROOT, "public", "install.sh"),
+    ];
+    for (const p of candidatePaths) {
+      if (existsSync(p)) {
+        const data = await readFile(p);
+        res.writeHead(200, {
+          "Content-Type": "text/x-shellscript; charset=utf-8",
+          "Content-Length": data.length,
+          "Cache-Control": "public, max-age=60",
+        });
+        return res.end(data);
+      }
+    }
+  }
+
+  // Direct macOS DMG Download
+  if (pathname === "/Cours-macOS.dmg" || pathname === "/download/mac-dmg" || pathname === "/download/dmg") {
+    const candidatePaths = [
+      path.resolve(ROOT, "Cours-macOS.dmg"),
+      path.resolve(ROOT, "landing", "Cours-macOS.dmg"),
+      path.resolve(ROOT, "public", "Cours-macOS.dmg"),
+    ];
+    for (const p of candidatePaths) {
+      if (existsSync(p)) {
+        const data = await readFile(p);
+        res.writeHead(200, {
+          "Content-Type": "application/x-apple-diskimage",
+          "Content-Disposition": 'attachment; filename="Cours-macOS.dmg"',
+          "Content-Length": data.length,
+          "Cache-Control": "public, max-age=3600",
+        });
+        return res.end(data);
+      }
+    }
+  }
+
+  // Direct macOS ZIP Download
+  if (pathname === "/Cours-macOS.zip" || pathname === "/download/mac-zip" || pathname === "/download/mac-app") {
+    const candidatePaths = [
+      path.resolve(ROOT, "Cours-macOS.zip"),
+      path.resolve(ROOT, "landing", "Cours-macOS.zip"),
+      path.resolve(ROOT, "public", "Cours-macOS.zip"),
+    ];
+    for (const p of candidatePaths) {
+      if (existsSync(p)) {
+        const data = await readFile(p);
+        res.writeHead(200, {
+          "Content-Type": "application/zip",
+          "Content-Disposition": 'attachment; filename="Cours-macOS.zip"',
+          "Content-Length": data.length,
+          "Cache-Control": "public, max-age=3600",
+        });
+        return res.end(data);
+      }
+    }
+  }
+
+  // Direct macOS PKG Download
+  if (pathname === "/Cours-macOS.pkg" || pathname === "/download/mac-pkg") {
+    const candidatePaths = [
+      path.resolve(ROOT, "Cours-macOS.pkg"),
+      path.resolve(ROOT, "landing", "Cours-macOS.pkg"),
+      path.resolve(ROOT, "public", "Cours-macOS.pkg"),
+    ];
+    for (const p of candidatePaths) {
+      if (existsSync(p)) {
+        const data = await readFile(p);
+        res.writeHead(200, {
+          "Content-Type": "application/octet-stream",
+          "Content-Disposition": 'attachment; filename="Cours-macOS.pkg"',
+          "Content-Length": data.length,
+          "Cache-Control": "public, max-age=3600",
+        });
+        return res.end(data);
+      }
+    }
+  }
+
   // Direct APK Downloads
   if (pathname === "/cours.apk" || pathname === "/download/cours.apk" || pathname === "/api/mobile/apk") {
     const candidatePaths = [
@@ -2666,6 +2788,15 @@ async function serveStatic(res, pathname) {
     ".webp": "image/webp",
     ".ico": "image/x-icon",
     ".woff": "font/woff",
+    ".woff2": "font/woff2",
+    ".dmg": "application/x-apple-diskimage",
+    ".pkg": "application/octet-stream",
+    ".zip": "application/zip",
+    ".apk": "application/vnd.android.package-archive",
+    ".sh": "text/x-shellscript; charset=utf-8",
+    ".command": "text/x-shellscript; charset=utf-8",
+    ".bat": "application/x-bat",
+    ".ps1": "text/plain; charset=utf-8",
     ".woff2": "font/woff2",
     ".apk": "application/vnd.android.package-archive",
     ".command": "application/x-sh",

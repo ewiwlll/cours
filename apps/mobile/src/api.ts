@@ -190,6 +190,8 @@ export async function discoverAndSelectBestHost(): Promise<string> {
     winOrigin && !winOrigin.includes("pages.dev") && !winOrigin.includes("8081") ? winOrigin : null,
     "http://127.0.0.1:3002",
     "http://localhost:3002",
+    "http://10.0.2.2:3002", // Android Emulator -> Mac Host
+    "http://10.0.3.2:3002", // Genymotion Emulator -> Mac Host
     apiUrl ? apiUrl.replace(/\/$/, "") : null,
     "http://100.123.88.110:3002",
     "http://192.168.1.54:3002",

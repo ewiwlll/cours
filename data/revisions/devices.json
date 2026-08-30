@@ -8,5 +8,45 @@
     "firstSeenAt": "2026-08-30T09:54:58.134Z",
     "lastSeenAt": "2026-08-30T09:54:58.134Z",
     "syncCount": 1
+  },
+  {
+    "id": "sim-pixel-8-test",
+    "deviceName": "Google Pixel 8 (Simulateur)",
+    "platform": "Android 14",
+    "userAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 8)",
+    "ip": "127.0.0.1",
+    "firstSeenAt": "2026-08-30T10:14:08.571Z",
+    "lastSeenAt": "2026-08-30T10:15:42.427Z",
+    "syncCount": 3
+  },
+  {
+    "id": "sim-iphone-16-test",
+    "deviceName": "iPhone 16 Pro (Simulateur)",
+    "platform": "iOS 18.0",
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)",
+    "ip": "127.0.0.1",
+    "firstSeenAt": "2026-08-30T10:14:08.573Z",
+    "lastSeenAt": "2026-08-30T10:15:42.430Z",
+    "syncCount": 3
+  },
+  {
+    "id": "mob-ap7cqvs",
+    "deviceName": "Android Smartphone",
+    "platform": "android",
+    "userAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 8 Pro Build/UD1A.230803.041) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36",
+    "ip": "127.0.0.1",
+    "firstSeenAt": "2026-08-30T10:15:38.544Z",
+    "lastSeenAt": "2026-08-30T10:15:38.544Z",
+    "syncCount": 1
+  },
+  {
+    "id": "mob-g5i6vef",
+    "deviceName": "Android Smartphone",
+    "platform": "android",
+    "userAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 8 Pro Build/UD1A.230803.041) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36",
+    "ip": "127.0.0.1",
+    "firstSeenAt": "2026-08-30T10:15:44.385Z",
+    "lastSeenAt": "2026-08-30T10:15:44.385Z",
+    "syncCount": 1
   }
 ]

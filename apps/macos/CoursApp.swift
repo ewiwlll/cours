@@ -220,13 +220,16 @@ class CoursAppDelegate: NSObject, NSApplicationDelegate, WKUIDelegate, WKNavigat
         DispatchQueue.main.async {
             self.statusLabel.stringValue = "Initialisation du serveur local..."
         }
+        let home = FileManager.default.homeDirectoryForCurrentUser.path
         let nodeCandidates = [
-            "/Users/ewilien/.local/bin/node",
+            (home as NSString).appendingPathComponent(".local/bin/node"),
+            (home as NSString).appendingPathComponent(".volta/bin/node"),
+            (home as NSString).appendingPathComponent(".asdf/shims/node"),
             "/opt/homebrew/bin/node",
             "/usr/local/bin/node",
-            "/Users/ewilien/.hermes/node/bin/node"
+            "/usr/bin/node"
         ]
-        var nodePath = "/usr/local/bin/node"
+        var nodePath: String? = nil
         for candidate in nodeCandidates {
             if FileManager.default.fileExists(atPath: candidate) {
                 nodePath = candidate
@@ -234,9 +237,42 @@ class CoursAppDelegate: NSObject, NSApplicationDelegate, WKUIDelegate, WKNavigat
             }
         }
 
+        // Si non trouvé, tentative via which node
+        if nodePath == nil {
+            let whichProc = Process()
+            whichProc.executableURL = URL(fileURLWithPath: "/usr/bin/which")
+            whichProc.arguments = ["node"]
+            let pipe = Pipe()
+            whichProc.standardOutput = pipe
+            try? whichProc.run()
+            whichProc.waitUntilExit()
+            let data = pipe.fileHandleForReading.readDataToEndOfFile()
+            if let output = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines), !output.isEmpty, FileManager.default.fileExists(atPath: output) {
+                nodePath = output
+            }
+        }
+
+        guard let validNode = nodePath else {
+            print("Node.js introuvable sur la machine, bascule vers le client Cloud...")
+            DispatchQueue.main.async {
+                self.statusLabel.stringValue = "Chargement de la version Cloud..."
+                self.loadCloudApp()
+            }
+            return
+        }
+
         let startScript = (projectDir as NSString).appendingPathComponent("start.mjs")
+        if !FileManager.default.fileExists(atPath: startScript) {
+            print("start.mjs introuvable dans \(projectDir), bascule vers le client Cloud...")
+            DispatchQueue.main.async {
+                self.statusLabel.stringValue = "Chargement de la version Cloud..."
+                self.loadCloudApp()
+            }
+            return
+        }
+
         let process = Process()
-        process.executableURL = URL(fileURLWithPath: nodePath)
+        process.executableURL = URL(fileURLWithPath: validNode)
         process.arguments = [startScript]
         process.currentDirectoryURL = URL(fileURLWithPath: projectDir)
         var env = ProcessInfo.processInfo.environment
@@ -248,13 +284,19 @@ class CoursAppDelegate: NSObject, NSApplicationDelegate, WKUIDelegate, WKNavigat
             self.serverProcess = process
         } catch {
             print("Failed to spawn start.mjs: \(error)")
+            DispatchQueue.main.async {
+                self.loadCloudApp()
+            }
         }
     }
 
     func waitForServerReady(attempt: Int = 0) {
-        if attempt > 40 {
-            statusLabel.stringValue = "Impossible de joindre le serveur. Cliquez sur Actualiser."
-            spinner.stopAnimation(nil)
+        if attempt > 30 {
+            // Si le serveur local n'a pas répondu après 9s, on bascule vers le cloud en douceur
+            DispatchQueue.main.async {
+                self.statusLabel.stringValue = "Connexion au Cloud..."
+                self.loadCloudApp()
+            }
             return
         }
 
@@ -269,6 +311,12 @@ class CoursAppDelegate: NSObject, NSApplicationDelegate, WKUIDelegate, WKNavigat
                 }
             }
         }
+    }
+
+    func loadCloudApp() {
+        guard let url = URL(string: "https://cours-awc.pages.dev/app") else { return }
+        let request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 15.0)
+        webView.load(request)
     }
 
     func loadWebApp() {
