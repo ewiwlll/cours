@@ -1276,19 +1276,24 @@
       const isEn = currentLandingLang === 'en';
 
       if (isMac) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🍏 <strong>' + (isEn ? 'macOS Detected' : 'macOS Détecté') + '</strong> • ' + (isEn ? '1-Click Installer Ready' : 'Installateur 1-Clic Prêt') + '</span>';
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🍏 <strong>' + (isEn ? 'macOS Detected' : 'macOS Détecté') + '</strong> • ' + (isEn ? 'Apple Silicon & Intel Ready' : 'Apple Silicon & Intel Prêt') + '</span>';
         ctaContainer.innerHTML = `
-          <a href="/Installer-macOS.command" download="Installer-Cours.command" class="px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-blue-500/25 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95">
-            <span class="text-lg">🍏</span>
-            <span>${isEn ? 'Download Cours for Mac (1-Click)' : 'Télécharger Cours pour Mac (1-Clic)'}</span>
-          </a>
-          <a href="/cours.apk" download="cours.apk" class="px-5 py-4 rounded-2xl bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 font-semibold text-xs flex items-center gap-2 transition-all hover:border-emerald-500/80 active:scale-95">
-            <span class="text-base">🤖</span>
-            <span>${isEn ? 'Android Standalone App (.apk)' : 'App Android Native (.apk)'}</span>
-          </a>
-          <a href="/app" class="px-4 py-4 rounded-2xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white font-semibold text-xs flex items-center gap-1.5 transition-all">
-            <span>${isEn ? 'Launch Web App' : 'Ouvrir l\'App Web'} →</span>
-          </a>
+          <div class="flex flex-wrap items-center justify-center gap-3 w-full">
+            <a href="/Cours-macOS.zip" download="Cours-macOS.zip" class="px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-blue-500/25 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95">
+              <span class="text-lg">🍏</span>
+              <span>${isEn ? 'Download Cours.app for Mac' : 'Télécharger Cours.app pour Mac'}</span>
+            </a>
+            <a href="/cours.apk" download="cours.apk" class="px-5 py-4 rounded-2xl bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 font-semibold text-xs flex items-center gap-2 transition-all hover:border-emerald-500/80 active:scale-95">
+              <span class="text-base">🤖</span>
+              <span>${isEn ? 'Android Standalone App (.apk)' : 'App Android Native (.apk)'}</span>
+            </a>
+            <a href="/app" class="px-4 py-4 rounded-2xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white font-semibold text-xs flex items-center gap-1.5 transition-all">
+              <span>${isEn ? 'Launch Web App' : 'Ouvrir l\'App Web'} →</span>
+            </a>
+          </div>
+          <div class="w-full text-center mt-2 text-[11px] text-zinc-400 bg-zinc-900/40 py-2 px-3 rounded-xl border border-zinc-800/60">
+            💡 <strong>${isEn ? 'macOS First Launch Tip:' : 'Astuce 1er Lancement macOS :'}</strong> ${isEn ? 'Right-Click on the downloaded app > click "Open" > click "Open" to allow the open-source app.' : 'Faites <strong>Clic Droit &gt; Ouvrir</strong> (ou Ctrl + Clic &gt; Ouvrir) sur le fichier pour valider l\'application Open Source.'}
+          </div>
         `;
       } else if (isWindows) {
         badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🪟 <strong>' + (isEn ? 'Windows Detected' : 'Windows Détecté') + '</strong> • ' + (isEn ? '1-Click Installer Ready' : 'Installateur 1-Clic Prêt') + '</span>';
