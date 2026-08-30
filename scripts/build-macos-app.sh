@@ -48,23 +48,32 @@ ln -s /Applications "$STAGE_DIR/Applications"
 
 cat << 'EOF' > "$STAGE_DIR/Ouvrir-Cours.command"
 #!/usr/bin/env bash
-# Script 1-Clic de lancement et levée de quarantaine Gatekeeper pour Cours
+# ============================================================
+# Cours — Assistant d'ouverture et déblocage 1-Clic pour macOS
+# ============================================================
+clear
+echo "🍏 Configuration et déblocage de Cours pour macOS..."
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-if [ -d "/Applications/Cours.app" ]; then
-    TARGET="/Applications/Cours.app"
-elif [ -d "$DIR/Cours.app" ]; then
-    TARGET="$DIR/Cours.app"
-else
-    TARGET=""
+
+# 1. Si Cours.app n'est pas encore dans Applications, copie automatique
+if [ ! -d "/Applications/Cours.app" ] && [ -d "$DIR/Cours.app" ]; then
+    echo "📦 Installation de Cours dans /Applications..."
+    cp -R "$DIR/Cours.app" /Applications/
 fi
 
-if [ -n "$TARGET" ]; then
-    echo "Levée des restrictions de sécurité macOS sur Cours.app..."
-    xattr -cr "$TARGET" 2>/dev/null || true
-    echo "Lancement de Cours..."
-    open "$TARGET"
+# 2. Levée des restrictions de quarantaine Gatekeeper
+if [ -d "/Applications/Cours.app" ]; then
+    echo "⚡ Levée des sécurités macOS (xattr -cr)..."
+    xattr -cr "/Applications/Cours.app" 2>/dev/null || true
+    echo "🚀 Lancement de l'application Cours..."
+    open "/Applications/Cours.app"
+    echo "✓ Tout est prêt ! Vous pouvez fermer cette fenêtre."
+elif [ -d "$DIR/Cours.app" ]; then
+    xattr -cr "$DIR/Cours.app" 2>/dev/null || true
+    open "$DIR/Cours.app"
 else
-    echo "Cours.app introuvable. Veuillez glisser Cours.app dans Applications."
+    echo "❌ Cours.app introuvable."
 fi
 EOF
 chmod +x "$STAGE_DIR/Ouvrir-Cours.command"
