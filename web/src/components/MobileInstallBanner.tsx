@@ -112,25 +112,23 @@ export function MobileInstallBanner() {
           </div>
         )}
 
-        {/* Action Android / APK */}
+        {/* Action Android & Desktop */}
         {!isIos && (
           <div className="mt-3 space-y-2 text-left">
-            <a
-              href="/cours.apk"
-              download="cours.apk"
-              className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 transition-all active:scale-95 text-center"
-            >
-              <Download className="w-4 h-4 text-emerald-200 animate-bounce" />
-              <span>Télécharger l'App Native Android (.apk)</span>
-            </a>
-
-            {deferredPrompt && (
+            {deferredPrompt ? (
               <button
                 onClick={handleInstallClick}
-                className="w-full py-2.5 rounded-xl bg-zinc-900 border border-zinc-700 hover:bg-zinc-800 text-zinc-200 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all"
+                className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 transition-all active:scale-95 text-center"
               >
-                <span>Ou ajouter via le navigateur</span>
+                <Download className="w-4 h-4 text-emerald-200 animate-bounce" />
+                <span>Installer sur l'écran d'accueil</span>
               </button>
+            ) : (
+              <div className="p-3 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-xs text-zinc-300 space-y-1.5">
+                <p className="leading-snug">
+                  Touchez le menu de votre navigateur (les <strong>3 points ⋮</strong> en haut à droite) et sélectionnez <strong className="text-white">« Installer l'application »</strong> ou <strong className="text-white">« Ajouter à l'écran d'accueil »</strong>.
+                </p>
+              </div>
             )}
           </div>
         )}

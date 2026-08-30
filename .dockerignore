@@ -1,0 +1,12 @@
+node_modules
+web/node_modules
+apps/mobile/node_modules
+.git
+.playwright-cli
+.wrangler
+server.log
+output
+models/whisper/*.bin
+*.dmg
+*.pkg
+*.zip

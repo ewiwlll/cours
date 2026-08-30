@@ -1,0 +1,16 @@
+services:
+  cours:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cours-app
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    environment:
+      - BIOMIA_PORT=3002
+      - NODE_ENV=production
+      - GEMINI_MODEL=gemini-3.7-flash
+    volumes:
+      - ./data:/app/data
+      - ./.env:/app/.env

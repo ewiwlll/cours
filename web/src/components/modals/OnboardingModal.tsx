@@ -18,6 +18,7 @@ import {
   Bot,
   Zap,
   Globe,
+  Copy,
 } from 'lucide-react';
 import QRCode from 'qrcode';
 import { useStore } from '../../lib/store';
@@ -30,11 +31,8 @@ export function OnboardingModal() {
   const [testing, setTesting] = useState<boolean>(false);
   const [testResult, setTestResult] = useState<{ ok: boolean; message: string } | null>(null);
   const [pairingUrl, setPairingUrl] = useState<string>('');
-  const [tailscaleUrl, setTailscaleUrl] = useState<string | null>(null);
-  const [antigravityStatus, setAntigravityStatus] = useState<{ installed: boolean; running: boolean } | null>(null);
-  const [openingAntigravity, setOpeningAntigravity] = useState<boolean>(false);
+  const [copied, setCopied] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [connectedDevicesCount, setConnectedDevicesCount] = useState<number>(0);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -56,55 +54,52 @@ export function OnboardingModal() {
     fetch('/api/system/status')
       .then((res) => res.json())
       .then((data) => {
-        if (data.ok) {
-          setPairingUrl(data.mobileConnectUrl || `http://${data.localIp || '127.0.0.1'}:${data.port || 3002}/mobile`);
-          setTailscaleUrl(data.tailscale?.url || null);
-          setAntigravityStatus(data.antigravity || null);
+        if (data.ok && data.localIp && data.localIp !== '127.0.0.1') {
+          setPairingUrl(`http://${data.localIp}:${data.port || 3002}/?paired=1`);
+        } else if (data.mobileConnectUrl) {
+          setPairingUrl(data.mobileConnectUrl);
         }
       })
       .catch(() => {
         fetch('/api/devices')
           .then((res) => res.json())
           .then((data) => {
-            setPairingUrl(data.pairingUrl || `http://${data.localIp || '127.0.0.1'}:${data.port || 3002}/mobile`);
-            setTailscaleUrl(data.tailscaleUrl || null);
-            setConnectedDevicesCount((data.devices || []).length);
+            if (data.localIp && data.localIp !== '127.0.0.1') {
+              setPairingUrl(`http://${data.localIp}:${data.port || 3002}/?paired=1`);
+            } else if (data.pairingUrl) {
+              setPairingUrl(data.pairingUrl);
+            }
           })
-          .catch(() => {});
+          .catch(() => {
+            if (typeof window !== 'undefined' && window.location.origin) {
+              setPairingUrl(`${window.location.origin}/?paired=1`);
+            }
+          });
       });
   };
 
   useEffect(() => {
     if (isOpen) {
       fetchSystemData();
-      const interval = setInterval(fetchSystemData, 4000);
-      return () => clearInterval(interval);
     }
   }, [isOpen]);
 
   useEffect(() => {
-    if (step === 4 && pairingUrl && canvasRef.current) {
+    if (step === 3 && pairingUrl && canvasRef.current) {
       QRCode.toCanvas(
         canvasRef.current,
         pairingUrl,
         {
-          width: 210,
+          width: 220,
           margin: 1.5,
           color: { dark: '#000000', light: '#ffffff' },
         },
         (err) => {
-          if (err) console.error(err);
+          if (err) console.error('Erreur génération QR Code:', err);
         }
       );
     }
   }, [step, pairingUrl]);
-
-  useEffect(() => {
-    if (step === 3) {
-      fetch('/api/antigravity/open', { method: 'POST' }).catch(() => {});
-      fetchSystemData();
-    }
-  }, [step]);
 
   if (!isOpen) return null;
 
@@ -120,7 +115,7 @@ export function OnboardingModal() {
       });
       const data = await res.json();
       if (res.ok && data.ok) {
-        setTestResult({ ok: true, message: 'Clé Gemini API valide et enregistrée !' });
+        setTestResult({ ok: true, message: 'Clé Gemini valide et enregistrée !' });
         await fetch('/api/settings', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -136,16 +131,11 @@ export function OnboardingModal() {
     }
   };
 
-  const handleOpenAntigravity = async () => {
-    setOpeningAntigravity(true);
-    try {
-      await fetch('/api/antigravity/open', { method: 'POST' });
-      setTimeout(() => {
-        fetchSystemData();
-        setOpeningAntigravity(false);
-      }, 1500);
-    } catch {
-      setOpeningAntigravity(false);
+  const handleCopyUrl = () => {
+    if (pairingUrl) {
+      navigator.clipboard.writeText(pairingUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
     }
   };
 
@@ -157,23 +147,23 @@ export function OnboardingModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in select-none">
-      <div className="relative w-full max-w-lg bg-surface border border-border rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+      <div className="relative w-full max-w-lg bg-zinc-950 border border-zinc-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
         
-        {/* Step Indicator Top Bar */}
-        <div className="px-6 pt-6 pb-2 flex items-center justify-between border-b border-border/40">
+        {/* Header Stepper */}
+        <div className="px-6 pt-5 pb-3 flex items-center justify-between border-b border-zinc-800/80 bg-zinc-900/60">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white text-sm shadow-md shadow-blue-500/20">
               C
             </div>
             <div>
               <span className="font-bold text-white text-sm tracking-tight block">Bienvenue sur Cours</span>
-              <span className="text-[10px] text-zinc-400">Configuration rapide en 4 étapes</span>
+              <span className="text-[10px] text-zinc-400">Configuration en 3 étapes simples</span>
             </div>
           </div>
 
           {/* Stepper Dots */}
           <div className="flex items-center gap-1.5">
-            {[1, 2, 3, 4].map((s) => (
+            {[1, 2, 3].map((s) => (
               <div
                 key={s}
                 className={`h-1.5 rounded-full transition-all ${
@@ -188,17 +178,17 @@ export function OnboardingModal() {
           </div>
         </div>
 
-        {/* Modal Content per Step */}
-        <div className="p-6 text-xs space-y-5 flex-1 overflow-y-auto">
+        {/* Body Content */}
+        <div className="p-6 text-xs space-y-4 flex-1 overflow-y-auto">
 
-          {/* STEP 1: WELCOME & METHODOLOGY */}
+          {/* STEP 1: PRESENTATION & METHOD */}
           {step === 1 && (
             <div className="space-y-4 animate-fade-in">
               <div className="text-center space-y-1.5 pt-1">
                 <span className="text-3xl">🎓</span>
-                <h3 className="text-xl font-extrabold text-white">L'OS d'Apprentissage & de Révision</h3>
+                <h3 className="text-xl font-extrabold text-white">L'OS de Révision Active & d'Amphi</h3>
                 <p className="text-zinc-400 text-xs max-w-sm mx-auto leading-relaxed">
-                  Prêt à réussir vos examens ? Voici les 3 piliers qui transforment votre manière d'étudier :
+                  Conçu scientifiquement pour retenir 100% de vos cours sans stress d'examen :
                 </p>
               </div>
 
@@ -208,8 +198,8 @@ export function OnboardingModal() {
                     🎙️
                   </div>
                   <div>
-                    <strong className="text-white block text-xs font-bold">1. En Amphi : Écoute Active & Whisper Metal</strong>
-                    <span className="text-zinc-400 text-[11px] leading-tight block">Le micro capture tout sans coupure. Vous visualisez les concepts.</span>
+                    <strong className="text-white block text-xs font-bold">1. En Amphi : Écoute Active & Photos</strong>
+                    <span className="text-zinc-400 text-[11px] leading-tight block">Posez des balises en 1 clic. Le micro capture tout fidèlement.</span>
                   </div>
                 </div>
 
@@ -219,7 +209,7 @@ export function OnboardingModal() {
                   </div>
                   <div>
                     <strong className="text-white block text-xs font-bold">2. Le Sas : Rappel Actif Obligatoire</strong>
-                    <span className="text-zinc-400 text-[11px] leading-tight block">Fiche verrouillée jusqu'à 1-2 min de restitution libre (orale ou écrite).</span>
+                    <span className="text-zinc-400 text-[11px] leading-tight block">Fiche verrouillée jusqu'à 1-2 min de restitution libre pour ancrer la mémoire.</span>
                   </div>
                 </div>
 
@@ -229,25 +219,25 @@ export function OnboardingModal() {
                   </div>
                   <div>
                     <strong className="text-white block text-xs font-bold">3. Au Quotidien : Répétition Espacée FSRS-5</strong>
-                    <span className="text-zinc-400 text-[11px] leading-tight block">Révisez au moment exact avant l'oubli, sans chrono stressant.</span>
+                    <span className="text-zinc-400 text-[11px] leading-tight block">Révisez les flashcards calculées au moment idéal avant l'oubli.</span>
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          {/* STEP 2: GEMINI API SETUP */}
+          {/* STEP 2: GEMINI API KEY */}
           {step === 2 && (
             <div className="space-y-4 animate-fade-in">
               <div className="text-center space-y-1 pt-1">
                 <span className="text-3xl">🔑</span>
                 <h3 className="text-lg font-extrabold text-white">Clé IA Gemini (100% Gratuite)</h3>
                 <p className="text-zinc-400 text-xs max-w-sm mx-auto leading-relaxed">
-                  Cours utilise <strong>Gemini 3.7 Flash</strong> pour diagnostiquer vos rappels et générer vos fiches de cours.
+                  Cours utilise <strong>Gemini 3.7 Flash</strong> pour évaluer vos rappels actifs et structurer vos cours.
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-surface-elevated/40 border border-border space-y-3">
+              <div className="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 space-y-3">
                 <label className="block text-xs font-bold text-zinc-200">Collez votre clé API Gemini :</label>
                 <div className="relative">
                   <input
@@ -255,7 +245,7 @@ export function OnboardingModal() {
                     value={apiKey}
                     onChange={(e) => setApiKey(e.target.value)}
                     placeholder="AIzaSy..."
-                    className="w-full bg-surface-muted border border-border rounded-xl pl-3 pr-10 py-2.5 text-xs text-zinc-100 font-mono focus:outline-none focus:border-blue-500"
+                    className="w-full bg-zinc-950 border border-zinc-700 rounded-xl pl-3 pr-10 py-2.5 text-xs text-zinc-100 font-mono focus:outline-none focus:border-blue-500"
                   />
                   <button
                     type="button"
@@ -308,117 +298,61 @@ export function OnboardingModal() {
             </div>
           )}
 
-          {/* STEP 3: ANTIGRAVITY STUDIO & TAILSCALE */}
+          {/* STEP 3: PHONE QR CODE & OFFLINE PWA */}
           {step === 3 && (
-            <div className="space-y-4 animate-fade-in">
-              <div className="text-center space-y-1 pt-1">
-                <span className="text-3xl">🧠</span>
-                <h3 className="text-lg font-extrabold text-white">Google Antigravity & Tailscale</h3>
-                <p className="text-zinc-400 text-xs max-w-sm mx-auto leading-relaxed">
-                  Tout est configuré automatiquement : Antigravity analyse vos incompréhensions et Tailscale synchronise vos appareils.
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                {/* Antigravity Card */}
-                <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-950/40 to-surface border border-purple-500/30 space-y-2.5">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Bot className="w-4 h-4 text-purple-400" />
-                      <span className="font-bold text-white text-xs">Studio Google Antigravity</span>
-                    </div>
-                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold inline-flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3" />
-                      Connecté au Projet
-                    </span>
-                  </div>
-                  <p className="text-zinc-300 text-[11px] leading-relaxed">
-                    ✨ Le Studio est ouvert directement sur votre dossier. Ouvrez le chat et tapez simplement <code className="text-emerald-400 font-mono font-bold">cours</code> pour que l'IA structure vos fiches et génère vos flashcards !
-                  </p>
-                  <div className="flex items-center justify-between pt-1">
-                    <span className="text-[10px] text-zinc-500 font-mono">Skills : process-course • oral-tutor</span>
-                    <button
-                      onClick={handleOpenAntigravity}
-                      className="text-[11px] text-purple-400 hover:text-purple-300 underline font-semibold"
-                    >
-                      {openingAntigravity ? 'Ouverture...' : 'Basculer vers Antigravity →'}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Tailscale Card */}
-                <div className="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                      <span className="font-bold text-white text-xs">Synchronisation Wi-Fi & Tailscale 4G</span>
-                    </div>
-                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">
-                      Automatique
-                    </span>
-                  </div>
-                  <p className="text-zinc-400 text-[11px] leading-relaxed">
-                    {tailscaleUrl ? (
-                      <>Tunnel 4G sécurisé actif : vos cours se synchronisent en temps réel à l'université et à la maison sans configuration !</>
-                    ) : (
-                      <>Vos appareils se connectent automatiquement en Wi-Fi local et basculent sur le mode hors-ligne sans coupure.</>
-                    )}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* STEP 4: SMARTPHONE PAIRING & NATIVE APP */}
-          {step === 4 && (
             <div className="space-y-4 animate-fade-in text-center">
               <div className="space-y-1 pt-1">
                 <span className="text-3xl">📱</span>
                 <h3 className="text-lg font-extrabold text-white">Connectez votre Smartphone</h3>
                 <p className="text-zinc-400 text-xs max-w-sm mx-auto leading-relaxed">
-                  Scannez ce QR Code avec votre appareil photo pour installer l'application sur votre téléphone :
+                  Ouvrez l'<strong>appareil photo</strong> de votre smartphone pour ouvrir l'application et réviser partout sans connexion :
                 </p>
               </div>
 
-              {/* QR Canvas */}
-              <div className="p-3.5 bg-white rounded-3xl shadow-xl shadow-blue-500/10 border-4 border-zinc-800 flex items-center justify-center w-fit mx-auto">
+              {/* High Contrast QR Code Canvas */}
+              <div className="p-3 bg-white rounded-3xl shadow-xl shadow-emerald-500/10 border-4 border-zinc-800 flex items-center justify-center w-fit mx-auto">
                 <canvas ref={canvasRef} className="rounded-xl" />
               </div>
 
-              {/* Native APK & Expo Highlights */}
-              <div className="p-3.5 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-left space-y-2 text-[11px]">
-                <div className="flex items-center justify-between text-zinc-300 font-bold">
-                  <span className="flex items-center gap-1.5 text-emerald-400">
-                    <span>🤖</span>
-                    <span>Android : Application Standalone (.apk)</span>
-                  </span>
-                  <a
-                    href="/cours.apk"
-                    download="cours.apk"
-                    className="text-blue-400 hover:text-blue-300 underline font-semibold text-[10px]"
-                  >
-                    Télécharger APK →
-                  </a>
-                </div>
-                <div className="flex items-center justify-between text-zinc-300 font-bold">
-                  <span className="flex items-center gap-1.5 text-purple-400">
-                    <span>🍏</span>
-                    <span>iPhone & Android : Expo Go (Instantané)</span>
-                  </span>
-                  <span className="text-zinc-500 text-[10px]">App Native</span>
-                </div>
+              {/* Badges */}
+              <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-[11px]">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300">
+                  <Sparkles className="w-3 h-3 text-amber-400" />
+                  <span>iPhone & Android</span>
+                </span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-emerald-300 font-semibold">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                  <span>100% Hors-Ligne</span>
+                </span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-blue-300">
+                  <Wifi className="w-3 h-3 text-blue-400" />
+                  <span>Sync Automatique</span>
+                </span>
               </div>
 
-              <div className="p-2.5 rounded-xl bg-surface-elevated/40 border border-border text-[11px] text-zinc-300 font-mono select-all">
-                {pairingUrl}
+              {/* Direct Copy Link */}
+              <div className="p-3 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-left space-y-1 text-[11px]">
+                <div className="flex items-center justify-between text-zinc-400">
+                  <span className="font-semibold text-zinc-300">Lien Direct Mobile :</span>
+                  <button
+                    onClick={handleCopyUrl}
+                    className="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1 transition-colors"
+                  >
+                    {copied ? <CheckCircle2 className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                    <span>{copied ? 'Copié !' : 'Copier'}</span>
+                  </button>
+                </div>
+                <code className="block font-mono text-[11px] text-emerald-300 truncate bg-black/40 p-1.5 rounded-lg border border-zinc-800/80 select-all">
+                  {pairingUrl}
+                </code>
               </div>
             </div>
           )}
 
         </div>
 
-        {/* Modal Navigation Buttons */}
-        <div className="px-6 py-4 border-t border-border bg-surface-elevated/40 flex items-center justify-between">
+        {/* Footer Navigation */}
+        <div className="px-6 py-4 border-t border-zinc-800/80 bg-zinc-900/40 flex items-center justify-between">
           {step > 1 ? (
             <button
               onClick={() => setStep(step - 1)}
@@ -436,7 +370,7 @@ export function OnboardingModal() {
             </button>
           )}
 
-          {step < 4 ? (
+          {step < 3 ? (
             <button
               onClick={() => setStep(step + 1)}
               className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-2 shadow-lg shadow-blue-500/20 transition-all active:scale-95"

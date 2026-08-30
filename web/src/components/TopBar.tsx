@@ -33,10 +33,11 @@ export function TopBar() {
   const [showIosGuide, setShowIosGuide] = useState<boolean>(false);
 
   useEffect(() => {
-    // 1. Détection mode autonome (déjà installé)
+    // 1. Détection mode autonome (déjà installé ou PWA active)
     const isAppStandalone =
       window.matchMedia('(display-mode: standalone)').matches ||
-      (window.navigator as any).standalone === true;
+      (window.navigator as any).standalone === true ||
+      document.referrer.includes('android-app://');
     setIsStandalone(isAppStandalone);
 
     // 2. Détection iOS Safari
@@ -44,15 +45,22 @@ export function TopBar() {
     const isIosDevice = /iphone|ipad|ipod/.test(userAgent) && !(window as any).MSStream;
     setIsIos(isIosDevice);
 
-    // 3. Écoute de l'événement natif d'installation PWA (Android / Windows / Chrome / Edge)
+    // 3. Écoute de l'événement natif d'installation PWA
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e);
     };
 
+    const handleAppInstalled = () => {
+      setIsStandalone(true);
+      setDeferredPrompt(null);
+    };
+
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
     };
   }, []);
 
@@ -61,10 +69,9 @@ export function TopBar() {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
       if (outcome === 'accepted') {
+        setIsStandalone(true);
         setDeferredPrompt(null);
       }
-    } else if (isIos) {
-      setShowIosGuide(true);
     } else {
       setShowIosGuide(true);
     }
@@ -126,23 +133,23 @@ export function TopBar() {
         </nav>
 
         {/* Right Actions: PWA Install + Record Mic + Method + Language + Settings */}
-        <div className="flex items-center gap-2">
-          {/* PWA Install Button (visible if not standalone) */}
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* PWA Install Button (visible on Desktop only if not standalone) */}
           {!isStandalone && (
             <button
               onClick={handleInstallClick}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-300 text-xs font-bold transition-all shadow-sm active:scale-95"
+              className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-300 text-xs font-bold transition-all shadow-sm active:scale-95"
               title={lang === 'en' ? 'Install App on your device' : 'Installer l\'application Cours sur votre appareil'}
             >
               <Download className="w-3.5 h-3.5 text-purple-400" />
-              <span className="hidden lg:inline">{lang === 'en' ? 'Install App' : 'Installer l\'App'}</span>
+              <span>{lang === 'en' ? 'Install App' : 'Installer l\'App'}</span>
             </button>
           )}
 
           {/* Record Button */}
           <button
             onClick={() => openModal('recording')}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-300 text-xs font-bold shadow-sm transition-all hover:scale-105 active:scale-95"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-300 text-xs font-bold shadow-sm transition-all hover:scale-105 active:scale-95"
             title={lang === 'en' ? 'Record lecture (Shortcut: R)' : 'Enregistrer un amphi (Raccourci: Touche R)'}
           >
             <span className="relative flex h-2 w-2">
@@ -153,29 +160,29 @@ export function TopBar() {
             <span className="hidden sm:inline">{lang === 'en' ? 'Record' : 'Enregistrer'}</span>
           </button>
 
-          {/* Method Guide Button */}
+          {/* Method Guide Button (Desktop / Tablet only) */}
           <button
             onClick={() => openModal('howItWorks')}
-            className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all"
+            className="hidden sm:flex p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all"
             title={lang === 'en' ? 'Methodology & Guide' : 'Méthode & Studio Antigravity'}
           >
             <HelpCircle className="w-4 h-4 text-blue-400" />
           </button>
 
-          {/* Language Switcher */}
+          {/* Language Switcher (Desktop / Tablet only) */}
           <button
             onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')}
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-mono font-bold text-zinc-300 hover:text-white hover:border-zinc-700 transition-all"
+            className="hidden sm:flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-mono font-bold text-zinc-300 hover:text-white hover:border-zinc-700 transition-all"
             title={lang === 'en' ? 'Switch to French' : 'Basculer en Anglais'}
           >
             <Globe className="w-3.5 h-3.5 text-zinc-400" />
             <span>{lang.toUpperCase()}</span>
           </button>
 
-          {/* Mobile Devices & QR Code Pairing Button */}
+          {/* Mobile Devices & QR Code Pairing Button (DESKTOP ONLY) */}
           <button
             onClick={() => openModal('devicePairing')}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/50 border border-emerald-500/40 text-xs font-bold text-emerald-300 hover:text-emerald-200 hover:border-emerald-500/80 hover:bg-emerald-900/60 transition-all shadow-sm shadow-emerald-500/10 hover:scale-105 active:scale-95"
+            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/50 border border-emerald-500/40 text-xs font-bold text-emerald-300 hover:text-emerald-200 hover:border-emerald-500/80 hover:bg-emerald-900/60 transition-all shadow-sm shadow-emerald-500/10 hover:scale-105 active:scale-95"
             title={lang === 'en' ? 'Connect Phone & Scan QR Code' : 'Connecter mon téléphone / Scanner QR Code'}
           >
             <Smartphone className="w-3.5 h-3.5 text-emerald-400" />

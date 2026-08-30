@@ -18,11 +18,28 @@ import type {
   CurriculumCustomizationQuestion,
 } from './types';
 
-const API_BASE = '';
+export function getApiBase(): string {
+  if (typeof window === 'undefined') return '';
+  const params = new URLSearchParams(window.location.search);
+  const serverParam = params.get('server');
+  if (serverParam) {
+    try {
+      const normalized = serverParam.replace(/\/+$/, '');
+      localStorage.setItem('cours_server_host', normalized);
+      return normalized;
+    } catch {}
+  }
+  const saved = localStorage.getItem('cours_server_host');
+  if (saved && saved.trim()) {
+    return saved.trim().replace(/\/+$/, '');
+  }
+  return '';
+}
 
 async function safeFetch<T>(url: string, fallback: T, options?: RequestInit): Promise<T> {
   try {
-    const res = await fetch(`${API_BASE}${url}`, {
+    const base = getApiBase();
+    const res = await fetch(`${base}${url}`, {
       headers: {
         Accept: 'application/json',
         ...(options?.headers || {}),
@@ -41,21 +58,55 @@ async function safeFetch<T>(url: string, fallback: T, options?: RequestInit): Pr
   }
 }
 
+const DEFAULT_FALLBACK_SUBJECTS: Subject[] = [
+  { id: "s1-analyse-1", title: "Analyse 1 pour les Sciences", semester: "S1", category: "Majeure (Mathématiques)", ects: 6, priority: "A" },
+  { id: "s1-algebre-1", title: "Algèbre Linéaire 1", semester: "S1", category: "Majeure (Mathématiques)", ects: 6, priority: "A" },
+  { id: "s1-biocel-mol", title: "Biologie Cellulaire et Moléculaire", semester: "S1", category: "Majeure (Biologie)", ects: 6, priority: "A" },
+  { id: "s1-python-ia", title: "Algorithmique & Programmation Python (IA)", semester: "S1", category: "Majeure (Informatique / IA)", ects: 6, priority: "A" },
+  { id: "s1-anglais-sciences", title: "Anglais Scientifique", semester: "S1", category: "Transversale", ects: 3, priority: "B" },
+  { id: "s1-ppp-methodo", title: "Méthodologie Universitaire & PPP", semester: "S1", category: "Transversale", ects: 3, priority: "B" }
+];
+
 /**
  * Subject catalog (15 courses / subjects defined in courses.json)
  */
 export async function getSubjects(): Promise<Subject[]> {
   const data = await safeFetch<{ courses?: Subject[] } | Subject[]>('/api/courses', []);
-  if (Array.isArray(data)) return data;
-  if (data && Array.isArray(data.courses)) return data.courses;
-  return [];
+  if (Array.isArray(data) && data.length > 0) {
+    try { localStorage.setItem('cours_cached_subjects', JSON.stringify(data)); } catch {}
+    return data;
+  }
+  if (data && Array.isArray((data as any).courses) && (data as any).courses.length > 0) {
+    try { localStorage.setItem('cours_cached_subjects', JSON.stringify((data as any).courses)); } catch {}
+    return (data as any).courses;
+  }
+  try {
+    const cached = localStorage.getItem('cours_cached_subjects');
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch {}
+  return DEFAULT_FALLBACK_SUBJECTS;
 }
 
 /**
  * List of study courses created/imported
  */
 export async function getStudyCourses(): Promise<Course[]> {
-  return safeFetch<Course[]>('/api/study-courses', []);
+  const data = await safeFetch<Course[]>('/api/study-courses', []);
+  if (Array.isArray(data) && data.length > 0) {
+    try { localStorage.setItem('cours_cached_study_courses', JSON.stringify(data)); } catch {}
+    return data;
+  }
+  try {
+    const cached = localStorage.getItem('cours_cached_study_courses');
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch {}
+  return [];
 }
 
 /**
@@ -72,20 +123,37 @@ export async function createStudyCourse(payload: {
   notes?: string;
 }): Promise<Course | null> {
   try {
-    const res = await fetch(`${API_BASE}/api/study-courses`, {
+    const res = await fetch(`${getApiBase()}/api/study-courses`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || `Erreur ${res.status}`);
+    if (res.ok) {
+      const course = await res.json();
+      return course;
     }
-    return await res.json();
-  } catch (error) {
-    console.error('Error creating study course:', error);
-    return null;
-  }
+  } catch {}
+
+  // Fallback client-side creation if backend unreachable
+  const localCourse: Course = {
+    id: `local-course-${Date.now()}`,
+    subjectId: payload.subjectId,
+    subjectTitle: payload.subjectTitle || '',
+    title: payload.title,
+    date: payload.date || new Date().toISOString().slice(0, 10),
+    kind: 'lecture',
+    chapter: payload.chapter || '',
+    chapterId: payload.chapterId || undefined,
+    notes: payload.notes || '',
+    recallStatus: 'unlocked',
+    cards: [],
+  };
+  try {
+    const existing = JSON.parse(localStorage.getItem('cours_cached_study_courses') || '[]');
+    existing.unshift(localCourse);
+    localStorage.setItem('cours_cached_study_courses', JSON.stringify(existing));
+  } catch {}
+  return localCourse;
 }
 
 /**
@@ -96,7 +164,7 @@ export async function updateStudyCourse(
   payload: Partial<Course>
 ): Promise<Course | null> {
   try {
-    const res = await fetch(`${API_BASE}/api/study-courses/${encodeURIComponent(id)}`, {
+    const res = await fetch(`${getApiBase()}/api/study-courses/${encodeURIComponent(id)}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -117,7 +185,7 @@ export async function updateStudyCourse(
  */
 export async function deleteStudyCourse(id: string): Promise<boolean> {
   try {
-    const res = await fetch(`${API_BASE}/api/study-courses/${encodeURIComponent(id)}`, {
+    const res = await fetch(`${getApiBase()}/api/study-courses/${encodeURIComponent(id)}`, {
       method: 'DELETE',
     });
     return res.ok;
@@ -131,7 +199,7 @@ export async function deleteStudyCourse(id: string): Promise<boolean> {
  */
 export async function getDiagnosticQuiz(courseId: string): Promise<any[]> {
   try {
-    const res = await fetch(`${API_BASE}/api/study-courses/${encodeURIComponent(courseId)}/diagnostic-quiz`);
+    const res = await fetch(`${getApiBase()}/api/study-courses/${encodeURIComponent(courseId)}/diagnostic-quiz`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.quiz || [];
@@ -149,7 +217,7 @@ export async function unlockCourseRecall(
 ): Promise<{ course: Course; evaluation: any } | null> {
   try {
     const body = typeof payload === 'string' ? { recallText: payload } : payload;
-    const res = await fetch(`${API_BASE}/api/study-courses/${encodeURIComponent(courseId)}/unlock-recall`, {
+    const res = await fetch(`${getApiBase()}/api/study-courses/${encodeURIComponent(courseId)}/unlock-recall`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -173,7 +241,7 @@ export async function createSubject(payload: {
   priority?: PriorityLevel;
 }): Promise<Subject | null> {
   try {
-    const res = await fetch(`${API_BASE}/api/courses`, {
+    const res = await fetch(`${getApiBase()}/api/courses`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -193,7 +261,7 @@ export async function generateCurriculum(query: string): Promise<CurriculumAnaly
   if (!cleanQuery) return null;
 
   try {
-    const res = await fetch(`${API_BASE}/api/curriculum/generate`, {
+    const res = await fetch(`${getApiBase()}/api/curriculum/generate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: cleanQuery }),
@@ -355,7 +423,7 @@ export async function importCurriculum(subjects: Array<{
   importedChapters: number;
 } | null> {
   try {
-    const res = await fetch(`${API_BASE}/api/curriculum/import`, {
+    const res = await fetch(`${getApiBase()}/api/curriculum/import`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ subjects }),
@@ -400,7 +468,7 @@ export async function importCurriculum(subjects: Array<{
  */
 export async function deleteSubject(id: string): Promise<boolean> {
   try {
-    const res = await fetch(`${API_BASE}/api/courses/${encodeURIComponent(id)}`, {
+    const res = await fetch(`${getApiBase()}/api/courses/${encodeURIComponent(id)}`, {
       method: 'DELETE',
     });
     return res.ok;
@@ -415,7 +483,7 @@ export async function deleteSubject(id: string): Promise<boolean> {
 export async function proposeTranscriptSections(courseId: string): Promise<any> {
   try {
     const res = await fetch(
-      `${API_BASE}/api/study-courses/${encodeURIComponent(courseId)}/transcript-sections/propose`,
+      `${getApiBase()}/api/study-courses/${encodeURIComponent(courseId)}/transcript-sections/propose`,
       { method: 'POST' }
     );
     if (!res.ok) return null;
@@ -447,7 +515,7 @@ export async function createChapterDefinition(payload: {
   title: string;
 }): Promise<ChapterDefinition | null> {
   try {
-    const res = await fetch(`${API_BASE}/api/chapter-definitions`, {
+    const res = await fetch(`${getApiBase()}/api/chapter-definitions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -467,7 +535,7 @@ export async function deleteChapterDefinition(
   reassignToChapterId?: string | null
 ): Promise<boolean> {
   try {
-    const res = await fetch(`${API_BASE}/api/chapter-definitions/${encodeURIComponent(id)}`, {
+    const res = await fetch(`${getApiBase()}/api/chapter-definitions/${encodeURIComponent(id)}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ reassignToChapterId: reassignToChapterId || null }),
@@ -543,7 +611,7 @@ export async function submitCardReview(payload: {
         ? 3
         : 4;
 
-    const res = await fetch(`${API_BASE}/api/reviews`, {
+    const res = await fetch(`${getApiBase()}/api/reviews`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -585,7 +653,7 @@ export async function createExam(exam: {
   minutesPerDay: number;
 }): Promise<Exam | null> {
   try {
-    const res = await fetch(`${API_BASE}/api/exams`, {
+    const res = await fetch(`${getApiBase()}/api/exams`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(exam),
@@ -602,7 +670,7 @@ export async function createExam(exam: {
  */
 export async function updateExam(id: string, payload: Partial<Exam>): Promise<Exam | null> {
   try {
-    const res = await fetch(`${API_BASE}/api/exams/${encodeURIComponent(id)}`, {
+    const res = await fetch(`${getApiBase()}/api/exams/${encodeURIComponent(id)}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -619,7 +687,7 @@ export async function updateExam(id: string, payload: Partial<Exam>): Promise<Ex
  */
 export async function deleteExam(id: string): Promise<boolean> {
   try {
-    const res = await fetch(`${API_BASE}/api/exams/${encodeURIComponent(id)}`, {
+    const res = await fetch(`${getApiBase()}/api/exams/${encodeURIComponent(id)}`, {
       method: 'DELETE',
     });
     return res.ok;
@@ -641,7 +709,7 @@ export async function startAdaptiveSession(payload: {
   examId?: string;
 }): Promise<any> {
   try {
-    const res = await fetch(`${API_BASE}/api/adaptive-session`, {
+    const res = await fetch(`${getApiBase()}/api/adaptive-session`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -671,7 +739,7 @@ export async function saveRevisionSession(
       ...session,
       createdAt: session.createdAt || new Date().toISOString(),
     };
-    const res = await fetch(`${API_BASE}/api/revision-sessions`, {
+    const res = await fetch(`${getApiBase()}/api/revision-sessions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -761,7 +829,7 @@ export async function correctRecall(payload: {
   previousCorrection?: any;
 }): Promise<{ ok: boolean; evaluation?: RecallEvaluation; reason?: string; sourceWarnings?: string[] }> {
   try {
-    const res = await fetch(`${API_BASE}/api/recall-correction`, {
+    const res = await fetch(`${getApiBase()}/api/recall-correction`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -783,7 +851,7 @@ export async function transcribeAudio(payload: {
   courseId?: string;
 }): Promise<any> {
   try {
-    const res = await fetch(`${API_BASE}/api/audio/transcribe`, {
+    const res = await fetch(`${getApiBase()}/api/audio/transcribe`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -805,7 +873,7 @@ export async function transcribeAudio(payload: {
 export async function getCourseSummaryContent(filename: string): Promise<string> {
   if (!filename) return '';
   try {
-    const res = await fetch(`${API_BASE}/api/courses/content?file=${encodeURIComponent(filename)}`);
+    const res = await fetch(`${getApiBase()}/api/courses/content?file=${encodeURIComponent(filename)}`);
     if (!res.ok) return '';
     return await res.text();
   } catch {
@@ -820,7 +888,7 @@ export async function getTranscriptionContent(filename: string): Promise<string>
   if (!filename) return '';
   try {
     const res = await fetch(
-      `${API_BASE}/api/transcriptions/content?file=${encodeURIComponent(filename)}`
+      `${getApiBase()}/api/transcriptions/content?file=${encodeURIComponent(filename)}`
     );
     if (!res.ok) return '';
     return await res.text();
@@ -834,7 +902,7 @@ export async function getTranscriptionContent(filename: string): Promise<string>
  */
 export async function saveCourseNotes(courseId: string, notes: string): Promise<boolean> {
   try {
-    const res = await fetch(`${API_BASE}/api/courses/notes`, {
+    const res = await fetch(`${getApiBase()}/api/courses/notes`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ courseId, notes }),
@@ -857,7 +925,7 @@ export async function uploadCoursePhoto(payload: {
   markerId?: string;
 }): Promise<CoursePhoto | null> {
   try {
-    const res = await fetch(`${API_BASE}/api/courses/photos`, {
+    const res = await fetch(`${getApiBase()}/api/courses/photos`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -908,7 +976,7 @@ export async function getInterleavedTraining(
     if (subjects && subjects.length > 0) {
       params.set('subjects', subjects.join(','));
     }
-    const res = await fetch(`${API_BASE}/api/training/interleaved?${params.toString()}`);
+    const res = await fetch(`${getApiBase()}/api/training/interleaved?${params.toString()}`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.items || [];
@@ -923,7 +991,7 @@ export async function getInterleavedTraining(
  */
 export async function getExamTrapsAndErrors(): Promise<any[]> {
   try {
-    const res = await fetch(`${API_BASE}/api/training/traps`);
+    const res = await fetch(`${getApiBase()}/api/training/traps`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.items || [];
@@ -950,7 +1018,7 @@ export async function evaluateFeynman(
   improvedFeynman: string;
 } | null> {
   try {
-    const res = await fetch(`${API_BASE}/api/training/feynman-evaluate`, {
+    const res = await fetch(`${getApiBase()}/api/training/feynman-evaluate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ courseId, cardId, explanationText }),
@@ -969,18 +1037,19 @@ export async function evaluateFeynman(
  */
 export async function syncPendingReviews(): Promise<number> {
   try {
-    const raw = localStorage.getItem('biomia_pending_reviews');
+    const raw = localStorage.getItem('cours_pending_reviews') || localStorage.getItem('biomia_pending_reviews');
     if (!raw) return 0;
     const pending = JSON.parse(raw);
     if (!Array.isArray(pending) || pending.length === 0) return 0;
 
-    const res = await fetch(`${API_BASE}/api/reviews/batch`, {
+    const res = await fetch(`${getApiBase()}/api/reviews/batch`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ reviews: pending }),
     });
 
     if (res.ok) {
+      localStorage.removeItem('cours_pending_reviews');
       localStorage.removeItem('biomia_pending_reviews');
       return pending.length;
     }
@@ -995,10 +1064,10 @@ export async function syncPendingReviews(): Promise<number> {
  */
 export function enqueueOfflineReview(review: any) {
   try {
-    const raw = localStorage.getItem('biomia_pending_reviews');
+    const raw = localStorage.getItem('cours_pending_reviews') || localStorage.getItem('biomia_pending_reviews');
     const list = raw ? JSON.parse(raw) : [];
     list.push(review);
-    localStorage.setItem('biomia_pending_reviews', JSON.stringify(list));
+    localStorage.setItem('cours_pending_reviews', JSON.stringify(list));
   } catch (e) {
     console.warn('Failed to enqueue review offline:', e);
   }

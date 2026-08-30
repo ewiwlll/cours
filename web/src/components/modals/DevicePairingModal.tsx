@@ -18,13 +18,13 @@ export function DevicePairingModal() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const getUniversalUrl = () => {
-    if (typeof window !== 'undefined' && window.location.origin && !window.location.origin.includes('127.0.0.1') && !window.location.origin.includes('localhost')) {
-      return `${window.location.origin}/app?paired=1`;
-    }
     if (localIp && localIp !== '127.0.0.1' && localIp !== 'localhost') {
-      return `http://${localIp}:${port}/app?paired=1`;
+      return `http://${localIp}:${port}/?paired=1`;
     }
-    return 'https://cours-awc.pages.dev/app?paired=1';
+    if (typeof window !== 'undefined' && window.location.origin && !window.location.origin.includes('127.0.0.1') && !window.location.origin.includes('localhost')) {
+      return `${window.location.origin}/?paired=1`;
+    }
+    return `http://127.0.0.1:${port}/?paired=1`;
   };
 
   const universalUrl = getUniversalUrl();

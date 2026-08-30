@@ -1,19 +1,19 @@
 {
-  "name": "Cours — Revision OS",
+  "name": "Cours",
   "short_name": "Cours",
-  "description": "L'OS d'apprentissage et de révision active pour tous vos cours, amphis et classes",
+  "description": "L'OS d'apprentissage et de révision active pour tous vos cours, amphis et examens",
   "start_url": "/",
   "scope": "/",
-  "id": "cours-revision-os",
+  "id": "cours-app",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "background_color": "#09090b",
   "theme_color": "#09090b",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "categories": ["education", "productivity"],
   "shortcuts": [
     {
-      "name": "Studio Amphi (Micro)",
+      "name": "Studio Amphi",
       "short_name": "Amphi",
       "description": "Enregistrer un cours en direct avec balises d'incompréhension",
       "url": "/?tab=amphi",
@@ -27,7 +27,7 @@
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "Planificateur & Épreuves",
+      "name": "Planificateur & Examens",
       "short_name": "Planning",
       "description": "Consulter le calendrier prévisionnel des examens",
       "url": "/?tab=planning",
@@ -52,6 +52,12 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

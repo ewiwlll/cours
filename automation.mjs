@@ -57,7 +57,7 @@ async function writeJson(file, value) {
 }
 
 async function loadConfig() {
-  loadEnvIfPresent(ROOT);
+  loadEnvFile(ROOT);
   const stored = await readJson(CONFIG_FILE, {});
   const configuredInbox = process.env.BIOMIA_PHONE_INBOX || stored.inboxPath || DEFAULT_INBOX;
   return {

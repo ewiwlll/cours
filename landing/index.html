@@ -1275,70 +1275,92 @@
       const isAndroid = /Android/i.test(ua);
       const isEn = currentLandingLang === 'en';
 
-      if (isMac || isWindows || (!isAndroid && !isIos)) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">💻 <strong>' + (isEn ? 'Computer Detected' : 'Ordinateur Détecté') + '</strong> • ' + (isEn ? 'Instant PWA & Dock Ready' : 'PWA & Ajout au Dock Immédiat') + '</span>';
+      if (isMac) {
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🍏 <strong>' + (isEn ? 'macOS Detected' : 'macOS Détecté') + '</strong> • ' + (isEn ? 'Native App with Whisper Metal' : 'Application Native avec Whisper Metal') + '</span>';
         ctaContainer.innerHTML = `
-          <div class="flex flex-col items-center justify-center gap-4 w-full">
-            <!-- 1 GROS BOUTON UNIQUE INSTALLATION PWA DOCK -->
-            <button id="pwaHeroBtn" onclick="handlePwaInstallAndLaunch()" class="px-8 py-4.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-blue-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 cursor-pointer">
-              <span class="text-2xl">📲</span>
-              <span id="pwaHeroBtnText">${isEn ? 'Install Cours to Dock & Launch' : 'Installer Cours dans le Dock & Ouvrir'}</span>
-            </button>
+          <div class="flex flex-col items-center justify-center gap-3.5 w-full">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-lg">
+              <!-- BOUTON 1 : TÉLÉCHARGER L'APPLICATION NATIVE MAC -->
+              <a href="/Cours-macOS.dmg" download="Cours-macOS.dmg" class="w-full sm:w-auto flex-1 px-8 py-4.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-blue-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 text-center">
+                <span class="text-2xl">🍏</span>
+                <span>${isEn ? 'Download for macOS (.dmg)' : 'Télécharger pour Mac (.dmg)'}</span>
+              </a>
 
-            <!-- GUIDE CLAIR EN 2 ÉTAPES : DOCK MAC PUIS QR TÉLÉPHONE DEPUIS L'APP -->
-            <div class="w-full max-w-lg mt-2 p-5 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-left text-xs text-zinc-300 shadow-xl space-y-4">
-              <div class="flex items-start gap-3">
-                <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
-                <div>
-                  <strong class="text-white block text-sm font-semibold">${isEn ? '1. Install into your Dock' : '1. Installez dans votre Dock'}</strong>
-                  <p class="text-zinc-400 text-xs mt-0.5 leading-relaxed">${isEn ? 'Click the button above to install Cours directly into your Mac Dock or Windows Launchpad and open it as a standalone app.' : 'Cliquez sur le bouton ci-dessus : l\'application s\'installe directement dans votre <strong>Dock macOS</strong> et s\'ouvre dans sa propre fenêtre dédiée sans barre d\'adresse.'}</p>
-                </div>
-              </div>
-              <div class="flex items-start gap-3 pt-3 border-t border-zinc-800/80">
-                <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
-                <div>
-                  <strong class="text-emerald-400 block text-sm font-semibold">${isEn ? '2. Connect your Phone from the App' : '2. Connectez votre Téléphone depuis l\'App'}</strong>
-                  <p class="text-zinc-400 text-xs mt-0.5 leading-relaxed">${isEn ? 'Once in the application, click the <strong>📱 Connect Phone</strong> button at the top to display your QR Code and sync in 1 scan.' : 'Une fois dans l\'application, cliquez sur le bouton <strong>« 📱 Téléphone »</strong> en haut pour afficher votre <strong>QR Code</strong> et connecter votre mobile en 1 scan.'}</p>
-                </div>
-              </div>
+              <!-- BOUTON 2 : LANCER EN LIGNE (WEB / PWA) -->
+              <a href="/app" class="w-full sm:w-auto px-6 py-4.5 rounded-2xl bg-zinc-900/90 border border-zinc-700 hover:bg-zinc-800 text-zinc-200 font-bold text-sm flex items-center justify-center gap-2.5 transition-all hover:scale-105 active:scale-95 text-center">
+                <span class="text-xl">🌐</span>
+                <span>${isEn ? 'Launch Web Version' : 'Lancer en Ligne (Web)'}</span>
+              </a>
             </div>
 
-            <!-- OPTIONS NATIVES COMPACTES POUR DÉVELOPPEURS / WHISPER LOCAL -->
-            <div class="text-[11px] text-zinc-500 flex flex-wrap items-center justify-center gap-2 pt-1">
-              <span>💻 ${isEn ? 'Optional local standalone:' : 'Applications locales autonomes :'}</span>
-              <a href="/Cours-macOS.dmg" download="Cours-macOS.dmg" class="text-zinc-400 hover:text-white underline">macOS .dmg</a>
+            <!-- OPTIONS NATIVES COMPACTES POUR DÉVELOPPEURS -->
+            <div class="text-[11px] text-zinc-400 flex flex-wrap items-center justify-center gap-2 pt-2">
+              <span>Autres formats :</span>
+              <a href="/Cours-macOS.pkg" download="Cours-macOS.pkg" class="text-blue-400 hover:text-blue-300 underline font-medium">macOS .pkg</a>
               <span>•</span>
-              <a href="/Installer-Windows.bat" download="Installer-Cours.bat" class="text-zinc-400 hover:text-white underline">Windows .bat</a>
+              <a href="/Installer-Windows.bat" download="Installer-Cours.bat" class="text-blue-400 hover:text-blue-300 underline font-medium">Windows .bat</a>
               <span>•</span>
-              <code class="font-mono text-[10px] bg-zinc-900 px-1.5 py-0.5 rounded text-emerald-400 border border-zinc-800">curl -fsSL https://cours-awc.pages.dev/install.sh | bash</code>
+              <code class="font-mono text-[10px] bg-zinc-900 px-2 py-0.5 rounded text-emerald-400 border border-zinc-800 select-all">curl -fsSL https://cours-awc.pages.dev/install.sh | bash</code>
+            </div>
+          </div>
+        `;
+      } else if (isWindows) {
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-semibold backdrop-blur-md">🪟 <strong>' + (isEn ? 'Windows Detected' : 'Windows Détecté') + '</strong> • ' + (isEn ? 'Standalone Installer' : 'Installateur Autonome') + '</span>';
+        ctaContainer.innerHTML = `
+          <div class="flex flex-col items-center justify-center gap-3.5 w-full">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-lg">
+              <!-- BOUTON 1 : TÉLÉCHARGER WINDOWS -->
+              <a href="/Installer-Windows.bat" download="Installer-Cours.bat" class="w-full sm:w-auto flex-1 px-8 py-4.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-blue-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 text-center">
+                <span class="text-2xl">🪟</span>
+                <span>${isEn ? 'Download for Windows' : 'Télécharger pour Windows'}</span>
+              </a>
+
+              <!-- BOUTON 2 : LANCER EN LIGNE (WEB / PWA) -->
+              <a href="/app" class="w-full sm:w-auto px-6 py-4.5 rounded-2xl bg-zinc-900/90 border border-zinc-700 hover:bg-zinc-800 text-zinc-200 font-bold text-sm flex items-center justify-center gap-2.5 transition-all hover:scale-105 active:scale-95 text-center">
+                <span class="text-xl">🌐</span>
+                <span>${isEn ? 'Launch Web Version' : 'Lancer en Ligne (Web)'}</span>
+              </a>
+            </div>
+
+            <div class="text-[11px] text-zinc-400 flex flex-wrap items-center justify-center gap-2 pt-2">
+              <span>Terminal PowerShell :</span>
+              <code class="font-mono text-[10px] bg-zinc-900 px-2 py-0.5 rounded text-emerald-400 border border-zinc-800 select-all">irm https://cours-awc.pages.dev/install.ps1 | iex</code>
             </div>
           </div>
         `;
       } else if (isAndroid) {
-        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-semibold backdrop-blur-md">🤖 <strong>' + (isEn ? 'Android Phone Detected' : 'Smartphone Android Détecté') + '</strong> • ' + (isEn ? 'Native App Ready' : 'Application Mobile 100% Hors-Ligne') + '</span>';
+        badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-semibold backdrop-blur-md">🤖 <strong>' + (isEn ? 'Android Phone Detected' : 'Smartphone Android Détecté') + '</strong> • ' + (isEn ? 'Native Mobile App' : 'Application Mobile 100% Hors-Ligne') + '</span>';
         ctaContainer.innerHTML = `
-          <div class="flex flex-col items-center justify-center gap-4 w-full">
-            <a href="/cours.apk" download="cours.apk" class="px-8 py-4.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-base shadow-2xl shadow-emerald-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95">
-              <span class="text-2xl">🤖</span>
-              <span>${isEn ? 'Install Native Android App (.apk)' : 'Installer l\'Application Android (.apk)'}</span>
-            </a>
-            <div class="w-full max-w-lg mt-2 p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-left text-xs text-zinc-300 space-y-2 shadow-xl">
-              <p><strong>100% Hors-Ligne :</strong> Enregistrez vos amphis sans coupure et révisez vos cartes dans les transports sans internet.</p>
-              <p><strong>Synchronisation :</strong> Scannez le QR Code de votre ordinateur pour lier vos fiches.</p>
+          <div class="flex flex-col items-center justify-center gap-3.5 w-full">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-lg">
+              <!-- BOUTON 1 : TÉLÉCHARGER APK ANDROID -->
+              <a href="/cours.apk" download="cours.apk" class="w-full sm:w-auto flex-1 px-8 py-4.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-base shadow-2xl shadow-emerald-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 text-center">
+                <span class="text-2xl">🤖</span>
+                <span>${isEn ? 'Download Android App (.apk)' : 'Télécharger l\'App Android (.apk)'}</span>
+              </a>
+
+              <!-- BOUTON 2 : OUVRIR VERSION PWA -->
+              <a href="/app" class="w-full sm:w-auto px-6 py-4.5 rounded-2xl bg-zinc-900/90 border border-zinc-700 hover:bg-zinc-800 text-zinc-200 font-bold text-sm flex items-center justify-center gap-2.5 transition-all hover:scale-105 active:scale-95 text-center">
+                <span class="text-xl">🌐</span>
+                <span>${isEn ? 'Open Web Version' : 'Ouvrir Version Web'}</span>
+              </a>
+            </div>
+
+            <div class="w-full max-w-lg p-3 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-left text-xs text-zinc-300 space-y-1">
+              <p><strong>⚡ 100% Hors-Ligne :</strong> Enregistrez vos cours et révisez vos flashcards sans connexion internet.</p>
             </div>
           </div>
         `;
       } else if (isIos) {
         badgeEl.innerHTML = '<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/30 font-semibold backdrop-blur-md">🍏 <strong>' + (isEn ? 'iPhone / iPad Detected' : 'iPhone / iPad Détecté') + '</strong> • ' + (isEn ? 'PWA Ready' : 'Application PWA 100% Hors-Ligne') + '</span>';
         ctaContainer.innerHTML = `
-          <div class="flex flex-col items-center justify-center gap-4 w-full">
-            <a href="/app" class="px-8 py-4.5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-purple-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95">
+          <div class="flex flex-col items-center justify-center gap-3.5 w-full">
+            <a href="/app" class="w-full max-w-md px-8 py-4.5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-base shadow-2xl shadow-purple-500/30 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 text-center">
               <span class="text-2xl">🚀</span>
               <span>${isEn ? 'Launch Cours on iPhone' : 'Lancer Cours sur iPhone'}</span>
             </a>
-            <div class="w-full max-w-lg mt-2 p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-left text-xs text-zinc-300 space-y-2 shadow-xl">
-              <p><strong>Étape 1 :</strong> Dans Safari, touchez Partager &gt; <em>« Sur l'écran d'accueil »</em> pour l'utiliser comme une vraie app native hors-ligne.</p>
-              <p><strong>Étape 2 :</strong> Scannez le QR Code de votre Mac pour synchroniser vos enregistrements.</p>
+            <div class="w-full max-w-lg p-3.5 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-left text-xs text-zinc-300 space-y-1.5 shadow-xl">
+              <p><strong>📲 Installation en 2 clics :</strong> Touchez <strong>Partager</strong> en bas de Safari, puis <strong>« Sur l'écran d'accueil »</strong>.</p>
             </div>
           </div>
         `;
@@ -1352,7 +1374,7 @@
       deferredPwaPrompt = e;
       const btnText = document.getElementById('pwaHeroBtnText');
       if (btnText) {
-        btnText.innerText = currentLandingLang === 'en' ? 'Install Cours to Dock & Launch' : 'Installer Cours dans le Dock & Ouvrir';
+        btnText.innerText = currentLandingLang === 'en' ? 'Install Cours App (PWA)' : 'Installer Cours sur le Bureau (PWA)';
       }
     });
 
