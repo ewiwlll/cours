@@ -98,17 +98,52 @@ export function MobileInstallBanner() {
           </div>
         </div>
 
-        {/* Instructions iOS Safari */}
+        {/* Instructions iOS Safari ultra-détaillées avec flèche animée vers le bas */}
         {isIos && (
-          <div className="mt-3 p-3.5 rounded-2xl bg-zinc-900/95 border border-zinc-800 space-y-2.5 text-xs text-left">
-            <div className="flex items-center gap-3 text-zinc-200">
-              <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-xs shrink-0">1</span>
-              <span className="leading-snug">Touchez le bouton <strong className="text-white">Partager</strong> (<Share2 className="w-3.5 h-3.5 inline text-blue-400 -mt-0.5" />) tout en bas de Safari</span>
+          <div className="mt-3 space-y-3 text-left">
+            <div className="p-4 rounded-2xl bg-gradient-to-b from-zinc-900 to-zinc-950 border border-blue-500/30 space-y-3 text-xs shadow-inner">
+              <div className="flex items-start gap-3 text-zinc-200">
+                <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
+                <div>
+                  <span className="leading-snug block">
+                    Touchez l'icône <strong className="text-blue-400">Partager</strong> (<Share2 className="w-3.5 h-3.5 inline text-blue-400 -mt-0.5" />) tout en bas de Safari.
+                  </span>
+                  <span className="text-[10px] text-zinc-400 block mt-0.5">(La barre grise en bas au milieu de votre écran)</span>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 text-zinc-200 pt-2 border-t border-zinc-800/80">
+                <span className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
+                <div>
+                  <span className="leading-snug block">
+                    Faites défiler la liste vers le bas et touchez <strong className="text-emerald-400">« Sur l'écran d'accueil »</strong> (<PlusSquare className="w-3.5 h-3.5 inline text-emerald-400 -mt-0.5" />).
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 text-zinc-200 pt-2 border-t border-zinc-800/80">
+                <span className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">3</span>
+                <div>
+                  <span className="leading-snug block">
+                    Touchez <strong className="text-white">« Ajouter »</strong> en haut à droite.
+                  </span>
+                  <span className="text-[10px] text-emerald-400 block mt-0.5 font-semibold">✓ L'application est installée sur votre iPhone !</span>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-3 text-zinc-200">
-              <span className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 font-bold flex items-center justify-center text-xs shrink-0">2</span>
-              <span className="leading-snug">Sélectionnez <strong className="text-white">« Sur l'écran d'accueil »</strong> (<PlusSquare className="w-3.5 h-3.5 inline text-purple-400 -mt-0.5" />)</span>
+
+            {/* Flèche d'indication animée vers le bas de Safari */}
+            <div className="flex items-center justify-center gap-1.5 text-[11px] text-blue-400 font-bold animate-bounce pt-1">
+              <span>Le bouton Partager est juste en bas</span>
+              <span className="text-sm">👇</span>
             </div>
+
+            <button
+              onClick={handleDismiss}
+              className="w-full py-2.5 px-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 font-bold text-xs transition-colors text-center"
+            >
+              J'ai compris
+            </button>
           </div>
         )}
 
