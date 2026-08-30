@@ -210,51 +210,48 @@ export function TopBar() {
 
             <div className="space-y-1">
               <h3 className="text-base font-black text-white">
-                {isIos ? 'Installer Cours sur iPhone / iPad' : 'Installer l\'Application Cours'}
+                {isIos ? 'Installer Cours sur iPhone / iPad' : 'Ajouter Cours à votre Dock & Écran'}
               </h3>
               <p className="text-xs text-zinc-400 leading-relaxed">
-                Profite de Cours en plein écran 100% autonome, avec enregistrement micro amphi et révisions sans connexion :
+                Utilisez Cours en mode application 100% autonome, sans barre d'adresse, avec accès direct depuis votre Dock :
               </p>
             </div>
 
-            <div className="space-y-2 pt-1 text-xs">
+            <div className="space-y-2.5 pt-1 text-xs">
               {isIos ? (
                 <>
                   <div className="p-3 rounded-2xl bg-zinc-800/80 border border-zinc-700/60 flex items-center gap-3">
                     <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xs shrink-0">1</span>
                     <span className="text-zinc-200">
-                      Appuie sur le bouton <strong className="text-white">Partager</strong> (<Share2 className="w-3.5 h-3.5 inline text-blue-400" />) en bas de Safari.
+                      Appuyez sur le bouton <strong className="text-white">Partager</strong> (<Share2 className="w-3.5 h-3.5 inline text-blue-400" />) en bas de Safari.
                     </span>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-zinc-800/80 border border-zinc-700/60 flex items-center gap-3">
                     <span className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-xs shrink-0">2</span>
                     <span className="text-zinc-200">
-                      Fais défiler et sélectionne <strong className="text-white">Sur l'écran d'accueil</strong> (<PlusSquare className="w-3.5 h-3.5 inline text-purple-400" />).
-                    </span>
-                  </div>
-
-                  <div className="p-3 rounded-2xl bg-zinc-800/80 border border-zinc-700/60 flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">3</span>
-                    <span className="text-zinc-200">
-                      Clique sur <strong className="text-white">Ajouter</strong> en haut à droite. C'est tout ! 🎉
+                      Faites défiler et sélectionnez <strong className="text-white">Sur l'écran d'accueil</strong> (<PlusSquare className="w-3.5 h-3.5 inline text-purple-400" />).
                     </span>
                   </div>
                 </>
               ) : (
                 <>
-                  <div className="p-3 rounded-2xl bg-zinc-800/80 border border-zinc-700/60 flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xs shrink-0">1</span>
-                    <span className="text-zinc-200">
-                      Ouvre le menu du navigateur (<strong className="text-white">⋮</strong> ou <strong className="text-white">⋯</strong> en haut à droite).
-                    </span>
+                  <div className="p-3.5 rounded-2xl bg-blue-950/30 border border-blue-500/30 space-y-1.5">
+                    <div className="flex items-center gap-2 text-blue-400 font-bold">
+                      <span>🌐 Sur Google Chrome / Edge (Mac & PC) :</span>
+                    </div>
+                    <p className="text-zinc-300 text-[11px] leading-relaxed">
+                      Regardez en haut à droite dans votre <strong>barre d'adresse</strong> : cliquez sur le bouton bleu <span className="bg-blue-600/30 text-blue-300 px-1.5 py-0.5 rounded font-semibold border border-blue-500/40">Ouvrir dans l'appli</span> ou l'icône d'installation 📥. L'app s'ouvre directement dans votre <strong>Dock</strong> !
+                    </p>
                   </div>
 
-                  <div className="p-3 rounded-2xl bg-zinc-800/80 border border-zinc-700/60 flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-xs shrink-0">2</span>
-                    <span className="text-zinc-200">
-                      Clique sur <strong className="text-white">Installer l'application</strong> ou <strong className="text-white">Ajouter à l'écran d'accueil</strong>.
-                    </span>
+                  <div className="p-3.5 rounded-2xl bg-purple-950/30 border border-purple-500/30 space-y-1.5">
+                    <div className="flex items-center gap-2 text-purple-300 font-bold">
+                      <span>🍏 Sur Safari (macOS Sonoma & Sequoia) :</span>
+                    </div>
+                    <p className="text-zinc-300 text-[11px] leading-relaxed">
+                      Dans la barre des menus en haut de votre écran, cliquez sur <strong className="text-white">Fichier &gt; Ajouter au Dock...</strong> pour créer l'icône de l'app.
+                    </p>
                   </div>
                 </>
               )}
@@ -262,7 +259,7 @@ export function TopBar() {
 
             <button
               onClick={() => setShowIosGuide(false)}
-              className="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition-all shadow-md mt-2"
+              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs transition-all shadow-md mt-2"
             >
               Compris !
             </button>
