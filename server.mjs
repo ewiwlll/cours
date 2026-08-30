@@ -1,4 +1,5 @@
 import http from "node:http";
+import os from "node:os";
 import { createHash } from "node:crypto";
 import { readFile, writeFile, readdir, stat, mkdir, rename } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
@@ -35,6 +36,7 @@ const CHAPTERS = path.join(DATA, "cours", "chapters.json");
 const CHAPTER_DEFINITIONS = path.join(DATA, "cours", "chapter-definitions.json");
 const REVISION_SESSIONS = path.join(DATA, "revisions", "sessions.json");
 const WEAK_CONCEPTS = path.join(DATA, "revisions", "weak-concepts.json");
+const DEVICES = path.join(DATA, "revisions", "devices.json");
 const AUTOMATION = path.join(DATA, "automation");
 const AUTOMATION_CONFIG = path.join(AUTOMATION, "config.json");
 const PENDING_ORAL = path.join(AUTOMATION, "pending-oral.json");
@@ -134,6 +136,48 @@ async function saveJsonArray(file, items) {
   const temporary = `${file}.tmp-${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   await writeFile(temporary, JSON.stringify(items, null, 2) + "\n", "utf8");
   await rename(temporary, file);
+}
+
+function getLocalIp() {
+  try {
+    const nets = os.networkInterfaces();
+    for (const name of Object.keys(nets)) {
+      for (const net of nets[name] || []) {
+        if (net.family === "IPv4" && !net.internal) {
+          return net.address;
+        }
+      }
+    }
+  } catch {}
+  return "127.0.0.1";
+}
+
+async function registerDevice({ deviceId, deviceName, platform, userAgent, ip }) {
+  try {
+    const devices = await readJsonFile(DEVICES, []);
+    const now = new Date().toISOString();
+    const cleanIp = ip ? String(ip).replace(/^.*:/, "") : "127.0.0.1";
+    const id = deviceId || `dev-${cleanIp.replace(/[^a-zA-Z0-9]/g, "-")}`;
+    const existing = devices.find((d) => d.id === id);
+    if (existing) {
+      existing.lastSeenAt = now;
+      existing.ip = cleanIp;
+      existing.syncCount = (existing.syncCount || 1) + 1;
+      if (deviceName && deviceName !== "Appareil Mobile") existing.deviceName = deviceName;
+    } else {
+      devices.push({
+        id,
+        deviceName: deviceName || (platform === "ios" ? "iPhone / iPad" : platform === "android" ? "Google Pixel / Android" : "Appareil Connecté"),
+        platform: platform || (/iphone|ipad|ipod/i.test(userAgent || "") ? "ios" : /android/i.test(userAgent || "") ? "android" : "mobile"),
+        userAgent: userAgent || "",
+        ip: cleanIp,
+        firstSeenAt: now,
+        lastSeenAt: now,
+        syncCount: 1,
+      });
+    }
+    await saveJsonArray(DEVICES, devices);
+  } catch {}
 }
 
 async function appendCoursePhoto(course, payload) {
@@ -939,6 +983,48 @@ async function handleApi(req, res, url) {
     } catch (error) {
       return json(res, 500, { ok: false, error: error.message || "Erreur de connexion à Gemini" });
     }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/devices") {
+    const devices = await readJsonFile(DEVICES, []);
+    const localIp = getLocalIp();
+    return json(res, 200, {
+      ok: true,
+      devices,
+      localIp,
+      port: PORT,
+      pairingUrl: `http://${localIp}:${PORT}`,
+      tailscaleUrl: process.env.TAILSCALE_URL || null,
+    });
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/devices/pair") {
+    try {
+      const payload = JSON.parse(await readBody(req));
+      await registerDevice({
+        deviceId: payload.deviceId,
+        deviceName: payload.deviceName,
+        platform: payload.platform,
+        userAgent: req.headers["user-agent"],
+        ip: req.socket.remoteAddress,
+      });
+      const localIp = getLocalIp();
+      return json(res, 200, {
+        ok: true,
+        message: "Appareil appairé avec succès",
+        pairingUrl: `http://${localIp}:${PORT}`,
+      });
+    } catch (error) {
+      return json(res, 400, { error: error.message || "Impossible d'appairer l'appareil" });
+    }
+  }
+
+  if (req.method === "DELETE" && url.pathname.startsWith("/api/devices/")) {
+    const deviceId = decodeURIComponent(url.pathname.replace("/api/devices/", ""));
+    const devices = await readJsonFile(DEVICES, []);
+    const filtered = devices.filter((d) => d.id !== deviceId);
+    await saveJsonArray(DEVICES, filtered);
+    return json(res, 200, { ok: true, message: "Appareil dissocié avec succès" });
   }
 
   if (req.method === "GET" && url.pathname === "/api/courses") {

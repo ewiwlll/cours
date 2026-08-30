@@ -13,9 +13,11 @@ import {
   CourseEditorModal,
   ChapterEditorModal,
   SubjectEditorModal,
+  HowItWorksModal,
+  SettingsModal,
+  DevicePairingModal,
+  OnboardingModal,
 } from './components/modals';
-import { HowItWorksModal } from './components/modals/HowItWorksModal';
-import { SettingsModal } from './components/modals/SettingsModal';
 import {
   createStudyCourse,
   createChapterDefinition,
@@ -231,6 +233,12 @@ export function App() {
 
       {/* 7. Settings Modal */}
       <SettingsModal />
+
+      {/* 8. Device Pairing & QR Code Modal */}
+      <DevicePairingModal />
+
+      {/* 9. First-Run Visual Onboarding Modal */}
+      <OnboardingModal />
     </div>
   );
 }

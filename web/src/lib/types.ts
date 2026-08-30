@@ -668,5 +668,8 @@ export interface ModalsState {
   examPlanner: boolean;
   howItWorks: boolean;
   settings: boolean;
+  devicePairing: boolean;
+  onboarding: boolean;
   activeCourseIdForEditor?: string | null;
 }
+

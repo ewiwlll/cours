@@ -172,6 +172,16 @@ export function TopBar() {
             <span>{lang.toUpperCase()}</span>
           </button>
 
+          {/* Mobile Devices & QR Code Pairing Button */}
+          <button
+            onClick={() => openModal('devicePairing')}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-bold text-zinc-300 hover:text-white hover:border-zinc-700 transition-all"
+            title={lang === 'en' ? 'Connect Phone & Devices' : 'Connecter un téléphone / QR Code'}
+          >
+            <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="hidden sm:inline">{lang === 'en' ? 'Devices' : 'Appareils'}</span>
+          </button>
+
           {/* Settings Button */}
           <button
             onClick={() => openModal('settings')}

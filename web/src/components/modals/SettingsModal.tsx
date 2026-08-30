@@ -12,11 +12,12 @@ import {
   Sparkles,
   RefreshCw,
   Save,
+  QrCode,
 } from 'lucide-react';
 import { useStore } from '../../lib/store';
 
 export function SettingsModal() {
-  const { modals, closeModal, lang, setLang, t } = useStore();
+  const { modals, closeModal, openModal, lang, setLang, t } = useStore();
   const [apiKey, setApiKey] = useState('');
   const [showKey, setShowKey] = useState(false);
   const [model, setModel] = useState('gemini-3.7-flash');
@@ -297,6 +298,15 @@ export function SettingsModal() {
                     )}
                   </div>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => openModal('devicePairing')}
+                  className="w-full py-2 px-3 rounded-lg bg-surface-muted hover:bg-zinc-700 text-zinc-200 border border-border flex items-center justify-center gap-2 font-bold text-xs transition-colors"
+                >
+                  <QrCode className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Afficher le QR Code & Gérer les Appareils</span>
+                </button>
               </div>
 
               {/* SAVE BUTTON */}

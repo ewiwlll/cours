@@ -98,6 +98,8 @@ const INITIAL_MODALS: ModalsState = {
   examPlanner: false,
   howItWorks: false,
   settings: false,
+  devicePairing: false,
+  onboarding: false,
   activeCourseIdForEditor: null,
 };
 
