@@ -52,7 +52,23 @@ test('Simulateurs Réels: Test E2E de A à Z (macOS Desktop, Android Pixel 8, iP
     // Tester l'application Web /app sur Desktop
     await macPage.goto(`http://127.0.0.1:${TEST_PORT}/app`);
     await macPage.waitForSelector('body', { timeout: 5000 });
-    await macPage.screenshot({ path: path.join(ROOT, 'scratch', 'test_macos_desktop.png') });
+    
+    // Fermer l'onboarding si affiché
+    try {
+      const skipBtn = await macPage.waitForSelector('button:has-text("Passer")', { timeout: 2000 });
+      if (skipBtn) await skipBtn.click();
+    } catch {
+      // pas d'onboarding
+    }
+
+    // Ouvrir le modal QR Code Téléphone
+    const phoneBtn = await macPage.waitForSelector('button:has-text("Phone"), button:has-text("Téléphone")', { timeout: 5000 });
+    if (phoneBtn) {
+      await phoneBtn.click();
+      await macPage.waitForSelector('canvas', { timeout: 5000 });
+      await macPage.screenshot({ path: path.join(ROOT, 'scratch', 'test_device_pairing_modal.png') });
+    }
+    
     console.log('✓ Simulateur macOS Desktop validé.');
     await macContext.close();
 
