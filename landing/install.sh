@@ -159,9 +159,27 @@ if [ "$ANTIGRAVITY_LAUNCHED" = false ]; then
     fi
 fi
 
+# 8. Démarrage du serveur et ouverture automatique des fenêtres
+echo -e "\n${BLUE}==>${RESET} ${BOLD}Lancement automatique de votre cockpit...${RESET}"
+
+if ! lsof -ti :3002 >/dev/null 2>&1; then
+    (nohup node start.mjs >/dev/null 2>&1 &)
+    sleep 2
+fi
+
+if [ "$(uname)" = "Darwin" ]; then
+    if [ -d "/Applications/Cours.app" ]; then
+        echo -e "  ${GREEN}🚀 Ouverture de /Applications/Cours.app...${RESET}"
+        open "/Applications/Cours.app" 2>/dev/null || true
+    fi
+    open "http://localhost:3002" 2>/dev/null || true
+elif [ "$(uname)" = "Linux" ]; then
+    xdg-open "http://localhost:3002" 2>/dev/null || true
+fi
+
 # Banner Récapitulatif
 echo -e "\n${GREEN}${BOLD}════════════════════════════════════════════════════════════════════════════${RESET}"
-echo -e "${GREEN}${BOLD}  🎉 INSTALLATION TERMINÉE AVEC SUCCÈS ! TOUT EST PRÊT !${RESET}"
+echo -e "${GREEN}${BOLD}  🎉 INSTALLATION TERMINÉE AVEC SUCCÈS ! TOUT EST OUVERT !${RESET}"
 echo -e "${GREEN}${BOLD}════════════════════════════════════════════════════════════════════════════${RESET}\n"
 
 echo -e "${PURPLE}${BOLD}🧠 DANS GOOGLE ANTIGRAVITY :${RESET}"
@@ -171,6 +189,6 @@ echo -e "\n     ${BOLD}${GREEN}cours${RESET}  ${CYAN}(ou 'fait tout', 'débloque
 echo -e "  ${YELLOW}→ L'agent IA scanne votre dossier et s'occupe de tout pour vous !${RESET}\n"
 
 echo -e "${BLUE}${BOLD}📱 VOS COCKPITS DE RÉVISION AU QUOTIDIEN :${RESET}"
-echo -e "  💻 ${CYAN}Sur Mac :${RESET} Ouvrez ${BOLD}/Applications/Cours.app${RESET}"
+echo -e "  💻 ${CYAN}Sur Mac :${RESET} ${BOLD}/Applications/Cours.app${RESET} (ouvert sur votre écran)"
 echo -e "  🌐 ${CYAN}Sur Navigateur :${RESET} ${BOLD}http://localhost:3002${RESET}"
-echo -e "  📱 ${CYAN}Sur Smartphone :${RESET} Tapez ${BOLD}cours${RESET} dans votre terminal pour afficher le QR Code Wi-Fi.\n"
+echo -e "  📱 ${CYAN}Sur Smartphone :${RESET} Scannez le QR Code affiché dans l'application pour connecter votre mobile.\n"
