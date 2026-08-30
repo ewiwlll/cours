@@ -27,32 +27,24 @@ export function DevicePairingModal() {
     return `http://127.0.0.1:${port}/?paired=1`;
   };
 
-  const universalUrl = getUniversalUrl();
+  const [mode, setMode] = useState<'pwa' | 'apk'>('pwa');
+
+  const getApkUrl = () => {
+    if (localIp && localIp !== '127.0.0.1' && localIp !== 'localhost') {
+      return `http://${localIp}:${port}/cours.apk`;
+    }
+    return 'https://cours-awc.pages.dev/cours.apk';
+  };
+
+  const activeUrl = mode === 'pwa' ? getUniversalUrl() : getApkUrl();
 
   useEffect(() => {
-    if (!modals.devicePairing) return;
-    const fetchInfo = async () => {
-      try {
-        const res = await fetch('/api/devices');
-        if (res.ok) {
-          const data = await res.json();
-          setLocalIp(data.localIp || '127.0.0.1');
-          setPort(data.port || 3002);
-        }
-      } catch {
-        // ignore fallback
-      }
-    };
-    fetchInfo();
-  }, [modals.devicePairing]);
-
-  useEffect(() => {
-    if (!modals.devicePairing || !universalUrl || !canvasRef.current) return;
+    if (!modals.devicePairing || !activeUrl || !canvasRef.current) return;
     QRCode.toCanvas(
       canvasRef.current,
-      universalUrl,
+      activeUrl,
       {
-        width: 250,
+        width: 230,
         margin: 1.5,
         color: {
           dark: '#000000',
@@ -63,12 +55,12 @@ export function DevicePairingModal() {
         if (error) console.error('Erreur QR Code:', error);
       }
     );
-  }, [modals.devicePairing, universalUrl]);
+  }, [modals.devicePairing, activeUrl, mode]);
 
   if (!modals.devicePairing) return null;
 
   const handleCopyUrl = () => {
-    navigator.clipboard.writeText(universalUrl);
+    navigator.clipboard.writeText(activeUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
@@ -100,37 +92,49 @@ export function DevicePairingModal() {
           </button>
         </div>
 
-        {/* Body: 1 Grand QR Code Universel */}
-        <div className="p-6 flex flex-col items-center text-center space-y-4">
+        {/* Tab Selector: PWA vs APK */}
+        <div className="p-3 bg-zinc-900/40 border-b border-zinc-800 flex items-center gap-2">
+          <button
+            onClick={() => setMode('pwa')}
+            className={`flex-1 py-2 px-3 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5 ${
+              mode === 'pwa'
+                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                : 'bg-zinc-900 text-zinc-400 hover:text-white'
+            }`}
+          >
+            <span>🌐 Web PWA (iPhone & Android)</span>
+          </button>
+          <button
+            onClick={() => setMode('apk')}
+            className={`flex-1 py-2 px-3 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5 ${
+              mode === 'apk'
+                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/20'
+                : 'bg-zinc-900 text-zinc-400 hover:text-white'
+            }`}
+          >
+            <span>🤖 Télécharger APK (Pixel)</span>
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="p-5 flex flex-col items-center text-center space-y-3">
           <p className="text-xs text-zinc-300 leading-relaxed max-w-xs">
-            Ouvrez l'<strong>appareil photo</strong> de votre smartphone pour ouvrir l'application et réviser partout sans connexion (métro, amphis, transports).
+            {mode === 'pwa'
+              ? "Scannez avec l'appareil photo pour ouvrir et synchroniser l'application en direct sur votre smartphone."
+              : "Scannez pour télécharger directement le fichier d'installation cours.apk sur votre Google Pixel."}
           </p>
 
           {/* High Contrast QR Code Canvas */}
-          <div className="p-3.5 bg-white rounded-3xl shadow-2xl shadow-emerald-500/10 border-4 border-zinc-800 flex items-center justify-center">
+          <div className="p-3 bg-white rounded-3xl shadow-2xl shadow-emerald-500/10 border-4 border-zinc-800 flex items-center justify-center">
             <canvas ref={canvasRef} className="rounded-xl" />
           </div>
 
-          {/* Feature Badges */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-[11px]">
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300">
-              <Sparkles className="w-3 h-3 text-amber-400" />
-              <span>iPhone & Android</span>
-            </span>
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-emerald-300">
-              <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-              <span>100% Hors-Ligne</span>
-            </span>
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-blue-300">
-              <Wifi className="w-3 h-3 text-blue-400" />
-              <span>Sync Automatique</span>
-            </span>
-          </div>
-
           {/* Direct Link Pill */}
-          <div className="w-full p-3 rounded-2xl bg-zinc-900/80 border border-zinc-800 space-y-1 text-left">
+          <div className="w-full p-2.5 rounded-2xl bg-zinc-900/80 border border-zinc-800 space-y-1 text-left">
             <div className="flex items-center justify-between text-[11px] text-zinc-400">
-              <span className="font-semibold text-zinc-300">Lien Direct :</span>
+              <span className="font-semibold text-zinc-300">
+                {mode === 'pwa' ? 'Lien de synchronisation :' : 'Lien direct APK :'}
+              </span>
               <button
                 onClick={handleCopyUrl}
                 className="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1 transition-colors"
@@ -140,7 +144,7 @@ export function DevicePairingModal() {
               </button>
             </div>
             <code className="block font-mono text-[11px] text-emerald-300 truncate bg-black/40 p-1.5 rounded-lg border border-zinc-800/80 select-all">
-              {universalUrl}
+              {activeUrl}
             </code>
           </div>
         </div>
