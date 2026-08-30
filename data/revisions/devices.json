@@ -88,5 +88,15 @@
     "firstSeenAt": "2026-08-30T10:31:23.894Z",
     "lastSeenAt": "2026-08-30T10:31:23.894Z",
     "syncCount": 1
+  },
+  {
+    "id": "mob-r6yy59c",
+    "deviceName": "Android Smartphone",
+    "platform": "android",
+    "userAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 8 Pro Build/UD1A.230803.041) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36",
+    "ip": "127.0.0.1",
+    "firstSeenAt": "2026-08-30T10:42:52.895Z",
+    "lastSeenAt": "2026-08-30T10:42:52.895Z",
+    "syncCount": 1
   }
 ]

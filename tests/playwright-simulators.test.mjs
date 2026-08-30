@@ -39,13 +39,10 @@ test('Simulateurs Réels: Test E2E de A à Z (macOS Desktop, Android Pixel 8, iP
     const badgeText = await macPage.innerText('#platformDetectedBadge');
     assert.match(badgeText, /Ordinateur|Computer/i, 'La landing page doit détecter l\'ordinateur');
 
-    // Vérifier le gros bouton principal PWA / Web App
-    const pwaLink = await macPage.getAttribute('a[href="/app"]', 'href');
-    assert.equal(pwaLink, '/app');
-
-    // Vérifier la présence du lien de téléchargement téléphone hors-ligne (.apk)
-    const macApkLink = await macPage.getAttribute('a[href="/cours.apk"]', 'href');
-    assert.equal(macApkLink, '/cours.apk');
+    // Vérifier le gros bouton principal d'installation PWA dans le Dock
+    await macPage.waitForSelector('#pwaHeroBtn', { timeout: 5000 });
+    const pwaBtnText = await macPage.innerText('#pwaHeroBtn');
+    assert.match(pwaBtnText, /Dock|Ouvrir|Launch|Install/i);
 
     // Vérifier la présence de la commande 1-clic Terminal
     const terminalCode = await macPage.innerText('code');

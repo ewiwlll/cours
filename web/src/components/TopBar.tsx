@@ -175,11 +175,11 @@ export function TopBar() {
           {/* Mobile Devices & QR Code Pairing Button */}
           <button
             onClick={() => openModal('devicePairing')}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-bold text-zinc-300 hover:text-white hover:border-zinc-700 transition-all"
-            title={lang === 'en' ? 'Connect Phone & Devices' : 'Connecter un téléphone / QR Code'}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/50 border border-emerald-500/40 text-xs font-bold text-emerald-300 hover:text-emerald-200 hover:border-emerald-500/80 hover:bg-emerald-900/60 transition-all shadow-sm shadow-emerald-500/10 hover:scale-105 active:scale-95"
+            title={lang === 'en' ? 'Connect Phone & Scan QR Code' : 'Connecter mon téléphone / Scanner QR Code'}
           >
             <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="hidden sm:inline">{lang === 'en' ? 'Devices' : 'Appareils'}</span>
+            <span className="inline font-semibold">{lang === 'en' ? '📱 Connect Phone' : '📱 Téléphone'}</span>
           </button>
 
           {/* Settings Button */}
