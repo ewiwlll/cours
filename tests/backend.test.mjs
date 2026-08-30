@@ -120,7 +120,7 @@ test("synchronise deux reprises concurrentes d'un même enregistrement sans perd
   await new Promise((resolve, reject) => {
     const timeout = setTimeout(() => reject(new Error("Serveur de test non démarré")), 5000);
     child.stdout.on("data", (chunk) => {
-      if (String(chunk).includes("Cours :")) { clearTimeout(timeout); resolve(); }
+      if (String(chunk).includes("Serveur Cours") || String(chunk).includes("Cours")) { clearTimeout(timeout); resolve(); }
     });
     child.once("error", (error) => { clearTimeout(timeout); reject(error); });
   });

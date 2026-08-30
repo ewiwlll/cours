@@ -108,6 +108,7 @@ export const AudioRecorderModal: React.FC<AudioRecorderModalProps> = ({
   const animFrameRef = useRef<number | null>(null);
   const recognitionRef = useRef<any>(null);
   const cameraInputRef = useRef<HTMLInputElement | null>(null);
+  const wakeLockRef = useRef<any>(null);
 
   // Available chapters filtered by selected subject
   const filteredChapters = chapters.filter((c) => c.subjectId === selectedSubjectId);
@@ -134,6 +135,12 @@ export const AudioRecorderModal: React.FC<AudioRecorderModalProps> = ({
         try {
           recognitionRef.current.stop();
         } catch {}
+      }
+      if (wakeLockRef.current) {
+        try {
+          wakeLockRef.current.release();
+        } catch {}
+        wakeLockRef.current = null;
       }
     };
   }, []);
@@ -206,6 +213,13 @@ export const AudioRecorderModal: React.FC<AudioRecorderModalProps> = ({
       } catch {}
     }
 
+    // Request screen wake lock to avoid screen dimming during lecture recording
+    if ('wakeLock' in navigator) {
+      try {
+        wakeLockRef.current = await (navigator as any).wakeLock.request('screen');
+      } catch {}
+    }
+
     setStatus('recording');
     playAudioFeedback('marker');
 
@@ -253,6 +267,12 @@ export const AudioRecorderModal: React.FC<AudioRecorderModalProps> = ({
       try {
         recognitionRef.current.stop();
       } catch {}
+    }
+    if (wakeLockRef.current) {
+      try {
+        wakeLockRef.current.release();
+      } catch {}
+      wakeLockRef.current = null;
     }
     setStatus('stopped');
     playAudioFeedback('success');

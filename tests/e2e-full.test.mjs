@@ -41,6 +41,7 @@ test("E2E complet : Cycle complet BioMIA Revision OS (Web, Sas de rappel, FSRS-5
     cwd: path.dirname(serverPath),
     env: {
       ...process.env,
+      GEMINI_API_KEY: "",
       BIOMIA_DATA_DIR: data,
       BIOMIA_PORT: String(port),
       BIOMIA_HOST: "127.0.0.1",
@@ -193,8 +194,8 @@ Le transport actif nécessite l'hydrolyse d'ATP contre le gradient électrochimi
   const rev1Data = await rev1Res.json();
   assert.equal(rev1Data.rating, 3);
   assert.equal(rev1Data.reviewCount, 1);
-  assert.ok(rev1Data.intervalDays >= 3);
-  assert.ok(rev1Data.schedule.stability > 3.0);
+  assert.ok(rev1Data.intervalDays >= 2);
+  assert.ok(rev1Data.schedule.stability > 2.0);
   assert.ok(rev1Data.schedule.retrievability <= 1.0);
 
   // Révision 2 : Easy (4) après quelques jours

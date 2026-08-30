@@ -4,11 +4,36 @@
   "description": "L'OS d'apprentissage et de révision active pour tous vos cours, amphis et classes",
   "start_url": "/",
   "scope": "/",
+  "id": "cours-revision-os",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "background_color": "#09090b",
   "theme_color": "#09090b",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "categories": ["education", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Studio Amphi (Micro)",
+      "short_name": "Amphi",
+      "description": "Enregistrer un cours en direct avec balises d'incompréhension",
+      "url": "/?tab=amphi",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Entraînement FSRS-5",
+      "short_name": "Flashcards",
+      "description": "Réviser les cartes prioritaires du jour",
+      "url": "/?tab=training",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Planificateur & Épreuves",
+      "short_name": "Planning",
+      "description": "Consulter le calendrier prévisionnel des examens",
+      "url": "/?tab=planning",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
   "icons": [
     {
       "src": "/icon-192.png",
