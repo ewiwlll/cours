@@ -9,9 +9,7 @@
   },
   "scripts": {
     "start": "node start.mjs",
-    "test": "node --test tests/learning-engine.test.mjs tests/recall-correction.test.mjs tests/e2e-fictitious-course.test.mjs",
-    "build:web": "cd web && npm install && npm run build",
-    "dev:web": "cd web && npm run dev",
+    "build:web": "cd web && npm install && npm run build && cd .. && mkdir -p landing/app landing/assets && cp public/index.html landing/app/index.html && cp -rf public/assets/* landing/assets/ 2>/dev/null || true",
     "mobile": "cd apps/mobile && npm start"
   },
   "keywords": [

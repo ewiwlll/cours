@@ -2,12 +2,14 @@
   "name": "Cours — Revision OS",
   "short_name": "Cours",
   "description": "L'OS d'apprentissage et de révision active pour tous vos cours, amphis et classes",
-  "start_url": "/",
+  "start_url": "/app",
   "scope": "/",
+  "id": "cours-revision-os",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "background_color": "#09090b",
   "theme_color": "#09090b",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "categories": ["education", "productivity"],
   "icons": [
     {
